@@ -1,6 +1,7 @@
 {
   "name": "headless-primitives-monorepo",
   "private": true,
+  "type": "module",
   "scripts": {
     "docs:dev": "pnpm --filter @headless-primitives/docs run docs:dev",
     "dev": "pnpm --filter @headless-primitives/playground run dev",
@@ -40,7 +41,7 @@
     ]
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=24"
   },
   "packageManager": "pnpm@9.5.0"
 }
