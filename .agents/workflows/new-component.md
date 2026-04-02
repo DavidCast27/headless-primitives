@@ -87,7 +87,10 @@ export default defineConfig({
 ## 6. Integrar al Playground
 
 - Añadir `"@headless-primitives/<nombre>": "workspace:*"` a `apps/playground/package.json`.
-- Importar en `apps/playground/src/main.ts`.
+- Crear `apps/playground/src/styles/<nombre>.css` con los estilos de la demo.
+- Importar el nuevo CSS en `apps/playground/src/style.css` usando `@import './styles/<nombre>.css';`.
+- Crear `apps/playground/src/scripts/<nombre>.ts` con la lógica de listeners y logs.
+- Importar e inicializar la nueva lógica en `apps/playground/src/main.ts`.
 - Crear Card de demo en `apps/playground/index.html`.
 
 ## 7. Documentar

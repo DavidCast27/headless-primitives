@@ -7,10 +7,11 @@
     "docs:build": "vitepress build",
     "docs:preview": "vitepress preview"
   },
+  "dependencies": {
+    "@headless-primitives/button": "workspace:*",
+    "@headless-primitives/switch": "workspace:*"
+  },
   "devDependencies": {
     "vitepress": "^1.5.0"
-  },
-  "dependencies": {
-    "@headless-primitives/button": "workspace:*"
   }
 }

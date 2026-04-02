@@ -38,6 +38,37 @@
             <ul id="log-list"></ul>
           </div>
         </section>
+
+        <!-- Tarjeta de Demostración del Switch -->
+        <section class="card">
+          <div class="card-header">
+            <h2>Switch primitive</h2>
+            <span class="status-badge">Nuevo <span class="dot green"></span></span>
+          </div>
+
+          <p class="tagline">Implementación de role="switch" accesible</p>
+
+          <div class="demo-area">
+            <div class="control-group">
+              <label for="sw-toggle">Interruptor Principal</label>
+              <hp-switch id="sw-toggle" class="switch"></hp-switch>
+            </div>
+
+            <div class="control-group">
+              <label for="sw-checked">Estado On (Inicial)</label>
+              <hp-switch id="sw-checked" class="switch" checked></hp-switch>
+            </div>
+
+            <div class="control-group">
+              <label>Deshabilitado</label>
+              <hp-switch id="sw-disabled" class="switch" disabled></hp-switch>
+            </div>
+          </div>
+          
+          <div class="card-footer">
+            <p>Usa <code>Space</code> o <code>Enter</code> para alternar.</p>
+          </div>
+        </section>
       </main>
     </div>
     <script type="module" src="./src/main.ts"></script>  

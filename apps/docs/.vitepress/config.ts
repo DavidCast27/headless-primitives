@@ -1,71 +1,68 @@
-import { defineConfig } from 'vitepress';
+import { defineConfig } from "vitepress";
 
 export default defineConfig({
   title: "Headless Primitives",
   description: "Web Components agnósticos, accesibles y cero dependencias.",
-  head: [
-    ['link', { rel: 'icon', href: '/logo.png' }]
-  ],
+  head: [["link", { rel: "icon", href: "/logo.png" }]],
 
   themeConfig: {
-    logo: '/logo.png',
+    logo: "/logo.png",
 
     search: {
-      provider: 'local',
+      provider: "local",
       options: {
         locales: {
           root: {
             translations: {
               button: {
-                buttonText: 'Buscar',
-                buttonAriaLabel: 'Buscar'
+                buttonText: "Buscar",
+                buttonAriaLabel: "Buscar",
               },
               modal: {
-                displayDetails: 'Mostrar detalles',
-                resetButtonTitle: 'Limpiar busqueda',
-                backButtonTitle: 'Cerrar buscador',
-                noResultsText: 'No se encontraron resultados para',
+                displayDetails: "Mostrar detalles",
+                resetButtonTitle: "Limpiar busqueda",
+                backButtonTitle: "Cerrar buscador",
+                noResultsText: "No se encontraron resultados para",
                 footer: {
-                  selectText: 'para seleccionar',
-                  navigateText: 'para navegar',
-                  closeText: 'para cerrar'
-                }
-              }
-            }
-          }
-        }
-      }
+                  selectText: "para seleccionar",
+                  navigateText: "para navegar",
+                  closeText: "para cerrar",
+                },
+              },
+            },
+          },
+        },
+      },
     },
 
     nav: [
-      { text: 'Inicio', link: '/' },
-      { text: 'Guía', link: '/guide/quick-start' },
-      { text: 'Componentes', link: '/components/button' },
+      { text: "Inicio", link: "/" },
+      { text: "Guía", link: "/guide/quick-start" },
+      { text: "Componentes", link: "/components/button" },
     ],
 
     sidebar: [
       {
-        text: 'Introducción',
+        text: "Introducción",
         items: [
-          { text: 'Filosofía', link: '/guide/philosophy' },
-          { text: 'Instalación', link: '/guide/quick-start' }
-        ]
+          { text: "Filosofía", link: "/guide/philosophy" },
+          { text: "Instalación", link: "/guide/quick-start" },
+        ],
       },
       {
-        text: 'Componentes',
+        text: "Componentes",
         items: [
-          { text: 'Button', link: '/components/button' }
-        ]
-      }
+          { text: "Button", link: "/components/button" },
+          { text: "Switch", link: "/components/switch" },
+        ],
+      },
     ],
 
-    socialLinks: [
-      { icon: 'github', link: 'https://github.com/DavidCast27/headless-primitives' }
-    ],
+    socialLinks: [{ icon: "github", link: "https://github.com/DavidCast27/headless-primitives" }],
 
     footer: {
-      message: 'Lanzado bajo la MIT License.',
-      copyright: 'Copyright © 2026 - Presente | David Castrillón'
-    }
-  }
+      message: "Lanzado bajo la MIT License.",
+      copyright: "Copyright © 2026 - Presente | David Castrillón",
+    },
+  },
 });

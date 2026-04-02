@@ -50,6 +50,9 @@ importers:
       '@headless-primitives/button':
         specifier: workspace:*
         version: link:../../packages/vanilla/button
+      '@headless-primitives/switch':
+        specifier: workspace:*
+        version: link:../../packages/vanilla/switch
     devDependencies:
       vitepress:
         specifier: ^1.5.0
@@ -60,6 +63,9 @@ importers:
       '@headless-primitives/button':
         specifier: workspace:*
         version: link:../../packages/vanilla/button
+      '@headless-primitives/switch':
+        specifier: workspace:*
+        version: link:../../packages/vanilla/switch
     devDependencies:
       typescript:
         specifier: ^5.0.0
@@ -69,6 +75,8 @@ importers:
         version: 8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@25.5.0)(jiti@2.6.1)(yaml@2.8.3)
 
   packages/vanilla/button: {}
+
+  packages/vanilla/switch: {}
 
 packages:
 
