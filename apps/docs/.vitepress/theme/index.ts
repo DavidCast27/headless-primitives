@@ -7,6 +7,7 @@ import type { Theme } from "vitepress";
 import "@headless-primitives/button";
 import "@headless-primitives/switch";
 import "@headless-primitives/separator";
+import "@headless-primitives/progress";
 
 export default {
   extends: DefaultTheme,

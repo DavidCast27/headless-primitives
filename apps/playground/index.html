@@ -39,6 +39,36 @@
           </div>
         </section>
 
+        <!-- Card del Progress -->
+  <section class="card">
+    <div class="card-header">
+      <h2>Progress primitive</h2>
+      <div class="status-badge">
+        <span class="dot green"></span>
+        Nuevo
+      </div>
+    </div>
+
+    <p class="tagline">Indicador de progreso accesible (role="progressbar")</p>
+
+    <div class="demo-area" style="flex-direction: column; gap: 2rem;">
+      <div style="width: 100%;">
+        <p style="font-size: 0.9rem; margin-bottom: 1rem;">Determinado (Simulación)</p>
+        <hp-progress id="prg-test" class="progress" value="0"></hp-progress>
+        
+        <div class="progress-control">
+          <hp-button id="btn-prg-start" class="btn btn-primary">Iniciar Carga</hp-button>
+          <hp-button id="btn-prg-reset" class="btn btn-secondary">Reset</hp-button>
+        </div>
+      </div>
+
+      <div style="width: 100%;">
+        <p style="font-size: 0.9rem; margin-bottom: 1rem;">Indeterminado (Cargando...)</p>
+        <hp-progress class="progress"></hp-progress>
+      </div>
+    </div>
+  </section>
+
         <!-- Card del Switch -->
         <section class="card">
           <div class="card-header">

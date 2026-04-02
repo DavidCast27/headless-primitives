@@ -55,6 +55,7 @@ export default defineConfig({
           { text: "Button", link: "/components/button" },
           { text: "Switch", link: "/components/switch" },
           { text: "Separator", link: "/components/separator" },
+          { text: "Progress", link: "/components/progress" },
         ],
       },
     ],

@@ -1,0 +1,47 @@
+/* Contenedor del Progress (Track) */
+hp-progress.progress {
+  display: block;
+  width: 100%;
+  height: 8px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 99px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid var(--border-color);
+}
+
+/* Indicador de progreso (Bar) */
+hp-progress.progress::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-color: var(--primary-color);
+  transition: width 0.3s ease-out;
+  /* Usamos la variable CSS expuesta por el componente */
+  width: var(--hp-progress-percentage, 0%);
+}
+
+/* Estado Indeterminado */
+hp-progress.progress:not([aria-valuenow])::after {
+  width: 30%;
+  animation: progress-indeterminate 1.5s infinite linear;
+  background: linear-gradient(90deg, transparent 0%, var(--primary-color) 50%, transparent 100%);
+}
+
+@keyframes progress-indeterminate {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(400%);
+  }
+}
+
+.progress-control {
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
