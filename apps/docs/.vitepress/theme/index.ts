@@ -9,6 +9,7 @@ import "@headless-primitives/switch";
 import "@headless-primitives/separator";
 import "@headless-primitives/progress";
 import "@headless-primitives/label";
+import "@headless-primitives/avatar";
 
 export default {
   extends: DefaultTheme,

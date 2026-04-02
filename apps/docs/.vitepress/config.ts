@@ -57,6 +57,7 @@ export default defineConfig({
           { text: "Separator", link: "/components/separator" },
           { text: "Progress", link: "/components/progress" },
           { text: "Label", link: "/components/label" },
+          { text: "Avatar", link: "/components/avatar" },
         ],
       },
     ],

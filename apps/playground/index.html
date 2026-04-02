@@ -107,7 +107,7 @@
         <section class="card" id="label-demo">
           <div class="card-header">
             <h2 class="card-title">Label primitive</h2>
-            <span class="status-badge">Nuevo</span>
+            <span class="status-badge">Probado</span>
           </div>
           <p class="tagline">Etiqueta accesible con gestión de foco manual</p>
 
@@ -125,6 +125,58 @@
 
           <div class="card-footer">
             Haz click en el texto para enfocar el control asociado.
+          </div>
+        </section>
+
+        <!-- Avatar Section -->
+        <section class="card" id="avatar-demo">
+          <div class="card-header">
+            <h2 class="card-title">Avatar primitive</h2>
+            <span class="status-badge">Nuevo</span>
+          </div>
+          <p class="tagline">Representación de usuario con fallback inteligente</p>
+
+          <div class="demo-area" style="display: flex; gap: 20px; align-items: center; flex-wrap: wrap;">
+            <!-- Avatar Success -->
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+              <hp-avatar id="avatar-success">
+                <hp-avatar-image src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&h=100&fit=crop" alt="User 1"></hp-avatar-image>
+                <hp-avatar-fallback>JD</hp-avatar-fallback>
+              </hp-avatar>
+              <span style="font-size: 12px; color: var(--text-secondary);">Éxito</span>
+            </div>
+
+            <!-- Avatar Error -->
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+              <hp-avatar id="avatar-error">
+                <hp-avatar-image src="invalid-image.jpg" alt="User 2"></hp-avatar-image>
+                <hp-avatar-fallback>ER</hp-avatar-fallback>
+              </hp-avatar>
+              <span style="font-size: 12px; color: var(--text-secondary);">Error</span>
+            </div>
+
+            <!-- Avatar Sizes -->
+            <hp-avatar class="avatar-lg">
+              <hp-avatar-fallback>LG</hp-avatar-fallback>
+            </hp-avatar>
+            <hp-avatar class="avatar-sm">
+              <hp-avatar-fallback>SM</hp-avatar-fallback>
+            </hp-avatar>
+
+            <!-- Dynamic Load -->
+            <div id="dynamic-demo" style="display: flex; flex-direction: column; align-items: center; gap: 8px; margin-left: auto;">
+              <div id="dynamic-avatar">
+                <hp-avatar delay="1000">
+                  <hp-avatar-image src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop" alt="Dynamic User"></hp-avatar-image>
+                  <hp-avatar-fallback>DY</hp-avatar-fallback>
+                </hp-avatar>
+              </div>
+              <button id="reload-avatar" class="button" style="padding: 4px 8px; font-size: 12px;">Recargar con Delay</button>
+            </div>
+          </div>
+
+          <div class="card-footer">
+            Soporta estados de carga, error y fallback con delay opcional.
           </div>
         </section>
 

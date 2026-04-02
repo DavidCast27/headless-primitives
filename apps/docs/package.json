@@ -8,6 +8,7 @@
     "docs:preview": "vitepress preview"
   },
   "dependencies": {
+    "@headless-primitives/avatar": "workspace:*",
     "@headless-primitives/button": "workspace:*",
     "@headless-primitives/label": "workspace:*",
     "@headless-primitives/progress": "workspace:*",
