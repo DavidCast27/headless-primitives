@@ -1,16 +1,16 @@
-import { defineConfig } from 'vitest/config';
-import { resolve } from 'path';
+import { defineConfig } from "vitest/config";
+import { resolve } from "path";
 
 export default defineConfig({
   build: {
     lib: {
-      entry: resolve(__dirname, 'src/index.ts'),
-      name: 'HeadlessPrimitivesButton',
-      fileName: 'index'
+      entry: resolve(__dirname, "src/index.ts"),
+      name: "HeadlessPrimitivesButton",
+      fileName: "index",
     },
-    target: 'esnext'
+    target: "esnext",
   },
   test: {
-    environment: 'happy-dom'
-  }
+    environment: "happy-dom",
+  },
 });

@@ -63,23 +63,23 @@ El botón es la espinal dorsal de toda UI. `hp-button` encapsula la lógica de a
 
 ### Attributes
 
-| Atributo | Tipo | Por defecto | Descripción |
-| :--- | :--- | :--- | :--- |
-| `disabled` | `boolean` | `false` | Desactiva el botón y lo remueve del orden de foco. |
-| `aria-pressed` | `boolean` | `undefined` | Si se provee, el botón actúa como un "Toggle Button" persistiendo su estado. |
-| `role` | `string` | `"button"` | El rol de accesibilidad (manejado automáticamente). |
-| `tabindex` | `string` | `"0"` | El índice de tabulación (manejado automáticamente según el estado `disabled`). |
+| Atributo       | Tipo      | Por defecto | Descripción                                                                    |
+| :------------- | :-------- | :---------- | :----------------------------------------------------------------------------- |
+| `disabled`     | `boolean` | `false`     | Desactiva el botón y lo remueve del orden de foco.                             |
+| `aria-pressed` | `boolean` | `undefined` | Si se provee, el botón actúa como un "Toggle Button" persistiendo su estado.   |
+| `role`         | `string`  | `"button"`  | El rol de accesibilidad (manejado automáticamente).                            |
+| `tabindex`     | `string`  | `"0"`       | El índice de tabulación (manejado automáticamente según el estado `disabled`). |
 
 ### Events
 
-| Evento | Detalle | Descripción |
-| :--- | :--- | :--- |
-| `hp-change` | `{ pressed: boolean }` | Emitido únicamente cuando el botón actúa como *Toggle* y cambia su estado. |
-| `click` | `MouseEvent` | Evento nativo del navegador (disponible siempre). |
+| Evento      | Detalle                | Descripción                                                                |
+| :---------- | :--------------------- | :------------------------------------------------------------------------- |
+| `hp-change` | `{ pressed: boolean }` | Emitido únicamente cuando el botón actúa como _Toggle_ y cambia su estado. |
+| `click`     | `MouseEvent`           | Evento nativo del navegador (disponible siempre).                          |
 
 ## Styling (Guía de Estilos)
 
-Al ser un componente *Headless*, no inyectamos CSS. Puedes usar selectores de atributos para aplicar estilos basados en el estado:
+Al ser un componente _Headless_, no inyectamos CSS. Puedes usar selectores de atributos para aplicar estilos basados en el estado:
 
 ```css
 /* Estado Base */
@@ -109,6 +109,7 @@ hp-button[disabled] {
 ## Accesibilidad (a11y)
 
 `hp-button` implementa los siguientes patrones de la W3C:
+
 - Manejo automático de `tabindex`.
 - Soporte para teclas `Enter` y `Espacio`.
 - Sincronización automática de `aria-disabled` basada en el atributo nativo `disabled`.
