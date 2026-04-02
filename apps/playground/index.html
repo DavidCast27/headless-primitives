@@ -138,6 +138,54 @@
           <div class="card-footer">Haz click en el texto para enfocar el control asociado.</div>
         </section>
 
+        <!-- Field Section (Molecule) -->
+        <section class="card">
+          <div class="card-header">
+            <h2>Field molecule</h2>
+            <div class="status-badge" style="background: var(--primary-color); color: white;">
+              Molécula
+            </div>
+          </div>
+          <p class="tagline">Orquestación automática de accesibilidad en formularios</p>
+
+          <div class="demo-area" style="flex-direction: column; gap: 2rem;">
+            <!-- Example with Native Input -->
+            <hp-field>
+              <div class="control-group" style="align-items: flex-start;">
+                <hp-field-label style="font-weight: 600; margin-bottom: 4px;">Correo Electrónico</hp-field-label>
+                <hp-field-description style="font-size: 12px; color: var(--text-secondary); margin-bottom: 8px;">
+                  Nunca compartiremos tu correo con terceros.
+                </hp-field-description>
+                <hp-field-control style="width: 100%;">
+                  <input type="email" placeholder="ejemplo@correo.com" style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid var(--border-color); background: var(--bg-secondary); color: var(--text-primary);">
+                </hp-field-control>
+                <hp-field-error id="email-error" style="font-size: 12px; color: #ff4d4d; margin-top: 4px; display: none;">
+                  Introduce un correo válido.
+                </hp-field-error>
+              </div>
+            </hp-field>
+
+            <!-- Example with hp-switch -->
+            <hp-field>
+              <div class="control-group" style="flex-direction: row; align-items: center; justify-content: space-between;">
+                <div style="display: flex; flex-direction: column; gap: 2px;">
+                  <hp-field-label style="font-weight: 600;">Notificaciones Push</hp-field-label>
+                  <hp-field-description style="font-size: 12px; color: var(--text-secondary);">
+                    Recibe alertas en tiempo real en tu navegador.
+                  </hp-field-description>
+                </div>
+                <hp-field-control>
+                  <hp-switch class="switch"></hp-switch>
+                </hp-field-control>
+              </div>
+            </hp-field>
+          </div>
+
+          <div class="card-footer">
+            Los IDs y atributos ARIA se vinculan automáticamente por proximidad.
+          </div>
+        </section>
+
         <!-- Avatar Section -->
         <section class="card" id="avatar-demo">
           <div class="card-header">

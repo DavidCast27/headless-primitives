@@ -5,6 +5,7 @@ import "@headless-primitives/separator";
 import "@headless-primitives/progress";
 import "@headless-primitives/label";
 import "@headless-primitives/avatar";
+import "@headless-primitives/field";
 
 import { initButtonDemo } from "./scripts/button";
 import { initSwitchDemo } from "./scripts/switch";

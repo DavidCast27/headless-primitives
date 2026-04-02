@@ -60,6 +60,10 @@ export default defineConfig({
           { text: "Avatar", link: "/components/avatar" },
         ],
       },
+      {
+        text: "Tier 2 — Moléculas",
+        items: [{ text: "Field", link: "/components/field" }],
+      },
     ],
 
     socialLinks: [{ icon: "github", link: "https://github.com/DavidCast27/headless-primitives" }],

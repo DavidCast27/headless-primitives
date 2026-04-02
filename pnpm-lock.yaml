@@ -53,6 +53,9 @@ importers:
       '@headless-primitives/button':
         specifier: workspace:*
         version: link:../../packages/vanilla/button
+      '@headless-primitives/field':
+        specifier: workspace:*
+        version: link:../../packages/vanilla/field
       '@headless-primitives/label':
         specifier: workspace:*
         version: link:../../packages/vanilla/label
@@ -78,6 +81,9 @@ importers:
       '@headless-primitives/button':
         specifier: workspace:*
         version: link:../../packages/vanilla/button
+      '@headless-primitives/field':
+        specifier: workspace:*
+        version: link:../../packages/vanilla/field
       '@headless-primitives/label':
         specifier: workspace:*
         version: link:../../packages/vanilla/label
@@ -114,6 +120,21 @@ importers:
         version: 2.1.9(@types/node@25.5.0)(happy-dom@14.12.3)(jsdom@29.0.1)(lightningcss@1.32.0)
 
   packages/vanilla/button: {}
+
+  packages/vanilla/field:
+    devDependencies:
+      happy-dom:
+        specifier: ^14.12.3
+        version: 14.12.3
+      typescript:
+        specifier: ^5.5.4
+        version: 5.9.3
+      vite:
+        specifier: ^5.4.2
+        version: 5.4.21(@types/node@25.5.0)(lightningcss@1.32.0)
+      vitest:
+        specifier: ^2.0.5
+        version: 2.1.9(@types/node@25.5.0)(happy-dom@14.12.3)(jsdom@29.0.1)(lightningcss@1.32.0)
 
   packages/vanilla/label:
     devDependencies:

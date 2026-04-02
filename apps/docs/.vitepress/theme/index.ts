@@ -10,6 +10,7 @@ import "@headless-primitives/separator";
 import "@headless-primitives/progress";
 import "@headless-primitives/label";
 import "@headless-primitives/avatar";
+import "@headless-primitives/field";
 
 export default {
   extends: DefaultTheme,

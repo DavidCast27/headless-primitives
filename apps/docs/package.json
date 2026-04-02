@@ -10,6 +10,7 @@
   "dependencies": {
     "@headless-primitives/avatar": "workspace:*",
     "@headless-primitives/button": "workspace:*",
+    "@headless-primitives/field": "workspace:*",
     "@headless-primitives/label": "workspace:*",
     "@headless-primitives/progress": "workspace:*",
     "@headless-primitives/separator": "workspace:*",
