@@ -39,11 +39,14 @@
           </div>
         </section>
 
-        <!-- Tarjeta de Demostración del Switch -->
+        <!-- Card del Switch -->
         <section class="card">
           <div class="card-header">
             <h2>Switch primitive</h2>
-            <span class="status-badge">Nuevo <span class="dot green"></span></span>
+            <div class="status-badge">
+              <span class="dot green"></span>
+              Nuevo
+            </div>
           </div>
 
           <p class="tagline">Implementación de role="switch" accesible</p>
@@ -55,18 +58,50 @@
             </div>
 
             <div class="control-group">
-              <label for="sw-checked">Estado On (Inicial)</label>
-              <hp-switch id="sw-checked" class="switch" checked></hp-switch>
+              <label for="sw-on">Estado On (Inicial)</label>
+              <hp-switch id="sw-on" class="switch" checked></hp-switch>
             </div>
 
             <div class="control-group">
-              <label>Deshabilitado</label>
+              <label for="sw-disabled">Deshabilitado</label>
               <hp-switch id="sw-disabled" class="switch" disabled></hp-switch>
             </div>
           </div>
-          
+
           <div class="card-footer">
-            <p>Usa <code>Space</code> o <code>Enter</code> para alternar.</p>
+            Usa Space o Enter para alternar.
+          </div>
+        </section>
+
+        <!-- Card del Separator -->
+        <section class="card">
+          <div class="card-header">
+            <h2>Separator primitive</h2>
+            <div class="status-badge">
+              <span class="dot green"></span>
+              Nuevo
+            </div>
+          </div>
+
+          <p class="tagline">División semántica entre elementos (role="separator")</p>
+
+          <div class="demo-area">
+            <div style="width: 100%;">
+              <p style="font-size: 0.9rem; margin-bottom: 0.5rem;">Horizontal (Por defecto)</p>
+              <hp-separator></hp-separator>
+              <p style="font-size: 0.8rem; color: var(--text-secondary);">Contenido debajo del separador.</p>
+            </div>
+
+            <div style="width: 100%; margin-top: 2rem;">
+              <p style="font-size: 0.9rem; margin-bottom: 1rem;">Vertical</p>
+              <div class="separator-demo-box">
+                <span>Inicio</span>
+                <hp-separator orientation="vertical"></hp-separator>
+                <span>Perfil</span>
+                <hp-separator orientation="vertical"></hp-separator>
+                <span>Ajustes</span>
+              </div>
+            </div>
           </div>
         </section>
       </main>

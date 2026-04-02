@@ -1,0 +1,29 @@
+/* Separador Horizontal */
+hp-separator[orientation="horizontal"],
+hp-separator:not([orientation]) {
+  display: block;
+  height: 1px;
+  width: 100%;
+  background-color: var(--border-color);
+  margin: 1rem 0;
+}
+
+/* Separador Vertical */
+hp-separator[orientation="vertical"] {
+  display: inline-block;
+  width: 1px;
+  height: 1.5rem;
+  background-color: var(--border-color);
+  margin: 0 1rem;
+  vertical-align: middle;
+}
+
+/* Ejemplo decorativo en el playground */
+.separator-demo-box {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 8px;
+}

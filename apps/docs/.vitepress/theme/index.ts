@@ -6,6 +6,7 @@ import type { Theme } from "vitepress";
 // permitiendo a todo archivo Markdown parsearlo sin problema.
 import "@headless-primitives/button";
 import "@headless-primitives/switch";
+import "@headless-primitives/separator";
 
 export default {
   extends: DefaultTheme,
