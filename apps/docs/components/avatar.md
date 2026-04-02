@@ -65,6 +65,10 @@ pnpm add @headless-primitives/avatar
 }
 </style>
 
+<CodeSnippet>
+
+<Flavor only="css">
+
 ::: code-group
 
 ```html [index.html]
@@ -98,6 +102,33 @@ pnpm add @headless-primitives/avatar
 ```
 
 :::
+
+</Flavor>
+
+<Flavor only="tailwind">
+
+::: code-group
+
+```html [index.html]
+<hp-avatar delay="600" class="w-12 h-12 rounded-full overflow-hidden group">
+  <hp-avatar-image
+    src="user.jpg"
+    alt="Avatar"
+    class="hidden group-data-[state=loaded]:block w-full h-full object-cover"
+  />
+  <hp-avatar-fallback
+    class="flex items-center justify-center w-full h-full bg-gray-100 group-data-[state=loaded]:hidden"
+  >
+    JD
+  </hp-avatar-fallback>
+</hp-avatar>
+```
+
+:::
+
+</Flavor>
+
+</CodeSnippet>
 
 ## Anatomía
 

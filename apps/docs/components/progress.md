@@ -54,6 +54,10 @@ pnpm add @headless-primitives/progress
 }
 </style>
 
+<CodeSnippet>
+
+<Flavor only="css">
+
 ::: code-group
 
 ```html [index.html]
@@ -71,6 +75,7 @@ pnpm add @headless-primitives/progress
   background: #eee;
   position: relative;
   overflow: hidden;
+  border-radius: 999px;
 }
 
 .my-progress::after {
@@ -80,10 +85,53 @@ pnpm add @headless-primitives/progress
   background: blue;
   /* La variable se calcula automáticamente */
   width: var(--hp-progress-percentage, 0%);
+  transition: width 0.3s ease;
+}
+
+/* Estilo para indeterminado */
+.my-progress:not([aria-valuenow])::after {
+  width: 30%;
+  animation: progress-ind 1.5s infinite linear;
+}
+
+@keyframes progress-ind {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(400%);
+  }
 }
 ```
 
 :::
+
+</Flavor>
+
+<Flavor only="tailwind">
+
+::: code-group
+
+```html [index.html]
+<!-- Determinado -->
+<hp-progress value="60" class="block h-2 w-full bg-gray-200 rounded-full overflow-hidden">
+  <div
+    class="h-full bg-blue-600 transition-all duration-300"
+    style="width: var(--hp-progress-percentage, 0%)"
+  ></div>
+</hp-progress>
+
+<!-- Indeterminado -->
+<hp-progress class="block h-2 w-full bg-gray-200 rounded-full overflow-hidden">
+  <div class="h-full bg-blue-600 w-full animate-pulse"></div>
+</hp-progress>
+```
+
+:::
+
+</Flavor>
+
+</CodeSnippet>
 
 ## Anatomía
 

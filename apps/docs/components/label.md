@@ -54,30 +54,61 @@ pnpm add @headless-primitives/label
 .demo-switch[checked]::after { transform: translateX(20px); }
 </style>
 
+<CodeSnippet>
+
+<Flavor only="css">
+
 ::: code-group
 
 ```html [index.html]
-<hp-label for="first-name">Nombre</hp-label>
+<hp-label for="first-name" class="my-label">Nombre</hp-label>
 <input id="first-name" type="text" />
 
 <!-- Con otros primitivos -->
-<hp-label for="toggle-id">Aceptar términos</hp-label>
+<hp-label for="toggle-id" class="my-label">Aceptar términos</hp-label>
 <hp-switch id="toggle-id"></hp-switch>
 ```
 
 ```css [style.css]
-hp-label {
+.my-label {
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
 }
 
-hp-label:hover {
+.my-label:hover {
   color: var(--vp-c-brand-1);
 }
 ```
 
 :::
+
+</Flavor>
+
+<Flavor only="tailwind">
+
+::: code-group
+
+```html [index.html]
+<!-- Usando utilidades de Tailwind CSS -->
+<hp-label for="first-name" class="text-sm font-medium cursor-pointer hover:text-blue-600">
+  Nombre
+</hp-label>
+<input id="first-name" type="text" class="border rounded px-2 py-1 ml-2" />
+
+<div class="flex items-center gap-2 mt-4">
+  <hp-label for="toggle-id" class="text-sm font-medium cursor-pointer hover:text-blue-600">
+    Aceptar términos
+  </hp-label>
+  <hp-switch id="toggle-id"></hp-switch>
+</div>
+```
+
+:::
+
+</Flavor>
+
+</CodeSnippet>
 
 ## Anatomía
 

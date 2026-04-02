@@ -36,6 +36,10 @@ pnpm add @headless-primitives/button
 .demo-btn[disabled] { opacity: 0.5; cursor: not-allowed; }
 </style>
 
+<CodeSnippet>
+
+<Flavor only="css">
+
 ::: code-group
 
 ```html [index.html]
@@ -46,23 +50,54 @@ pnpm add @headless-primitives/button
 
 ```css [style.css]
 .my-btn {
-  /* Tus estilos aquí */
   padding: 10px 20px;
-  background: blue;
+  background: var(--vp-c-brand-1);
   color: white;
-  border-radius: 4px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
 }
 
 .my-btn:focus-visible {
-  outline: 2px solid blue;
+  outline: 2px solid var(--vp-c-brand-1);
+  outline-offset: 2px;
 }
 
 .my-btn[disabled] {
   opacity: 0.5;
+  cursor: not-allowed;
 }
 ```
 
 :::
+
+</Flavor>
+
+<Flavor only="tailwind">
+
+::: code-group
+
+```html [index.html]
+<!-- Usando utilidades de Tailwind CSS -->
+<hp-button
+  class="px-5 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
+>
+  Click me
+</hp-button>
+
+<hp-button
+  class="px-5 py-2.5 bg-blue-600 text-white rounded-lg opacity-50 cursor-not-allowed"
+  disabled
+>
+  Can't click
+</hp-button>
+```
+
+:::
+
+</Flavor>
+
+</CodeSnippet>
 
 ## Anatomía
 

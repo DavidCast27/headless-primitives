@@ -42,8 +42,8 @@ El mayor valor de esta librería es que la accesibilidad venga resuelta de fábr
 - **Documentación del Componente:** Cada componente nuevo **DEBE** tener su página en `apps/docs/components/[nombre].md` siguiendo el **Estándar Premium** (resumen en [ADR 0008](docs/adr/0008-docs-api-reference-by-custom-element.md)):
   - **Identidad**: Badge "Nuevo" y guía de instalación clara.
   - **Anatomía**: Snippet único en un bloque Markdown ` ```html ` con el árbol anidado de etiquetas `hp-*` (estilo Radix/Base UI), no listas en cuadros separados.
-  - **Code Tabs**: Separación de HTML y CSS usando `::: code-group`.
-  - **API Reference** (`## API Reference`): Una subsección `### \`hp-parte\`` por cada custom element del paquete (orden: raíz primero, luego hijos según la anatomía). En cada pieza, tablas **en el orden**: Atributos que el primitivo observa o documenta, Propiedades JavaScript públicas (getters/setters), Métodos públicos, Eventos personalizados (`hp-_`) y nativos relevantes, Estados (`data-_`) / notas ARIA que el código establece, Variables CSS en línea si aplica. La documentación **debe coincidir** con el código en `packages/vanilla/<nombre>/src/`(sin inventar atributos tipo React como`className`; si el código no lo implementa, no figura en la tabla).
+  - **Code Flavors**: Uso obligatorio de `<CodeSnippet>` para envolver ejemplos de código. Se deben proporcionar dos "sabores" (flavors): `<Flavor only="css">` para Vanilla CSS y `<Flavor only="tailwind">` para Tailwind CSS. Ambos deben estar dentro del mismo bloque de documentación.
+  - **API Reference**: Una subsección `### \`hp-parte\`` por cada custom element.
 
 ## 7. Playground-Driven Development
 

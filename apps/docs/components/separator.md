@@ -41,6 +41,10 @@ pnpm add @headless-primitives/separator
 }
 </style>
 
+<CodeSnippet>
+
+<Flavor only="css">
+
 ::: code-group
 
 ```html [index.html]
@@ -73,6 +77,30 @@ pnpm add @headless-primitives/separator
 ```
 
 :::
+
+</Flavor>
+
+<Flavor only="tailwind">
+
+::: code-group
+
+```html [index.html]
+<!-- Horizontal (default) -->
+<hp-separator class="block h-px w-full bg-gray-200 my-4"></hp-separator>
+
+<!-- Vertical -->
+<div class="flex h-5 items-center space-x-4">
+  <span>Uno</span>
+  <hp-separator orientation="vertical" class="h-full w-px bg-gray-200"></hp-separator>
+  <span>Dos</span>
+</div>
+```
+
+:::
+
+</Flavor>
+
+</CodeSnippet>
 
 ## Anatomía
 

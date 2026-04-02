@@ -6,7 +6,7 @@
 
 ## Filosofía
 
-- **Headless**: Sin estilos. Tú decides el _"look & feel"_ con CSS puro, Tailwind, o lo que prefieras.
+- **Headless**: Sin estilos. Tú decides el _"look & feel"_. La documentación incluye ejemplos listos para **Vanilla CSS** y **Tailwind CSS**.
 - **Accesible**: Atributos ARIA, navegación por teclado y manejo de foco listos para usarse (_built-in_).
 - **Framework-agnostic**: Al ser Custom Elements nativos, funcionan en cualquier stack (React, Vue, Astro, Vanilla JS, etc.).
 - **Puro**: Código escrito en Vanilla TypeScript, con **cero dependencias** de runtime.

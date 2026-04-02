@@ -94,13 +94,17 @@ export default defineConfig({
 
 ## 7. Documentar
 
-- Crear `apps/docs/components/<nombre>.md` siguiendo el **Estándar Premium** (ver `AGENTS.md` §6 y `docs/adr/0008-docs-api-reference-by-custom-element.md`):
-  - Badge "Nuevo".
-  - Sección de instalación con `pnpm add`.
-  - Demo interactiva usando `docs-demos.css` (`hp-demo-card`).
-  - **Anatomía:** un solo bloque Markdown ` ```html ` con el árbol anidado de etiquetas `hp-*` (no listas en cuadros ni “diagramas” aparte).
-  - **API Reference:** una subsección `### \`hp-parte\``por cada custom element del paquete; tablas alineadas con`packages/vanilla/<nombre>/src/`(atributos observados, propiedades/métodos públicos, eventos`hp-_`, `data-_`/ARIA, variables CSS si aplica).
-  - Bloques de código con pestañas (`::: code-group`) para HTML/CSS de ejemplo.
+- Documentar:
+  - Crear `apps/docs/components/<nombre>.md` siguiendo el **Estándar Premium** (ver `AGENTS.md` §6 y `docs/adr/0008-docs-api-reference-by-custom-element.md`):
+    - Badge "Nuevo".
+    - Sección de instalación con `pnpm add`.
+    - Demo interactiva usando `docs-demos.css` (`hp-demo-card`).
+    - **Anatomía:** un solo bloque Markdown ` ```html ` con el árbol anidado de etiquetas `hp-*`.
+    - **Ejemplos de Estilo (Multiflavor):** Uso obligatorio de `<CodeSnippet>` envolviendo dos bloques de `<Flavor>`:
+      - `<Flavor only="css">`: Contiene un `::: code-group` con el HTML base y el Vanilla CSS.
+      - `<Flavor only="tailwind">`: Contiene un `::: code-group` con el HTML usando utilidades de Tailwind.
+    - **API Reference:** una subsección `### \`hp-parte\`` por cada custom element del paquete.
+
 - Si la decisión de documentación es nueva o ambigua, considerar un ADR en `docs/adr/`.
 - Añadir entrada en la sidebar de `apps/docs/.vitepress/config.ts`.
 - Importar el componente en `apps/docs/.vitepress/theme/index.ts`.

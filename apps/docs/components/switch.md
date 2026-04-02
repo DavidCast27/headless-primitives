@@ -53,14 +53,26 @@ pnpm add @headless-primitives/switch
 }
 </style>
 
+<CodeSnippet>
+
+<Flavor only="css">
+
 ::: code-group
 
 ```html [index.html]
-<hp-label for="airplane-mode">Modo Avión</hp-label>
-<hp-switch id="airplane-mode" class="my-switch"></hp-switch>
+<div class="field-group">
+  <hp-label for="airplane-mode">Modo Avión</hp-label>
+  <hp-switch id="airplane-mode" class="my-switch"></hp-switch>
+</div>
 ```
 
 ```css [style.css]
+.field-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .my-switch {
   /* Contenedor */
   width: 40px;
@@ -68,6 +80,8 @@ pnpm add @headless-primitives/switch
   background: gray;
   border-radius: 999px;
   position: relative;
+  cursor: pointer;
+  display: inline-block;
 }
 
 .my-switch[checked] {
@@ -93,6 +107,32 @@ pnpm add @headless-primitives/switch
 ```
 
 :::
+
+</Flavor>
+
+<Flavor only="tailwind">
+
+::: code-group
+
+```html [index.html]
+<div class="flex items-center gap-2">
+  <hp-label for="airplane-mode">Modo Avión</hp-label>
+  <hp-switch
+    id="airplane-mode"
+    class="group relative h-5 w-10 cursor-pointer rounded-full bg-gray-400 transition-colors [&[checked]]:bg-green-600"
+  >
+    <span
+      class="absolute left-0.5 top-0.5 h-4 w-4 rounded-full bg-white transition-transform group-[&[checked]]:translate-x-5"
+    ></span>
+  </hp-switch>
+</div>
+```
+
+:::
+
+</Flavor>
+
+</CodeSnippet>
 
 ## Anatomía
 

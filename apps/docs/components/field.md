@@ -27,10 +27,14 @@ pnpm add @headless-primitives/field
   </div>
 </div>
 
+<CodeSnippet>
+
+<Flavor only="css">
+
 ::: code-group
 
 ```html [index.html]
-<hp-field>
+<hp-field class="field-container">
   <hp-field-label>Email</hp-field-label>
   <hp-field-description>No enviamos spam.</hp-field-description>
   <hp-field-control>
@@ -61,6 +65,32 @@ hp-field-error {
 ```
 
 :::
+
+</Flavor>
+
+<Flavor only="tailwind">
+
+::: code-group
+
+```html [index.html]
+<hp-field class="flex flex-col gap-1">
+  <hp-field-label class="font-bold">Email</hp-field-label>
+  <hp-field-description class="text-xs text-gray-500"> No enviamos spam. </hp-field-description>
+  <hp-field-control>
+    <input
+      type="email"
+      class="border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
+    />
+  </hp-field-control>
+  <hp-field-error class="text-sm text-red-500"> Email inválido. </hp-field-error>
+</hp-field>
+```
+
+:::
+
+</Flavor>
+
+</CodeSnippet>
 
 ## Anatomía
 
