@@ -39,15 +39,21 @@ El mayor valor de esta librería es que la accesibilidad venga resuelta de fábr
 ## 6. Documentación y Registro de Decisiones (ADR)
 
 - **Architecture Decision Records:** Cada vez que termines una tarea que implique una decisión de diseño profundo, arquitectura, o cambio tecnológico importante, **DEBES** documentarlo añadiendo un archivo en la carpeta `docs/adr/` usando el formato `[numero-secuencial]-[nombre-decision].md`.
-- **Documentación del Componente:** Cada componente nuevo **DEBE** tener su página en `apps/docs/components/[nombre].md` con: descripción, demo interactiva, tabla de API (atributos y eventos) y guía de estilos CSS.
+- **Documentación del Componente:** Cada componente nuevo **DEBE** tener su página en `apps/docs/components/[nombre].md` siguiendo el **Estándar Premium** (resumen en [ADR 0008](docs/adr/0008-docs-api-reference-by-custom-element.md)):
+  - **Identidad**: Badge "Nuevo" y guía de instalación clara.
+  - **Anatomía**: Snippet único en un bloque Markdown ` ```html ` con el árbol anidado de etiquetas `hp-*` (estilo Radix/Base UI), no listas en cuadros separados.
+  - **Code Tabs**: Separación de HTML y CSS usando `::: code-group`.
+  - **API Reference** (`## API Reference`): Una subsección `### \`hp-parte\`` por cada custom element del paquete (orden: raíz primero, luego hijos según la anatomía). En cada pieza, tablas **en el orden**: Atributos que el primitivo observa o documenta, Propiedades JavaScript públicas (getters/setters), Métodos públicos, Eventos personalizados (`hp-_`) y nativos relevantes, Estados (`data-_`) / notas ARIA que el código establece, Variables CSS en línea si aplica. La documentación **debe coincidir** con el código en `packages/vanilla/<nombre>/src/`(sin inventar atributos tipo React como`className`; si el código no lo implementa, no figura en la tabla).
 
 ## 7. Playground-Driven Development
 
 - **Obligatoriedad Visual:** Ningún primitivo puede darse por concluido sin haberse integrado al `apps/playground`.
-- Todo componente nuevo debe:
-  1. Registrarse como dependencia en `apps/playground/package.json` (`"workspace:*"`).
-  2. Importarse en `apps/playground/src/main.ts`.
-  3. Tener su propia "Card" de demostración en `apps/playground/index.html` con CSS agnóstico de prueba.
+- Todo componente nuevo debe seguir la **Arquitectura Modular (ADR 0007)**:
+  1. Registrarse como dependencia en `apps/playground/package.json`.
+  2. Crear un módulo de demo en `apps/playground/src/demos/[nombre].demo.ts`.
+  3. Crear su propio estilo en `apps/playground/src/demos/[nombre].css` e importarlo en la demo.
+  4. Registrar la demo en el objeto `ROUTES` de `apps/playground/src/main.ts`.
+  5. Añadir el botón de navegación correspondiente en `apps/playground/index.html`.
 
 ## 8. Calidad de Código
 

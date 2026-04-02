@@ -11,6 +11,7 @@ import "@headless-primitives/progress";
 import "@headless-primitives/label";
 import "@headless-primitives/avatar";
 import "@headless-primitives/field";
+import "./docs-demos.css";
 
 export default {
   extends: DefaultTheme,

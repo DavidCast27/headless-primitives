@@ -1,102 +1,110 @@
 # Separator
 
-Un componente que separa visualmente y semánticamente el contenido de una página. Sigue el patrón `role="separator"`.
+<span class="hp-badge">Nuevo</span>
 
-## Demo
+El componente `hp-separator` provee una división visual y semántica entre grupos de contenido, siguiendo el patrón de accesibilidad `role="separator"`.
 
-<div class="demo-card">
-  <p>Panel Superior</p>
-  <hp-separator></hp-separator>
-  <p>Panel Inferior</p>
-  
-  <div style="margin-top: 1.5rem; display: flex; align-items: center; gap: 10px;">
-    <span>Home</span>
-    <hp-separator orientation="vertical"></hp-separator>
-    <span>Blog</span>
-    <hp-separator orientation="vertical"></hp-separator>
-    <span>Contact</span>
+## Instalación
+
+```bash
+pnpm add @headless-primitives/separator
+```
+
+## Demostración
+
+<div class="hp-demo-card">
+  <div style="width: 100%; max-width: 300px;">
+    <p style="margin-bottom: 8px; font-weight: 500;">Opciones de cuenta</p>
+    <hp-separator class="demo-separator-h"></hp-separator>
+    <div style="display: flex; align-items: center; gap: 12px; margin-top: 12px; height: 20px;">
+      <span>Perfil</span>
+      <hp-separator orientation="vertical" class="demo-separator-v"></hp-separator>
+      <span>Ajustes</span>
+      <hp-separator orientation="vertical" class="demo-separator-v"></hp-separator>
+      <span>Salir</span>
+    </div>
   </div>
 </div>
 
 <style>
-.demo-card {
-  padding: 2rem;
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 8px;
-  margin: 1rem 0;
-  background-color: var(--vp-c-bg-soft);
-}
-
-hp-separator[orientation="horizontal"],
-hp-separator:not([orientation]) {
+.demo-separator-h {
   display: block;
   height: 1px;
-  background-color: var(--vp-c-divider);
-  margin: 1rem 0;
   width: 100%;
+  background: var(--vp-c-divider);
 }
-
-hp-separator[orientation="vertical"] {
+.demo-separator-v {
   display: inline-block;
   width: 1px;
-  height: 1.25em;
-  background-color: var(--vp-c-divider);
-  margin: 0 0.5rem;
-  vertical-align: middle;
+  height: 100%;
+  background: var(--vp-c-divider);
 }
 </style>
 
-## Uso
+::: code-group
 
-### HTML
+```html [index.html]
+<!-- Horizontal (default) -->
+<hp-separator class="my-sep"></hp-separator>
 
-```html
-<!-- Por defecto es horizontal -->
-<hp-separator></hp-separator>
-
-<!-- Orientación vertical -->
-<hp-separator orientation="vertical"></hp-separator>
+<!-- Vertical -->
+<div style="display: flex; height: 20px;">
+  <span>Uno</span>
+  <hp-separator orientation="vertical" class="my-sep-v"></hp-separator>
+  <span>Dos</span>
+</div>
 ```
 
-### CSS Recomendado
-
-Al ser **headless**, debes definir su apariencia visual. Aquí un ejemplo:
-
-```css
-hp-separator[orientation="horizontal"] {
+```css [style.css]
+.my-sep {
   display: block;
   height: 1px;
-  background-color: #e2e8f0;
-  margin: 1rem 0;
+  background: #eee;
+  margin: 10px 0;
 }
 
-hp-separator[orientation="vertical"] {
+.my-sep-v {
   display: inline-block;
   width: 1px;
-  height: 1.25em;
-  background-color: #e2e8f0;
-  margin: 0 0.5rem;
-  vertical-align: middle;
+  height: 100%;
+  background: #eee;
+  margin: 0 10px;
 }
 ```
 
-## API
+:::
 
-### Atributos
+## Anatomía
 
-| Atributo      | Tipo                         | Descripción                                                          |
-| :------------ | :--------------------------- | :------------------------------------------------------------------- |
-| `orientation` | `'horizontal' \| 'vertical'` | Establece la orientación del separador. Por defecto es `horizontal`. |
+Un único elemento: orientación horizontal por defecto y `aria-orientation` acorde al atributo `orientation`.
 
-### Propiedades JS
+```html
+<hp-separator />
+```
 
-| Propiedad     | Tipo     | Descripción                         |
-| :------------ | :------- | :---------------------------------- |
-| `orientation` | `string` | Obtiene o establece la orientación. |
+## API Reference
+
+### `hp-separator`
+
+#### Atributos
+
+| Atributo      | Tipo                           | Por defecto    | Descripción                                                                          |
+| :------------ | :----------------------------- | :------------- | :----------------------------------------------------------------------------------- |
+| `orientation` | `"horizontal"` \| `"vertical"` | `"horizontal"` | Orientación del separador; cualquier otro valor se trata como horizontal. Observado. |
+| `role`        | `string`                       | `"separator"`  | Si no se indica, se asigna `separator`.                                              |
+
+#### Propiedades
+
+| Propiedad     | Tipo                           | Descripción                                           |
+| :------------ | :----------------------------- | :---------------------------------------------------- |
+| `orientation` | `"horizontal"` \| `"vertical"` | Getter/setter alineado con el atributo `orientation`. |
+
+#### ARIA (gestionado por el primitivo)
+
+| Atributo           | Descripción                                        |
+| :----------------- | :------------------------------------------------- |
+| `aria-orientation` | `"horizontal"` u `"vertical"` según `orientation`. |
 
 ## Accesibilidad
 
-Este componente implementa el patrón **WAI-ARIA Separator**:
-
-- Se le asigna automáticamente `role="separator"`.
-- Sincroniza el atributo `aria-orientation` con el valor de `orientation`.
+`hp-separator` usa el rol **separator** y **aria-orientation** según el eje. Para separadores puramente decorativos, la guía WAI-ARIA suele recomendar no exponerlos como separador semántico; en ese caso el autor puede sobreescribir `role` en el markup o usar otro elemento, porque este primitivo **no** incluye un atributo `decorative` automático.

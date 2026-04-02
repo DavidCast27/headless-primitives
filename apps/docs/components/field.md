@@ -1,42 +1,79 @@
 # Field
 
-<span class="badge molecule">Molécula</span>
+<span class="hp-badge">Nuevo</span>
 
-Componente orquestador para coordinar la accesibilidad de los elementos de un formulario (etiquetas, descripciones y errores).
+El componente `hp-field` actúa como un orquestador que coordina automáticamente la accesibilidad entre etiquetas, descripciones, mensajes de error y controles de formulario.
 
-## Demo
+## Instalación
 
-<div class="demo-card" style="padding: 24px; border: 1px solid var(--vp-c-divider); border-radius: 8px; background: var(--vp-c-bg-soft); margin-bottom: 24px;">
-<hp-field>
-<div style="display: flex; flex-direction: column; gap: 8px; max-width: 320px; margin: 0 auto;">
-<hp-field-label style="font-weight: 600;">Nombre de Usuario</hp-field-label>
-<hp-field-description style="font-size: 0.85rem; color: var(--vp-c-text-2);">Este es el nombre que verán otros usuarios.</hp-field-description>
-<hp-field-control>
-<input type="text" placeholder="Ej: david_c" style="width: 100%; padding: 8px; border: 1px solid var(--vp-c-divider); border-radius: 4px; background: var(--vp-c-bg);">
-</hp-field-control>
-<hp-field-error style="font-size: 0.85rem; color: var(--vp-c-danger-1);">El nombre ya está en uso.</hp-field-error>
-</div>
-</hp-field>
-</div>
-
-## Uso
-
-Importa el componente en tu archivo principal:
-
-```javascript
-import "@headless-primitives/field";
+```bash
+pnpm add @headless-primitives/field
 ```
 
-Estructura básica en HTML:
+## Demostración
 
-```html
+<div class="hp-demo-card">
+  <div style="width: 100%; max-width: 320px;">
+    <hp-field>
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <hp-field-label style="font-weight: 600; font-size: 0.9rem;">Nombre de Usuario</hp-field-label>
+        <hp-field-description style="font-size: 0.8rem; opacity: 0.7;">Este es el nombre público en tu perfil.</hp-field-description>
+        <hp-field-control>
+          <input type="text" placeholder="Ej: david_c" style="width: 100%; padding: 8px; border: 1px solid var(--vp-c-divider); border-radius: 6px; background: var(--vp-c-bg);">
+        </hp-field-control>
+        <hp-field-error style="font-size: 0.8rem; color: #ff4d4d;">El nombre ya está en uso.</hp-field-error>
+      </div>
+    </hp-field>
+  </div>
+</div>
+
+::: code-group
+
+```html [index.html]
 <hp-field>
   <hp-field-label>Email</hp-field-label>
-  <hp-field-description>No enviaremos spam.</hp-field-description>
+  <hp-field-description>No enviamos spam.</hp-field-description>
   <hp-field-control>
     <input type="email" />
   </hp-field-control>
   <hp-field-error>Email inválido.</hp-field-error>
+</hp-field>
+```
+
+```css [style.css]
+/* hp-field no impone layout, usa flexbox o stack en contenedores */
+.field-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+hp-field-label {
+  font-weight: bold;
+}
+hp-field-description {
+  font-size: 12px;
+  color: gray;
+}
+hp-field-error {
+  color: red;
+}
+```
+
+:::
+
+## Anatomía
+
+Ensambla las piezas en este orden; el `hp-field` raíz genera el contexto de IDs y el control recibe `id` y `aria-describedby` automáticamente.
+
+```html
+<hp-field>
+  <hp-field-label>...</hp-field-label>
+  <hp-field-description>...</hp-field-description>
+  <hp-field-control>
+    <input type="text" />
+  </hp-field-control>
+  <hp-field-error>...</hp-field-error>
 </hp-field>
 ```
 
@@ -48,32 +85,62 @@ Estructura básica en HTML:
 2.  **Label**: El `hp-field-label` apunta automáticamente al ID del control mediante el atributo `for`.
 3.  **Descripciones**: El control recibe un atributo `aria-describedby` que incluye los IDs de la descripción y el mensaje de error.
 
-## API
+## API Reference
 
-### hp-field
+### `hp-field`
 
-Componente raíz (contenedor).
+Agrupa las partes del campo y expone un `baseId` estable para generar IDs hijos.
 
-- **Atributos**: Ninguno (genera ID interno).
-- **Roles**: `group` (por defecto).
+#### Atributos
 
-### hp-field-label
+| Atributo | Tipo     | Por defecto | Descripción                                                    |
+| :------- | :------- | :---------- | :------------------------------------------------------------- |
+| `role`   | `string` | `"group"`   | Si no está definido en `connectedCallback`, se asigna `group`. |
 
-Hereda la lógica de [Label](./label.md).
+#### Propiedades (solo lectura)
 
-- **Sincronización**: Se conecta automáticamente al control del mismo field.
+| Propiedad | Tipo     | Descripción                                                          |
+| :-------- | :------- | :------------------------------------------------------------------- |
+| `baseId`  | `string` | Prefijo único usado para IDs de label, control, descripción y error. |
 
-### hp-field-control
+### `hp-field-label`
 
-El "cerebro" de la vinculación. Detecta automáticamente:
+#### Atributos
 
-- `<input>`, `<select>`, `<textarea>`
-- Componentes con roles `checkbox`, `switch`, `combobox`, `progressbar`.
+| Atributo | Tipo     | Por defecto | Descripción                               |
+| :------- | :------- | :---------- | :---------------------------------------- |
+| `for`    | `string` | auto        | Si falta, se asigna a `{baseId}-control`. |
+| `id`     | `string` | auto        | Si falta, se asigna a `{baseId}-label`.   |
 
-### hp-field-description / hp-field-error
+### `hp-field-description`
 
-- **Sincronización**: Sus IDs se añaden al `aria-describedby` del control.
+#### Atributos
 
-## Estilos
+| Atributo | Tipo     | Por defecto | Descripción                                                                                |
+| :------- | :------- | :---------- | :----------------------------------------------------------------------------------------- |
+| `id`     | `string` | auto        | Si falta, se asigna a `{baseId}-description` (incluido en `aria-describedby` del control). |
 
-Al ser una molécula, `hp-field` no impone ningún layout (por defecto es `display: block`). El usuario es responsable de colocar los elementos (por ejemplo, usando Flexbox o Stack) dentro del contenedor.
+### `hp-field-error`
+
+#### Atributos
+
+| Atributo | Tipo     | Por defecto | Descripción                                                                          |
+| :------- | :------- | :---------- | :----------------------------------------------------------------------------------- |
+| `id`     | `string` | auto        | Si falta, se asigna a `{baseId}-error` (incluido en `aria-describedby` del control). |
+| `role`   | `string` | `"alert"`   | Si no está definido, se asigna `alert`.                                              |
+
+### `hp-field-control`
+
+Envoltorio del control real (`input`, `select`, etc.). Inyecta `id`, `aria-labelledby` y `aria-describedby` en el elemento encontrado.
+
+#### Atributos
+
+Ninguno observado por el primitivo.
+
+#### Comportamiento
+
+Busca el **primer** elemento que coincida con el selector interno (`input`, `select`, `textarea`, y ciertos roles: `checkbox`, `switch`, `combobox`, `progressbar`) y le asigna `id`, `aria-labelledby` (desde `hp-field-label`) y `aria-describedby` (descripción y error). Un `MutationObserver` en el control reaplica la vinculación cuando cambian los hijos.
+
+## Accesibilidad
+
+`hp-field` garantiza que todos los elementos de soporte de un formulario estén correctamente vinculados semánticamente sin intervención manual del desarrollador, cumpliendo con los estándares de **WAI-ARIA Labels and Descriptions**.

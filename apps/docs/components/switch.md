@@ -1,124 +1,147 @@
 # Switch
 
-El primitivo `hp-switch` permite a los usuarios alternar entre dos estados: encendido y apagado. A diferencia de un checkbox tradicional, un switch representa una acción inmediata de cambio de estado.
+<span class="hp-badge">Nuevo</span>
 
-## Demo
+El componente `hp-switch` provee un control interactivo que permite alternar entre dos estados (prendido/apagado) siguiendo el patrón de accesibilidad de un interruptor físico.
 
-<div class="demo-box">
-  <div class="control-group">
-    <label for="sw-demo">Activar notificaciones</label>
-    <hp-switch id="sw-demo" class="hp-switch"></hp-switch>
+## Instalación
+
+```bash
+pnpm add @headless-primitives/switch
+```
+
+## Demostración
+
+<div class="hp-demo-card">
+  <div style="display: flex; flex-direction: column; gap: 1rem; align-items: center;">
+    <hp-label for="sw-demo">Activar modo oscuro</hp-label>
+    <hp-switch id="sw-demo" class="demo-switch"></hp-switch>
   </div>
 </div>
 
 <style>
-.demo-box {
-  padding: 2rem;
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 8px;
-  margin: 1rem 0;
-  display: flex;
-  justify-content: center;
-}
-
-.control-group {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-/* Ejemplo de estilos visuales aplicados por el usuario */
-.hp-switch {
-  position: relative;
-  display: inline-block;
+.demo-switch {
   width: 44px;
   height: 24px;
-  background-color: var(--vp-c-bg-mute);
-  border-radius: 12px;
-  transition: background-color 0.2s;
+  background: var(--vp-c-divider);
+  border-radius: 999px;
   cursor: pointer;
-  border: 2px solid transparent;
+  position: relative;
+  transition: background 0.2s;
+  border: 1px solid transparent;
 }
-
-.hp-switch:focus-visible {
-  outline: 2px solid var(--vp-c-brand);
+.demo-switch[checked] {
+  background: var(--vp-c-brand-1);
+}
+.demo-switch::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  background: white;
+  border-radius: 50%;
+  transition: transform 0.2s;
+}
+.demo-switch[checked]::after {
+  transform: translateX(20px);
+}
+.demo-switch:focus-visible {
+  outline: 2px solid var(--vp-c-brand-1);
   outline-offset: 2px;
 }
+</style>
 
-.hp-switch::after {
-  content: '';
+::: code-group
+
+```html [index.html]
+<hp-label for="airplane-mode">Modo Avión</hp-label>
+<hp-switch id="airplane-mode" class="my-switch"></hp-switch>
+```
+
+```css [style.css]
+.my-switch {
+  /* Contenedor */
+  width: 40px;
+  height: 20px;
+  background: gray;
+  border-radius: 999px;
+  position: relative;
+}
+
+.my-switch[checked] {
+  background: green;
+}
+
+/* El círculo se puede estilizar con pseudo-elementos */
+.my-switch::after {
+  content: "";
   position: absolute;
   top: 2px;
   left: 2px;
   width: 16px;
   height: 16px;
-  background-color: white;
+  background: white;
   border-radius: 50%;
   transition: transform 0.2s;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 }
 
-.hp-switch[aria-checked="true"] {
-  background-color: var(--vp-c-brand);
-}
-
-.hp-switch[aria-checked="true"]::after {
+.my-switch[checked]::after {
   transform: translateX(20px);
 }
+```
 
-.hp-switch[aria-disabled="true"] {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-</style>
+:::
 
-## Uso
+## Anatomía
 
-### HTML nativo
+El estado `checked` y la interacción (ratón y teclado) viven en el elemento raíz.
 
 ```html
-<hp-switch checked></hp-switch> <hp-switch disabled></hp-switch>
+<hp-switch> ... </hp-switch>
 ```
 
-### JavaScript
+## API Reference
 
-```javascript
-import "@headless-primitives/switch";
+### `hp-switch`
 
-const sw = document.querySelector("hp-switch");
-sw.addEventListener("hp-change", (e) => {
-  console.log("Nuevo estado:", e.detail.checked);
-});
-```
+Rol `switch`, `aria-checked` sincronizado con `checked`, foco por teclado y activación con `Enter` / `Espacio`.
 
-## API
+#### Atributos
 
-### Atributos
+| Atributo   | Tipo                  | Por defecto | Descripción                                                   |
+| :--------- | :-------------------- | :---------- | :------------------------------------------------------------ |
+| `checked`  | _boolean (presencia)_ | ausente     | Estado activado. Observado.                                   |
+| `disabled` | _boolean (presencia)_ | ausente     | Quita `tabindex`, añade `aria-disabled`. Observado.           |
+| `required` | _boolean (presencia)_ | ausente     | Añade `aria-required="true"` cuando está presente. Observado. |
+| `role`     | `string`              | `"switch"`  | Si no se indica, se asigna `switch`.                          |
+| `tabindex` | `string`              | `"0"`       | Con `disabled`, se elimina.                                   |
 
-| Atributo   | Tipo      | Descripción                                   |
-| :--------- | :-------- | :-------------------------------------------- |
-| `checked`  | `boolean` | Indica si el switch está activado.            |
-| `disabled` | `boolean` | Deshabilita la interacción con el componente. |
-| `required` | `boolean` | Indica que el campo es obligatorio.           |
+#### Propiedades
 
-### Propiedades JS
+| Propiedad  | Tipo      | Descripción                                            |
+| :--------- | :-------- | :----------------------------------------------------- |
+| `checked`  | `boolean` | Getter/setter sincronizado con el atributo `checked`.  |
+| `disabled` | `boolean` | Getter/setter sincronizado con el atributo `disabled`. |
 
-| Propiedad  | Tipo      | Descripción                                  |
-| :--------- | :-------- | :------------------------------------------- |
-| `checked`  | `boolean` | Obtiene o establece el estado activado.      |
-| `disabled` | `boolean` | Obtiene o establece el estado deshabilitado. |
+#### Métodos
 
-### Eventos
+| Método     | Descripción                                                  |
+| :--------- | :----------------------------------------------------------- |
+| `toggle()` | Alterna `checked` si no está `disabled` y emite `hp-change`. |
 
-| Evento      | Detalle                | Descripción                                    |
-| :---------- | :--------------------- | :--------------------------------------------- |
-| `hp-change` | `{ checked: boolean }` | Se dispara cuando el estado del switch cambia. |
+#### Eventos
+
+| Evento      | Detalle                | Descripción                                           |
+| :---------- | :--------------------- | :---------------------------------------------------- |
+| `hp-change` | `{ checked: boolean }` | Tras `toggle()` por clic o teclado (`bubbles: true`). |
 
 ## Accesibilidad
 
-Este componente implementa el patrón [WAI-ARIA Switch](https://www.w3.org/WAI/ARIA/apg/patterns/switch/):
+`hp-switch` implementa el patrón **WAI-ARIA Switch**:
 
-- Soporta `role="switch"`.
-- Gestiona automáticamente `aria-checked`, `aria-disabled` y `aria-required`.
-- Soporta navegación por teclado con `tabindex`.
-- Soporta activación mediante las teclas `Espacio` y `Enter`.
+- Maneja automáticamente el rol `switch`.
+- Sincroniza `aria-checked` basándose en el estado interno.
+- Soporta las teclas `Espacio` y `Enter` para alternar el valor.
+- Manejo de foco consistente.

@@ -1,100 +1,169 @@
 # Avatar
 
-Una representación visual de un usuario o entidad con soporte para carga progresiva y estados de error.
+<span class="hp-badge">Nuevo</span>
 
-## Demo
+El componente `hp-avatar` es una representación visual de un usuario o entidad. Gestiona automáticamente la carga de imágenes, errores de red y estados de carga mediante fallbacks inteligentes.
 
-<div class="demo-card" style="padding: 24px; border: 1px solid var(--vp-c-divider); border-radius: 8px; background: var(--vp-c-bg-soft); margin-bottom: 24px;">
-<div style="display: flex; align-items: center; gap: 24px; flex-wrap: wrap; justify-content: center;">
-<div style="text-align: center;">
-<hp-avatar class="docs-avatar">
-<hp-avatar-image src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&h=100&fit=crop" alt="User Image"></hp-avatar-image>
-<hp-avatar-fallback class="docs-fallback">JD</hp-avatar-fallback>
-</hp-avatar>
-<p style="font-size: 0.8rem; margin-top: 8px; color: var(--vp-c-text-2);">Éxito</p>
-</div>
-<div style="text-align: center;">
-<hp-avatar class="docs-avatar">
-<hp-avatar-image src="broken-link.jpg" alt="Broken Image"></hp-avatar-image>
-<hp-avatar-fallback class="docs-fallback">ER</hp-avatar-fallback>
-</hp-avatar>
-<p style="font-size: 0.8rem; margin-top: 8px; color: var(--vp-c-text-2);">Error</p>
-</div>
-<div style="text-align: center;">
-<hp-avatar class="docs-avatar" delay="2000">
-<hp-avatar-image src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop" alt="Delayed Image"></hp-avatar-image>
-<hp-avatar-fallback class="docs-fallback">DY</hp-avatar-fallback>
-</hp-avatar>
-<p style="font-size: 0.8rem; margin-top: 8px; color: var(--vp-c-text-2);">Con Delay (2s)</p>
-</div>
-</div>
+## Instalación
+
+```bash
+pnpm add @headless-primitives/avatar
+```
+
+## Demostración
+
+<div class="hp-demo-card">
+  <div style="display: flex; gap: 2rem; align-items: center; flex-wrap: wrap; justify-content: center;">
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+      <hp-avatar class="demo-avatar">
+        <hp-avatar-image src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=128&h=128&fit=crop" alt="User Image"></hp-avatar-image>
+        <hp-avatar-fallback class="demo-fallback">JD</hp-avatar-fallback>
+      </hp-avatar>
+      <span style="font-size: 11px; opacity: 0.7;">Éxito</span>
+    </div>
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+      <hp-avatar class="demo-avatar">
+        <hp-avatar-image src="invalid.jpg" alt="Broken Image"></hp-avatar-image>
+        <hp-avatar-fallback class="demo-fallback">ER</hp-avatar-fallback>
+      </hp-avatar>
+      <span style="font-size: 11px; opacity: 0.7;">Error</span>
+    </div>
+  </div>
 </div>
 
 <style>
-.docs-avatar {
+.demo-avatar {
   display: inline-flex;
-  align-items: center;
-  justify-content: center;
   width: 64px;
   height: 64px;
   border-radius: 50%;
   overflow: hidden;
-  background-color: var(--vp-c-bg-mute);
+  background: var(--vp-c-bg-mute);
   border: 2px solid var(--vp-c-divider);
 }
-
-.docs-avatar hp-avatar-image {
+.demo-avatar hp-avatar-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   display: none;
 }
-
-.docs-avatar[data-state="loaded"] hp-avatar-image {
+.demo-avatar[data-state="loaded"] hp-avatar-image {
   display: block;
 }
-
-.docs-fallback {
+.demo-fallback {
   width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--vp-c-brand);
+  background: var(--vp-c-brand-1);
   color: white;
-  font-weight: bold;
+  font-weight: 600;
 }
-
-.docs-avatar[data-state="loaded"] .docs-fallback {
+.demo-avatar[data-state="loaded"] .demo-fallback {
   display: none;
 }
 </style>
 
-## Uso
+::: code-group
 
-### HTML
-
-```html
-<hp-avatar delay="600">
-  <hp-avatar-image src="user.jpg" alt="Nombre de Usuario" />
-  <hp-avatar-fallback>JD</hp-avatar-fallback>
+```html [index.html]
+<hp-avatar delay="600" class="my-avatar">
+  <hp-avatar-image src="user.jpg" alt="Avatar" />
+  <hp-avatar-fallback class="my-fallback"> JD </hp-avatar-fallback>
 </hp-avatar>
 ```
 
-## API
+```css [style.css]
+.my-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  overflow: hidden;
+}
 
-### hp-avatar (Root)
+/* Ocultar imagen hasta que cargue */
+.my-avatar hp-avatar-image {
+  display: none;
+}
 
-| Atributo | Tipo     | Descripción                                                                                                     |
-| :------- | :------- | :-------------------------------------------------------------------------------------------------------------- |
-| `delay`  | `number` | Tiempo en ms para esperar antes de mostrar el fallback durante la carga. Evita parpadeos en conexiones rápidas. |
+.my-avatar[data-state="loaded"] hp-avatar-image {
+  display: block;
+}
 
-### hp-avatar-image
+/* Ocultar fallback cuando cargue la imagen */
+.my-avatar[data-state="loaded"] .my-fallback {
+  display: none;
+}
+```
 
-| Atributo | Tipo     | Descripción                                       |
-| :------- | :------- | :------------------------------------------------ |
-| `src`    | `string` | La URL de la imagen a cargar.                     |
-| `alt`    | `string` | Texto descriptivo para la imagen (accesibilidad). |
+:::
+
+## Anatomía
+
+El raíz orquesta los estados y aporta `role="img"`. La imagen y el fallback son sub-etiquetas dentro del mismo árbol.
+
+```html
+<hp-avatar>
+  <!-- Imagen que se intenta cargar -->
+  <hp-avatar-image src="..." alt=""></hp-avatar-image>
+  <!-- Visible en carga o error (según delay / estado) -->
+  <hp-avatar-fallback>AB</hp-avatar-fallback>
+</hp-avatar>
+```
+
+## API Reference
+
+### `hp-avatar`
+
+Contenedor raíz: aplica `role="img"`, coordina imagen y fallback, refleja el estado de carga y controla la opacidad del fallback vía CSS.
+
+#### Atributos
+
+| Atributo | Tipo     | Por defecto | Descripción                                                                                                              |
+| :------- | :------- | :---------- | :----------------------------------------------------------------------------------------------------------------------- |
+| `delay`  | `number` | `0`         | Retraso en ms antes de mostrar el fallback (evita parpadeos). Usa la variable `--hp-avatar-fallback-opacity` en el host. |
+| `role`   | `string` | `"img"`     | Si no se define, se asigna `img`.                                                                                        |
+
+#### Estados (`data-*`)
+
+| Atributo     | Valores                            | Descripción                                                                                   |
+| :----------- | :--------------------------------- | :-------------------------------------------------------------------------------------------- |
+| `data-state` | `"loading" \| "loaded" \| "error"` | Estado actual de la carga de la imagen (lo actualiza el raíz al notificar `hp-avatar-image`). |
+
+#### Variables CSS (en el host)
+
+| Variable                       | Descripción                                                                   |
+| :----------------------------- | :---------------------------------------------------------------------------- |
+| `--hp-avatar-fallback-opacity` | Opacidad del fallback (`0`–`1`); el raíz la ajusta según `delay` y el estado. |
+
+#### Eventos
+
+| Evento            | Detalle                                       | Descripción                                            |
+| :---------------- | :-------------------------------------------- | :----------------------------------------------------- |
+| `hp-state-change` | `{ state: "loading" \| "loaded" \| "error" }` | Se emite cuando cambia `data-state` (`bubbles: true`). |
+
+### `hp-avatar-image`
+
+Inserta un `<img>` interno y notifica al ancestro `hp-avatar` cuando la carga termina o falla.
+
+#### Atributos
+
+| Atributo | Tipo     | Por defecto | Descripción                                                      |
+| :------- | :------- | :---------- | :--------------------------------------------------------------- |
+| `src`    | `string` | `""`        | URL de la imagen; observado y sincronizado con el `img` interno. |
+| `alt`    | `string` | `""`        | Texto alternativo del `img` interno.                             |
+
+### `hp-avatar-fallback`
+
+Contenido mostrado mientras carga o si la imagen falla; suele enlazarse visualmente a `--hp-avatar-fallback-opacity`.
+
+#### Atributos
+
+Ninguno observado por el primitivo. El contenido es el light DOM del elemento (texto o hijos).
 
 ## Accesibilidad
 
-- **Semántica**: El contenedor raíz tiene `role="img"` por defecto.
-- **Alt Text**: Se debe proporcionar un `alt` significativo en el `hp-avatar-image`.
-- **Estados**: El componente gestiona automáticamente la visibilidad del fallback basándose en el éxito o error de carga de la imagen.
+- **Semántica**: El componente raíz actúa como una imagen consolidada (`role="img"`).
+- **Fallback**: Asegura que siempre haya una representación visual válida del usuario.
+- **Texto Alternativo**: Traspasa la importancia semántica al atributo `alt` de la imagen interna.

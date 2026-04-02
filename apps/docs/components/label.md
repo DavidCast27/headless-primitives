@@ -1,86 +1,115 @@
 # Label
 
-Una etiqueta accesible asociada a un control de formulario. Sigue los patrones de accesibilidad para vinculación de controles.
+<span class="hp-badge">Nuevo</span>
 
-## Demo
+El componente `hp-label` permite asociar etiquetas de texto con elementos de formulario de manera accesible, superando las limitaciones nativas de HTML al trabajar con Custom Elements.
 
-<div class="demo-card" style="padding: 24px; border: 1px solid var(--vp-c-divider); border-radius: 8px; background: var(--vp-c-bg-soft); margin-bottom: 24px;">
-<div style="display: flex; flex-direction: column; gap: 24px;">
-<div style="display: flex; align-items: center; gap: 12px;">
-<hp-label for="switch-docs" class="docs-label" style="cursor: pointer; font-weight: 500;">Activar modo oscuro</hp-label>
-<hp-switch id="switch-docs" class="docs-switch"></hp-switch>
-</div>
-<div style="display: flex; flex-direction: column; gap: 8px;">
-<hp-label for="input-docs" class="docs-label" style="cursor: pointer; font-weight: 500;">Nombre de usuario</hp-label>
-<input id="input-docs" type="text" placeholder="Haz click en el label..." style="padding: 8px; border-radius: 4px; border: 1px solid var(--vp-c-divider); background: var(--vp-c-bg); color: var(--vp-c-text-1); width: 100%; max-width: 300px;" />
-</div>
-</div>
-<p style="margin-top: 16px; font-size: 0.85rem; color: var(--vp-c-text-2); border-top: 1px solid var(--vp-c-divider); padding-top: 12px;">
-Pruébalo: Haz click en los textos para enfocar los controles.
-</p>
+## Instalación
+
+```bash
+pnpm add @headless-primitives/label
+```
+
+## Demostración
+
+<div class="hp-demo-card">
+  <div style="display: flex; flex-direction: column; gap: 1.5rem; width: 100%; max-width: 300px;">
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+      <hp-label for="input-demo" class="demo-label">Nombre de usuario</hp-label>
+      <input id="input-demo" type="text" placeholder="Escribe algo..." />
+    </div>
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+      <hp-label for="switch-label-demo" class="demo-label">Notificaciones</hp-label>
+      <hp-switch id="switch-label-demo" class="demo-switch"></hp-switch>
+    </div>
+  </div>
 </div>
 
 <style>
-.docs-switch {
-  position: relative;
-  display: inline-block;
+.demo-label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+.demo-switch {
   width: 40px;
   height: 20px;
-  background-color: var(--vp-c-bg-mute);
-  border-radius: 10px;
+  background: var(--vp-c-divider);
+  border-radius: 999px;
   cursor: pointer;
-  transition: background-color 0.2s;
+  position: relative;
 }
-.docs-switch[aria-checked="true"] {
-  background-color: var(--vp-c-brand);
-}
-.docs-switch::after {
-  content: '';
+.demo-switch[checked] { background: var(--vp-c-brand-1); }
+.demo-switch::after {
+  content: "";
   position: absolute;
   top: 2px;
   left: 2px;
   width: 16px;
   height: 16px;
-  background-color: white;
+  background: white;
   border-radius: 50%;
   transition: transform 0.2s;
 }
-.docs-switch[aria-checked="true"]::after {
-  transform: translateX(20px);
-}
+.demo-switch[checked]::after { transform: translateX(20px); }
 </style>
 
-## Uso
+::: code-group
 
-### HTML
-
-```html
-<hp-label for="mi-input">Nombre de usuario</hp-label>
-<input id="mi-input" type="text" />
+```html [index.html]
+<hp-label for="first-name">Nombre</hp-label>
+<input id="first-name" type="text" />
 
 <!-- Con otros primitivos -->
-<hp-label for="btn-id">Aceptar términos</hp-label>
-<hp-switch id="btn-id"></hp-switch>
+<hp-label for="toggle-id">Aceptar términos</hp-label>
+<hp-switch id="toggle-id"></hp-switch>
 ```
 
-## API
+```css [style.css]
+hp-label {
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
 
-### Atributos
+hp-label:hover {
+  color: var(--vp-c-brand-1);
+}
+```
 
-| Atributo | Tipo     | Descripción                                                                                           |
-| :------- | :------- | :---------------------------------------------------------------------------------------------------- |
-| `for`    | `string` | El ID del elemento que esta etiqueta describe. Al hacer click, el foco se trasladará a este elemento. |
+:::
 
-### Propiedades JS
+## Anatomía
 
-| Propiedad | Tipo     | Descripción                            |
-| :-------- | :------- | :------------------------------------- |
-| `htmlFor` | `string` | Obtiene o establece el atributo `for`. |
+Un único custom element envuelve el texto y gestiona la vinculación con el control referenciado por `for`.
+
+```html
+<hp-label for="mi-control"> Etiqueta </hp-label>
+```
+
+## API Reference
+
+### `hp-label`
+
+Asocia el texto al control con ID `for`: en click enfoca y, si aplica, dispara `click` en el destino. Si el control carece de `aria-labelledby`, lo sincroniza con el `id` de esta etiqueta.
+
+#### Atributos
+
+| Atributo | Tipo     | Por defecto | Descripción                                                                                                        |
+| :------- | :------- | :---------- | :----------------------------------------------------------------------------------------------------------------- |
+| `for`    | `string` | —           | ID del elemento objetivo en el documento. Observado.                                                               |
+| `id`     | `string` | auto        | Si falta y hay `for` válido, se genera un id estable (`hp-label-…`) para `aria-labelledby` del destino. Observado. |
+
+#### Propiedades
+
+| Propiedad | Tipo             | Descripción                            |
+| :-------- | :--------------- | :------------------------------------- |
+| `htmlFor` | `string \| null` | Refleja / establece el atributo `for`. |
 
 ## Accesibilidad
 
-Este componente soluciona una limitación de los Custom Elements: el tag `<label>` nativo no puede enfocar elementos que no sean "labelable" por defecto en el navegador.
+`hp-label` soluciona una limitación crítica del navegador: la etiqueta `<label>` nativa no puede transferir el foco a elementos que no sean "labelables" por defecto (como los Custom Elements).
 
-- **Foco Manual**: Implementa la lógica de traslación de foco al elemento destino.
-- **Vinculación ARIA**: Si el elemento destino no tiene un `aria-labelledby`, el componente lo asigna automáticamente apuntando a su propio ID.
-- **Selección**: Evita la selección accidental de texto al hacer doble click, imitando el comportamiento de los labels nativos.
+- **Click to Focus**: Traslada manualmente el foco al elemento referenciado por `for`.
+- **Aria-Labelledby**: Si el destino no tiene un `aria-labelledby`, el componente lo vincula automáticamente.
+- **No Selection**: Evita la selección accidental de texto al hacer doble click, igual que un label nativo.

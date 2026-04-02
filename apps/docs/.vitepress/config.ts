@@ -58,11 +58,8 @@ export default defineConfig({
           { text: "Progress", link: "/components/progress" },
           { text: "Label", link: "/components/label" },
           { text: "Avatar", link: "/components/avatar" },
+          { text: "Field", link: "/components/field" },
         ],
-      },
-      {
-        text: "Tier 2 — Moléculas",
-        items: [{ text: "Field", link: "/components/field" }],
       },
     ],
 

@@ -8,289 +8,54 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./src/style.css" />
+    <!-- Prism Theme for Code Preview -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+    />
   </head>
-  <body>
-    <div id="app">
-      <header class="header">
-        <h1>Headless Primitives <span class="badge">Playground</span></h1>
-        <p>Entorno visual de pruebas desvinculado (Vanilla + Vite)</p>
-      </header>
+  <body class="hp-dashboard">
+    <div id="app" class="dashboard-root">
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <img src="/logo.png" alt="Logo" class="logo" />
+          <h1>Headless</h1>
+        </div>
 
-      <main class="gallery">
-        <!-- Tarjeta de Demostración del Botón -->
-        <section class="card">
-          <div class="card-header">
-            <h2>Button primitive</h2>
-            <span class="status-badge">Probado <span class="dot"></span></span>
+        <nav class="sidebar-nav">
+          <span class="nav-label">Componentes</span>
+          <ul id="sidebar-list">
+            <!-- Cargado dinámicamente -->
+            <li><button class="nav-item active" data-comp="button">Button</button></li>
+            <li><button class="nav-item" data-comp="switch">Switch</button></li>
+            <li><button class="nav-item" data-comp="separator">Separator</button></li>
+            <li><button class="nav-item" data-comp="progress">Progress</button></li>
+            <li><button class="nav-item" data-comp="label">Label</button></li>
+            <li><button class="nav-item" data-comp="avatar">Avatar</button></li>
+            <li><button class="nav-item" data-comp="field">Field</button></li>
+          </ul>
+        </nav>
+
+        <footer class="sidebar-footer">
+          <a href="https://github.com/DavidCast27/headless-primitives" target="_blank">GitHub</a>
+          <span class="version">v0.1.0</span>
+        </footer>
+      </aside>
+
+      <main class="main-content">
+        <header class="top-bar">
+          <div id="comp-header">
+            <!-- Título y Chip dinámicos -->
           </div>
+        </header>
 
-          <div class="demo-area">
-            <hp-button class="btn btn-primary" id="btn-comun">Botón Básico</hp-button>
-            <hp-button class="btn btn-secondary" disabled>Deshabilitado</hp-button>
-            <hp-button class="btn btn-toggle" aria-pressed="false" id="btn-toggle">
-              Botón Toggle
-            </hp-button>
-          </div>
-
-          <div class="logger">
-            <strong>Log de Interacciones:</strong>
-            <ul id="log-list"></ul>
-          </div>
-        </section>
-
-        <!-- Card del Progress -->
-        <section class="card">
-          <div class="card-header">
-            <h2>Progress primitive</h2>
-            <div class="status-badge">
-              <span class="dot green"></span>
-              Nuevo
-            </div>
-          </div>
-
-          <p class="tagline">Indicador de progreso accesible (role="progressbar")</p>
-
-          <div class="demo-area" style="flex-direction: column; gap: 2rem">
-            <div style="width: 100%">
-              <p style="font-size: 0.9rem; margin-bottom: 1rem">Determinado (Simulación)</p>
-              <hp-progress id="prg-test" class="progress" value="0"></hp-progress>
-
-              <div class="progress-control">
-                <hp-button id="btn-prg-start" class="btn btn-primary">Iniciar Carga</hp-button>
-                <hp-button id="btn-prg-reset" class="btn btn-secondary">Reset</hp-button>
-              </div>
-            </div>
-
-            <div style="width: 100%">
-              <p style="font-size: 0.9rem; margin-bottom: 1rem">Indeterminado (Cargando...)</p>
-              <hp-progress class="progress"></hp-progress>
-            </div>
-          </div>
-        </section>
-
-        <!-- Card del Switch -->
-        <section class="card">
-          <div class="card-header">
-            <h2>Switch primitive</h2>
-            <div class="status-badge">
-              <span class="dot green"></span>
-              Nuevo
-            </div>
-          </div>
-
-          <p class="tagline">Implementación de role="switch" accesible</p>
-
-          <div class="demo-area">
-            <div class="control-group">
-              <hp-label for="sw-toggle">Interruptor Principal</hp-label>
-              <hp-switch id="sw-toggle" class="switch"></hp-switch>
-            </div>
-
-            <div class="control-group">
-              <hp-label for="sw-on">Estado On (Inicial)</hp-label>
-              <hp-switch id="sw-on" class="switch" checked></hp-switch>
-            </div>
-
-            <div class="control-group">
-              <hp-label for="sw-disabled">Deshabilitado</hp-label>
-              <hp-switch id="sw-disabled" class="switch" disabled></hp-switch>
-            </div>
-          </div>
-
-          <div class="card-footer">Usa Space o Enter para alternar.</div>
-        </section>
-
-        <!-- Label Section -->
-        <section class="card" id="label-demo">
-          <div class="card-header">
-            <h2 class="card-title">Label primitive</h2>
-            <span class="status-badge">Probado</span>
-          </div>
-          <p class="tagline">Etiqueta accesible con gestión de foco manual</p>
-
-          <div class="demo-area">
-            <div class="control-group">
-              <hp-label for="lbl-input">Nombre de Usuario</hp-label>
-              <input
-                type="text"
-                id="lbl-input"
-                placeholder="Escribe aquí..."
-                style="
-                  padding: 8px;
-                  border-radius: 4px;
-                  border: 1px solid var(--border-color);
-                  background: var(--bg-secondary);
-                  color: var(--text-primary);
-                "
-              />
-            </div>
-
-            <div class="control-group">
-              <hp-label for="lbl-switch">Activar Notificaciones</hp-label>
-              <hp-switch id="lbl-switch" class="switch"></hp-switch>
-            </div>
-          </div>
-
-          <div class="card-footer">Haz click en el texto para enfocar el control asociado.</div>
-        </section>
-
-        <!-- Field Section (Molecule) -->
-        <section class="card">
-          <div class="card-header">
-            <h2>Field molecule</h2>
-            <div class="status-badge" style="background: var(--primary-color); color: white;">
-              Molécula
-            </div>
-          </div>
-          <p class="tagline">Orquestación automática de accesibilidad en formularios</p>
-
-          <div class="demo-area" style="flex-direction: column; gap: 2rem;">
-            <!-- Example with Native Input -->
-            <hp-field>
-              <div class="control-group" style="align-items: flex-start;">
-                <hp-field-label style="font-weight: 600; margin-bottom: 4px;">Correo Electrónico</hp-field-label>
-                <hp-field-description style="font-size: 12px; color: var(--text-secondary); margin-bottom: 8px;">
-                  Nunca compartiremos tu correo con terceros.
-                </hp-field-description>
-                <hp-field-control style="width: 100%;">
-                  <input type="email" placeholder="ejemplo@correo.com" style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid var(--border-color); background: var(--bg-secondary); color: var(--text-primary);">
-                </hp-field-control>
-                <hp-field-error id="email-error" style="font-size: 12px; color: #ff4d4d; margin-top: 4px; display: none;">
-                  Introduce un correo válido.
-                </hp-field-error>
-              </div>
-            </hp-field>
-
-            <!-- Example with hp-switch -->
-            <hp-field>
-              <div class="control-group" style="flex-direction: row; align-items: center; justify-content: space-between;">
-                <div style="display: flex; flex-direction: column; gap: 2px;">
-                  <hp-field-label style="font-weight: 600;">Notificaciones Push</hp-field-label>
-                  <hp-field-description style="font-size: 12px; color: var(--text-secondary);">
-                    Recibe alertas en tiempo real en tu navegador.
-                  </hp-field-description>
-                </div>
-                <hp-field-control>
-                  <hp-switch class="switch"></hp-switch>
-                </hp-field-control>
-              </div>
-            </hp-field>
-          </div>
-
-          <div class="card-footer">
-            Los IDs y atributos ARIA se vinculan automáticamente por proximidad.
-          </div>
-        </section>
-
-        <!-- Avatar Section -->
-        <section class="card" id="avatar-demo">
-          <div class="card-header">
-            <h2 class="card-title">Avatar primitive</h2>
-            <span class="status-badge">Nuevo</span>
-          </div>
-          <p class="tagline">Representación de usuario con fallback inteligente</p>
-
-          <div
-            class="demo-area"
-            style="display: flex; gap: 20px; align-items: center; flex-wrap: wrap"
-          >
-            <!-- Avatar Success -->
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 8px">
-              <hp-avatar id="avatar-success">
-                <hp-avatar-image
-                  src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&h=100&fit=crop"
-                  alt="User 1"
-                ></hp-avatar-image>
-                <hp-avatar-fallback>JD</hp-avatar-fallback>
-              </hp-avatar>
-              <span style="font-size: 12px; color: var(--text-secondary)">Éxito</span>
-            </div>
-
-            <!-- Avatar Error -->
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 8px">
-              <hp-avatar id="avatar-error">
-                <hp-avatar-image src="invalid-image.jpg" alt="User 2"></hp-avatar-image>
-                <hp-avatar-fallback>ER</hp-avatar-fallback>
-              </hp-avatar>
-              <span style="font-size: 12px; color: var(--text-secondary)">Error</span>
-            </div>
-
-            <!-- Avatar Sizes -->
-            <hp-avatar class="avatar-lg">
-              <hp-avatar-fallback>LG</hp-avatar-fallback>
-            </hp-avatar>
-            <hp-avatar class="avatar-sm">
-              <hp-avatar-fallback>SM</hp-avatar-fallback>
-            </hp-avatar>
-
-            <!-- Dynamic Load -->
-            <div
-              id="dynamic-demo"
-              style="
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 8px;
-                margin-left: auto;
-              "
-            >
-              <div id="dynamic-avatar">
-                <hp-avatar delay="1000">
-                  <hp-avatar-image
-                    src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop"
-                    alt="Dynamic User"
-                  ></hp-avatar-image>
-                  <hp-avatar-fallback>DY</hp-avatar-fallback>
-                </hp-avatar>
-              </div>
-              <button id="reload-avatar" class="button" style="padding: 4px 8px; font-size: 12px">
-                Recargar con Delay
-              </button>
-            </div>
-          </div>
-
-          <div class="card-footer">
-            Soporta estados de carga, error y fallback con delay opcional.
-          </div>
-        </section>
-
-        <!-- Separator Section -->
-        <section class="card">
-          <div class="card-header">
-            <h2>Separator primitive</h2>
-            <div class="status-badge">
-              <span class="dot green"></span>
-              Nuevo
-            </div>
-          </div>
-
-          <p class="tagline">División semántica entre elementos (role="separator")</p>
-
-          <div class="demo-area">
-            <div style="width: 100%">
-              <p style="font-size: 0.9rem; margin-bottom: 0.5rem">Horizontal (Por defecto)</p>
-              <hp-separator></hp-separator>
-              <p style="font-size: 0.8rem; color: var(--text-secondary)">
-                Contenido debajo del separador.
-              </p>
-            </div>
-
-            <div style="width: 100%; margin-top: 2rem">
-              <p style="font-size: 0.9rem; margin-bottom: 1rem">Vertical</p>
-              <div class="separator-demo-box">
-                <span>Inicio</span>
-                <hp-separator orientation="vertical"></hp-separator>
-                <span>Perfil</span>
-                <hp-separator orientation="vertical"></hp-separator>
-                <span>Ajustes</span>
-              </div>
-            </div>
-          </div>
-        </section>
+        <div id="playground-viewport" class="viewport">
+          <!-- Área de la Demo -->
+        </div>
       </main>
     </div>
     <script type="module" src="./src/main.ts"></script>

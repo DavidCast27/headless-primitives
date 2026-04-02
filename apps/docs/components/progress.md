@@ -1,107 +1,139 @@
 # Progress
 
-Un indicador visual y semántico del estado de una tarea o proceso. Sigue el patrón `role="progressbar"`.
+<span class="hp-badge">Nuevo</span>
 
-## Demo
+El componente `hp-progress` informa al usuario sobre el estado de avance de un proceso largo, como una descarga o una carga de datos, siguiendo el estándar de accesibilidad `progressbar`.
 
-<div class="demo-card">
-  <p style="margin-bottom: 10px; font-size: 0.9rem;">Cargando archivos (75%)</p>
-  <hp-progress class="docs-progress" value="75"></hp-progress>
-  
-  <p style="margin-top: 20px; margin-bottom: 10px; font-size: 0.9rem;">Estado indeterminado</p>
-  <hp-progress class="docs-progress"></hp-progress>
+## Instalación
+
+```bash
+pnpm add @headless-primitives/progress
+```
+
+## Demostración
+
+<div class="hp-demo-card">
+  <div style="width: 100%; max-width: 300px; display: flex; flex-direction: column; gap: 1.5rem;">
+    <div>
+      <p style="font-size: 0.85rem; margin-bottom: 8px;">Determinado (75%)</p>
+      <hp-progress value="75" class="demo-progress"></hp-progress>
+    </div>
+    <div>
+      <p style="font-size: 0.85rem; margin-bottom: 8px;">Indeterminado</p>
+      <hp-progress class="demo-progress"></hp-progress>
+    </div>
+  </div>
 </div>
 
 <style>
-.docs-progress {
+.demo-progress {
   display: block;
-  width: 100%;
   height: 8px;
-  background-color: var(--vp-c-bg-soft);
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 4px;
+  background: var(--vp-c-divider);
+  border-radius: 999px;
   overflow: hidden;
   position: relative;
 }
-
-.docs-progress::after {
-  content: '';
+.demo-progress::after {
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   height: 100%;
-  background-color: var(--vp-c-brand-1);
+  background: var(--vp-c-brand-1);
   width: var(--hp-progress-percentage, 0%);
   transition: width 0.3s ease;
 }
-
-.docs-progress:not([aria-valuenow])::after {
+.demo-progress:not([aria-valuenow])::after {
   width: 30%;
-  animation: docs-progress-ind 1.5s infinite linear;
+  animation: hp-progress-ind 1.5s infinite linear;
 }
-
-@keyframes docs-progress-ind {
+@keyframes hp-progress-ind {
   0% { transform: translateX(-100%); }
-  100% { transform: translateX(350%); }
+  100% { transform: translateX(400%); }
 }
 </style>
 
-## Uso
+::: code-group
 
-### HTML
+```html [index.html]
+<!-- Determinado -->
+<hp-progress value="60" class="my-progress"></hp-progress>
 
-```html
-<!-- Progreso determinado -->
-<hp-progress value="70"></hp-progress>
-
-<!-- Progreso indeterminado -->
-<hp-progress></hp-progress>
-
-<!-- Con límites personalizados -->
-<hp-progress min="100" max="200" value="150"></hp-progress>
+<!-- Indeterminado -->
+<hp-progress class="my-progress"></hp-progress>
 ```
 
-### CSS (Headless)
-
-El componente expone la variable CSS `--hp-progress-percentage` automáticamente basada en el valor, min y max.
-
-```css
-hp-progress {
+```css [style.css]
+.my-progress {
   display: block;
   height: 10px;
   background: #eee;
+  position: relative;
+  overflow: hidden;
 }
 
-hp-progress::after {
+.my-progress::after {
   content: "";
-  display: block;
+  position: absolute;
   height: 100%;
   background: blue;
+  /* La variable se calcula automáticamente */
   width: var(--hp-progress-percentage, 0%);
 }
 ```
 
-## API
+:::
 
-### Atributos
+## Anatomía
 
-| Atributo | Tipo     | Descripción                                                                  |
-| :------- | :------- | :--------------------------------------------------------------------------- |
-| `value`  | `number` | El valor actual del progreso. Si no se define, el estado es "indeterminado". |
-| `min`    | `number` | Valor mínimo (por defecto 0).                                                |
-| `max`    | `number` | Valor máximo (por defecto 100).                                              |
+El raíz aplica los atributos ARIA y expone el avance como variable CSS (`--hp-progress-percentage`).
 
-### Propiedades JS
+```html
+<hp-progress value="50" min="0" max="100"></hp-progress>
+```
 
-| Propiedad    | Tipo             | Descripción                                            |
-| :----------- | :--------------- | :----------------------------------------------------- |
-| `value`      | `number \| null` | Obtiene o establece el valor actual.                   |
-| `percentage` | `number`         | (**Read-only**) El porcentaje calculado entre 0 y 100. |
+## API Reference
+
+### `hp-progress`
+
+Rol `progressbar`. Con `value` definido expone el porcentaje en una variable CSS; sin `value`, el progreso es indeterminado (`aria-valuenow` omitido).
+
+#### Atributos
+
+| Atributo | Tipo     | Por defecto     | Descripción                                                 |
+| :------- | :------- | :-------------- | :---------------------------------------------------------- |
+| `value`  | `number` | —               | Progreso actual; si falta, estado indeterminado. Observado. |
+| `min`    | `number` | `0`             | Límite inferior. Observado.                                 |
+| `max`    | `number` | `100`           | Límite superior. Observado.                                 |
+| `role`   | `string` | `"progressbar"` | Si no se indica, se asigna `progressbar`.                   |
+
+#### Propiedades
+
+| Propiedad    | Tipo             | Descripción                                                         |
+| :----------- | :--------------- | :------------------------------------------------------------------ |
+| `value`      | `number \| null` | Refleja el atributo `value` (`null` si no está definido).           |
+| `min`        | `number`         | Refleja `min`.                                                      |
+| `max`        | `number`         | Refleja `max`.                                                      |
+| `percentage` | `number`         | Porcentaje 0–100 derivado de `value`, `min` y `max` (solo lectura). |
+
+#### Variables CSS (en el host)
+
+| Variable                   | Descripción                                                                                                           |
+| :------------------------- | :-------------------------------------------------------------------------------------------------------------------- |
+| `--hp-progress-percentage` | Porcentaje calculado (p. ej. `50%`) aplicado en `style` cuando hay `value`; se elimina si el estado es indeterminado. |
+
+#### ARIA (gestionado por el primitivo)
+
+| Atributo                          | Descripción                                 |
+| :-------------------------------- | :------------------------------------------ |
+| `aria-valuemin` / `aria-valuemax` | Sincronizados con `min` y `max`.            |
+| `aria-valuenow`                   | Presente solo cuando `value` está definido. |
 
 ## Accesibilidad
 
-Este componente implementa el patrón **WAI-ARIA Progressbar**:
+`hp-progress` implementa el patrón **WAI-ARIA Progressbar**:
 
-- Asigna automáticamente `role="progressbar"`.
+- Maneja automáticamente el rol `progressbar`.
 - Gestiona `aria-valuenow`, `aria-valuemin` y `aria-valuemax`.
-- Gestiona el estado indeterminado eliminando `aria-valuenow` según la especificación.
+- Remueve `aria-valuenow` cuando el estado es indeterminado.

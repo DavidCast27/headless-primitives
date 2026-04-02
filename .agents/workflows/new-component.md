@@ -87,17 +87,23 @@ export default defineConfig({
 ## 6. Integrar al Playground
 
 - Añadir `"@headless-primitives/<nombre>": "workspace:*"` a `apps/playground/package.json`.
-- Crear `apps/playground/src/styles/<nombre>.css` con los estilos de la demo.
-- Importar el nuevo CSS en `apps/playground/src/style.css` usando `@import './styles/<nombre>.css';`.
-- Crear `apps/playground/src/scripts/<nombre>.ts` con la lógica de listeners y logs.
-- Importar e inicializar la nueva lógica en `apps/playground/src/main.ts`.
-- Crear Card de demo en `apps/playground/index.html`.
+- Crear `apps/playground/src/demos/<nombre>.demo.ts` exportando un objeto de tipo `ComponentDemo`.
+- Crear `apps/playground/src/demos/<nombre>.css` con los estilos de la demo e importarlo en el `.demo.ts`.
+- Registrar la nueva demo en el objeto `ROUTES` de `apps/playground/src/main.ts`.
+- Añadir el botón correspondiente en la barra lateral de `apps/playground/index.html`.
 
 ## 7. Documentar
 
-- Crear `apps/docs/components/<nombre>.md` con demo interactiva, tablas de API y guía de estilos.
+- Crear `apps/docs/components/<nombre>.md` siguiendo el **Estándar Premium** (ver `AGENTS.md` §6 y `docs/adr/0008-docs-api-reference-by-custom-element.md`):
+  - Badge "Nuevo".
+  - Sección de instalación con `pnpm add`.
+  - Demo interactiva usando `docs-demos.css` (`hp-demo-card`).
+  - **Anatomía:** un solo bloque Markdown ` ```html ` con el árbol anidado de etiquetas `hp-*` (no listas en cuadros ni “diagramas” aparte).
+  - **API Reference:** una subsección `### \`hp-parte\``por cada custom element del paquete; tablas alineadas con`packages/vanilla/<nombre>/src/`(atributos observados, propiedades/métodos públicos, eventos`hp-_`, `data-_`/ARIA, variables CSS si aplica).
+  - Bloques de código con pestañas (`::: code-group`) para HTML/CSS de ejemplo.
+- Si la decisión de documentación es nueva o ambigua, considerar un ADR en `docs/adr/`.
 - Añadir entrada en la sidebar de `apps/docs/.vitepress/config.ts`.
-- Importar en `apps/docs/.vitepress/theme/index.ts`.
+- Importar el componente en `apps/docs/.vitepress/theme/index.ts`.
 
 ## 8. Registrar dependencia en docs
 

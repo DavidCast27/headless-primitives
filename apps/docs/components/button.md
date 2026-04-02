@@ -1,116 +1,106 @@
-# Button (`hp-button`)
+# Button
 
-El botón es la espinal dorsal de toda UI. `hp-button` encapsula la lógica de accesibilidad (a11y) nativa, manejo de teclado y estados de interacción, permitiéndote centrarte puramente en el diseño visual.
+<span class="hp-badge">Nuevo</span>
 
-## Demostración Interactiva en Vivo
+El componente `hp-button` es el elemento básico de interacción. Provee una base sólida y accesible (WAI-ARIA) para crear botones, enlaces que parecen botones o interruptores binarios táctiles, permitiéndote total libertad creativa en el diseño visual.
 
-<div class="demo-box">
+## Instalación
+
+```bash
+pnpm add @headless-primitives/button
+```
+
+## Demostración
+
+<div class="hp-demo-card">
   <hp-button class="demo-btn primary">Botón Primario</hp-button>
   <hp-button class="demo-btn secondary">Secundario</hp-button>
-  <hp-button class="demo-btn toggle" aria-pressed="false">Toggle Me</hp-button>
-  <hp-button class="demo-btn" disabled>Disabled</hp-button>
+  <hp-button class="demo-btn" disabled>Deshabilitado</hp-button>
 </div>
 
 <style>
-.demo-box {
-  margin-top: 1.5rem;
-  margin-bottom: 2rem;
-  padding: 2.5rem;
-  border: 1px dashed var(--vp-c-divider);
-  border-radius: 12px;
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-  flex-wrap: wrap;
-  background-color: var(--vp-custom-block-bg);
-}
-
 .demo-btn {
   font-family: inherit;
   font-size: 0.9rem;
   font-weight: 500;
   padding: 8px 16px;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s;
   border: 1px solid transparent;
 }
-
-.primary {
-  background-color: var(--vp-c-brand-1);
-  color: white;
-}
-.primary:hover { background-color: var(--vp-c-brand-2); }
-
-.secondary {
-  background-color: transparent;
-  border-color: var(--vp-c-divider);
-}
+.primary { background: var(--vp-c-brand-1); color: white; }
+.primary:hover { background: var(--vp-c-brand-2); }
+.secondary { background: transparent; border-color: var(--vp-c-divider); }
 .secondary:hover { border-color: var(--vp-c-brand-1); }
-
-.toggle[aria-pressed="true"] {
-  background-color: #10b981;
-  color: white;
-}
-
-.demo-btn[disabled] {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
+.demo-btn[disabled] { opacity: 0.5; cursor: not-allowed; }
 </style>
 
-## API Reference
+::: code-group
 
-### Attributes
+```html [index.html]
+<hp-button class="my-btn"> Click me </hp-button>
 
-| Atributo       | Tipo      | Por defecto | Descripción                                                                    |
-| :------------- | :-------- | :---------- | :----------------------------------------------------------------------------- |
-| `disabled`     | `boolean` | `false`     | Desactiva el botón y lo remueve del orden de foco.                             |
-| `aria-pressed` | `boolean` | `undefined` | Si se provee, el botón actúa como un "Toggle Button" persistiendo su estado.   |
-| `role`         | `string`  | `"button"`  | El rol de accesibilidad (manejado automáticamente).                            |
-| `tabindex`     | `string`  | `"0"`       | El índice de tabulación (manejado automáticamente según el estado `disabled`). |
+<hp-button class="my-btn" disabled> Can't click </hp-button>
+```
 
-### Events
-
-| Evento      | Detalle                | Descripción                                                                |
-| :---------- | :--------------------- | :------------------------------------------------------------------------- |
-| `hp-change` | `{ pressed: boolean }` | Emitido únicamente cuando el botón actúa como _Toggle_ y cambia su estado. |
-| `click`     | `MouseEvent`           | Evento nativo del navegador (disponible siempre).                          |
-
-## Styling (Guía de Estilos)
-
-Al ser un componente _Headless_, no inyectamos CSS. Puedes usar selectores de atributos para aplicar estilos basados en el estado:
-
-```css
-/* Estado Base */
-hp-button {
-  display: inline-block;
-  cursor: pointer;
+```css [style.css]
+.my-btn {
+  /* Tus estilos aquí */
+  padding: 10px 20px;
+  background: blue;
+  color: white;
+  border-radius: 4px;
 }
 
-/* Estado Focus (Accesibilidad) */
-hp-button:focus-visible {
-  outline: 2px solid #3b82f6;
-  outline-offset: 2px;
+.my-btn:focus-visible {
+  outline: 2px solid blue;
 }
 
-/* Estado de Toggle Activado */
-hp-button[aria-pressed="true"] {
-  background-color: green;
-}
-
-/* Estado Deshabilitado */
-hp-button[disabled] {
+.my-btn[disabled] {
   opacity: 0.5;
-  pointer-events: none;
 }
 ```
 
-## Accesibilidad (a11y)
+:::
 
-`hp-button` implementa los siguientes patrones de la W3C:
+## Anatomía
 
-- Manejo automático de `tabindex`.
-- Soporte para teclas `Enter` y `Espacio`.
-- Sincronización automática de `aria-disabled` basada en el atributo nativo `disabled`.
-- Semántica de Toggle via `aria-pressed`.
+Los componentes Headless no inyectan estructura interna compleja: un solo elemento raíz concentra el foco y la interacción por teclado.
+
+```html
+<hp-button> ... </hp-button>
+```
+
+## API Reference
+
+### `hp-button`
+
+Custom element de un solo nodo con rol `button` por defecto, activable con teclado (`Enter` / `Espacio`). Si existe `aria-pressed`, actúa como interruptor y emite `hp-change`.
+
+#### Atributos
+
+| Atributo       | Tipo                  | Por defecto | Descripción                                                                                        |
+| :------------- | :-------------------- | :---------- | :------------------------------------------------------------------------------------------------- |
+| `disabled`     | _boolean (presencia)_ | ausente     | Si está presente, quita el foco por tabulación y establece `aria-disabled="true"`. Observado.      |
+| `aria-pressed` | `"true"` \| `"false"` | —           | Si está definido, cada activación alterna el valor y dispara `hp-change`. Observado como atributo. |
+| `role`         | `string`              | `"button"`  | Si no se indica, se asigna `button`.                                                               |
+| `tabindex`     | `string`              | `"0"`       | Si no hay `disabled`, se fuerza `0` para permitir foco (comportamiento tipo botón nativo).         |
+
+Otros atributos HTML globales pueden estar presentes en el DOM; el primitivo **solo** observa `disabled` y `aria-pressed` en código.
+
+#### Eventos
+
+| Evento      | Detalle                | Descripción                                                                 |
+| :---------- | :--------------------- | :-------------------------------------------------------------------------- |
+| `hp-change` | `{ pressed: boolean }` | Solo cuando hay `aria-pressed` y cambia el estado (`bubbles` y `composed`). |
+| `click`     | `MouseEvent`           | Nativo; con `disabled`, el primitivo detiene propagación.                   |
+
+## Accesibilidad
+
+`hp-button` implementa el patrón **WAI-ARIA Button**:
+
+- Maneja automáticamente los roles de accesibilidad.
+- Sincroniza `aria-disabled` con el atributo `disabled`.
+- Soporta activación mediante las teclas `Enter` y `Espacio`.
+- Gestión inteligente del `tabindex`.
