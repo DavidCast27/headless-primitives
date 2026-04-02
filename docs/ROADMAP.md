@@ -28,11 +28,11 @@ Cada uno implementa exactamente un patrón WAI-ARIA.
 | #   | Componente    | Patrón WAI-ARIA                                            | Complejidad | Estado   |
 | :-- | :------------ | :--------------------------------------------------------- | :---------- | :------- |
 | 1   | **Button**    | [Button](https://www.w3.org/WAI/ARIA/apg/patterns/button/) | 🟢 Baja     | ✅ Hecho |
-| 2   | **Switch**    | [Switch](https://www.w3.org/WAI/ARIA/apg/patterns/switch/) | 🟢 Baja     | ⬜       |
-| 3   | **Separator** | — (role="separator")                                       | 🟢 Baja     | ⬜       |
-| 4   | **Progress**  | [Meter](https://www.w3.org/WAI/ARIA/apg/patterns/meter/)   | 🟢 Baja     | ⬜       |
-| 5   | **Label**     | — (aria-labelledby)                                        | 🟢 Baja     | ⬜       |
-| 6   | **Avatar**    | — (role="img" + fallback)                                  | 🟢 Baja     | ⬜       |
+| 2   | **Switch**    | [Switch](https://www.w3.org/WAI/ARIA/apg/patterns/switch/) | 🟢 Baja     | ✅ Hecho |
+| 3   | **Separator** | — (role="separator")                                       | 🟢 Baja     | ✅ Hecho |
+| 4   | **Progress**  | [Meter](https://www.w3.org/WAI/ARIA/apg/patterns/meter/)   | 🟢 Baja     | ✅ Hecho |
+| 5   | **Label**     | — (aria-labelledby)                                        | 🟢 Baja     | ✅ Hecho |
+| 6   | **Avatar**    | — (role="img" + fallback)                                  | 🟢 Baja     | ✅ Hecho |
 
 **Por qué estos primero:** Son los ladrillos más simples. Cada uno tiene un solo elemento, un solo estado, y cero interacciones complejas de teclado más allá de Enter/Space.
 
