@@ -6,6 +6,7 @@
     "node": ">=18"
   },
   "scripts": {
+    "docs:dev": "pnpm --filter @headless-primitives/docs run docs:dev",
     "dev": "pnpm --filter @headless-primitives/playground run dev",
     "build": "pnpm -r run build",
     "test": "pnpm -r run test",

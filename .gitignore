@@ -3,3 +3,9 @@ dist
 .DS_Store
 coverage
 .env
+
+# VitePress
+**/.vitepress/dist
+**/.vitepress/cache
+.tsbuildinfo
+*.log

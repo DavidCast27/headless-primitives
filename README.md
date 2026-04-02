@@ -2,7 +2,7 @@
 
 > Primitivos UI accesibles y sin estilos, construidos como Web Components framework-agnostic.
 
-Para conocer más sobre por qué se creó esta librería y las decisiones técnicas de fondo (como la elección de usar Vanilla JS en lugar de frameworks o librerías externas), consulta nuestro archivo de **[Motivación y Decisiones de Diseño (MOTIVATION.md)](./MOTIVATION.md)**.
+Para conocer más sobre por qué se creó esta librería y las decisiones técnicas de fondo (como la elección de usar Vanilla JS en lugar de frameworks o librerías externas), consulta nuestro archivo de **[Motivación y Decisiones de Diseño (MOTIVATION.md)](./docs/MOTIVATION.md)**.
 
 ## Filosofía
 
