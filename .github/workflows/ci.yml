@@ -1,10 +1,8 @@
 name: CI
 
+# Solo manual: Actions → CI → Run workflow (reactivar push/PR cuando quieras CI automático)
 on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+  workflow_dispatch:
 
 jobs:
   quality:

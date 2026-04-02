@@ -1,11 +1,8 @@
 name: Deploy Docs
 
+# Solo manual: Actions → Deploy Docs → Run workflow
 on:
-  push:
-    branches: [main]
-    paths:
-      - "apps/docs/**"
-      - "packages/**"
+  workflow_dispatch:
 
 permissions:
   contents: read
