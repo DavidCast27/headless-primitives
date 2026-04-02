@@ -1,0 +1,23 @@
+{
+  "name": "@headless-primitives/button",
+  "version": "0.1.0",
+  "description": "Headless primitive para botones o toggles abstractos",
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc && vite build",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage"
+  }
+}

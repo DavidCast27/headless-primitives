@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Headless Primitives | Playground</title>
+    <!-- Modern premium font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./src/style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <header class="header">
+        <h1>Headless Primitives <span class="badge">Playground</span></h1>
+        <p>Entorno visual de pruebas desvinculado (Vanilla + Vite)</p>
+      </header>
+
+      <main class="gallery">
+        <!-- Tarjeta de Demostración del Botón -->
+        <section class="card">
+          <div class="card-header">
+            <h2>Button primitive</h2>
+            <span class="status-badge">Probado <span class="dot"></span></span>
+          </div>
+
+          <div class="demo-area">
+            <hp-button class="btn btn-primary" id="btn-comun">Botón Básico</hp-button>
+            <hp-button class="btn btn-secondary" disabled>Deshabilitado</hp-button>
+            <hp-button class="btn btn-toggle" aria-pressed="false" id="btn-toggle">
+              Botón Toggle
+            </hp-button>
+          </div>
+          
+          <div class="logger">
+            <strong>Log de Interacciones:</strong>
+            <ul id="log-list"></ul>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script type="module" src="./src/main.ts"></script>  
+  </body>
+</html>
