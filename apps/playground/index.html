@@ -82,28 +82,53 @@
           <p class="tagline">Implementación de role="switch" accesible</p>
 
           <div class="demo-area">
-            <div class="control-group">
-              <label for="sw-toggle">Interruptor Principal</label>
-              <hp-switch id="sw-toggle" class="switch"></hp-switch>
-            </div>
+      <div class="control-group">
+        <hp-label for="sw-toggle">Interruptor Principal</hp-label>
+        <hp-switch id="sw-toggle" class="switch"></hp-switch>
+      </div>
 
-            <div class="control-group">
-              <label for="sw-on">Estado On (Inicial)</label>
-              <hp-switch id="sw-on" class="switch" checked></hp-switch>
-            </div>
+      <div class="control-group">
+        <hp-label for="sw-on">Estado On (Inicial)</hp-label>
+        <hp-switch id="sw-on" class="switch" checked></hp-switch>
+      </div>
 
-            <div class="control-group">
-              <label for="sw-disabled">Deshabilitado</label>
-              <hp-switch id="sw-disabled" class="switch" disabled></hp-switch>
-            </div>
-          </div>
+      <div class="control-group">
+        <hp-label for="sw-disabled">Deshabilitado</hp-label>
+        <hp-switch id="sw-disabled" class="switch" disabled></hp-switch>
+      </div>
+    </div>
 
           <div class="card-footer">
             Usa Space o Enter para alternar.
           </div>
         </section>
 
-        <!-- Card del Separator -->
+        <!-- Label Section -->
+        <section class="card" id="label-demo">
+          <div class="card-header">
+            <h2 class="card-title">Label primitive</h2>
+            <span class="status-badge">Nuevo</span>
+          </div>
+          <p class="tagline">Etiqueta accesible con gestión de foco manual</p>
+
+          <div class="demo-area">
+            <div class="control-group">
+              <hp-label for="lbl-input">Nombre de Usuario</hp-label>
+              <input type="text" id="lbl-input" placeholder="Escribe aquí..." style="padding: 8px; border-radius: 4px; border: 1px solid var(--border-color); background: var(--bg-secondary); color: var(--text-primary);">
+            </div>
+
+            <div class="control-group">
+              <hp-label for="lbl-switch">Activar Notificaciones</hp-label>
+              <hp-switch id="lbl-switch" class="switch"></hp-switch>
+            </div>
+          </div>
+
+          <div class="card-footer">
+            Haz click en el texto para enfocar el control asociado.
+          </div>
+        </section>
+
+        <!-- Separator Section -->
         <section class="card">
           <div class="card-header">
             <h2>Separator primitive</h2>

@@ -50,6 +50,9 @@ importers:
       '@headless-primitives/button':
         specifier: workspace:*
         version: link:../../packages/vanilla/button
+      '@headless-primitives/label':
+        specifier: workspace:*
+        version: link:../../packages/vanilla/label
       '@headless-primitives/progress':
         specifier: workspace:*
         version: link:../../packages/vanilla/progress
@@ -69,6 +72,9 @@ importers:
       '@headless-primitives/button':
         specifier: workspace:*
         version: link:../../packages/vanilla/button
+      '@headless-primitives/label':
+        specifier: workspace:*
+        version: link:../../packages/vanilla/label
       '@headless-primitives/progress':
         specifier: workspace:*
         version: link:../../packages/vanilla/progress
@@ -87,6 +93,21 @@ importers:
         version: 8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@25.5.0)(jiti@2.6.1)(yaml@2.8.3)
 
   packages/vanilla/button: {}
+
+  packages/vanilla/label:
+    devDependencies:
+      happy-dom:
+        specifier: ^14.12.3
+        version: 14.12.3
+      typescript:
+        specifier: ^5.5.4
+        version: 5.9.3
+      vite:
+        specifier: ^5.4.2
+        version: 5.4.21(@types/node@25.5.0)(lightningcss@1.32.0)
+      vitest:
+        specifier: ^2.0.5
+        version: 2.1.9(@types/node@25.5.0)(happy-dom@14.12.3)(jsdom@29.0.1)(lightningcss@1.32.0)
 
   packages/vanilla/progress:
     devDependencies:

@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@headless-primitives/button": "workspace:*",
+    "@headless-primitives/label": "workspace:*",
     "@headless-primitives/progress": "workspace:*",
     "@headless-primitives/separator": "workspace:*",
     "@headless-primitives/switch": "workspace:*"
