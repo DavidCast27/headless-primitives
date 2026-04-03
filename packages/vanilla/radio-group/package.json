@@ -1,0 +1,26 @@
+{
+  "name": "@headless-primitives/radio-group",
+  "version": "0.1.0",
+  "description": "Headless Radio Group primitive",
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc && vite build",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@headless-primitives/utils": "workspace:*"
+  }
+}

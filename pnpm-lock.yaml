@@ -65,6 +65,9 @@ importers:
       '@headless-primitives/progress':
         specifier: workspace:*
         version: link:../../packages/vanilla/progress
+      '@headless-primitives/radio-group':
+        specifier: workspace:*
+        version: link:../../packages/vanilla/radio-group
       '@headless-primitives/separator':
         specifier: workspace:*
         version: link:../../packages/vanilla/separator
@@ -96,12 +99,18 @@ importers:
       '@headless-primitives/progress':
         specifier: workspace:*
         version: link:../../packages/vanilla/progress
+      '@headless-primitives/radio-group':
+        specifier: workspace:*
+        version: link:../../packages/vanilla/radio-group
       '@headless-primitives/separator':
         specifier: workspace:*
         version: link:../../packages/vanilla/separator
       '@headless-primitives/switch':
         specifier: workspace:*
         version: link:../../packages/vanilla/switch
+      '@headless-primitives/utils':
+        specifier: workspace:*
+        version: link:../../packages/vanilla/utils
     devDependencies:
       '@types/prismjs':
         specifier: ^1.26.6
@@ -180,6 +189,12 @@ importers:
         specifier: ^2.0.5
         version: 2.1.9(@types/node@25.5.0)(happy-dom@14.12.3)(jsdom@29.0.1)(lightningcss@1.32.0)
 
+  packages/vanilla/radio-group:
+    dependencies:
+      '@headless-primitives/utils':
+        specifier: workspace:*
+        version: link:../utils
+
   packages/vanilla/separator:
     devDependencies:
       happy-dom:
@@ -196,6 +211,8 @@ importers:
         version: 2.1.9(@types/node@25.5.0)(happy-dom@14.12.3)(jsdom@29.0.1)(lightningcss@1.32.0)
 
   packages/vanilla/switch: {}
+
+  packages/vanilla/utils: {}
 
 packages:
 

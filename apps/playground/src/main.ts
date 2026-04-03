@@ -5,6 +5,7 @@ import "@headless-primitives/button";
 import "@headless-primitives/switch";
 import "@headless-primitives/separator";
 import "@headless-primitives/progress";
+import "@headless-primitives/radio-group";
 import "@headless-primitives/label";
 import "@headless-primitives/avatar";
 import "@headless-primitives/checkbox";
@@ -19,6 +20,7 @@ import { switchDemo } from "./demos/switch.demo";
 import { checkboxDemo } from "./demos/checkbox.demo";
 import { separatorDemo } from "./demos/separator.demo";
 import { progressDemo } from "./demos/progress.demo";
+import { radioGroupDemo } from "./demos/radio-group.demo";
 import { labelDemo } from "./demos/label.demo";
 import { avatarDemo } from "./demos/avatar.demo";
 import { fieldDemo } from "./demos/field.demo";
@@ -30,6 +32,7 @@ const ROUTES: Record<string, ComponentDemo> = {
   checkbox: checkboxDemo,
   separator: separatorDemo,
   progress: progressDemo,
+  "radio-group": radioGroupDemo,
   label: labelDemo,
   avatar: avatarDemo,
   field: fieldDemo,

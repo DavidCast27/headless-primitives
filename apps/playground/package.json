@@ -15,8 +15,10 @@
     "@headless-primitives/field": "workspace:*",
     "@headless-primitives/label": "workspace:*",
     "@headless-primitives/progress": "workspace:*",
+    "@headless-primitives/radio-group": "workspace:*",
     "@headless-primitives/separator": "workspace:*",
-    "@headless-primitives/switch": "workspace:*"
+    "@headless-primitives/switch": "workspace:*",
+    "@headless-primitives/utils": "workspace:*"
   },
   "devDependencies": {
     "@types/prismjs": "^1.26.6",

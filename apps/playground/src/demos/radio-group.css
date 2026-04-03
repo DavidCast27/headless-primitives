@@ -1,0 +1,58 @@
+.demo-radio-group-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+hp-radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+hp-radio-group[orientation="horizontal"] {
+  flex-direction: row;
+}
+
+.demo-radio-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.demo-radio {
+  width: 18px;
+  height: 18px;
+  border: 2px solid #ccc;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+}
+
+.demo-radio[aria-checked="true"],
+hp-radio[aria-checked="true"] {
+  border-color: #000;
+}
+
+.demo-radio[aria-checked="true"]::after,
+hp-radio[aria-checked="true"]::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  background: #000;
+  border-radius: 50%;
+}
+
+.demo-radio:focus-visible,
+hp-radio:focus-visible {
+  outline: 2px solid #000;
+  outline-offset: 2px;
+}
+
+hp-radio[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

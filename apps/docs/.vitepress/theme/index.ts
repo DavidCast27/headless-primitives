@@ -7,6 +7,7 @@ import "@headless-primitives/switch";
 import "@headless-primitives/checkbox";
 import "@headless-primitives/separator";
 import "@headless-primitives/progress";
+import "@headless-primitives/radio-group";
 import "@headless-primitives/label";
 import "@headless-primitives/avatar";
 import "@headless-primitives/field";
