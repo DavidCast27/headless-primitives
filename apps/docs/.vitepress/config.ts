@@ -59,6 +59,7 @@ export default defineConfig({
           { text: "Progress", link: "/components/progress" },
           { text: "Radio Group", link: "/components/radio-group" },
           { text: "Toggle Group", link: "/components/toggle-group" },
+          { text: "Collapsible", link: "/components/collapsible" },
           { text: "Label", link: "/components/label" },
           { text: "Avatar", link: "/components/avatar" },
           { text: "Field", link: "/components/field" },

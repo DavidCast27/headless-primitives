@@ -9,6 +9,7 @@ import "@headless-primitives/radio-group";
 import "@headless-primitives/label";
 import "@headless-primitives/avatar";
 import "@headless-primitives/checkbox";
+import "@headless-primitives/collapsible";
 import "@headless-primitives/field";
 import "@headless-primitives/toggle-group";
 
@@ -26,6 +27,7 @@ import { labelDemo } from "./demos/label.demo";
 import { avatarDemo } from "./demos/avatar.demo";
 import { fieldDemo } from "./demos/field.demo";
 import { toggleGroupDemo } from "./demos/toggle-group.demo";
+import { collapsibleDemo } from "./demos/collapsible.demo";
 
 // --- Route Registry ---
 const ROUTES: Record<string, ComponentDemo> = {
@@ -39,6 +41,7 @@ const ROUTES: Record<string, ComponentDemo> = {
   avatar: avatarDemo,
   field: fieldDemo,
   "toggle-group": toggleGroupDemo,
+  collapsible: collapsibleDemo,
 };
 
 function renderRoute(compId: string) {

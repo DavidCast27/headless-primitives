@@ -9,6 +9,7 @@ import "@headless-primitives/separator";
 import "@headless-primitives/progress";
 import "@headless-primitives/radio-group";
 import "@headless-primitives/toggle-group";
+import "@headless-primitives/collapsible";
 import "@headless-primitives/label";
 import "@headless-primitives/avatar";
 import "@headless-primitives/field";

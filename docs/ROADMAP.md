@@ -43,14 +43,14 @@ Cada uno implementa exactamente un patrón WAI-ARIA.
 Componentes que combinan conceptos de átomos o coordinan múltiples elementos hijos.
 Introducen navegación por flechas y sincronización de estado.
 
-| #   | Componente       | Patrón WAI-ARIA                                                            | Complejidad | Dependencias        |
-| :-- | :--------------- | :------------------------------------------------------------------------- | :---------- | :------------------ |
-| 7   | **Checkbox**     | [Checkbox](https://www.w3.org/WAI/ARIA/apg/patterns/checkbox/) (tri-state) | 🟡 Media    | ✅ Hecho            |
-| 8   | **Radio Group**  | [Radio Group](https://www.w3.org/WAI/ARIA/apg/patterns/radio/)             | 🟡 Media    | ✅ Hecho            |
-| 9   | **Toggle Group** | — (grupo de toggles excluyentes)                                           | 🟡 Media    | Button              |
-| 10  | **Collapsible**  | [Disclosure](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/)         | 🟡 Media    | —                   |
-| 11  | **Accordion**    | [Accordion](https://www.w3.org/WAI/ARIA/apg/patterns/accordion/)           | 🟡 Media    | Collapsible pattern |
-| 12  | **Tabs**         | [Tabs](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/)                     | 🟡 Media    | Keyboard Nav util   |
+| #   | Componente       | Patrón WAI-ARIA                                                            | Complejidad | Dependencias        | Estado         |
+| :-- | :--------------- | :------------------------------------------------------------------------- | :---------- | :------------------ | :------------- |
+| 7   | **Checkbox**     | [Checkbox](https://www.w3.org/WAI/ARIA/apg/patterns/checkbox/) (tri-state) | 🟡 Media    | ✅ Hecho            | ✅ Hecho       |
+| 8   | **Radio Group**  | [Radio Group](https://www.w3.org/WAI/ARIA/apg/patterns/radio/)             | 🟡 Media    | ✅ Hecho            | ✅ Hecho       |
+| 9   | **Toggle Group** | — (grupo de toggles excluyentes)                                           | 🟡 Media    | Button              | ✅ Hecho       |
+| 10  | **Collapsible**  | [Disclosure](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/)         | 🟡 Media    | —                   | ✅ Hecho       |
+| 11  | **Accordion**    | [Accordion](https://www.w3.org/WAI/ARIA/apg/patterns/accordion/)           | 🟡 Media    | Collapsible pattern | 🔄 En progreso |
+| 12  | **Tabs**         | [Tabs](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/)                     | 🟡 Media    | Keyboard Nav util   | 🔄 En progreso |
 
 **Por qué este orden:** Checkbox y Radio Group son patterns de formulario esenciales. Collapsible es el building block del Accordion, así que va primero. Tabs es la culminación de este tier porque combina roving focus + panel switching.
 
@@ -109,19 +109,21 @@ Componentes que no todos los proyectos necesitan pero añaden mucho valor.
 
 ```
 Button ✅
-├── Toggle Group
+├── Toggle Group ✅
 ├── Dropdown Menu ──► Context Menu
 │                └──► Navigation Menu
-Switch
-Separator
-Progress
-Label
-Avatar
-Checkbox
+Switch ✅
+Separator ✅
+Progress ✅
+Label ✅
+Avatar ✅
+Checkbox ✅
 Radio Group ────────── Keyboard Nav util
-Collapsible
-├── Accordion
+✅
+Collapsible ✅
+├── Accordion 🔄
 Tabs ───────────────── Keyboard Nav util
+🔄
 Tooltip
 Popover ────────────── Focus Trap util
 ├── Dialog

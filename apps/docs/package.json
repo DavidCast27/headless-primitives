@@ -11,6 +11,7 @@
     "@headless-primitives/avatar": "workspace:*",
     "@headless-primitives/button": "workspace:*",
     "@headless-primitives/checkbox": "workspace:*",
+    "@headless-primitives/collapsible": "workspace:*",
     "@headless-primitives/field": "workspace:*",
     "@headless-primitives/label": "workspace:*",
     "@headless-primitives/progress": "workspace:*",
