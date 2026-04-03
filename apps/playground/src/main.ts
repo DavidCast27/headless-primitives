@@ -10,6 +10,7 @@ import "@headless-primitives/label";
 import "@headless-primitives/avatar";
 import "@headless-primitives/checkbox";
 import "@headless-primitives/field";
+import "@headless-primitives/toggle-group";
 
 import { Shell } from "./components/Shell";
 import { ComponentDemo } from "./types";
@@ -24,6 +25,7 @@ import { radioGroupDemo } from "./demos/radio-group.demo";
 import { labelDemo } from "./demos/label.demo";
 import { avatarDemo } from "./demos/avatar.demo";
 import { fieldDemo } from "./demos/field.demo";
+import { toggleGroupDemo } from "./demos/toggle-group.demo";
 
 // --- Route Registry ---
 const ROUTES: Record<string, ComponentDemo> = {
@@ -36,6 +38,7 @@ const ROUTES: Record<string, ComponentDemo> = {
   label: labelDemo,
   avatar: avatarDemo,
   field: fieldDemo,
+  "toggle-group": toggleGroupDemo,
 };
 
 function renderRoute(compId: string) {

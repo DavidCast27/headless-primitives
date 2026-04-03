@@ -74,6 +74,9 @@ importers:
       '@headless-primitives/switch':
         specifier: workspace:*
         version: link:../../packages/vanilla/switch
+      '@headless-primitives/toggle-group':
+        specifier: workspace:*
+        version: link:../../packages/vanilla/toggle-group
     devDependencies:
       vitepress:
         specifier: ^1.5.0
@@ -108,6 +111,9 @@ importers:
       '@headless-primitives/switch':
         specifier: workspace:*
         version: link:../../packages/vanilla/switch
+      '@headless-primitives/toggle-group':
+        specifier: workspace:*
+        version: link:../../packages/vanilla/toggle-group
       '@headless-primitives/utils':
         specifier: workspace:*
         version: link:../../packages/vanilla/utils
@@ -211,6 +217,8 @@ importers:
         version: 2.1.9(@types/node@25.5.0)(happy-dom@14.12.3)(jsdom@29.0.1)(lightningcss@1.32.0)
 
   packages/vanilla/switch: {}
+
+  packages/vanilla/toggle-group: {}
 
   packages/vanilla/utils: {}
 
