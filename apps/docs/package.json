@@ -19,6 +19,7 @@
     "@headless-primitives/radio-group": "workspace:*",
     "@headless-primitives/separator": "workspace:*",
     "@headless-primitives/switch": "workspace:*",
+    "@headless-primitives/tabs": "workspace:*",
     "@headless-primitives/toggle-group": "workspace:*"
   },
   "devDependencies": {

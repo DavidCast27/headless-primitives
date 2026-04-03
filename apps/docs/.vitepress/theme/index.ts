@@ -11,6 +11,7 @@ import "@headless-primitives/radio-group";
 import "@headless-primitives/toggle-group";
 import "@headless-primitives/collapsible";
 import "@headless-primitives/accordion";
+import "@headless-primitives/tabs";
 import "@headless-primitives/label";
 import "@headless-primitives/avatar";
 import "@headless-primitives/field";

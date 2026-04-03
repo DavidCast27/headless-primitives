@@ -5,6 +5,14 @@ export default defineConfig({
   description: "Web Components agnósticos, accesibles y cero dependencias.",
   head: [["link", { rel: "icon", href: "/logo.png" }]],
 
+  vue: {
+    template: {
+      compilerOptions: {
+        isCustomElement: (tag) => tag.startsWith("hp-"),
+      },
+    },
+  },
+
   themeConfig: {
     logo: "/logo.png",
 
@@ -61,6 +69,7 @@ export default defineConfig({
           { text: "Toggle Group", link: "/components/toggle-group" },
           { text: "Collapsible", link: "/components/collapsible" },
           { text: "Accordion", link: "/components/accordion" },
+          { text: "Tab", link: "/components/tabs" },
           { text: "Label", link: "/components/label" },
           { text: "Avatar", link: "/components/avatar" },
           { text: "Field", link: "/components/field" },

@@ -81,3 +81,85 @@ packages/vanilla/dialog/
 ---
 
 > Al procesar cualquier solicitud del usuario referente a escribir código funcional en este proyecto, revisa esta guía mentalmente antes de sugerir `import React` o `npm install`.
+
+## 10. Lecciones Aprendidas: Compatibilidad con VitePress
+
+Al crear componentes que se demuestran en `apps/docs`, ten en cuenta estas reglas críticas aprendidas en producción:
+
+### Inicialización del componente raíz
+
+Sigue **exactamente** el mismo patrón que `hp-collapsible`, `hp-accordion` y `hp-toggle-group`:
+
+```ts
+constructor() {
+  super();
+  this._observer = new MutationObserver(() => this._sync());
+}
+
+connectedCallback() {
+  // Leer estado inicial directamente del atributo
+  this._value = this.getAttribute('value') || '';
+  // Observar cambios en hijos
+  this._observer?.observe(this, { childList: true, subtree: true });
+  // Sincronizar inmediatamente y en el siguiente frame
+  this._sync();
+  requestAnimationFrame(() => this._sync());
+}
+```
+
+**Nunca uses** `Promise.resolve().then()` para diferir la inicialización — en VitePress/Vue la hydration puede no ejecutar la microtask en el momento correcto.
+
+### Nombres de atributos
+
+- **Usa atributos simples** como `value`, `open`, `selected` — los mismos que usan los otros componentes.
+- **Evita atributos con semántica "inicial"** como `default-value`. VitePress usa Vue internamente y puede ignorar o strippear atributos desconocidos durante la hydration SSR.
+- El atributo `value` debe estar en `observedAttributes` y leerse en `connectedCallback`.
+
+### Visibilidad de paneles/contenido
+
+- **No uses el atributo nativo `hidden`** para ocultar paneles en componentes con estado inicial. El parser HTML aplica `display:none` inmediatamente y si el JS no corre a tiempo (SSR/hydration), el contenido queda oculto permanentemente.
+- **Usa un atributo propio** (ej. `selected`) y controla la visibilidad con CSS:
+  ```css
+  hp-tab-panel:not([selected]) {
+    display: none;
+  }
+  ```
+- Esto garantiza que el CSS funcione independientemente del timing del JS.
+
+### Demos en Markdown de VitePress
+
+- **Sin líneas en blanco** entre elementos custom dentro del `<div class="hp-demo-card">`. VitePress procesa el contenido como markdown y las líneas en blanco entre tags HTML los escapan como texto plano.
+- **Contenido de elementos en una sola línea** cuando sea posible: `<hp-tab-panel value="x"><p>texto</p></hp-tab-panel>`
+- **Usa variables CSS de VitePress** en el `<style>` del demo: `--vp-c-divider`, `--vp-c-brand-1`, `--vp-c-text-1`, `--vp-c-bg-soft`, etc. No uses colores hardcodeados.
+- **Declara `display: block`** para todos los custom elements en el `<style>` local del archivo `.md`.
+
+### Registro de custom elements
+
+Siempre usa el guard de SSR para evitar errores durante el build de VitePress:
+
+```ts
+if (typeof window !== "undefined") {
+  if (!customElements.get("hp-mi-elemento")) {
+    customElements.define("hp-mi-elemento", MiElemento);
+  }
+}
+```
+
+### Configuración de VitePress
+
+El archivo `apps/docs/.vitepress/config.ts` **debe** tener la opción `vue.template.compilerOptions.isCustomElement` para que Vue no intente resolver los elementos `hp-*` como componentes Vue durante la hydration SSR:
+
+```ts
+export default defineConfig({
+  vue: {
+    template: {
+      compilerOptions: {
+        isCustomElement: (tag) => tag.startsWith("hp-"),
+      },
+    },
+  },
+  // ...
+});
+```
+
+Sin esto, Vue puede emitir warnings e interferir con el rendering de los custom elements.
