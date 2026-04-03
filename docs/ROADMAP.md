@@ -49,7 +49,7 @@ Introducen navegación por flechas y sincronización de estado.
 | 8   | **Radio Group**  | [Radio Group](https://www.w3.org/WAI/ARIA/apg/patterns/radio/)             | 🟡 Media    | ✅ Hecho            | ✅ Hecho       |
 | 9   | **Toggle Group** | — (grupo de toggles excluyentes)                                           | 🟡 Media    | Button              | ✅ Hecho       |
 | 10  | **Collapsible**  | [Disclosure](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/)         | 🟡 Media    | —                   | ✅ Hecho       |
-| 11  | **Accordion**    | [Accordion](https://www.w3.org/WAI/ARIA/apg/patterns/accordion/)           | 🟡 Media    | Collapsible pattern | 🔄 En progreso |
+| 11  | **Accordion**    | [Accordion](https://www.w3.org/WAI/ARIA/apg/patterns/accordion/)           | 🟡 Media    | Collapsible pattern | ✅ Hecho       |
 | 12  | **Tabs**         | [Tabs](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/)                     | 🟡 Media    | Keyboard Nav util   | 🔄 En progreso |
 
 **Por qué este orden:** Checkbox y Radio Group son patterns de formulario esenciales. Collapsible es el building block del Accordion, así que va primero. Tabs es la culminación de este tier porque combina roving focus + panel switching.
@@ -121,7 +121,7 @@ Checkbox ✅
 Radio Group ────────── Keyboard Nav util
 ✅
 Collapsible ✅
-├── Accordion 🔄
+├── Accordion ✅
 Tabs ───────────────── Keyboard Nav util
 🔄
 Tooltip

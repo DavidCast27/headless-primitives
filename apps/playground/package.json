@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@headless-primitives/accordion": "workspace:*",
     "@headless-primitives/avatar": "workspace:*",
     "@headless-primitives/button": "workspace:*",
     "@headless-primitives/checkbox": "workspace:*",

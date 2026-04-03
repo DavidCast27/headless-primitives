@@ -9,3 +9,6 @@ coverage
 **/.vitepress/cache
 .tsbuildinfo
 *.log
+
+#kiro
+.kiro

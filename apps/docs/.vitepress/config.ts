@@ -60,6 +60,7 @@ export default defineConfig({
           { text: "Radio Group", link: "/components/radio-group" },
           { text: "Toggle Group", link: "/components/toggle-group" },
           { text: "Collapsible", link: "/components/collapsible" },
+          { text: "Accordion", link: "/components/accordion" },
           { text: "Label", link: "/components/label" },
           { text: "Avatar", link: "/components/avatar" },
           { text: "Field", link: "/components/field" },

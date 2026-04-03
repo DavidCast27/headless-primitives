@@ -47,6 +47,9 @@ importers:
 
   apps/docs:
     dependencies:
+      '@headless-primitives/accordion':
+        specifier: workspace:*
+        version: link:../../packages/vanilla/accordion
       '@headless-primitives/avatar':
         specifier: workspace:*
         version: link:../../packages/vanilla/avatar
@@ -87,6 +90,9 @@ importers:
 
   apps/playground:
     dependencies:
+      '@headless-primitives/accordion':
+        specifier: workspace:*
+        version: link:../../packages/vanilla/accordion
       '@headless-primitives/avatar':
         specifier: workspace:*
         version: link:../../packages/vanilla/avatar
@@ -136,6 +142,8 @@ importers:
       vite:
         specifier: ^8.0.3
         version: 8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@25.5.0)(jiti@2.6.1)(yaml@2.8.3)
+
+  packages/vanilla/accordion: {}
 
   packages/vanilla/avatar:
     devDependencies:
