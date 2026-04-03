@@ -53,6 +53,7 @@ export default defineConfig({
         text: "Componentes",
         items: [
           { text: "Button", link: "/components/button" },
+          { text: "Checkbox", link: "/components/checkbox" },
           { text: "Switch", link: "/components/switch" },
           { text: "Separator", link: "/components/separator" },
           { text: "Progress", link: "/components/progress" },

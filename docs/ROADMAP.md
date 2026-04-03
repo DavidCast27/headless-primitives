@@ -45,7 +45,7 @@ Introducen navegación por flechas y sincronización de estado.
 
 | #   | Componente       | Patrón WAI-ARIA                                                            | Complejidad | Dependencias        |
 | :-- | :--------------- | :------------------------------------------------------------------------- | :---------- | :------------------ |
-| 7   | **Checkbox**     | [Checkbox](https://www.w3.org/WAI/ARIA/apg/patterns/checkbox/) (tri-state) | 🟡 Media    | —                   |
+| 7   | **Checkbox**     | [Checkbox](https://www.w3.org/WAI/ARIA/apg/patterns/checkbox/) (tri-state) | 🟡 Media    | ✅ Hecho            |
 | 8   | **Radio Group**  | [Radio Group](https://www.w3.org/WAI/ARIA/apg/patterns/radio/)             | 🟡 Media    | Keyboard Nav util   |
 | 9   | **Toggle Group** | — (grupo de toggles excluyentes)                                           | 🟡 Media    | Button              |
 | 10  | **Collapsible**  | [Disclosure](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/)         | 🟡 Media    | —                   |

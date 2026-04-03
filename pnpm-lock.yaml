@@ -53,6 +53,9 @@ importers:
       '@headless-primitives/button':
         specifier: workspace:*
         version: link:../../packages/vanilla/button
+      '@headless-primitives/checkbox':
+        specifier: workspace:*
+        version: link:../../packages/vanilla/checkbox
       '@headless-primitives/field':
         specifier: workspace:*
         version: link:../../packages/vanilla/field
@@ -81,6 +84,9 @@ importers:
       '@headless-primitives/button':
         specifier: workspace:*
         version: link:../../packages/vanilla/button
+      '@headless-primitives/checkbox':
+        specifier: workspace:*
+        version: link:../../packages/vanilla/checkbox
       '@headless-primitives/field':
         specifier: workspace:*
         version: link:../../packages/vanilla/field
@@ -126,6 +132,8 @@ importers:
         version: 2.1.9(@types/node@25.5.0)(happy-dom@14.12.3)(jsdom@29.0.1)(lightningcss@1.32.0)
 
   packages/vanilla/button: {}
+
+  packages/vanilla/checkbox: {}
 
   packages/vanilla/field:
     devDependencies:

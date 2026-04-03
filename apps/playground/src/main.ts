@@ -7,6 +7,7 @@ import "@headless-primitives/separator";
 import "@headless-primitives/progress";
 import "@headless-primitives/label";
 import "@headless-primitives/avatar";
+import "@headless-primitives/checkbox";
 import "@headless-primitives/field";
 
 import { Shell } from "./components/Shell";
@@ -15,6 +16,7 @@ import { ComponentDemo } from "./types";
 // Import modular demos
 import { buttonDemo } from "./demos/button.demo";
 import { switchDemo } from "./demos/switch.demo";
+import { checkboxDemo } from "./demos/checkbox.demo";
 import { separatorDemo } from "./demos/separator.demo";
 import { progressDemo } from "./demos/progress.demo";
 import { labelDemo } from "./demos/label.demo";
@@ -25,6 +27,7 @@ import { fieldDemo } from "./demos/field.demo";
 const ROUTES: Record<string, ComponentDemo> = {
   button: buttonDemo,
   switch: switchDemo,
+  checkbox: checkboxDemo,
   separator: separatorDemo,
   progress: progressDemo,
   label: labelDemo,

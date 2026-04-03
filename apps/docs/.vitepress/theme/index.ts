@@ -4,6 +4,7 @@ import type { Theme } from "vitepress";
 // Importamos el componente primitivo general globalmente en todo Vitepress
 import "@headless-primitives/button";
 import "@headless-primitives/switch";
+import "@headless-primitives/checkbox";
 import "@headless-primitives/separator";
 import "@headless-primitives/progress";
 import "@headless-primitives/label";
