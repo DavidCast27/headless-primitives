@@ -1,0 +1,64 @@
+/**
+ * @headless-primitives/styles — hp-toggle-group / hp-toggle (Req 7)
+ *
+ * Grupo de botones segmentados con borde exterior compartido.
+ */
+
+/* Group container (Req 7.1) */
+hp-toggle-group {
+  display: inline-flex;
+  align-items: stretch;
+  border: 1px solid var(--hp-border);
+  border-radius: var(--hp-radius);
+  overflow: hidden;
+  background-color: var(--hp-surface);
+}
+
+/* Toggle item (Req 7.2) */
+hp-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--hp-space-2) var(--hp-space-3);
+  font-family: inherit;
+  font-size: var(--hp-font-size-sm);
+  font-weight: var(--hp-font-weight-medium);
+  color: var(--hp-text-secondary);
+  background-color: transparent;
+  border: none;
+  border-right: 1px solid var(--hp-border);
+  cursor: pointer;
+  user-select: none;
+  transition:
+    background-color var(--hp-transition),
+    color var(--hp-transition);
+  box-sizing: border-box;
+}
+
+hp-toggle:last-child {
+  border-right: none;
+}
+
+/* Hover */
+hp-toggle:hover:not([aria-disabled="true"]):not([aria-pressed="true"]) {
+  background-color: var(--hp-bg-muted);
+  color: var(--hp-text);
+}
+
+/* Focus visible (Req 7.5) */
+hp-toggle:focus-visible {
+  outline: var(--hp-focus-outline-width) solid var(--hp-focus-outline-color);
+  outline-offset: -2px;
+}
+
+/* Pressed / Selected (Req 7.3) */
+hp-toggle[aria-pressed="true"] {
+  background-color: var(--hp-bg-muted);
+  color: var(--hp-text);
+}
+
+/* Disabled (Req 7.4) */
+hp-toggle[aria-disabled="true"] {
+  opacity: var(--hp-opacity-disabled);
+  cursor: not-allowed;
+}

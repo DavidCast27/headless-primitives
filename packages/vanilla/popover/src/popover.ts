@@ -3,9 +3,9 @@
  *
  * Floating content that opens on click, with focus management.
  */
-import { FocusTrap } from "@headless-primitives/utils";
+import { FocusTrap, HeadlessElement } from "@headless-primitives/utils";
 
-export class HeadlessPopover extends HTMLElement {
+export class HeadlessPopover extends HeadlessElement {
   private _trigger: HTMLElement | null = null;
   private _content: HTMLElement | null = null;
   private _isOpen = false;
@@ -14,6 +14,7 @@ export class HeadlessPopover extends HTMLElement {
   private _scrollParents: EventTarget[] = [];
 
   connectedCallback() {
+    super.connectedCallback();
     this._trigger = this.querySelector("hp-popover-trigger");
     this._content = this.querySelector("hp-popover-content");
 
@@ -25,6 +26,7 @@ export class HeadlessPopover extends HTMLElement {
   }
 
   disconnectedCallback() {
+    super.disconnectedCallback();
     this._removeGlobalListeners();
   }
 
@@ -149,7 +151,7 @@ export class HeadlessPopover extends HTMLElement {
     window.addEventListener("resize", this._handleScrollOrResize, { passive: true });
 
     this._focusTrap?.activate();
-    this.dispatchEvent(new CustomEvent("hp-open", { bubbles: true, composed: true }));
+    this.emit("open");
   }
 
   private _close() {
@@ -170,7 +172,7 @@ export class HeadlessPopover extends HTMLElement {
 
     this._removeGlobalListeners();
     this._focusTrap?.deactivate();
-    this.dispatchEvent(new CustomEvent("hp-close", { bubbles: true, composed: true }));
+    this.emit("close");
   }
 
   private _removeGlobalListeners() {
@@ -222,8 +224,9 @@ export class HeadlessPopover extends HTMLElement {
 /**
  * Popover Trigger - The element that opens/closes the popover.
  */
-export class HeadlessPopoverTrigger extends HTMLElement {
+export class HeadlessPopoverTrigger extends HeadlessElement {
   connectedCallback() {
+    super.connectedCallback();
     // Ensure it's focusable
     if (!this.hasAttribute("tabindex") && !this.hasAttribute("disabled")) {
       this.setAttribute("tabindex", "0");
@@ -234,8 +237,9 @@ export class HeadlessPopoverTrigger extends HTMLElement {
 /**
  * Popover Content - The floating content with focus trap.
  */
-export class HeadlessPopoverContent extends HTMLElement {
+export class HeadlessPopoverContent extends HeadlessElement {
   connectedCallback() {
+    super.connectedCallback();
     this.setAttribute("data-hp-component", "popover-content");
     if (!this.id) {
       this.id = `hp-popover-content-${Math.random().toString(36).slice(2, 9)}`;

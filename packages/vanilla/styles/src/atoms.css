@@ -1,0 +1,100 @@
+/**
+ * @headless-primitives/styles — Componentes Atómicos (Req 15)
+ *
+ * Separator, Progress, Label, Avatar.
+ */
+
+/* ============================================================
+ * hp-separator (Req 15.1)
+ * ============================================================ */
+
+hp-separator {
+  display: block;
+  border: none;
+  background-color: var(--hp-border);
+  /* Horizontal por defecto */
+  width: 100%;
+  height: 1px;
+  flex-shrink: 0;
+}
+
+hp-separator[aria-orientation="vertical"] {
+  width: 1px;
+  height: auto;
+  align-self: stretch;
+}
+
+/* ============================================================
+ * hp-progress + hp-progress-indicator (Req 15.2, 15.3)
+ * ============================================================ */
+
+hp-progress {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 8px;
+  background-color: var(--hp-bg-muted);
+  border-radius: var(--hp-radius-full);
+  overflow: hidden;
+}
+
+hp-progress-indicator {
+  display: block;
+  height: 100%;
+  background-color: var(--hp-accent);
+  border-radius: var(--hp-radius-full);
+  transition: width var(--hp-transition-slow) ease;
+}
+
+/* ============================================================
+ * hp-label (Req 15.4)
+ * ============================================================ */
+
+hp-label {
+  display: inline-block;
+  font-size: var(--hp-font-size-sm);
+  font-weight: var(--hp-font-weight-medium);
+  color: var(--hp-text-secondary);
+  line-height: 1.5;
+  cursor: default;
+}
+
+/* ============================================================
+ * hp-avatar (Req 15.5, 15.6)
+ * ============================================================ */
+
+hp-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--hp-radius-full);
+  background-color: var(--hp-bg-muted);
+  overflow: hidden;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+
+hp-avatar-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--hp-radius-full);
+}
+
+/* Fallback — iniciales centradas (Req 15.6) */
+hp-avatar-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  font-size: var(--hp-font-size-sm);
+  font-weight: var(--hp-font-weight-semibold);
+  color: var(--hp-text-secondary);
+  background-color: var(--hp-bg-muted);
+  border-radius: var(--hp-radius-full);
+}

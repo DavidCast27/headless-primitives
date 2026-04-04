@@ -1,0 +1,97 @@
+/**
+ * @headless-primitives/styles — hp-toast (Req 14)
+ *
+ * Notificaciones flotantes. Complementa base.css.
+ */
+
+/* Container fijo en esquina inferior derecha (Req 14.1) */
+hp-toast-container {
+  /* display:block ya definido en base.css */
+  position: fixed;
+  bottom: var(--hp-space-4);
+  right: var(--hp-space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--hp-space-2);
+  z-index: var(--hp-z-index-overlay-content, 1100);
+  width: min(calc(100vw - 2rem), 380px);
+  pointer-events: none;
+}
+
+/* Toast individual (Req 14.2) */
+hp-toast {
+  display: block;
+  padding: var(--hp-space-3) var(--hp-space-4);
+  background-color: var(--hp-surface);
+  border: 1px solid var(--hp-border);
+  border-radius: var(--hp-radius-md);
+  box-shadow: var(--hp-shadow-lg);
+  color: var(--hp-text);
+  font-size: var(--hp-font-size-sm);
+  pointer-events: auto;
+  /* Animación de entrada — slide + fade (Req 14.3) */
+  animation: hp-toast-in var(--hp-transition-slow) ease forwards;
+}
+
+/* Animación de salida (Req 14.4) */
+hp-toast[data-state="closed"] {
+  animation: hp-toast-out var(--hp-transition-slow) ease forwards;
+}
+
+/* Título (Req 14.5) */
+hp-toast-title {
+  display: block;
+  font-weight: var(--hp-font-weight-semibold);
+  color: var(--hp-text);
+  margin-bottom: var(--hp-space-1);
+}
+
+/* Descripción (Req 14.5) */
+hp-toast-description {
+  display: block;
+  color: var(--hp-text-secondary);
+  font-size: var(--hp-font-size-xs);
+}
+
+/* Botón de cierre del toast */
+hp-toast-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  float: right;
+  margin-left: var(--hp-space-2);
+  width: 20px;
+  height: 20px;
+  color: var(--hp-text-secondary);
+  background-color: transparent;
+  border: none;
+  border-radius: var(--hp-radius-sm);
+  cursor: pointer;
+  transition: background-color var(--hp-transition);
+}
+
+hp-toast-close:hover {
+  background-color: var(--hp-bg-muted);
+}
+
+@keyframes hp-toast-in {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes hp-toast-out {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}

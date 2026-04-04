@@ -1,0 +1,62 @@
+/**
+ * @headless-primitives/styles — hp-radio-group / hp-radio (Req 6)
+ *
+ * Radio group en columna. Radio individual circular.
+ */
+
+/* Group layout (Req 6.5) */
+hp-radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hp-space-2);
+}
+
+/* Radio item circular (Req 6.1) */
+hp-radio {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 18px;
+  height: 18px;
+  background-color: var(--hp-surface);
+  border: 1.5px solid var(--hp-border-strong);
+  border-radius: var(--hp-radius-full);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition:
+    background-color var(--hp-transition),
+    border-color var(--hp-transition);
+  box-sizing: border-box;
+}
+
+/* Hover */
+hp-radio:hover:not([aria-disabled="true"]) {
+  border-color: var(--hp-accent);
+}
+
+/* Focus visible (Req 6.4) */
+hp-radio:focus-visible {
+  outline: var(--hp-focus-outline-width) solid var(--hp-focus-outline-color);
+  outline-offset: 2px;
+}
+
+/* Checked — punto central + borde acento (Req 6.2) */
+hp-radio[aria-checked="true"] {
+  border-color: var(--hp-accent);
+}
+
+hp-radio[aria-checked="true"]::after {
+  content: "";
+  display: block;
+  width: 8px;
+  height: 8px;
+  background-color: var(--hp-accent);
+  border-radius: var(--hp-radius-full);
+}
+
+/* Disabled (Req 6.3) */
+hp-radio[aria-disabled="true"] {
+  opacity: var(--hp-opacity-disabled);
+  cursor: not-allowed;
+}

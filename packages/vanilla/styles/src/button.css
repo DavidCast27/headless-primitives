@@ -1,0 +1,68 @@
+/**
+ * @headless-primitives/styles — hp-button (Req 3)
+ *
+ * Especificidad mínima: selector de elemento único.
+ * Sin !important. Sobrescribible por el Consumer.
+ */
+
+hp-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--hp-space-2);
+  padding: var(--hp-space-2) var(--hp-space-4);
+  font-family: inherit;
+  font-size: var(--hp-font-size-sm);
+  font-weight: var(--hp-font-weight-medium);
+  line-height: 1.5;
+  color: var(--hp-text);
+  background-color: var(--hp-surface);
+  border: 1px solid var(--hp-border);
+  border-radius: var(--hp-radius);
+  cursor: pointer;
+  user-select: none;
+  text-decoration: none;
+  transition:
+    background-color var(--hp-transition),
+    border-color var(--hp-transition),
+    color var(--hp-transition),
+    box-shadow var(--hp-transition),
+    opacity var(--hp-transition);
+  box-sizing: border-box;
+}
+
+/* Hover (Req 3.5) */
+hp-button:hover:not([disabled]):not([aria-disabled="true"]) {
+  background-color: var(--hp-bg-muted);
+  border-color: var(--hp-border-strong);
+}
+
+/* Active (Req 3.5) */
+hp-button:active:not([disabled]):not([aria-disabled="true"]) {
+  background-color: var(--hp-bg-subtle);
+}
+
+/* Focus visible (Req 3.2) */
+hp-button:focus-visible {
+  outline: var(--hp-focus-outline-width) solid var(--hp-focus-outline-color);
+  outline-offset: 2px;
+}
+
+/* Disabled (Req 3.3) */
+hp-button[disabled],
+hp-button[aria-disabled="true"] {
+  opacity: var(--hp-opacity-disabled);
+  cursor: not-allowed;
+}
+
+/* Pressed / Toggle activo (Req 3.4) */
+hp-button[aria-pressed="true"] {
+  background-color: var(--hp-accent);
+  color: var(--hp-accent-foreground);
+  border-color: var(--hp-accent);
+}
+
+hp-button[aria-pressed="true"]:hover:not([disabled]):not([aria-disabled="true"]) {
+  background-color: var(--hp-accent-hover);
+  border-color: var(--hp-accent-hover);
+}

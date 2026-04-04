@@ -3,9 +3,9 @@
  *
  * Modal overlay with focus trap and scroll lock.
  */
-import { FocusTrap } from "@headless-primitives/utils";
+import { FocusTrap, HeadlessElement } from "@headless-primitives/utils";
 
-export class HeadlessDialog extends HTMLElement {
+export class HeadlessDialog extends HeadlessElement {
   private _trigger: HTMLElement | null = null;
   private _content: HTMLElement | null = null;
   private _backdrop: HTMLElement | null = null;
@@ -15,6 +15,7 @@ export class HeadlessDialog extends HTMLElement {
   private _previousScrollPosition = 0;
 
   connectedCallback() {
+    super.connectedCallback();
     this._isAlert = this.hasAttribute("data-alert");
     this._trigger = this.querySelector("hp-dialog-trigger");
     this._content = this.querySelector("hp-dialog-content");
@@ -90,12 +91,7 @@ export class HeadlessDialog extends HTMLElement {
 
     this._focusTrap?.activate();
 
-    this.dispatchEvent(
-      new CustomEvent("hp-open", {
-        bubbles: true,
-        composed: true,
-      }),
-    );
+    this.emit("open");
   };
 
   private _close = () => {
@@ -122,12 +118,7 @@ export class HeadlessDialog extends HTMLElement {
 
     this._focusTrap?.deactivate();
 
-    this.dispatchEvent(
-      new CustomEvent("hp-close", {
-        bubbles: true,
-        composed: true,
-      }),
-    );
+    this.emit("close");
   };
 
   /**
@@ -160,8 +151,9 @@ export class HeadlessDialog extends HTMLElement {
 /**
  * Dialog Trigger - The element that opens the dialog.
  */
-export class HeadlessDialogTrigger extends HTMLElement {
+export class HeadlessDialogTrigger extends HeadlessElement {
   connectedCallback() {
+    super.connectedCallback();
     // Ensure it's focusable
     if (!this.hasAttribute("tabindex") && !this.hasAttribute("disabled")) {
       this.setAttribute("tabindex", "0");
@@ -172,8 +164,9 @@ export class HeadlessDialogTrigger extends HTMLElement {
 /**
  * Dialog Content - The modal content with focus trap.
  */
-export class HeadlessDialogContent extends HTMLElement {
+export class HeadlessDialogContent extends HeadlessElement {
   connectedCallback() {
+    super.connectedCallback();
     this.setAttribute("data-hp-component", "dialog-content");
     if (!this.id) {
       this.id = `hp-dialog-content-${Math.random().toString(36).slice(2, 9)}`;
@@ -181,8 +174,9 @@ export class HeadlessDialogContent extends HTMLElement {
   }
 }
 
-export class HeadlessDialogBackdrop extends HTMLElement {
+export class HeadlessDialogBackdrop extends HeadlessElement {
   connectedCallback() {
+    super.connectedCallback();
     this.setAttribute("data-hp-component", "dialog-backdrop");
   }
 }

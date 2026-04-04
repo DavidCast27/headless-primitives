@@ -1,0 +1,77 @@
+/**
+ * @headless-primitives/styles — hp-switch (Req 4)
+ *
+ * Track (pista) con forma de píldora.
+ * Thumb mediante pseudo-elemento ::after.
+ */
+
+hp-switch {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  width: 44px;
+  height: 24px;
+  background-color: var(--hp-bg-muted);
+  border: 1px solid var(--hp-border);
+  border-radius: var(--hp-radius-full);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition:
+    background-color var(--hp-transition),
+    border-color var(--hp-transition);
+  box-sizing: border-box;
+}
+
+/* Thumb (Req 4.2) */
+hp-switch::after {
+  content: "";
+  position: absolute;
+  left: 3px;
+  width: 16px;
+  height: 16px;
+  background-color: var(--hp-text-secondary);
+  border-radius: var(--hp-radius-full);
+  transition:
+    transform var(--hp-transition),
+    background-color var(--hp-transition);
+  box-shadow: var(--hp-shadow-sm);
+}
+
+/* Checked — thumb al extremo derecho (Req 4.3) */
+hp-switch[aria-checked="true"] {
+  background-color: var(--hp-accent);
+  border-color: var(--hp-accent);
+}
+
+hp-switch[aria-checked="true"]::after {
+  transform: translateX(20px);
+  background-color: var(--hp-accent-foreground);
+}
+
+/* Unchecked — thumb al extremo izquierdo (Req 4.4) */
+hp-switch[aria-checked="false"]::after,
+hp-switch:not([aria-checked])::after {
+  transform: translateX(0);
+}
+
+/* Hover */
+hp-switch:hover:not([aria-disabled="true"]) {
+  border-color: var(--hp-border-strong);
+}
+
+hp-switch[aria-checked="true"]:hover:not([aria-disabled="true"]) {
+  background-color: var(--hp-accent-hover);
+  border-color: var(--hp-accent-hover);
+}
+
+/* Focus visible */
+hp-switch:focus-visible {
+  outline: var(--hp-focus-outline-width) solid var(--hp-focus-outline-color);
+  outline-offset: 2px;
+}
+
+/* Disabled (Req 4.5) — complementa pointer-events:none de base.css */
+hp-switch[aria-disabled="true"] {
+  opacity: var(--hp-opacity-disabled);
+  cursor: not-allowed;
+}

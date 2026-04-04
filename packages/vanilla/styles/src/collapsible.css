@@ -1,0 +1,50 @@
+/**
+ * @headless-primitives/styles — hp-collapsible (Req 8)
+ *
+ * Sección expandible con trigger de ancho completo.
+ */
+
+/* Trigger — botón de ancho completo (Req 8.1) */
+hp-collapsible-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: var(--hp-space-3) var(--hp-space-4);
+  font-family: inherit;
+  font-size: var(--hp-font-size-sm);
+  font-weight: var(--hp-font-weight-medium);
+  color: var(--hp-text);
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  user-select: none;
+  text-align: left;
+  transition: background-color var(--hp-transition);
+  box-sizing: border-box;
+}
+
+hp-collapsible-trigger:hover {
+  background-color: var(--hp-bg-muted);
+}
+
+/* Focus visible (Req 8.4) */
+hp-collapsible-trigger:focus-visible {
+  outline: var(--hp-focus-outline-width) solid var(--hp-focus-outline-color);
+  outline-offset: -2px;
+}
+
+/* Ícono indicador — rotación al estar expandido (Req 8.2) */
+hp-collapsible-trigger[aria-expanded="true"] .hp-icon,
+hp-collapsible-trigger[aria-expanded="true"] [data-hp-icon] {
+  transform: rotate(180deg);
+}
+
+/* Content (Req 8.3) */
+hp-collapsible-content {
+  display: block;
+  padding: var(--hp-space-3) var(--hp-space-4);
+  border-top: 1px solid var(--hp-border);
+  color: var(--hp-text-secondary);
+  font-size: var(--hp-font-size-sm);
+}

@@ -1,0 +1,69 @@
+/**
+ * @headless-primitives/styles — hp-tabs (Req 10)
+ *
+ * Sistema de pestañas con línea indicadora inferior.
+ * Complementa [data-hp-panel][data-state="unselected"] de base.css.
+ */
+
+/* Tab list — fila con borde inferior (Req 10.1) */
+hp-tab-list {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  border-bottom: 1px solid var(--hp-border);
+  gap: 0;
+}
+
+/* Tab individual (Req 10.2) */
+hp-tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--hp-space-2) var(--hp-space-4);
+  font-family: inherit;
+  font-size: var(--hp-font-size-sm);
+  font-weight: var(--hp-font-weight-medium);
+  color: var(--hp-text-secondary);
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  transition:
+    color var(--hp-transition),
+    border-color var(--hp-transition);
+  box-sizing: border-box;
+}
+
+hp-tab:hover:not([aria-disabled="true"]):not([aria-selected="true"]) {
+  color: var(--hp-text);
+  background-color: var(--hp-bg-muted);
+}
+
+/* Focus visible (Req 10.6) */
+hp-tab:focus-visible {
+  outline: var(--hp-focus-outline-width) solid var(--hp-focus-outline-color);
+  outline-offset: -2px;
+}
+
+/* Selected — borde inferior acento + texto primario (Req 10.3) */
+hp-tab[aria-selected="true"] {
+  color: var(--hp-accent);
+  border-bottom-color: var(--hp-accent);
+}
+
+/* Disabled (Req 10.4) */
+hp-tab[aria-disabled="true"] {
+  opacity: var(--hp-opacity-disabled);
+  cursor: not-allowed;
+}
+
+/* Panel — padding interno (Req 10.5) */
+hp-tab-panel {
+  display: block;
+  padding: var(--hp-space-4);
+  color: var(--hp-text);
+  font-size: var(--hp-font-size-sm);
+}
