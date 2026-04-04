@@ -1,281 +1,162 @@
-/**
- * HeadlessCollapsible
- * Un primitivo que extiende HTMLElement para proporcionar el patrón WAI-ARIA Disclosure,
- * permitiendo mostrar/ocultar contenido con accesibilidad nativa.
- */
-export class HeadlessCollapsible extends HTMLElement {
-  static readonly observedAttributes = ["open", "disabled"];
+import { HeadlessElement, customElement } from "@headless-primitives/utils";
+import { property } from "lit/decorators.js";
+
+@customElement("hp-collapsible")
+export class HeadlessCollapsible extends HeadlessElement {
+  @property({ type: Boolean, reflect: true })
+  get open() {
+    return this._open;
+  }
+  set open(val: boolean) {
+    const old = this._open;
+    this._open = val;
+    this.requestUpdate("open", old);
+    if (this.isConnected) this._syncState(val, this.disabled);
+  }
+
+  @property({ type: Boolean, reflect: true })
+  get disabled() {
+    return this._disabled;
+  }
+  set disabled(val: boolean) {
+    const old = this._disabled;
+    this._disabled = val;
+    this.requestUpdate("disabled", old);
+    if (this.isConnected) this._syncState(this.open, val);
+  }
 
   private _open = false;
   private _disabled = false;
-  private _observer: MutationObserver | null = null;
+
   private _triggerId = "";
   private _contentId = "";
 
-  constructor() {
-    super();
-    this.addEventListener("hp-trigger-click", this._handleTriggerClick.bind(this) as EventListener);
-    this._observer = new MutationObserver(() => {
-      this._updateComponents();
-    });
-  }
-
   connectedCallback() {
-    // Parse initial open attribute
-    this._open = this.hasAttribute("open");
-
-    // Parse disabled attribute
-    this._disabled = this.hasAttribute("disabled");
-
-    // Generate unique IDs for trigger and content relationship
-    this._triggerId = this._triggerId || `collapsible-trigger-${this._generateId()}`;
-    this._contentId = this._contentId || `collapsible-content-${this._generateId()}`;
-
-    // Start observing DOM changes
-    this._observer?.observe(this, { childList: true, subtree: true });
-
-    // Update components immediately and then after DOM is ready
-    this._updateComponents();
-    requestAnimationFrame(() => {
-      this._updateComponents();
-    });
+    super.connectedCallback();
+    this.setAttribute("data-hp-component", "collapsible");
+    this._triggerId = `hp-collapsible-trigger-${this.hpId}`;
+    this._contentId = `hp-collapsible-content-${this.hpId}`;
+    this.addEventListener("hp-trigger-click", this._handleTriggerClick as EventListener);
+    this.addEventListener("slotchange", () => this._sync());
+    requestAnimationFrame(() => this._sync());
   }
 
   disconnectedCallback() {
-    this._observer?.disconnect();
+    super.disconnectedCallback();
+    this.removeEventListener("hp-trigger-click", this._handleTriggerClick as EventListener);
   }
 
-  attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null) {
-    if (oldValue === newValue) return;
-
-    switch (name) {
-      case "open":
-        this._open = newValue !== null;
-        this._updateComponents();
-        break;
-      case "disabled":
-        this._disabled = newValue !== null;
-        this._updateComponents();
-        break;
+  protected updated(changed: Map<string, unknown>) {
+    if (changed.has("open") || changed.has("disabled")) {
+      this._syncState(this.open, this.disabled);
     }
   }
 
-  get open(): boolean {
-    return this._open;
-  }
-
-  set open(val: boolean) {
-    if (val) {
-      this.setAttribute("open", "");
-    } else {
-      this.removeAttribute("open");
+  attributeChangedCallback(name: string, old: string | null, next: string | null) {
+    super.attributeChangedCallback(name, old, next);
+    if ((name === "open" || name === "disabled") && old !== next && this.isConnected) {
+      const open = name === "open" ? next !== null : this.open;
+      const disabled = name === "disabled" ? next !== null : this.disabled;
+      this._syncState(open, disabled);
     }
   }
 
-  get disabled(): boolean {
-    return this._disabled;
+  private _handleTriggerClick = () => {
+    if (this.disabled) return;
+    const newOpen = !this.open;
+    this.open = newOpen;
+    this._syncState(newOpen, this.disabled);
+    this.emit(newOpen ? "open" : "close", { open: newOpen });
+    this.emit("change", { open: newOpen });
+  };
+
+  private _sync() {
+    this._syncState(this.hasAttribute("open"), this.hasAttribute("disabled"));
   }
 
-  set disabled(val: boolean) {
-    if (val) {
-      this.setAttribute("disabled", "");
-    } else {
-      this.removeAttribute("disabled");
-    }
-  }
-
-  private _generateId(): string {
-    return Math.random().toString(36).substr(2, 9);
-  }
-
-  private _updateComponents() {
-    const trigger = this.querySelector(
-      "hp-collapsible-trigger",
-    ) as HeadlessCollapsibleTrigger | null;
-    const content = this.querySelector(
-      "hp-collapsible-content",
-    ) as HeadlessCollapsibleContent | null;
+  private _syncState(open: boolean, disabled: boolean) {
+    // Try both tag name and data attribute for happy-dom compatibility
+    let trigger = this.querySelector<HTMLElement>("hp-collapsible-trigger");
+    if (!trigger)
+      trigger = this.querySelector<HTMLElement>('[data-hp-component="collapsible-trigger"]');
+    let content = this.querySelector<HTMLElement>("hp-collapsible-content");
+    if (!content)
+      content = this.querySelector<HTMLElement>('[data-hp-component="collapsible-content"]');
 
     if (trigger) {
-      // Set IDs for ARIA relationship
-      if (!trigger.hasAttribute("id")) {
-        trigger.setAttribute("id", this._triggerId);
-      }
-
-      // Set aria-controls to reference content
-      if (content && !trigger.hasAttribute("aria-controls")) {
-        trigger.setAttribute("aria-controls", this._contentId);
-      }
-
-      // Set aria-expanded based on open state
-      trigger.setAttribute("aria-expanded", String(this._open));
-
-      // Inherit disabled state
-      if (this._disabled) {
+      if (!trigger.id) trigger.id = this._triggerId;
+      trigger.setAttribute("aria-expanded", String(open));
+      trigger.setAttribute("aria-controls", this._contentId);
+      if (disabled) {
         trigger.setAttribute("disabled", "");
+        trigger.setAttribute("aria-disabled", "true");
       } else {
         trigger.removeAttribute("disabled");
+        trigger.removeAttribute("aria-disabled");
       }
     }
 
     if (content) {
-      // Set ID for ARIA relationship
-      if (!content.hasAttribute("id")) {
-        content.setAttribute("id", this._contentId);
-      }
-
-      // Set aria-labelledby to reference trigger
-      if (trigger && !content.hasAttribute("aria-labelledby")) {
-        content.setAttribute("aria-labelledby", this._triggerId);
-      }
-
-      // Set role for accessibility
-      if (!content.hasAttribute("role")) {
-        content.setAttribute("role", "region");
-      }
-
-      // Show/hide content based on open state
-      if (this._open) {
-        content.removeAttribute("hidden");
-      } else {
-        content.setAttribute("hidden", "");
-      }
+      if (!content.id) content.id = this._contentId;
+      if (!content.hasAttribute("role")) content.setAttribute("role", "region");
+      if (trigger?.id) content.setAttribute("aria-labelledby", trigger.id);
+      content.setAttribute("data-hp-panel", "");
+      content.setAttribute("data-state", open ? "open" : "closed");
     }
-  }
-
-  private _handleTriggerClick() {
-    if (this._disabled) return;
-
-    this._open = !this._open;
-    if (this._open) {
-      this.setAttribute("open", "");
-    } else {
-      this.removeAttribute("open");
-    }
-    this._updateComponents();
-    this._dispatchChangeEvent();
-  }
-
-  private _dispatchChangeEvent() {
-    const eventType = this._open ? "hp-open" : "hp-close";
-
-    this.dispatchEvent(
-      new CustomEvent(eventType, {
-        detail: { value: this._open },
-        bubbles: true,
-      }),
-    );
-
-    this.dispatchEvent(
-      new CustomEvent("hp-change", {
-        detail: { open: this._open },
-        bubbles: true,
-      }),
-    );
   }
 }
 
-/**
- * HeadlessCollapsibleTrigger
- * El botón que controla la visibilidad del contenido del collapsible.
- */
-export class HeadlessCollapsibleTrigger extends HTMLElement {
-  static readonly observedAttributes = ["disabled"];
-
-  private _disabled = false;
-
-  constructor() {
-    super();
-    this.addEventListener("click", this._handleClick.bind(this));
-    this.addEventListener("keydown", this._handleKeyDown.bind(this));
-  }
+@customElement("hp-collapsible-trigger")
+export class HeadlessCollapsibleTrigger extends HeadlessElement {
+  @property({ type: Boolean, reflect: true }) disabled = false;
 
   connectedCallback() {
-    if (!this.hasAttribute("role")) {
-      this.setAttribute("role", "button");
-    }
-
-    if (!this.hasAttribute("tabindex") && !this.hasAttribute("disabled")) {
-      this.setAttribute("tabindex", "0");
-    }
-
-    this._updateAria();
+    super.connectedCallback();
+    this.setAttribute("data-hp-component", "collapsible-trigger");
+    if (!this.hasAttribute("role")) this.setAttribute("role", "button");
+    if (!this.disabled) this.setAttribute("tabindex", "0");
+    this.addEventListener("click", this._handleClick);
+    this.addEventListener("keydown", this._handleKeyDown);
   }
 
-  attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null) {
-    if (oldValue === newValue) return;
-
-    switch (name) {
-      case "disabled":
-        this._disabled = newValue !== null;
-        if (this._disabled) {
-          this.setAttribute("aria-disabled", "true");
-          this.removeAttribute("tabindex");
-        } else {
-          this.removeAttribute("aria-disabled");
-          this.setAttribute("tabindex", "0");
-        }
-        break;
-    }
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this.removeEventListener("click", this._handleClick);
+    this.removeEventListener("keydown", this._handleKeyDown);
   }
 
-  get disabled(): boolean {
-    return this._disabled;
-  }
-
-  set disabled(val: boolean) {
-    if (val) {
-      this.setAttribute("disabled", "");
-    } else {
-      this.removeAttribute("disabled");
+  attributeChangedCallback(name: string, old: string | null, next: string | null) {
+    super.attributeChangedCallback(name, old, next);
+    if (name === "disabled") {
+      if (next !== null) {
+        this.setAttribute("aria-disabled", "true");
+        this.removeAttribute("tabindex");
+      } else {
+        this.removeAttribute("aria-disabled");
+        this.setAttribute("tabindex", "0");
+      }
     }
   }
 
-  private _handleClick() {
-    if (this._disabled) return;
+  private _handleClick = () => {
+    if (this.disabled) return;
+    this.dispatchEvent(new CustomEvent("hp-trigger-click", { bubbles: true }));
+  };
 
-    this.dispatchEvent(
-      new CustomEvent("hp-trigger-click", {
-        bubbles: true,
-      }),
-    );
-  }
-
-  private _handleKeyDown(event: KeyboardEvent) {
-    if (this._disabled) return;
-
-    if (event.key === "Enter" || event.key === " ") {
-      event.preventDefault();
+  private _handleKeyDown = (e: KeyboardEvent) => {
+    if (this.disabled) return;
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
       this._handleClick();
     }
-  }
-
-  private _updateAria() {
-    // aria-expanded and aria-controls are managed by the parent HeadlessCollapsible
-  }
+  };
 }
 
-/**
- * HeadlessCollapsibleContent
- * El panel de contenido que se muestra u oculta.
- */
-export class HeadlessCollapsibleContent extends HTMLElement {
+@customElement("hp-collapsible-content")
+export class HeadlessCollapsibleContent extends HeadlessElement {
   connectedCallback() {
-    if (!this.hasAttribute("role")) {
-      this.setAttribute("role", "region");
-    }
-  }
-}
-
-// Registrar los elementos si no existen (importante para evitar errores en SSR/HMR)
-if (typeof window !== "undefined") {
-  if (!customElements.get("hp-collapsible")) {
-    customElements.define("hp-collapsible", HeadlessCollapsible);
-  }
-  if (!customElements.get("hp-collapsible-trigger")) {
-    customElements.define("hp-collapsible-trigger", HeadlessCollapsibleTrigger);
-  }
-  if (!customElements.get("hp-collapsible-content")) {
-    customElements.define("hp-collapsible-content", HeadlessCollapsibleContent);
+    super.connectedCallback();
+    this.setAttribute("data-hp-component", "collapsible-content");
+    if (!this.hasAttribute("role")) this.setAttribute("role", "region");
   }
 }

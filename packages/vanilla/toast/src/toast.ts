@@ -15,27 +15,16 @@ export class HeadlessToast extends HTMLElement {
   private _closeTimeout: number | null = null;
 
   connectedCallback() {
-    // Apply default styles
-    this._applyDefaultStyles();
-
-    // Handle close button if present
-    const closeBtn = this.querySelector("hp-toast-close");
-    if (closeBtn) {
-      closeBtn.addEventListener("click", () => this._close());
-    }
-
-    // Set ARIA attributes
+    this.setAttribute("data-hp-component", "toast");
     this.setAttribute("role", "alert");
     this.setAttribute("aria-live", "polite");
     this.setAttribute("aria-atomic", "true");
 
-    // Parse duration from attribute if set
-    const duration = this.getAttribute("data-duration");
-    if (duration && !isNaN(Number(duration))) {
-      this._duration = Number(duration);
-    }
+    const closeBtn = this.querySelector("hp-toast-close");
+    if (closeBtn) closeBtn.addEventListener("click", () => this._close());
 
-    // Start auto-dismiss timer if duration > 0
+    const duration = this.getAttribute("data-duration");
+    if (duration && !isNaN(Number(duration))) this._duration = Number(duration);
     if (this._duration > 0) {
       this._closeTimeout = window.setTimeout(() => this._close(), this._duration);
     }
@@ -47,19 +36,6 @@ export class HeadlessToast extends HTMLElement {
       clearTimeout(this._closeTimeout);
       this._closeTimeout = null;
     }
-  }
-
-  private _applyDefaultStyles() {
-    this.style.display = "flex";
-    this.style.alignItems = "center";
-    this.style.gap = "0.75rem";
-    this.style.padding = "0.75rem 1rem";
-    this.style.borderRadius = "6px";
-    this.style.fontFamily = "inherit";
-    this.style.fontSize = "0.875rem";
-    this.style.lineHeight = "1.5";
-    this.style.zIndex = "9999";
-    this.style.animation = "slideIn 0.2s ease-out";
   }
 
   private _close = () => {
@@ -102,21 +78,16 @@ export class HeadlessToast extends HTMLElement {
  */
 export class HeadlessToastContainer extends HTMLElement {
   connectedCallback() {
+    this.setAttribute("data-hp-component", "toast-container");
     this.style.position = "fixed";
     this.style.display = "flex";
     this.style.flexDirection = "column";
     this.style.gap = "0.5rem";
     this.style.pointerEvents = "none";
-    this.style.zIndex = "9999";
+    this.style.zIndex = "var(--hp-z-index-overlay-content, 1100)";
 
-    // Default position: top-right
     const position = this.getAttribute("data-position") || "top-right";
     this._applyPosition(position);
-
-    // Track child toasts and allow pointer events on them
-    this.addEventListener("hp-dismiss", () => {
-      // Child toast will remove itself, container stays
-    });
   }
 
   private _applyPosition(position: string) {

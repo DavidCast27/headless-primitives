@@ -57,15 +57,52 @@
   z-index: var(--hp-z-index-popover);
 }
 
-/* 4. Accesibilidad y Foco */
+/* C. Inputs (Switch, Checkbox) */
+[data-hp-component="switch"][disabled],
+[data-hp-component="checkbox"][disabled],
+[data-hp-component="radio"][disabled] {
+  pointer-events: none;
+}
+
+/* Tooltip content visibility */
+[data-hp-tooltip-content][data-state="closed"] {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+[data-hp-tooltip-content][data-state="open"] {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Block display for container elements — custom elements are inline by default */
+hp-tabs,
+hp-tab-list,
+hp-tab-panel,
+hp-accordion,
+hp-accordion-item,
+hp-accordion-content,
+hp-collapsible,
+hp-collapsible-content,
+hp-toggle-group,
+hp-field,
+hp-field-label,
+hp-field-description,
+hp-field-error,
+hp-field-control,
+hp-dialog,
+hp-dialog-content,
+hp-dialog-backdrop,
+hp-popover,
+hp-toast-container {
+  display: block;
+}
 
 [data-hp-component]:focus-visible {
   outline: var(--hp-focus-outline-width) solid var(--hp-focus-outline-color);
   outline-offset: 2px;
-}
-
-[data-hp-component] {
-  display: block;
 }
 
 .hp-visually-hidden {

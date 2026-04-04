@@ -176,9 +176,23 @@ importers:
         specifier: ^8.0.3
         version: 8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@25.5.0)(jiti@2.6.1)(yaml@2.8.3)
 
-  packages/vanilla/accordion: {}
+  packages/vanilla/accordion:
+    dependencies:
+      '@headless-primitives/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lit:
+        specifier: ^3.3.2
+        version: 3.3.2
 
   packages/vanilla/avatar:
+    dependencies:
+      '@headless-primitives/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lit:
+        specifier: ^3.3.2
+        version: 3.3.2
     devDependencies:
       happy-dom:
         specifier: ^14.12.3
@@ -190,11 +204,32 @@ importers:
         specifier: ^2.0.5
         version: 2.1.9(@types/node@25.5.0)(happy-dom@14.12.3)(jsdom@29.0.1)(lightningcss@1.32.0)
 
-  packages/vanilla/button: {}
+  packages/vanilla/button:
+    dependencies:
+      '@headless-primitives/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lit:
+        specifier: ^3.3.2
+        version: 3.3.2
 
-  packages/vanilla/checkbox: {}
+  packages/vanilla/checkbox:
+    dependencies:
+      '@headless-primitives/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lit:
+        specifier: ^3.3.2
+        version: 3.3.2
 
-  packages/vanilla/collapsible: {}
+  packages/vanilla/collapsible:
+    dependencies:
+      '@headless-primitives/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lit:
+        specifier: ^3.3.2
+        version: 3.3.2
 
   packages/vanilla/dialog:
     dependencies:
@@ -213,6 +248,13 @@ importers:
         version: 2.1.9(@types/node@25.5.0)(happy-dom@14.12.3)(jsdom@29.0.1)(lightningcss@1.32.0)
 
   packages/vanilla/field:
+    dependencies:
+      '@headless-primitives/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lit:
+        specifier: ^3.3.2
+        version: 3.3.2
     devDependencies:
       happy-dom:
         specifier: ^14.12.3
@@ -225,6 +267,13 @@ importers:
         version: 2.1.9(@types/node@25.5.0)(happy-dom@14.12.3)(jsdom@29.0.1)(lightningcss@1.32.0)
 
   packages/vanilla/label:
+    dependencies:
+      '@headless-primitives/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lit:
+        specifier: ^3.3.2
+        version: 3.3.2
     devDependencies:
       happy-dom:
         specifier: ^14.12.3
@@ -253,6 +302,13 @@ importers:
         version: 2.1.9(@types/node@25.5.0)(happy-dom@14.12.3)(jsdom@29.0.1)(lightningcss@1.32.0)
 
   packages/vanilla/progress:
+    dependencies:
+      '@headless-primitives/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lit:
+        specifier: ^3.3.2
+        version: 3.3.2
     devDependencies:
       happy-dom:
         specifier: ^14.12.3
@@ -269,8 +325,18 @@ importers:
       '@headless-primitives/utils':
         specifier: workspace:*
         version: link:../utils
+      lit:
+        specifier: ^3.3.2
+        version: 3.3.2
 
   packages/vanilla/separator:
+    dependencies:
+      '@headless-primitives/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lit:
+        specifier: ^3.3.2
+        version: 3.3.2
     devDependencies:
       happy-dom:
         specifier: ^14.12.3
@@ -282,7 +348,14 @@ importers:
         specifier: ^2.0.5
         version: 2.1.9(@types/node@25.5.0)(happy-dom@14.12.3)(jsdom@29.0.1)(lightningcss@1.32.0)
 
-  packages/vanilla/switch: {}
+  packages/vanilla/switch:
+    dependencies:
+      '@headless-primitives/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lit:
+        specifier: ^3.3.2
+        version: 3.3.2
 
   packages/vanilla/tabs:
     dependencies:
@@ -305,9 +378,23 @@ importers:
         specifier: ^2.0.5
         version: 2.1.9(@types/node@25.5.0)(happy-dom@14.12.3)(jsdom@29.0.1)(lightningcss@1.32.0)
 
-  packages/vanilla/toggle-group: {}
+  packages/vanilla/toggle-group:
+    dependencies:
+      '@headless-primitives/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lit:
+        specifier: ^3.3.2
+        version: 3.3.2
 
   packages/vanilla/tooltip:
+    dependencies:
+      '@headless-primitives/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lit:
+        specifier: ^3.3.2
+        version: 3.3.2
     devDependencies:
       happy-dom:
         specifier: ^14.12.3

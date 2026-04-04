@@ -8,6 +8,11 @@ hp-tooltip-trigger {
   display: inline-block;
 }
 
+/* Visibility controlled by data-state (set by the component) */
+hp-tooltip-content[data-state="closed"] {
+  display: none;
+}
+
 .tooltip-content {
   position: absolute;
   background-color: #1f2937;
@@ -45,6 +50,7 @@ hp-tooltip-trigger {
     opacity: 0;
     transform: translateX(-50%) translateY(4px);
   }
+
   to {
     opacity: 1;
     transform: translateX(-50%) translateY(0);

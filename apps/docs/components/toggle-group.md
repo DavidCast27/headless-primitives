@@ -79,9 +79,7 @@ pnpm add @headless-primitives/toggle-group
 }
 
 /* Máxima especificidad para asegurar que se aplique */
-.hp-demo-card .demo-toggle[pressed="true"],
-.hp-demo-card .demo-toggle[pressed],
-.hp-demo-card .demo-toggle[data-pressed="true"] {
+.hp-demo-card .demo-toggle[data-state="on"] {
   background: var(--vp-c-brand-1) !important;
   color: white !important;
   border-color: var(--vp-c-brand-2) !important;
@@ -159,10 +157,8 @@ pnpm add @headless-primitives/toggle-group
   outline-offset: 2px;
 }
 
-/* Importante: el atributo "pressed" es booleano (presencia/ausencia) */
-.toggle[pressed],
-.toggle[pressed="true"],
-.toggle[data-pressed="true"] {
+/* El componente setea data-state="on" cuando está activo */
+.toggle[data-state="on"] {
   background: #3b82f6;
   color: white;
 }
@@ -186,19 +182,19 @@ pnpm add @headless-primitives/toggle-group
 <hp-toggle-group type="single" class="flex gap-0.5 border border-gray-300 rounded-md p-0.5">
   <hp-toggle
     value="bold"
-    class="flex items-center justify-center min-w-[2rem] h-8 px-2 rounded font-semibold text-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 data-[pressed=true]:bg-blue-600 data-[pressed=true]:text-white disabled:opacity-50 disabled:cursor-not-allowed"
+    class="flex items-center justify-center min-w-[2rem] h-8 px-2 rounded font-semibold text-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 data-[state=on]:bg-blue-600 data-[state=on]:text-white disabled:opacity-50 disabled:cursor-not-allowed"
   >
     B
   </hp-toggle>
   <hp-toggle
     value="italic"
-    class="flex items-center justify-center min-w-[2rem] h-8 px-2 rounded font-semibold text-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 data-[pressed=true]:bg-blue-600 data-[pressed=true]:text-white disabled:opacity-50 disabled:cursor-not-allowed"
+    class="flex items-center justify-center min-w-[2rem] h-8 px-2 rounded font-semibold text-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 data-[state=on]:bg-blue-600 data-[state=on]:text-white disabled:opacity-50 disabled:cursor-not-allowed"
   >
     I
   </hp-toggle>
   <hp-toggle
     value="underline"
-    class="flex items-center justify-center min-w-[2rem] h-8 px-2 rounded font-semibold text-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 data-[pressed=true]:bg-blue-600 data-[pressed=true]:text-white disabled:opacity-50 disabled:cursor-not-allowed"
+    class="flex items-center justify-center min-w-[2rem] h-8 px-2 rounded font-semibold text-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 data-[state=on]:bg-blue-600 data-[state=on]:text-white disabled:opacity-50 disabled:cursor-not-allowed"
   >
     U
   </hp-toggle>
@@ -212,19 +208,19 @@ pnpm add @headless-primitives/toggle-group
 >
   <hp-toggle
     value="top"
-    class="flex items-center justify-center min-w-[2rem] h-8 px-2 rounded font-semibold text-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 data-[pressed=true]:bg-blue-600 data-[pressed=true]:text-white disabled:opacity-50 disabled:cursor-not-allowed"
+    class="flex items-center justify-center min-w-[2rem] h-8 px-2 rounded font-semibold text-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 data-[state=on]:bg-blue-600 data-[state=on]:text-white disabled:opacity-50 disabled:cursor-not-allowed"
   >
     ↑
   </hp-toggle>
   <hp-toggle
     value="middle"
-    class="flex items-center justify-center min-w-[2rem] h-8 px-2 rounded font-semibold text-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 data-[pressed=true]:bg-blue-600 data-[pressed=true]:text-white disabled:opacity-50 disabled:cursor-not-allowed"
+    class="flex items-center justify-center min-w-[2rem] h-8 px-2 rounded font-semibold text-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 data-[state=on]:bg-blue-600 data-[state=on]:text-white disabled:opacity-50 disabled:cursor-not-allowed"
   >
     ↕
   </hp-toggle>
   <hp-toggle
     value="bottom"
-    class="flex items-center justify-center min-w-[2rem] h-8 px-2 rounded font-semibold text-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 data-[pressed=true]:bg-blue-600 data-[pressed=true]:text-white disabled:opacity-50 disabled:cursor-not-allowed"
+    class="flex items-center justify-center min-w-[2rem] h-8 px-2 rounded font-semibold text-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 data-[state=on]:bg-blue-600 data-[state=on]:text-white disabled:opacity-50 disabled:cursor-not-allowed"
   >
     ↓
   </hp-toggle>
@@ -278,13 +274,17 @@ Botón individual que puede estar activado o desactivado.
 
 #### Atributos
 
-| Atributo   | Tipo                  | Por defecto | Descripción                                                                                      |
-| :--------- | :-------------------- | :---------- | :----------------------------------------------------------------------------------------------- |
-| `value`    | `string`              | —           | Identificador único del toggle (requerido).                                                      |
-| `pressed`  | _boolean (presencia)_ | ausente     | Estado actual del toggle. **Es un atributo booleano** (presencia/ausencia, no `pressed="true"`). |
-| `disabled` | _boolean (presencia)_ | ausente     | Deshabilita el toggle individual.                                                                |
-| `role`     | `string`              | `"button"`  | Rol de accesibilidad.                                                                            |
-| `tabindex` | `string`              | dinámico    | Se gestiona automáticamente según el estado y foco.                                              |
+| Atributo   | Tipo                  | Por defecto | Descripción                                         |
+| :--------- | :-------------------- | :---------- | :-------------------------------------------------- |
+| `value`    | `string`              | —           | Identificador único del toggle (requerido).         |
+| `disabled` | _boolean (presencia)_ | ausente     | Deshabilita el toggle individual.                   |
+| `role`     | `string`              | `"button"`  | Rol de accesibilidad.                               |
+| `tabindex` | `string`              | dinámico    | Se gestiona automáticamente según el estado y foco. |
+
+#### Atributos de estado gestionados
+
+- `data-state` — `"on"` / `"off"` (para estilos CSS)
+- `aria-pressed` — `"true"` / `"false"`
 
 #### Eventos
 

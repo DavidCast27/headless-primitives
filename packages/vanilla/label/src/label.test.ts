@@ -21,15 +21,11 @@ describe("hp-label", () => {
     expect(focusSpy).toHaveBeenCalled();
   });
 
-  it("should have an ID and link to target via aria-labelledby", () => {
-    // Forzamos vinculación
+  it("should have an ID and link to target via aria-labelledby", async () => {
     label.setAttribute("for", "target-input");
-
-    // Verificamos que tenga ALGÚN id (ya sea el original o uno generado)
+    await new Promise((r) => requestAnimationFrame(r));
     expect(label.id).toBeTruthy();
     expect(target.getAttribute("aria-labelledby")).toBe(label.id);
-
-    // Si no tiene ID y cambiamos el target, debería generar uno o usar el actual
     const currentId = label.id;
     label.setAttribute("for", "target-input");
     expect(label.id).toBe(currentId);

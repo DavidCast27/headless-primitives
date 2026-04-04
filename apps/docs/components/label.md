@@ -39,7 +39,7 @@ pnpm add @headless-primitives/label
   cursor: pointer;
   position: relative;
 }
-.demo-switch[checked] { background: var(--vp-c-brand-1); }
+.demo-switch[data-state="checked"] { background: var(--vp-c-brand-1); }
 .demo-switch::after {
   content: "";
   position: absolute;
@@ -51,7 +51,7 @@ pnpm add @headless-primitives/label
   border-radius: 50%;
   transition: transform 0.2s;
 }
-.demo-switch[checked]::after { transform: translateX(20px); }
+.demo-switch[data-state="checked"]::after { transform: translateX(20px); }
 </style>
 
 <CodeSnippet>
