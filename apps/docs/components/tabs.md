@@ -73,6 +73,23 @@ pnpm add @headless-primitives/tabs
 }
 </style>
 
+### Sin estilos (solo base.css)
+
+Así se ven las tabs usando únicamente `@headless-primitives/utils/base.css`. La navegación por teclado, `aria-selected` y la visibilidad de paneles funcionan completamente.
+
+<div class="hp-demo-card">
+  <hp-tabs value="a">
+    <hp-tab-list>
+      <hp-tab value="a">Tab A</hp-tab>
+      <hp-tab value="b">Tab B</hp-tab>
+      <hp-tab value="c" disabled>Disabled</hp-tab>
+    </hp-tab-list>
+    <hp-tab-panel value="a"><p>Contenido del panel A.</p></hp-tab-panel>
+    <hp-tab-panel value="b"><p>Contenido del panel B.</p></hp-tab-panel>
+    <hp-tab-panel value="c"><p>Contenido del panel C.</p></hp-tab-panel>
+  </hp-tabs>
+</div>
+
 <CodeSnippet>
 
 <Flavor only="css">

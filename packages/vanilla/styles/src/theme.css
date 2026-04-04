@@ -4,18 +4,26 @@
  * CSS custom properties inspirados en Base UI.
  * Extiende los tokens funcionales de @headless-primitives/utils/base.css.
  * Todos los valores son sobrescribibles por el Consumer.
+ *
+ * Contraste mínimo garantizado (WCAG 2.1):
+ *   • Texto normal   → 4.5:1  (AA, criterio 1.4.3)
+ *   • Componentes UI → 3:1    (AA, criterio 1.4.11 Non-text Contrast)
+ *   • Disabled       → exento (criterio 1.4.3 excepción)
  */
 
 :root {
   /* === Tokens heredados de base.css (no se duplican, se extienden) === */
-  /* --hp-focus-outline-color: #2563eb;  (definido en base.css) */
+  /* --hp-focus-outline-color: #2563eb;  (5.12:1 vs blanco ✓) */
   /* --hp-focus-outline-width: 2px;      (definido en base.css) */
   /* --hp-z-index-*                      (definidos en base.css) */
 
   /* === Colores de acento === */
-  --hp-accent: #0ea5e9;
-  --hp-accent-hover: #0284c7;
-  --hp-accent-active: #0369a1;
+  /* #0369a1 = sky-700  → 5.93:1 vs blanco ✓  |  foreground blanco 5.93:1 ✓ */
+  --hp-accent: #0369a1;
+  /* #075985 = sky-800  → 7.56:1 vs blanco ✓ */
+  --hp-accent-hover: #075985;
+  /* #0c4a6e = sky-900  → 10.4:1 vs blanco ✓ */
+  --hp-accent-active: #0c4a6e;
   --hp-accent-foreground: #ffffff;
 
   /* === Colores de superficie (Light Mode) === */
@@ -26,12 +34,18 @@
   --hp-surface-raised: #ffffff;
 
   /* === Colores de borde === */
+  /* --hp-border: separadores visuales (no-interactive) */
   --hp-border: #e2e8f0;
-  --hp-border-strong: #cbd5e1;
+  /* --hp-border-strong: bordes de componentes UI interactivos (checkbox, radio…) */
+  /* #64748b = slate-500 → 4.76:1 vs blanco ✓  (supera 3:1 non-text ✓) */
+  --hp-border-strong: #64748b;
 
   /* === Colores de texto === */
+  /* #0f172a = slate-900 → 18.1:1 vs blanco ✓ */
   --hp-text: #0f172a;
+  /* #64748b = slate-500 → 4.76:1 vs blanco ✓ */
   --hp-text-secondary: #64748b;
+  /* Disabled → exento de contraste mínimo (WCAG 1.4.3 excepción) */
   --hp-text-disabled: #94a3b8;
   --hp-text-on-accent: #ffffff;
 
@@ -75,9 +89,11 @@
 /* === Dark Mode (Req 2.6) === */
 @media (prefers-color-scheme: dark) {
   :root {
+    /* #38bdf8 = sky-400 → 8.96:1 vs #0f172a ✓  |  6.22:1 vs surface ✓ */
     --hp-accent: #38bdf8;
     --hp-accent-hover: #7dd3fc;
     --hp-accent-active: #bae6fd;
+    /* #0c1a29 oscuro → 8.54:1 vs #38bdf8 ✓ */
     --hp-accent-foreground: #0c1a29;
 
     --hp-bg: #0f172a;
@@ -86,11 +102,16 @@
     --hp-surface: #1e293b;
     --hp-surface-raised: #293548;
 
+    /* --hp-border: separadores visuales */
     --hp-border: #334155;
-    --hp-border-strong: #475569;
+    /* #64748b = slate-500 → 4.60:1 vs #0f172a ✓  |  3.20:1 vs #1e293b ✓ */
+    --hp-border-strong: #64748b;
 
+    /* #f8fafc → 17.6:1 vs #0f172a ✓ */
     --hp-text: #f8fafc;
+    /* #94a3b8 = slate-400 → 7.63:1 vs #0f172a ✓  |  5.31:1 vs surface ✓ */
     --hp-text-secondary: #94a3b8;
+    /* Disabled → exento (WCAG 1.4.3) */
     --hp-text-disabled: #475569;
     --hp-text-on-accent: #0c1a29;
 

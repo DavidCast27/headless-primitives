@@ -1,0 +1,93 @@
+/**
+ * @headless-primitives/styles — hp-field
+ *
+ * Contenedor de campo de formulario con label, descripción y error.
+ * Especificidad mínima: selector de elemento único.
+ * Sin !important. Sobrescribible por el Consumer.
+ */
+
+/* Contenedor del campo — columna con separación entre partes */
+hp-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hp-space-1);
+}
+
+/* Label */
+hp-field-label {
+  display: block;
+  font-size: var(--hp-font-size-sm);
+  font-weight: var(--hp-font-weight-medium);
+  color: var(--hp-text);
+  line-height: 1.5;
+}
+
+/* Descripción / hint */
+hp-field-description {
+  display: block;
+  font-size: var(--hp-font-size-xs);
+  color: var(--hp-text-secondary);
+  line-height: 1.5;
+}
+
+/* Error — texto en rojo, visible solo cuando tiene contenido */
+hp-field-error {
+  display: block;
+  font-size: var(--hp-font-size-xs);
+  color: #dc2626;
+  line-height: 1.5;
+}
+
+/* En dark mode el rojo se aclara para mantener contraste */
+@media (prefers-color-scheme: dark) {
+  hp-field-error {
+    color: #f87171;
+  }
+}
+
+/* Control wrapper — asegura que el control nativo ocupe el ancho completo */
+hp-field-control {
+  display: block;
+  width: 100%;
+}
+
+/* Estilos base para controles nativos dentro de hp-field-control */
+hp-field-control input,
+hp-field-control select,
+hp-field-control textarea {
+  display: block;
+  width: 100%;
+  padding: var(--hp-space-2) var(--hp-space-3);
+  font-family: inherit;
+  font-size: var(--hp-font-size-sm);
+  color: var(--hp-text);
+  background-color: var(--hp-surface);
+  border: 1px solid var(--hp-border-strong);
+  border-radius: var(--hp-radius);
+  outline: none;
+  transition:
+    border-color var(--hp-transition),
+    box-shadow var(--hp-transition);
+  box-sizing: border-box;
+}
+
+hp-field-control input:focus,
+hp-field-control select:focus,
+hp-field-control textarea:focus {
+  border-color: var(--hp-accent);
+  box-shadow: 0 0 0 var(--hp-focus-outline-width)
+    color-mix(in srgb, var(--hp-focus-outline-color) 25%, transparent);
+}
+
+hp-field-control input:disabled,
+hp-field-control select:disabled,
+hp-field-control textarea:disabled {
+  opacity: var(--hp-opacity-disabled);
+  cursor: not-allowed;
+  background-color: var(--hp-bg-muted);
+}
+
+hp-field-control textarea {
+  resize: vertical;
+  min-height: 80px;
+}

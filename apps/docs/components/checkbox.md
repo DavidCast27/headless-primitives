@@ -12,6 +12,19 @@ pnpm add @headless-primitives/checkbox
 
 ## Demostración
 
+### Sin estilos (solo base.css)
+
+Así se ve `hp-checkbox` usando únicamente `@headless-primitives/utils/base.css`. Los estados `checked`, `mixed` y `disabled` funcionan completamente.
+
+<div class="hp-demo-card">
+  <hp-checkbox></hp-checkbox>
+  <hp-checkbox aria-checked="true"></hp-checkbox>
+  <hp-checkbox aria-checked="mixed"></hp-checkbox>
+  <hp-checkbox disabled></hp-checkbox>
+</div>
+
+### Con estilos personalizados
+
 <div class="hp-demo-card">
   <div style="display: flex; flex-direction: column; gap: 1rem; align-items: flex-start;">
     <div style="display: flex; align-items: center; gap: 0.75rem;">

@@ -43,6 +43,15 @@ pnpm add @headless-primitives/toast
 .demo-btn:hover { opacity: 0.9; transform: translateY(-1px); }
 </style>
 
+### Sin estilos (solo base.css)
+
+Así se ve `hp-toast` usando únicamente `@headless-primitives/utils/base.css`. El posicionamiento del container, el auto-dismiss y los eventos funcionan completamente sin ningún estilo visual.
+
+<div class="hp-demo-card">
+  <hp-toast-container id="demo-toast-bare" data-position="bottom-right"></hp-toast-container>
+  <button class="demo-btn info" onclick="document.getElementById('demo-toast-bare').addToast('Notificación sin estilos', {duration:3000})">Mostrar Toast (sin estilos)</button>
+</div>
+
 <CodeSnippet>
 <Flavor only="css">
 

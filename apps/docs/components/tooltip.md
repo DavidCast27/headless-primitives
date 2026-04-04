@@ -16,6 +16,19 @@ pnpm add @headless-primitives/tooltip
 
 ## Demostración
 
+### Sin estilos (solo base.css)
+
+Así se ve `hp-tooltip` usando únicamente `@headless-primitives/utils/base.css`. El hover/focus, `aria-describedby` y visibilidad funcionan completamente.
+
+<div class="hp-demo-card" style="overflow: visible; min-height: 100px;">
+  <hp-tooltip>
+    <hp-tooltip-trigger><button>Hover aquí</button></hp-tooltip-trigger>
+    <hp-tooltip-content>Texto del tooltip sin estilos</hp-tooltip-content>
+  </hp-tooltip>
+</div>
+
+### Con estilos personalizados
+
 <div class="hp-demo-card" style="overflow: visible; min-height: 120px;">
   <hp-tooltip class="demo-tooltip">
     <hp-tooltip-trigger>

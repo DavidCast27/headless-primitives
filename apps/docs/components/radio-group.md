@@ -12,6 +12,20 @@ pnpm add @headless-primitives/radio-group
 
 ## Demostración
 
+### Sin estilos (solo base.css)
+
+Así se ve `hp-radio-group` usando únicamente `@headless-primitives/utils/base.css`. La selección exclusiva, `aria-checked` y navegación por flechas funcionan completamente.
+
+<div class="hp-demo-card">
+  <hp-radio-group value="op1">
+    <hp-radio value="op1"></hp-radio> Opción 1
+    <hp-radio value="op2"></hp-radio> Opción 2
+    <hp-radio value="op3" disabled></hp-radio> Deshabilitada
+  </hp-radio-group>
+</div>
+
+### Con estilos personalizados
+
 <div class="hp-demo-card">
   <div style="display: flex; flex-direction: column; gap: 1rem;">
     <hp-radio-group value="op1" class="demo-radio-group">

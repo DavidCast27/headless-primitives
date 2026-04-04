@@ -12,6 +12,17 @@ pnpm add @headless-primitives/progress
 
 ## Demostración
 
+### Sin estilos (solo base.css)
+
+Así se ve `hp-progress` usando únicamente `@headless-primitives/utils/base.css`. Los atributos ARIA y la variable CSS `--hp-progress-percentage` funcionan completamente.
+
+<div class="hp-demo-card">
+  <hp-progress value="65"></hp-progress>
+  <hp-progress></hp-progress>
+</div>
+
+### Con estilos personalizados
+
 <div class="hp-demo-card">
   <div style="width: 100%; max-width: 300px; display: flex; flex-direction: column; gap: 1.5rem;">
     <div>

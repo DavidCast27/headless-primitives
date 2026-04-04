@@ -16,6 +16,22 @@ pnpm add @headless-primitives/popover
 
 ## Demostración
 
+### Sin estilos (solo base.css)
+
+Así se ve `hp-popover` usando únicamente `@headless-primitives/utils/base.css`. El click, focus trap, ESC y `aria-expanded` funcionan completamente.
+
+<div class="hp-demo-card">
+  <hp-popover>
+    <hp-popover-trigger><button>Abrir Popover</button></hp-popover-trigger>
+    <hp-popover-content>
+      <p>Contenido del popover sin estilos.</p>
+      <button onclick="this.closest('hp-popover').close()">Cerrar</button>
+    </hp-popover-content>
+  </hp-popover>
+</div>
+
+### Con estilos personalizados
+
 <div class="hp-demo-card">
   <hp-popover>
     <hp-popover-trigger>

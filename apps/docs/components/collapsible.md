@@ -12,6 +12,19 @@ pnpm add @headless-primitives/collapsible
 
 ## Demostración
 
+### Sin estilos (solo base.css)
+
+Así se ve `hp-collapsible` usando únicamente `@headless-primitives/utils/base.css`. El toggle, `aria-expanded` y visibilidad del contenido funcionan completamente.
+
+<div class="hp-demo-card">
+  <hp-collapsible>
+    <hp-collapsible-trigger>¿Qué es headless?</hp-collapsible-trigger>
+    <hp-collapsible-content><p>Comportamiento sin estilos impuestos.</p></hp-collapsible-content>
+  </hp-collapsible>
+</div>
+
+### Con estilos personalizados
+
 <div class="hp-demo-card">
   <hp-collapsible class="demo-collapsible">
     <hp-collapsible-trigger class="demo-trigger">
