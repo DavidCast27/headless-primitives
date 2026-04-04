@@ -2,19 +2,23 @@ import DefaultTheme from "vitepress/theme";
 import type { Theme } from "vitepress";
 
 // Importamos el componente primitivo general globalmente en todo Vitepress
+import "@headless-primitives/accordion";
+import "@headless-primitives/avatar";
 import "@headless-primitives/button";
-import "@headless-primitives/switch";
 import "@headless-primitives/checkbox";
-import "@headless-primitives/separator";
+import "@headless-primitives/collapsible";
+import "@headless-primitives/dialog";
+import "@headless-primitives/field";
+import "@headless-primitives/label";
+import "@headless-primitives/popover";
 import "@headless-primitives/progress";
 import "@headless-primitives/radio-group";
-import "@headless-primitives/toggle-group";
-import "@headless-primitives/collapsible";
-import "@headless-primitives/accordion";
+import "@headless-primitives/separator";
+import "@headless-primitives/switch";
 import "@headless-primitives/tabs";
-import "@headless-primitives/label";
-import "@headless-primitives/avatar";
-import "@headless-primitives/field";
+import "@headless-primitives/toast";
+import "@headless-primitives/tooltip";
+import "@headless-primitives/toggle-group";
 import "./docs-demos.css";
 
 // Importar componentes del tema

@@ -62,12 +62,12 @@ Componentes que crean capas flotantes sobre la UI.
 Requieren Focus Trap, manejo de Escape, y control del scroll.
 
 | #   | Componente       | Patrón WAI-ARIA                                                          | Complejidad | Dependencias                     |
-| :-- | :--------------- | :----------------------------------------------------------------------- | :---------- | :------------------------------- |
-| 13  | **Tooltip**      | [Tooltip](https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/)             | 🟡 Media    | —                                |
-| 14  | **Popover**      | — (click-triggered floating)                                             | 🔴 Alta     | Focus Trap util                  |
-| 15  | **Dialog**       | [Dialog (Modal)](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/) | 🔴 Alta     | Focus Trap util, Popover pattern |
-| 16  | **Alert Dialog** | [Alert Dialog](https://www.w3.org/WAI/ARIA/apg/patterns/alertdialog/)    | 🔴 Alta     | Dialog                           |
-| 17  | **Toast/Alert**  | [Alert](https://www.w3.org/WAI/ARIA/apg/patterns/alert/)                 | 🟡 Media    | —                                |
+| :-- | :--------------- | :----------------------------------------------------------------------- | :---------- | :------------------------------- | -------------- |
+| 13  | **Tooltip**      | [Tooltip](https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/)             | 🟡 Media    | —                                | ✅ Hecho       |
+| 14  | **Popover**      | — (click-triggered floating)                                             | 🔴 Alta     | Focus Trap util                  | ✅ Hecho       |
+| 15  | **Dialog**       | [Dialog (Modal)](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/) | 🔴 Alta     | Focus Trap util, Popover pattern | ✅ Hecho       |
+| 16  | **Alert Dialog** | [Alert Dialog](https://www.w3.org/WAI/ARIA/apg/patterns/alertdialog/)    | 🔴 Alta     | Dialog                           | ✅ Hecho (variante de Dialog con `data-alert`) |
+| 17  | **Toast/Alert**  | [Alert](https://www.w3.org/WAI/ARIA/apg/patterns/alert/)                 | 🟡 Media    | —                                | ✅ Hecho       |
 
 **Por qué este orden:** Tooltip es floating pero no atrapa foco (es el caso más simple de overlay). Popover introduce Focus Trap. Dialog se construye sobre esos mismos patterns pero añade scroll lock. Alert Dialog es una variante del Dialog.
 

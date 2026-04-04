@@ -62,12 +62,18 @@ importers:
       '@headless-primitives/collapsible':
         specifier: workspace:*
         version: link:../../packages/vanilla/collapsible
+      '@headless-primitives/dialog':
+        specifier: workspace:*
+        version: link:../../packages/vanilla/dialog
       '@headless-primitives/field':
         specifier: workspace:*
         version: link:../../packages/vanilla/field
       '@headless-primitives/label':
         specifier: workspace:*
         version: link:../../packages/vanilla/label
+      '@headless-primitives/popover':
+        specifier: workspace:*
+        version: link:../../packages/vanilla/popover
       '@headless-primitives/progress':
         specifier: workspace:*
         version: link:../../packages/vanilla/progress
@@ -83,9 +89,15 @@ importers:
       '@headless-primitives/tabs':
         specifier: workspace:*
         version: link:../../packages/vanilla/tabs
+      '@headless-primitives/toast':
+        specifier: workspace:*
+        version: link:../../packages/vanilla/toast
       '@headless-primitives/toggle-group':
         specifier: workspace:*
         version: link:../../packages/vanilla/toggle-group
+      '@headless-primitives/tooltip':
+        specifier: workspace:*
+        version: link:../../packages/vanilla/tooltip
     devDependencies:
       vitepress:
         specifier: ^1.5.0
@@ -108,12 +120,18 @@ importers:
       '@headless-primitives/collapsible':
         specifier: workspace:*
         version: link:../../packages/vanilla/collapsible
+      '@headless-primitives/dialog':
+        specifier: workspace:*
+        version: link:../../packages/vanilla/dialog
       '@headless-primitives/field':
         specifier: workspace:*
         version: link:../../packages/vanilla/field
       '@headless-primitives/label':
         specifier: workspace:*
         version: link:../../packages/vanilla/label
+      '@headless-primitives/popover':
+        specifier: workspace:*
+        version: link:../../packages/vanilla/popover
       '@headless-primitives/progress':
         specifier: workspace:*
         version: link:../../packages/vanilla/progress
@@ -129,9 +147,15 @@ importers:
       '@headless-primitives/tabs':
         specifier: workspace:*
         version: link:../../packages/vanilla/tabs
+      '@headless-primitives/toast':
+        specifier: workspace:*
+        version: link:../../packages/vanilla/toast
       '@headless-primitives/toggle-group':
         specifier: workspace:*
         version: link:../../packages/vanilla/toggle-group
+      '@headless-primitives/tooltip':
+        specifier: workspace:*
+        version: link:../../packages/vanilla/tooltip
       '@headless-primitives/utils':
         specifier: workspace:*
         version: link:../../packages/vanilla/utils
@@ -172,6 +196,25 @@ importers:
 
   packages/vanilla/collapsible: {}
 
+  packages/vanilla/dialog:
+    dependencies:
+      '@headless-primitives/utils':
+        specifier: workspace:*
+        version: link:../utils
+    devDependencies:
+      happy-dom:
+        specifier: ^14.12.3
+        version: 14.12.3
+      typescript:
+        specifier: ^5.5.4
+        version: 5.9.3
+      vite:
+        specifier: ^5.4.2
+        version: 5.4.21(@types/node@25.5.0)(lightningcss@1.32.0)
+      vitest:
+        specifier: ^2.0.5
+        version: 2.1.9(@types/node@25.5.0)(happy-dom@14.12.3)(jsdom@29.0.1)(lightningcss@1.32.0)
+
   packages/vanilla/field:
     devDependencies:
       happy-dom:
@@ -188,6 +231,25 @@ importers:
         version: 2.1.9(@types/node@25.5.0)(happy-dom@14.12.3)(jsdom@29.0.1)(lightningcss@1.32.0)
 
   packages/vanilla/label:
+    devDependencies:
+      happy-dom:
+        specifier: ^14.12.3
+        version: 14.12.3
+      typescript:
+        specifier: ^5.5.4
+        version: 5.9.3
+      vite:
+        specifier: ^5.4.2
+        version: 5.4.21(@types/node@25.5.0)(lightningcss@1.32.0)
+      vitest:
+        specifier: ^2.0.5
+        version: 2.1.9(@types/node@25.5.0)(happy-dom@14.12.3)(jsdom@29.0.1)(lightningcss@1.32.0)
+
+  packages/vanilla/popover:
+    dependencies:
+      '@headless-primitives/utils':
+        specifier: workspace:*
+        version: link:../utils
     devDependencies:
       happy-dom:
         specifier: ^14.12.3
@@ -242,7 +304,37 @@ importers:
 
   packages/vanilla/tabs: {}
 
+  packages/vanilla/toast:
+    devDependencies:
+      happy-dom:
+        specifier: ^14.12.3
+        version: 14.12.3
+      typescript:
+        specifier: ^5.5.4
+        version: 5.9.3
+      vite:
+        specifier: ^5.4.2
+        version: 5.4.21(@types/node@25.5.0)(lightningcss@1.32.0)
+      vitest:
+        specifier: ^2.0.5
+        version: 2.1.9(@types/node@25.5.0)(happy-dom@14.12.3)(jsdom@29.0.1)(lightningcss@1.32.0)
+
   packages/vanilla/toggle-group: {}
+
+  packages/vanilla/tooltip:
+    devDependencies:
+      happy-dom:
+        specifier: ^14.12.3
+        version: 14.12.3
+      typescript:
+        specifier: ^5.5.4
+        version: 5.9.3
+      vite:
+        specifier: ^5.4.2
+        version: 5.4.21(@types/node@25.5.0)(lightningcss@1.32.0)
+      vitest:
+        specifier: ^2.0.5
+        version: 2.1.9(@types/node@25.5.0)(happy-dom@14.12.3)(jsdom@29.0.1)(lightningcss@1.32.0)
 
   packages/vanilla/utils: {}
 

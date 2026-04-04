@@ -13,14 +13,18 @@
     "@headless-primitives/button": "workspace:*",
     "@headless-primitives/checkbox": "workspace:*",
     "@headless-primitives/collapsible": "workspace:*",
+    "@headless-primitives/dialog": "workspace:*",
     "@headless-primitives/field": "workspace:*",
     "@headless-primitives/label": "workspace:*",
+    "@headless-primitives/popover": "workspace:*",
     "@headless-primitives/progress": "workspace:*",
     "@headless-primitives/radio-group": "workspace:*",
     "@headless-primitives/separator": "workspace:*",
     "@headless-primitives/switch": "workspace:*",
     "@headless-primitives/tabs": "workspace:*",
-    "@headless-primitives/toggle-group": "workspace:*"
+    "@headless-primitives/toast": "workspace:*",
+    "@headless-primitives/toggle-group": "workspace:*",
+    "@headless-primitives/tooltip": "workspace:*"
   },
   "devDependencies": {
     "vitepress": "^1.5.0"

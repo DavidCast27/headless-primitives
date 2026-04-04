@@ -1,6 +1,6 @@
 import { HeadlessCheckbox } from "./checkbox";
 
-if (!customElements.get("hp-checkbox")) {
+if (typeof window !== "undefined" && !customElements.get("hp-checkbox")) {
   customElements.define("hp-checkbox", HeadlessCheckbox);
 }
 
