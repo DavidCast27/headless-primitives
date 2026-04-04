@@ -36,6 +36,24 @@ pnpm add @headless-primitives/dialog
 
 ## Demostración
 
+### Sin estilos (solo base.css)
+
+Así se ve `hp-dialog` con `data-alert` usando únicamente `@headless-primitives/utils/base.css`. El focus trap, bloqueo de ESC y backdrop sin cierre funcionan completamente.
+
+<div class="hp-demo-card">
+  <hp-dialog id="bare-alert-dialog" data-alert>
+    <hp-dialog-backdrop></hp-dialog-backdrop>
+    <hp-dialog-content aria-labelledby="bare-alert-title">
+      <p id="bare-alert-title">¿Confirmar acción irreversible?</p>
+      <button onclick="document.getElementById('bare-alert-dialog').close()">Cancelar</button>
+      <button onclick="document.getElementById('bare-alert-dialog').close()">Confirmar</button>
+    </hp-dialog-content>
+  </hp-dialog>
+  <button onclick="document.getElementById('bare-alert-dialog').open()">Abrir Alert Dialog (sin estilos)</button>
+</div>
+
+### Con estilos personalizados
+
 <div class="hp-demo-card">
   <hp-dialog id="demo-alert-dialog" data-alert="true" aria-labelledby="demo-alert-title" aria-describedby="demo-alert-body">
     <hp-dialog-trigger style="display:none;" tabindex="-1"></hp-dialog-trigger>

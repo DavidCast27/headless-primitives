@@ -12,6 +12,17 @@ pnpm add @headless-primitives/label
 
 ## Demostración
 
+### Sin estilos (solo base.css)
+
+Así se ve `hp-label` usando únicamente `@headless-primitives/utils/base.css`. El click-to-focus y `aria-labelledby` funcionan completamente.
+
+<div class="hp-demo-card">
+  <hp-label for="bare-input">Nombre</hp-label>
+  <input id="bare-input" type="text" placeholder="Escribe algo..." />
+</div>
+
+### Con estilos personalizados
+
 <div class="hp-demo-card">
   <div style="display: flex; flex-direction: column; gap: 1.5rem; width: 100%; max-width: 300px;">
     <div style="display: flex; flex-direction: column; gap: 8px;">

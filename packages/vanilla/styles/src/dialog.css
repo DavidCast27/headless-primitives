@@ -1,24 +1,26 @@
 /**
  * @headless-primitives/styles — hp-dialog (Req 13)
  *
- * Modal centrado con overlay. Complementa base.css.
+ * Estilos visuales opcionales. El posicionamiento estructural vive en base.css:
+ *   [data-hp-backdrop]        → position:fixed; inset:0; z-index:1000
+ *   [data-hp-overlay-content] → position:fixed; z-index:1100
+ *   [role="dialog"]           → top:50%; left:50%; transform:translate(-50%,-50%)
+ *   [data-state="closed"]     → visibility:hidden; opacity:0; pointer-events:none
  */
 
-/* Backdrop (Req 13.1) */
+/* Backdrop — visual semitransparente (Req 13.1) */
 hp-dialog-backdrop {
-  /* position:fixed; inset:0; z-index ya definido en base.css para [data-hp-backdrop] */
   background-color: rgb(0 0 0 / 0.5);
   backdrop-filter: blur(2px);
 }
 
-/* Backdrop visible */
 hp-dialog-backdrop[data-state="open"] {
   animation: hp-backdrop-in var(--hp-transition-slow) ease forwards;
 }
 
-/* Content — panel modal centrado (Req 13.2) */
+/* Content — apariencia visual del panel (Req 13.2)
+ * NO declarar position/top/left/transform aquí — base.css lo gestiona */
 hp-dialog-content {
-  /* position:fixed y z-index ya gestionados por base.css y el componente */
   width: min(calc(100vw - 2rem), 560px);
   max-height: calc(100vh - 4rem);
   overflow-y: auto;
@@ -31,13 +33,10 @@ hp-dialog-content {
   font-size: var(--hp-font-size-sm);
 }
 
-/* Animaciones de entrada (Req 13.4) */
+/* Animación de entrada (Req 13.4) */
 hp-dialog-content[data-state="open"] {
   animation: hp-dialog-in var(--hp-transition-slow) ease forwards;
 }
-
-/* Visibilidad gestionada por base.css:
-   [data-hp-overlay-content][data-state="closed"] y [data-hp-backdrop][data-state="closed"] (Req 13.3) */
 
 /* Título (Req 13.5) */
 hp-dialog-title {
@@ -47,6 +46,7 @@ hp-dialog-title {
   font-weight: var(--hp-font-weight-semibold);
   color: var(--hp-text);
   line-height: 1.3;
+  padding-right: calc(28px + var(--hp-space-3));
 }
 
 /* Botón de cierre — esquina superior derecha (Req 13.6) */
@@ -79,11 +79,6 @@ hp-dialog-close:hover {
 hp-dialog-close:focus-visible {
   outline: var(--hp-focus-outline-width) solid var(--hp-focus-outline-color);
   outline-offset: 2px;
-}
-
-/* hp-dialog-content necesita position:relative para el close absoluto */
-hp-dialog-content {
-  position: relative;
 }
 
 @keyframes hp-backdrop-in {

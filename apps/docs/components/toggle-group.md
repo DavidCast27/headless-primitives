@@ -12,6 +12,20 @@ pnpm add @headless-primitives/toggle-group
 
 ## Demostración
 
+### Sin estilos (solo base.css)
+
+Así se ve `hp-toggle-group` usando únicamente `@headless-primitives/utils/base.css`. La selección, `aria-pressed` y navegación por teclado funcionan completamente.
+
+<div class="hp-demo-card">
+  <hp-toggle-group type="single" value="b">
+    <hp-toggle value="b">B</hp-toggle>
+    <hp-toggle value="i">I</hp-toggle>
+    <hp-toggle value="u">U</hp-toggle>
+  </hp-toggle-group>
+</div>
+
+### Con estilos personalizados
+
 <div class="hp-demo-card">
   <hp-toggle-group type="single" value="bold" class="demo-group">
     <hp-toggle value="bold" class="demo-toggle">

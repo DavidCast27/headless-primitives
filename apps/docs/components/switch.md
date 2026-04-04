@@ -12,6 +12,18 @@ pnpm add @headless-primitives/switch
 
 ## Demostración
 
+### Sin estilos (solo base.css)
+
+Así se ve `hp-switch` usando únicamente `@headless-primitives/utils/base.css`. El toggle, `aria-checked` y teclado funcionan completamente.
+
+<div class="hp-demo-card">
+  <hp-switch></hp-switch>
+  <hp-switch aria-checked="true"></hp-switch>
+  <hp-switch disabled></hp-switch>
+</div>
+
+### Con estilos personalizados
+
 <div class="hp-demo-card">
   <div style="display: flex; flex-direction: column; gap: 1rem; align-items: center;">
     <hp-label for="sw-demo">Activar modo oscuro</hp-label>

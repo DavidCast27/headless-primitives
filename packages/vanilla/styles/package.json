@@ -22,6 +22,7 @@
     "./dialog.css": "./src/dialog.css",
     "./toast.css": "./src/toast.css",
     "./atoms.css": "./src/atoms.css",
+    "./field.css": "./src/field.css",
     "./verify-aria.js": "./src/verify-aria.js"
   },
   "dependencies": {},

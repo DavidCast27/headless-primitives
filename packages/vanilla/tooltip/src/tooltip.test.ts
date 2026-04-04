@@ -12,7 +12,7 @@ describe("HpTooltip (Headless Primitive Tooltip)", () => {
   let trigger: HeadlessTooltipTrigger;
   let content: HeadlessTooltipContent;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     vi.useFakeTimers();
     tooltip = document.createElement("hp-tooltip") as HeadlessTooltip;
     trigger = document.createElement("hp-tooltip-trigger") as HeadlessTooltipTrigger;
@@ -21,6 +21,8 @@ describe("HpTooltip (Headless Primitive Tooltip)", () => {
     tooltip.appendChild(trigger);
     tooltip.appendChild(content);
     document.body.appendChild(tooltip);
+    // Wait for rAF so _attachTriggerListeners runs before tests dispatch events
+    await new Promise((resolve) => requestAnimationFrame(resolve));
   });
 
   afterEach(() => {

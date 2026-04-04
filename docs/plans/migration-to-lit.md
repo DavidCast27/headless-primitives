@@ -65,14 +65,14 @@ Asegurar que el render de Lit inyecte los atributos que `base.css` espera:
 ## 3. Definition of Done (DoD) Refinada
 
 - [x] **Arquitectura Base**: Clase `HeadlessElement` implementada en `utils`.
-- [ ] **Migración Individual**: Extiende de `HeadlessElement` y usa decoradores de Lit.
-- [ ] **Zero Runtime Styles**: Prohibido usar `this.style.*` para lógica (excepto cálculos dinámicos de posición como Floating UI).
+- [x] **Migración Individual**: Extiende de `HeadlessElement` y usa decoradores de Lit. _(accordion, button, tabs, tooltip, dialog, toast — completados)_
+- [x] **Zero Runtime Styles**: Prohibido usar `this.style.*` para lógica (excepto cálculos dinámicos de posición como Floating UI). _(toast y dialog corregidos)_
 - [ ] **Compatibilidad**: Mantiene las etiquetas, atributos y eventos actuales.
-- [ ] **Eventos**: Los eventos emitidos usan el prefijo `hp-*`.
+- [x] **Eventos**: Los eventos emitidos usan el prefijo `hp-*`.
 - [ ] **A11y**: Gestión de foco completa y roles ARIA dinámicos.
 - [ ] **Base CSS**: El componente funciona correctamente estructuralmente solo con `base.css`.
 - [ ] **Tests**: Los tests validan comportamiento en el DOM, no internals de Lit.
-- [ ] **Slots Dinámicos**: Casos `slotchange` cubiertos para alta/ baja de hijos sloteados.
+- [ ] **Slots Dinámicos**: Casos `slotchange` cubiertos para alta/baja de hijos sloteados.
 - [ ] **Pure Headless**: Caso en playground que verifica funcionalidad con solo `base.css`.
 - [ ] **Mapeo data-hp-\***: Tabla por componente con partes → `data-hp-*`, `data-state`, roles y ARIA.
 - [ ] **Docs – Estados y Selectores**: La página `apps/docs/components/[nombre].md` incluye una sección que lista atributos públicos, roles ARIA y todos los selectores `data-hp-*`/`data-state` del componente.
@@ -86,7 +86,7 @@ Asegurar que el render de Lit inyecte los atributos que `base.css` espera:
 ## 5. Empaquetado [INICIADO]
 
 - [x] `lit` declarado como `peerDependency` + `dependency` en `utils`.
-- [ ] Replicar configuración de dependencias en cada paquete migrado.
+- [x] Replicar configuración de dependencias en cada paquete migrado. _(toast, tooltip, dialog — completados)_
 - [ ] Mantener el `library mode` de Vite para generar bundles CJS/ESM limpios.
 - [ ] Verificar que las apps consumidoras no bundlean múltiples copias de `lit` y documentar estrategia de dedupe.
 
@@ -164,3 +164,50 @@ Resumen de decisiones y patrones que funcionaron en la migración de Tabs a Lit,
 4. [ ] Manejar `slotchange` para contenido sloteado.
 5. [ ] Tests (A11y, teclado, eventos, pure headless).
 ```
+
+## 7. Mapeo data-hp-\* por Componente
+
+### hp-dialog / hp-dialog (data-alert)
+
+| Parte    | Tag                  | `data-hp-component` | `data-hp-*` extra         | `data-state`   | Rol ARIA                 | ARIA gestionado internamente     |
+| :------- | :------------------- | :------------------ | :------------------------ | :------------- | :----------------------- | :------------------------------- |
+| Root     | `hp-dialog`          | `dialog`            | —                         | —              | —                        | —                                |
+| Trigger  | `hp-dialog-trigger`  | `dialog-trigger`    | —                         | —              | `button`                 | `aria-expanded`, `aria-controls` |
+| Content  | `hp-dialog-content`  | `dialog-content`    | `data-hp-overlay-content` | `open\|closed` | `dialog` / `alertdialog` | `aria-modal`, `aria-hidden`      |
+| Backdrop | `hp-dialog-backdrop` | `dialog-backdrop`   | `data-hp-backdrop`        | `open\|closed` | —                        | —                                |
+| Title    | `hp-dialog-title`    | `dialog-title`      | —                         | —              | —                        | —                                |
+| Close    | `hp-dialog-close`    | `dialog-close`      | —                         | —              | `button`                 | —                                |
+
+**ARIA_Context_Attribute (responsabilidad del Consumer):** `aria-labelledby`, `aria-describedby`, `aria-label`
+
+**Comportamiento alertdialog** (`data-alert` presente): `role="alertdialog"`, ESC no cierra, backdrop no cierra.
+
+---
+
+### hp-toast
+
+| Parte       | Tag                    | `data-hp-component` | `data-hp-*` extra | `data-state`   | Rol ARIA | ARIA gestionado internamente               |
+| :---------- | :--------------------- | :------------------ | :---------------- | :------------- | :------- | :----------------------------------------- |
+| Container   | `hp-toast-container`   | `toast-container`   | —                 | —              | —        | —                                          |
+| Toast       | `hp-toast`             | `toast`             | —                 | `open\|closed` | `alert`  | `aria-live="polite"`, `aria-atomic="true"` |
+| Title       | `hp-toast-title`       | `toast-title`       | —                 | —              | —        | —                                          |
+| Description | `hp-toast-description` | `toast-description` | —                 | —              | —        | —                                          |
+| Close       | `hp-toast-close`       | `toast-close`       | —                 | —              | `button` | —                                          |
+
+**ARIA_Context_Attribute (responsabilidad del Consumer):** `aria-label` en `hp-toast-close`
+
+**Posicionamiento del container** controlado por `data-position` (CSS attribute selector en `toast.css`). Valores: `top-left | top-center | top-right | bottom-left | bottom-center | bottom-right`.
+
+---
+
+### hp-tooltip
+
+| Parte   | Tag                  | `data-hp-component` | `data-hp-*` extra         | `data-state`   | Rol ARIA  | ARIA gestionado internamente        |
+| :------ | :------------------- | :------------------ | :------------------------ | :------------- | :-------- | :---------------------------------- |
+| Root    | `hp-tooltip`         | `tooltip`           | —                         | —              | —         | —                                   |
+| Trigger | `hp-tooltip-trigger` | `tooltip-trigger`   | —                         | —              | —         | `aria-describedby` (cuando abierto) |
+| Content | `hp-tooltip-content` | `tooltip-content`   | `data-hp-tooltip-content` | `open\|closed` | `tooltip` | `aria-hidden`                       |
+
+**ARIA_Context_Attribute (responsabilidad del Consumer):** `aria-label` en `hp-tooltip-trigger`
+
+**Propiedades configurables:** `show-delay` (default 300ms), `hide-delay` (default 150ms).

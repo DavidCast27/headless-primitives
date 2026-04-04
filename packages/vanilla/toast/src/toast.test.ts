@@ -50,23 +50,23 @@ describe("HeadlessToast", () => {
 });
 
 describe("HeadlessToastContainer", () => {
-  it("renders as fixed positioned container", () => {
+  it("renders with correct data-hp-component attribute", () => {
     const container = document.createElement("hp-toast-container") as HeadlessToastContainer;
     document.body.appendChild(container);
 
-    expect(container.style.position).toBe("fixed");
+    // Positioning is now handled by CSS (toast.css), not inline styles
     expect(container.getAttribute("data-hp-component")).toBe("toast-container");
 
     document.body.removeChild(container);
   });
 
-  it("applies position from data-position attribute", () => {
+  it("reflects data-position attribute for CSS targeting", () => {
     const container = document.createElement("hp-toast-container") as HeadlessToastContainer;
     container.setAttribute("data-position", "bottom-left");
     document.body.appendChild(container);
 
-    expect(container.style.bottom).toMatch(/^0/);
-    expect(container.style.left).toMatch(/^0/);
+    // Positioning is CSS-driven via [data-position] attribute selector in toast.css
+    expect(container.getAttribute("data-position")).toBe("bottom-left");
 
     document.body.removeChild(container);
   });

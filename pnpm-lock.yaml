@@ -239,6 +239,9 @@ importers:
       '@headless-primitives/utils':
         specifier: workspace:*
         version: link:../utils
+      lit:
+        specifier: ^3.3.2
+        version: 3.3.2
     devDependencies:
       happy-dom:
         specifier: ^14.12.3

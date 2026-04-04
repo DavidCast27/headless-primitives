@@ -12,6 +12,21 @@ pnpm add @headless-primitives/field
 
 ## Demostración
 
+### Sin estilos (solo base.css)
+
+Así se ve `hp-field` usando únicamente `@headless-primitives/utils/base.css`. La vinculación automática de `aria-labelledby`, `aria-describedby` y `for` funciona completamente.
+
+<div class="hp-demo-card">
+  <hp-field>
+    <hp-field-label>Email</hp-field-label>
+    <hp-field-description>No enviamos spam.</hp-field-description>
+    <hp-field-control><input type="email" placeholder="tu@email.com" /></hp-field-control>
+    <hp-field-error>Email inválido.</hp-field-error>
+  </hp-field>
+</div>
+
+### Con estilos personalizados
+
 <div class="hp-demo-card">
   <div style="width: 100%; max-width: 320px;">
     <hp-field>
