@@ -30,10 +30,34 @@ Así se ve `hp-popover` usando únicamente `@headless-primitives/utils/base.css`
   </hp-popover>
 </div>
 
+### Alineamiento
+
+El atributo `align` controla el borde horizontal desde el que se abre el contenido, siempre hacia abajo.
+
+<div class="hp-demo-card" style="gap: 1rem; display: flex; flex-wrap: wrap; justify-content: space-between;">
+  <hp-popover align="start">
+    <hp-popover-trigger>
+      <button class="demo-btn">align="start" (izquierda)</button>
+    </hp-popover-trigger>
+    <hp-popover-content class="demo-popover-content">
+      <p style="margin: 0; font-size: 0.875rem; color: var(--vp-c-text-2);">Alineado al borde izquierdo del trigger.</p>
+    </hp-popover-content>
+  </hp-popover>
+
+  <hp-popover align="end">
+    <hp-popover-trigger>
+      <button class="demo-btn">align="end" (derecha)</button>
+    </hp-popover-trigger>
+    <hp-popover-content class="demo-popover-content">
+      <p style="margin: 0; font-size: 0.875rem; color: var(--vp-c-text-2);">Alineado al borde derecho del trigger.</p>
+    </hp-popover-content>
+  </hp-popover>
+</div>
+
 ### Con estilos personalizados
 
 <div class="hp-demo-card">
-  <hp-popover>
+  <hp-popover align="start">
     <hp-popover-trigger>
       <button class="demo-btn">Abrir Popover</button>
     </hp-popover-trigger>
@@ -165,11 +189,21 @@ hp-popover-trigger {
 
 Contenedor principal que coordina el trigger y el content.
 
+#### Atributos
+
+| Atributo | Tipo                 | Por defecto | Descripción                                                                                                                          |
+| :------- | :------------------- | :---------- | :----------------------------------------------------------------------------------------------------------------------------------- |
+| `align`  | `"start"` \| `"end"` | `"start"`   | Alineamiento horizontal del contenido respecto al trigger. `start` = borde izquierdo del trigger, `end` = borde derecho del trigger. |
+
+#### Métodos
+
 | Método     | Descripción                   |
 | :--------- | :---------------------------- |
 | `open()`   | Abre el popover               |
 | `close()`  | Cierra el popover             |
 | `toggle()` | Alterna el estado del popover |
+
+#### Eventos
 
 | Evento     | Descripción                          |
 | :--------- | :----------------------------------- |

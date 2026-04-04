@@ -25,13 +25,21 @@ hp-tooltip-content {
   white-space: nowrap;
   pointer-events: none;
   z-index: var(--hp-z-index-tooltip, 1300);
-  /* Animación de entrada (Req 11.5) */
-  animation: hp-tooltip-in var(--hp-transition-fast) ease forwards;
 }
 
 /* Visibilidad ya gestionada por base.css:
    [data-hp-tooltip-content][data-state="closed"] → visibility:hidden; opacity:0
    [data-hp-tooltip-content][data-state="open"]   → visibility:visible; opacity:1  (Req 11.3) */
+
+/* Animaciones — reutiliza @keyframes hp-tooltip-in / hp-tooltip-out de base.css (Req 11.5) */
+hp-tooltip-content[data-state="open"] {
+  animation: hp-tooltip-in var(--hp-transition-fast)
+    var(--hp-ease-out, cubic-bezier(0.16, 1, 0.3, 1)) both;
+}
+
+hp-tooltip-content[data-state="closed"] {
+  animation: hp-tooltip-out var(--hp-transition-fast) ease both;
+}
 
 /* Flecha apuntando al trigger (Req 11.4) */
 hp-tooltip-content::after {
@@ -42,15 +50,4 @@ hp-tooltip-content::after {
   transform: translateX(-50%);
   border: 5px solid transparent;
   border-top-color: var(--hp-text);
-}
-
-@keyframes hp-tooltip-in {
-  from {
-    opacity: 0;
-    transform: translateY(-4px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }

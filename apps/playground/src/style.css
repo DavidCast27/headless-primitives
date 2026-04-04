@@ -17,6 +17,37 @@
 
   --font-sans: "Inter", system-ui, -apple-system, sans-serif;
   --font-mono: "JetBrains Mono", monospace;
+
+  /* ── HP Theme tokens — forzado dark para el playground ──────────────────
+   * El playground es siempre oscuro, independientemente del color-scheme del OS.
+   * Sobreescribimos los tokens de @headless-primitives/styles/theme.css para
+   * que todos los hp-* components usen la paleta dark del playground.
+   * ──────────────────────────────────────────────────────────────────────── */
+  --hp-bg: #0c0c0e;
+  --hp-bg-subtle: #18181b;
+  --hp-bg-muted: #27272a;
+  --hp-surface: #18181b;
+  --hp-surface-raised: #1f1f23;
+
+  --hp-border: #27272a;
+  --hp-border-strong: #52525b;
+
+  --hp-text: #f8fafc;
+  --hp-text-secondary: #94a3b8;
+  --hp-text-disabled: #52525b;
+  --hp-text-on-accent: #ffffff;
+
+  --hp-accent: #10b981;
+  --hp-accent-hover: #059669;
+  --hp-accent-active: #047857;
+  --hp-accent-foreground: #ffffff;
+
+  --hp-focus-outline-color: #10b981;
+
+  --hp-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.4);
+  --hp-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.5), 0 1px 2px -1px rgb(0 0 0 / 0.5);
+  --hp-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.5), 0 2px 4px -2px rgb(0 0 0 / 0.5);
+  --hp-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5), 0 4px 6px -4px rgb(0 0 0 / 0.5);
 }
 
 * {

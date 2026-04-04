@@ -1,4 +1,4 @@
-/* Contenedor del Progress (Track) */
+/* Track */
 hp-progress.progress {
   display: block;
   width: 100%;
@@ -6,26 +6,20 @@ hp-progress.progress {
   background-color: rgba(255, 255, 255, 0.05);
   border-radius: 99px;
   overflow: hidden;
-  position: relative;
   border: 1px solid var(--border-color);
 }
 
-/* Indicador de progreso (Bar) */
-hp-progress.progress::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
+/* Indicator bar — width set inline by the component */
+hp-progress.progress hp-progress-indicator {
+  display: block;
   height: 100%;
   background-color: var(--primary-color);
   transition: width 0.3s ease-out;
-  /* Usamos la variable CSS expuesta por el componente */
-  width: var(--hp-progress-percentage, 0%);
 }
 
-/* Estado Indeterminado */
-hp-progress.progress:not([aria-valuenow])::after {
-  width: 30%;
+/* Indeterminate state */
+hp-progress.progress hp-progress-indicator[data-indeterminate] {
+  width: 30% !important;
   animation: progress-indeterminate 1.5s infinite linear;
   background: linear-gradient(90deg, transparent 0%, var(--primary-color) 50%, transparent 100%);
 }

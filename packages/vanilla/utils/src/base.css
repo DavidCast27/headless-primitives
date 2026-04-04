@@ -21,6 +21,14 @@
 }
 
 /* B. Overlays (Dialog, Popover, Tooltip) */
+/* Transición suave: opacidad primero, visibilidad con delay al cerrar */
+[data-hp-overlay-content],
+[data-hp-backdrop] {
+  transition:
+    opacity var(--hp-duration, 150ms) var(--hp-ease, ease),
+    visibility 0s linear var(--hp-duration, 150ms);
+}
+
 [data-hp-overlay-content][data-state="closed"],
 [data-hp-backdrop][data-state="closed"] {
   visibility: hidden;
@@ -33,6 +41,10 @@
   visibility: visible;
   opacity: 1;
   pointer-events: auto;
+  /* Sin delay al abrir: visibility es inmediata */
+  transition:
+    opacity var(--hp-duration, 150ms) var(--hp-ease, ease),
+    visibility 0s;
 }
 
 /* 3. Posicionamiento Semántico (Mínimo) */
@@ -50,8 +62,9 @@
   z-index: var(--hp-z-index-overlay-content);
 }
 
-/* Dialog content — centrado en viewport (posicionamiento estructural mínimo) */
-[data-hp-overlay-content][role="dialog"],
+/* Dialog content — centrado en viewport solo para modales (aria-modal="true")
+ * Popovers tienen role="dialog" pero aria-modal="false", por lo que quedan excluidos */
+[data-hp-overlay-content][role="dialog"][aria-modal="true"],
 [data-hp-overlay-content][role="alertdialog"] {
   top: 50%;
   left: 50%;
@@ -73,6 +86,12 @@
 }
 
 /* Tooltip content visibility */
+[data-hp-tooltip-content] {
+  transition:
+    opacity var(--hp-duration-fast, 100ms) var(--hp-ease, ease),
+    visibility 0s linear var(--hp-duration-fast, 100ms);
+}
+
 [data-hp-tooltip-content][data-state="closed"] {
   visibility: hidden;
   opacity: 0;
@@ -83,6 +102,9 @@
   visibility: visible;
   opacity: 1;
   pointer-events: auto;
+  transition:
+    opacity var(--hp-duration-fast, 100ms) var(--hp-ease, ease),
+    visibility 0s;
 }
 
 /* Block display for container elements — custom elements are inline by default */
@@ -167,21 +189,21 @@ hp-toast {
 }
 
 .hp-visually-hidden {
-  position: absolute !important;
-  width: 1px !important;
-  height: 1px !important;
-  padding: 0 !important;
-  margin: -1px !important;
-  overflow: hidden !important;
-  clip: rect(0, 0, 0, 0) !important;
-  white-space: nowrap !important;
-  border-width: 0 !important;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }
 
 /* =============================================================
- * Apariencia mínima — sin colores, sin temas.
- * Solo bordes, padding, border-radius y cursor para que cada
- * componente sea reconocible sin ningún CSS adicional.
+ * Apariencia mínima — sin colores hardcoded, sin temas.
+ * Solo estructura, forma, sombras y estados interactivos para
+ * que cada componente sea reconocible y usable sin CSS adicional.
  * El Consumer o @headless-primitives/styles sobreescribe esto.
  * ============================================================= */
 
@@ -208,6 +230,20 @@ hp-toast-close {
   line-height: 1.5;
   user-select: none;
   box-sizing: border-box;
+  transition:
+    background-color 0.15s ease,
+    opacity 0.15s ease,
+    border-color 0.15s ease;
+}
+
+hp-button:hover:not([disabled]):not([aria-disabled="true"]),
+hp-popover-trigger:hover,
+hp-dialog-trigger:hover {
+  background-color: color-mix(in srgb, currentColor 8%, transparent);
+}
+
+hp-button:active:not([disabled]):not([aria-disabled="true"]) {
+  background-color: color-mix(in srgb, currentColor 14%, transparent);
 }
 
 hp-button[disabled],
@@ -223,23 +259,30 @@ hp-switch {
   display: inline-flex;
   align-items: center;
   position: relative;
-  width: 40px;
-  height: 22px;
-  border: 1px solid currentColor;
+  width: 42px;
+  height: 24px;
+  border: 1.5px solid currentColor;
   border-radius: 999px;
   cursor: pointer;
   box-sizing: border-box;
+  opacity: 0.5;
+  transition: opacity 0.15s ease;
+}
+
+hp-switch[aria-checked="true"] {
+  opacity: 1;
 }
 
 hp-switch::after {
   content: "";
   position: absolute;
   left: 3px;
-  width: 14px;
-  height: 14px;
+  width: 15px;
+  height: 15px;
   border-radius: 50%;
   background: currentColor;
-  transition: transform 0.15s;
+  transition: transform 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 hp-switch[aria-checked="true"]::after {
@@ -247,7 +290,7 @@ hp-switch[aria-checked="true"]::after {
 }
 
 hp-switch[aria-disabled="true"] {
-  opacity: 0.45;
+  opacity: 0.35;
   cursor: not-allowed;
 }
 
@@ -256,29 +299,48 @@ hp-checkbox {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 16px;
-  height: 16px;
+  width: 17px;
+  height: 17px;
   border: 1.5px solid currentColor;
   border-radius: 3px;
   cursor: pointer;
   box-sizing: border-box;
   flex-shrink: 0;
+  opacity: 0.55;
+  transition: opacity 0.15s ease;
+}
+
+hp-checkbox:hover:not([aria-disabled="true"]) {
+  opacity: 0.8;
+}
+
+hp-checkbox[aria-checked="true"],
+hp-checkbox[aria-checked="mixed"] {
+  opacity: 1;
 }
 
 hp-checkbox[aria-checked="true"]::after {
-  content: "✓";
-  font-size: 11px;
-  line-height: 1;
+  content: "";
+  display: block;
+  width: 4px;
+  height: 8px;
+  border: 1.5px solid currentColor;
+  border-top: none;
+  border-left: none;
+  transform: rotate(45deg) translateY(-1px);
 }
 
 hp-checkbox[aria-checked="mixed"]::after {
-  content: "–";
-  font-size: 11px;
-  line-height: 1;
+  content: "";
+  display: block;
+  width: 8px;
+  height: 1.5px;
+  background: currentColor;
+  border-radius: 1px;
 }
 
 hp-checkbox[aria-disabled="true"] {
-  opacity: 0.45;
+  opacity: 0.35;
   cursor: not-allowed;
 }
 
@@ -287,13 +349,23 @@ hp-radio {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 16px;
-  height: 16px;
+  width: 17px;
+  height: 17px;
   border: 1.5px solid currentColor;
   border-radius: 50%;
   cursor: pointer;
   box-sizing: border-box;
   flex-shrink: 0;
+  opacity: 0.55;
+  transition: opacity 0.15s ease;
+}
+
+hp-radio:hover:not([aria-disabled="true"]) {
+  opacity: 0.8;
+}
+
+hp-radio[aria-checked="true"] {
+  opacity: 1;
 }
 
 hp-radio[aria-checked="true"]::after {
@@ -305,7 +377,7 @@ hp-radio[aria-checked="true"]::after {
 }
 
 hp-radio[aria-disabled="true"] {
-  opacity: 0.45;
+  opacity: 0.35;
   cursor: not-allowed;
 }
 
@@ -333,14 +405,20 @@ hp-toggle:last-child {
   border-right: none;
 }
 
+hp-toggle:hover:not([aria-disabled="true"]):not([aria-pressed="true"]) {
+  background-color: color-mix(in srgb, currentColor 8%, transparent);
+}
+
 hp-toggle[aria-pressed="true"] {
-  text-decoration: underline;
+  background-color: color-mix(in srgb, currentColor 12%, transparent);
+  font-weight: 600;
 }
 
 /* --- Tabs --- */
 hp-tab-list {
   display: flex;
   border-bottom: 1px solid currentColor;
+  opacity: 0.85;
 }
 
 hp-tab {
@@ -348,11 +426,18 @@ hp-tab {
   border-bottom: 2px solid transparent;
   border-radius: 0;
   margin-bottom: -1px;
+  opacity: 0.65;
+}
+
+hp-tab:hover:not([aria-disabled="true"]):not([aria-selected="true"]) {
+  background-color: color-mix(in srgb, currentColor 6%, transparent);
+  opacity: 0.85;
 }
 
 hp-tab[aria-selected="true"] {
   border-bottom-color: currentColor;
   font-weight: 600;
+  opacity: 1;
 }
 
 hp-tab-panel {
@@ -361,13 +446,16 @@ hp-tab-panel {
 
 /* --- Accordion --- */
 hp-accordion {
+  display: block;
+  width: 100%;
+  min-width: 0;
   border: 1px solid currentColor;
-  border-radius: 4px;
+  border-radius: 6px;
   overflow: hidden;
 }
 
 hp-accordion-item {
-  border-bottom: 1px solid currentColor;
+  border-bottom: 1px solid color-mix(in srgb, currentColor 30%, transparent);
 }
 
 hp-accordion-item:last-child {
@@ -376,10 +464,18 @@ hp-accordion-item:last-child {
 
 hp-accordion-trigger {
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   text-align: left;
   border: none;
   border-radius: 0;
-  padding: 0.625rem 0.75rem;
+  padding: 0.625rem 0.875rem;
+  font-weight: 500;
+}
+
+hp-accordion-trigger:hover {
+  background-color: color-mix(in srgb, currentColor 6%, transparent);
 }
 
 hp-accordion-trigger[aria-expanded="true"] {
@@ -387,48 +483,110 @@ hp-accordion-trigger[aria-expanded="true"] {
 }
 
 hp-accordion-content {
-  padding: 0.5rem 0.75rem 0.75rem;
+  padding: 0.375rem 0.875rem 0.75rem;
+  opacity: 0.8;
+  font-size: 0.875rem;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 /* --- Collapsible --- */
+hp-collapsible {
+  display: block;
+  width: 100%;
+  min-width: 0;
+}
+
 hp-collapsible-trigger {
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   text-align: left;
-  border: none;
+  border: 1px solid currentColor;
   border-radius: 4px;
   padding: 0.5rem 0.75rem;
+  font-weight: 500;
+  box-sizing: border-box;
+}
+
+hp-collapsible-trigger:hover {
+  background-color: color-mix(in srgb, currentColor 6%, transparent);
+}
+
+hp-collapsible-trigger[aria-expanded="true"] {
+  border-radius: 4px 4px 0 0;
 }
 
 hp-collapsible-content {
+  display: block;
+  width: 100%;
+  min-width: 0;
   padding: 0.5rem 0.75rem;
   border: 1px solid currentColor;
   border-top: none;
   border-radius: 0 0 4px 4px;
+  opacity: 0.85;
+  font-size: 0.875rem;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  box-sizing: border-box;
 }
 
 /* --- Dialog --- */
 hp-dialog-backdrop {
-  background: rgba(0, 0, 0, 0.35);
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(1px);
 }
 
 hp-dialog-content {
-  padding: 1.25rem;
-  border: 1px solid currentColor;
-  border-radius: 6px;
+  padding: 1.5rem;
+  border: 1px solid color-mix(in srgb, currentColor 20%, transparent);
+  border-radius: 8px;
   background: Canvas;
   max-width: min(calc(100vw - 2rem), 480px);
   width: 100%;
   max-height: calc(100vh - 4rem);
   overflow-y: auto;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.15),
+    0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+hp-dialog-title {
+  display: block;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  padding-right: 2rem;
+}
+
+hp-dialog-close {
+  position: absolute;
+  top: 0.875rem;
+  right: 0.875rem;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border-radius: 4px;
+  opacity: 0.6;
+}
+
+hp-dialog-close:hover {
+  opacity: 1;
+  background-color: color-mix(in srgb, currentColor 10%, transparent);
 }
 
 /* --- Popover --- */
 hp-popover-content {
   padding: 0.75rem;
-  border: 1px solid currentColor;
-  border-radius: 4px;
+  border: 1px solid color-mix(in srgb, currentColor 25%, transparent);
+  border-radius: 6px;
   background: Canvas;
   min-width: 160px;
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.1),
+    0 1px 4px rgba(0, 0, 0, 0.06);
 }
 
 /* --- Tooltip --- */
@@ -438,59 +596,110 @@ hp-tooltip {
 }
 
 hp-tooltip-content {
-  padding: 0.25rem 0.5rem;
-  border: 1px solid currentColor;
-  border-radius: 3px;
-  background: Canvas;
+  padding: 0.25rem 0.625rem;
+  border-radius: 4px;
+  background: CanvasText;
+  color: Canvas;
   font-size: 0.8rem;
   white-space: nowrap;
   bottom: calc(100% + 6px);
   left: 50%;
   transform: translateX(-50%);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  border: none;
 }
 
 /* --- Toast --- */
 hp-toast {
   display: block;
-  padding: 0.625rem 0.875rem;
-  border: 1px solid currentColor;
-  border-radius: 4px;
+  padding: 0.75rem 1rem;
+  border: 1px solid color-mix(in srgb, currentColor 20%, transparent);
+  border-radius: 6px;
   background: Canvas;
   font-size: 0.875rem;
-  min-width: 200px;
+  min-width: 220px;
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.1),
+    0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+hp-toast-title {
+  font-weight: 600;
+  margin-bottom: 0.125rem;
+}
+
+hp-toast-description {
+  font-size: 0.8rem;
+  opacity: 0.75;
+}
+
+hp-toast-close {
+  float: right;
+  margin-left: 0.5rem;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border-radius: 3px;
+  opacity: 0.5;
+}
+
+hp-toast-close:hover {
+  opacity: 1;
+  background-color: color-mix(in srgb, currentColor 10%, transparent);
 }
 
 /* --- Separator --- */
 hp-separator {
   display: block;
   border: none;
-  border-top: 1px solid currentColor;
-  opacity: 0.3;
+  border-top: 1px solid color-mix(in srgb, currentColor 40%, transparent);
+  margin: 0.5rem 0;
 }
 
 hp-separator[aria-orientation="vertical"] {
+  display: inline-block;
   border-top: none;
-  border-left: 1px solid currentColor;
+  border-left: 1px solid color-mix(in srgb, currentColor 40%, transparent);
   width: 1px;
-  height: auto;
+  height: 1em;
   align-self: stretch;
+  margin: 0 0.5rem;
+  vertical-align: middle;
 }
 
 /* --- Progress --- */
 hp-progress {
   display: block;
+  width: 100%;
   height: 8px;
-  border: 1px solid currentColor;
   border-radius: 999px;
   overflow: hidden;
+  background-color: color-mix(in srgb, currentColor 15%, transparent);
+  color: inherit;
 }
 
 hp-progress-indicator {
   display: block;
   height: 100%;
-  background: currentColor;
+  background: CanvasText;
+  opacity: 0.6;
   border-radius: 999px;
-  transition: width 0.2s;
+  transition: width 0.25s ease;
+  width: var(--hp-progress-percentage, 0%);
+}
+
+hp-progress-indicator[data-indeterminate] {
+  width: 30% !important;
+  animation: hp-progress-indeterminate 1.5s infinite linear;
+}
+
+@keyframes hp-progress-indeterminate {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(400%);
+  }
 }
 
 /* --- Label --- */
@@ -508,10 +717,11 @@ hp-avatar {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  border: 1px solid currentColor;
+  border: 1.5px solid currentColor;
   overflow: hidden;
   font-size: 0.8rem;
   font-weight: 600;
+  opacity: 0.85;
 }
 
 hp-avatar-image {
@@ -535,11 +745,12 @@ hp-field-label {
 
 hp-field-description {
   font-size: 0.8rem;
-  opacity: 0.7;
+  opacity: 0.6;
 }
 
 hp-field-error {
   font-size: 0.8rem;
+  opacity: 0.85;
   text-decoration: underline wavy;
 }
 
@@ -548,10 +759,297 @@ hp-field-control select,
 hp-field-control textarea {
   display: block;
   width: 100%;
-  padding: 0.375rem 0.5rem;
-  border: 1px solid currentColor;
+  padding: 0.375rem 0.625rem;
+  border: 1px solid color-mix(in srgb, currentColor 45%, transparent);
   border-radius: 4px;
   font-family: inherit;
   font-size: 0.875rem;
   box-sizing: border-box;
+  background: Canvas;
+  color: CanvasText;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+hp-field-control input:focus,
+hp-field-control select:focus,
+hp-field-control textarea:focus {
+  border-color: currentColor;
+  outline: 2px solid color-mix(in srgb, currentColor 25%, transparent);
+  outline-offset: 0;
+}
+
+hp-field-control textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* =============================================================
+ * ANIMACIONES
+ * Mismas animaciones que @headless-primitives/styles.
+ * Sin colores ni tokens — solo movimiento y timing.
+ * El paquete de estilos puede sobrescribir con sus propios tokens.
+ * ============================================================= */
+
+/* --- Variables de timing (fallbacks si theme.css no está cargado) --- */
+:root {
+  --hp-duration-fast: 100ms;
+  --hp-duration: 150ms;
+  --hp-duration-slow: 200ms;
+  --hp-ease: ease;
+  --hp-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* --- @keyframes --- */
+
+/* Backdrop */
+@keyframes hp-backdrop-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes hp-backdrop-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* Dialog — preserva translate(-50%,-50%) del centrado estructural */
+@keyframes hp-dialog-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes hp-dialog-out {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.96);
+  }
+}
+
+/* Overlays flotantes genéricos (Popover, Alert Dialog no centrado) */
+@keyframes hp-overlay-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes hp-overlay-out {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.97);
+  }
+}
+
+/* Tooltip — preserva translateX(-50%) del centrado horizontal */
+@keyframes hp-tooltip-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+@keyframes hp-tooltip-out {
+  from {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-3px);
+  }
+}
+
+/* Toast — dirección de slide según posición del contenedor */
+hp-toast-container {
+  --hp-toast-slide: 110%;
+}
+
+hp-toast-container[data-position="top-left"],
+hp-toast-container[data-position="bottom-left"] {
+  --hp-toast-slide: -110%;
+}
+
+hp-toast-container[data-position="top-center"],
+hp-toast-container[data-position="bottom-center"] {
+  --hp-toast-slide: 0px;
+}
+
+@keyframes hp-toast-in {
+  from {
+    opacity: 0;
+    transform: translateX(var(--hp-toast-slide, 110%));
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes hp-toast-out {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(var(--hp-toast-slide, 110%));
+  }
+}
+
+/* Para centrados: usa escala en lugar de slide horizontal */
+hp-toast-container[data-position="top-center"] hp-toast,
+hp-toast-container[data-position="bottom-center"] hp-toast {
+  --hp-toast-scale-from: 0.92;
+}
+
+@keyframes hp-toast-in-center {
+  from {
+    opacity: 0;
+    transform: scale(var(--hp-toast-scale-from, 0.92));
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Paneles (Accordion content, Tab panels, Collapsible content) */
+@keyframes hp-panel-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* --- Aplicación de animaciones --- */
+
+/* Backdrop */
+hp-dialog-backdrop[data-state="open"] {
+  animation: hp-backdrop-in var(--hp-duration-slow) var(--hp-ease) both;
+}
+
+hp-dialog-backdrop[data-state="closed"] {
+  animation: hp-backdrop-out var(--hp-duration) var(--hp-ease) both;
+}
+
+/* Dialog content — aria-modal="true" excluye popovers (aria-modal="false") */
+[data-hp-overlay-content][role="dialog"][aria-modal="true"][data-state="open"],
+[data-hp-overlay-content][role="alertdialog"][data-state="open"] {
+  animation: hp-dialog-in var(--hp-duration-slow) var(--hp-ease-out) both;
+}
+
+[data-hp-overlay-content][role="dialog"][aria-modal="true"][data-state="closed"],
+[data-hp-overlay-content][role="alertdialog"][data-state="closed"] {
+  animation: hp-dialog-out var(--hp-duration) var(--hp-ease) both;
+}
+
+/* Popover — dirección de animación según data-side calculado por el componente */
+hp-popover-content[data-state="open"][data-side="bottom"],
+hp-popover-content[data-state="open"]:not([data-side]) {
+  animation: hp-overlay-in var(--hp-duration) var(--hp-ease-out) both;
+}
+
+hp-popover-content[data-state="open"][data-side="top"] {
+  animation: hp-overlay-in-up var(--hp-duration) var(--hp-ease-out) both;
+}
+
+hp-popover-content[data-state="closed"][data-side="bottom"],
+hp-popover-content[data-state="closed"]:not([data-side]) {
+  animation: hp-overlay-out var(--hp-duration-fast) var(--hp-ease) both;
+}
+
+hp-popover-content[data-state="closed"][data-side="top"] {
+  animation: hp-overlay-out-up var(--hp-duration-fast) var(--hp-ease) both;
+}
+
+@keyframes hp-overlay-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes hp-overlay-out-up {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(4px) scale(0.97);
+  }
+}
+
+/* Tooltip */
+[data-hp-tooltip-content][data-state="open"] {
+  animation: hp-tooltip-in var(--hp-duration-fast) var(--hp-ease) both;
+}
+
+[data-hp-tooltip-content][data-state="closed"] {
+  animation: hp-tooltip-out var(--hp-duration-fast) var(--hp-ease) both;
+}
+
+/* Toast */
+hp-toast {
+  animation: hp-toast-in var(--hp-duration-slow) var(--hp-ease-out) both;
+}
+
+hp-toast[data-state="closed"] {
+  animation: hp-toast-out var(--hp-duration) var(--hp-ease) both;
+}
+
+hp-toast-container[data-position="top-center"] hp-toast,
+hp-toast-container[data-position="bottom-center"] hp-toast {
+  animation: hp-toast-in-center var(--hp-duration-slow) var(--hp-ease-out) both;
+}
+
+/* Paneles: fade-in al aparecer desde display:none — requiere @starting-style */
+[data-hp-panel][data-state="open"],
+[data-hp-panel][data-state="selected"] {
+  transition: opacity var(--hp-duration) var(--hp-ease);
+}
+
+@starting-style {
+  [data-hp-panel][data-state="open"],
+  [data-hp-panel][data-state="selected"] {
+    opacity: 0;
+  }
 }

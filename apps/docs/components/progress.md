@@ -37,26 +37,21 @@ Así se ve `hp-progress` usando únicamente `@headless-primitives/utils/base.css
 </div>
 
 <style>
+hp-progress-indicator { display: block; }
 .demo-progress {
   display: block;
   height: 8px;
   background: var(--vp-c-divider);
   border-radius: 999px;
   overflow: hidden;
-  position: relative;
 }
-.demo-progress::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
+.demo-progress hp-progress-indicator {
   height: 100%;
   background: var(--vp-c-brand-1);
-  width: var(--hp-progress-percentage, 0%);
   transition: width 0.3s ease;
 }
-.demo-progress:not([aria-valuenow])::after {
-  width: 30%;
+.demo-progress hp-progress-indicator[data-indeterminate] {
+  width: 30% !important;
   animation: hp-progress-ind 1.5s infinite linear;
 }
 @keyframes hp-progress-ind {
@@ -84,24 +79,21 @@ Así se ve `hp-progress` usando únicamente `@headless-primitives/utils/base.css
   display: block;
   height: 10px;
   background: #eee;
-  position: relative;
   overflow: hidden;
   border-radius: 999px;
 }
 
-.my-progress::after {
-  content: "";
-  position: absolute;
+/* El componente crea hp-progress-indicator internamente */
+.my-progress hp-progress-indicator {
+  display: block;
   height: 100%;
   background: blue;
-  /* La variable se calcula automáticamente */
-  width: var(--hp-progress-percentage, 0%);
   transition: width 0.3s ease;
+  /* El width lo setea el componente via style inline */
 }
 
-/* Estilo para indeterminado */
-.my-progress:not([aria-valuenow])::after {
-  width: 30%;
+.my-progress hp-progress-indicator[data-indeterminate] {
+  width: 30% !important;
   animation: progress-ind 1.5s infinite linear;
 }
 
@@ -125,17 +117,36 @@ Así se ve `hp-progress` usando únicamente `@headless-primitives/utils/base.css
 
 ```html [index.html]
 <!-- Determinado -->
-<hp-progress value="60" class="block h-2 w-full bg-gray-200 rounded-full overflow-hidden">
-  <div
-    class="h-full bg-blue-600 transition-all duration-300"
-    style="width: var(--hp-progress-percentage, 0%)"
-  ></div>
-</hp-progress>
+<hp-progress
+  value="60"
+  class="block h-2 w-full bg-gray-200 rounded-full overflow-hidden"
+></hp-progress>
 
 <!-- Indeterminado -->
-<hp-progress class="block h-2 w-full bg-gray-200 rounded-full overflow-hidden">
-  <div class="h-full bg-blue-600 w-full animate-pulse"></div>
-</hp-progress>
+<hp-progress class="block h-2 w-full bg-gray-200 rounded-full overflow-hidden"></hp-progress>
+```
+
+```css [style.css]
+/* El componente crea hp-progress-indicator internamente */
+hp-progress hp-progress-indicator {
+  display: block;
+  height: 100%;
+  @apply bg-blue-600 transition-all duration-300;
+}
+
+hp-progress hp-progress-indicator[data-indeterminate] {
+  width: 30% !important;
+  animation: progress-ind 1.5s infinite linear;
+}
+
+@keyframes progress-ind {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(400%);
+  }
+}
 ```
 
 :::
@@ -146,10 +157,13 @@ Así se ve `hp-progress` usando únicamente `@headless-primitives/utils/base.css
 
 ## Anatomía
 
-El raíz aplica los atributos ARIA y expone el avance como variable CSS (`--hp-progress-percentage`).
+El componente crea internamente un `hp-progress-indicator` que recibe el `width` via `style` inline. La variable CSS `--hp-progress-percentage` también se expone en el host para usos avanzados.
 
 ```html
-<hp-progress value="50" min="0" max="100"></hp-progress>
+<hp-progress value="50" min="0" max="100">
+  <!-- hp-progress-indicator se crea automáticamente -->
+  <hp-progress-indicator style="width: 50%"></hp-progress-indicator>
+</hp-progress>
 ```
 
 ## API Reference

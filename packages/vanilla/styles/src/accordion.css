@@ -7,6 +7,9 @@
 
 /* Contenedor (Req 9.1) */
 hp-accordion {
+  display: block;
+  width: 100%;
+  min-width: 0;
   border: 1px solid var(--hp-border);
   border-radius: var(--hp-radius-md);
   overflow: hidden;
@@ -75,4 +78,6 @@ hp-accordion-content {
   padding: var(--hp-space-3) var(--hp-space-4);
   color: var(--hp-text-secondary);
   font-size: var(--hp-font-size-sm);
+  overflow-wrap: break-word;
+  word-break: break-word;
 }

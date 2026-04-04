@@ -50,7 +50,7 @@ hp-collapsible-content[hidden] {
   border: 1px solid var(--vp-c-divider);
   border-radius: 8px;
   overflow: hidden;
-  background: white;
+  background: var(--vp-c-bg-soft);
   max-width: 400px;
 }
 .demo-trigger {
@@ -83,7 +83,7 @@ hp-collapsible-content[hidden] {
 }
 .demo-content {
   padding: 16px;
-  background: white;
+  background: var(--vp-c-bg);
   border-top: 1px solid var(--vp-c-divider);
   margin: 0;
 }
