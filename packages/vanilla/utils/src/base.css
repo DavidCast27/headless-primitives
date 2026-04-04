@@ -1,0 +1,81 @@
+/* Plan de Implementación de Estilos Base (base.css) v2.4 */
+
+:root {
+  /* Z-indexes (Arquitectura de capas) */
+  --hp-z-index-backdrop: 1000;
+  --hp-z-index-overlay-content: 1100;
+  --hp-z-index-popover: 1200;
+  --hp-z-index-tooltip: 1300;
+
+  /* Accesibilidad (Opcional/Customizable) */
+  --hp-focus-outline-color: #2563eb;
+  --hp-focus-outline-width: 2px;
+}
+
+/* 2. Reglas por Arquetipo */
+
+/* A. Paneles (Tabs, Accordion) */
+[data-hp-panel][data-state="closed"],
+[data-hp-panel][data-state="unselected"] {
+  display: none;
+}
+
+/* B. Overlays (Dialog, Popover, Tooltip) */
+[data-hp-overlay-content][data-state="closed"],
+[data-hp-backdrop][data-state="closed"] {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+[data-hp-overlay-content][data-state="open"],
+[data-hp-backdrop][data-state="open"] {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* 3. Posicionamiento Semántico (Mínimo) */
+
+/* Backdrops */
+[data-hp-backdrop] {
+  position: fixed;
+  inset: 0;
+  z-index: var(--hp-z-index-backdrop);
+}
+
+/* Contenido de Overlays */
+[data-hp-overlay-content] {
+  position: fixed;
+  z-index: var(--hp-z-index-overlay-content);
+}
+
+/* Floating Elements */
+[data-hp-popover-content],
+[data-hp-tooltip-content] {
+  position: absolute;
+  z-index: var(--hp-z-index-popover);
+}
+
+/* 4. Accesibilidad y Foco */
+
+[data-hp-component]:focus-visible {
+  outline: var(--hp-focus-outline-width) solid var(--hp-focus-outline-color);
+  outline-offset: 2px;
+}
+
+[data-hp-component] {
+  display: block;
+}
+
+.hp-visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border-width: 0 !important;
+}
