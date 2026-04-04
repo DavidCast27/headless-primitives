@@ -4,17 +4,19 @@
  * A simple, accessible notification component that auto-dismisses.
  * Supports role="alert" for screen readers and automatic cleanup.
  */
+import { HeadlessElement } from "@headless-primitives/utils";
 
 export interface ToastOptions {
   duration?: number; // ms before auto-dismiss (0 = manual dismiss only)
   id?: string;
 }
 
-export class HeadlessToast extends HTMLElement {
+export class HeadlessToast extends HeadlessElement {
   private _duration: number = 3000;
   private _closeTimeout: number | null = null;
 
   connectedCallback() {
+    super.connectedCallback();
     this.setAttribute("data-hp-component", "toast");
     this.setAttribute("role", "alert");
     this.setAttribute("aria-live", "polite");
@@ -31,6 +33,7 @@ export class HeadlessToast extends HTMLElement {
   }
 
   disconnectedCallback() {
+    super.disconnectedCallback();
     // Clean up timeout
     if (this._closeTimeout) {
       clearTimeout(this._closeTimeout);
@@ -47,12 +50,7 @@ export class HeadlessToast extends HTMLElement {
     this.style.animation = "slideOut 0.2s ease-out forwards";
 
     setTimeout(() => {
-      this.dispatchEvent(
-        new CustomEvent("hp-dismiss", {
-          bubbles: true,
-          composed: true,
-        }),
-      );
+      this.emit("dismiss");
       this.remove();
     }, 200);
   };
@@ -76,8 +74,9 @@ export class HeadlessToast extends HTMLElement {
 /**
  * Toast Container - Holds multiple toasts and manages their layout
  */
-export class HeadlessToastContainer extends HTMLElement {
+export class HeadlessToastContainer extends HeadlessElement {
   connectedCallback() {
+    super.connectedCallback();
     this.setAttribute("data-hp-component", "toast-container");
     this.style.position = "fixed";
     this.style.display = "flex";

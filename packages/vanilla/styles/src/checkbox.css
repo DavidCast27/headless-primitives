@@ -1,0 +1,72 @@
+/**
+ * @headless-primitives/styles — hp-checkbox (Req 5)
+ *
+ * Casilla de verificación cuadrada con check via ::after.
+ */
+
+hp-checkbox {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 18px;
+  height: 18px;
+  background-color: var(--hp-surface);
+  border: 1.5px solid var(--hp-border-strong);
+  border-radius: var(--hp-radius-sm);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition:
+    background-color var(--hp-transition),
+    border-color var(--hp-transition);
+  box-sizing: border-box;
+}
+
+/* Hover */
+hp-checkbox:hover:not([aria-disabled="true"]) {
+  border-color: var(--hp-accent);
+}
+
+/* Focus visible (Req 5.5) */
+hp-checkbox:focus-visible {
+  outline: var(--hp-focus-outline-width) solid var(--hp-focus-outline-color);
+  outline-offset: 2px;
+}
+
+/* Checked — fondo acento + checkmark (Req 5.2) */
+hp-checkbox[aria-checked="true"] {
+  background-color: var(--hp-accent);
+  border-color: var(--hp-accent);
+}
+
+hp-checkbox[aria-checked="true"]::after {
+  content: "";
+  display: block;
+  width: 5px;
+  height: 9px;
+  border: 2px solid var(--hp-accent-foreground);
+  border-top: none;
+  border-left: none;
+  transform: rotate(45deg) translateY(-1px);
+}
+
+/* Indeterminate — línea horizontal (Req 5.3) */
+hp-checkbox[aria-checked="mixed"] {
+  background-color: var(--hp-accent);
+  border-color: var(--hp-accent);
+}
+
+hp-checkbox[aria-checked="mixed"]::after {
+  content: "";
+  display: block;
+  width: 8px;
+  height: 2px;
+  background-color: var(--hp-accent-foreground);
+  border-radius: 1px;
+}
+
+/* Disabled (Req 5.4) */
+hp-checkbox[aria-disabled="true"] {
+  opacity: var(--hp-opacity-disabled);
+  cursor: not-allowed;
+}

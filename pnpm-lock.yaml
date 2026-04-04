@@ -144,6 +144,9 @@ importers:
       '@headless-primitives/separator':
         specifier: workspace:*
         version: link:../../packages/vanilla/separator
+      '@headless-primitives/styles':
+        specifier: workspace:*
+        version: link:../../packages/vanilla/styles
       '@headless-primitives/switch':
         specifier: workspace:*
         version: link:../../packages/vanilla/switch
@@ -348,6 +351,8 @@ importers:
         specifier: ^2.0.5
         version: 2.1.9(@types/node@25.5.0)(happy-dom@14.12.3)(jsdom@29.0.1)(lightningcss@1.32.0)
 
+  packages/vanilla/styles: {}
+
   packages/vanilla/switch:
     dependencies:
       '@headless-primitives/utils':
@@ -367,6 +372,13 @@ importers:
         version: 3.3.2
 
   packages/vanilla/toast:
+    dependencies:
+      '@headless-primitives/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lit:
+        specifier: ^3.3.2
+        version: 3.3.2
     devDependencies:
       happy-dom:
         specifier: ^14.12.3

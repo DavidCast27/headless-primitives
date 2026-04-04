@@ -1,0 +1,24 @@
+/**
+ * @headless-primitives/styles — index.css (Req 1)
+ *
+ * Importa todos los stylesheets del paquete.
+ * Uso: import '@headless-primitives/styles/index.css'
+ *
+ * Para importaciones selectivas usa el path individual:
+ *   import '@headless-primitives/styles/button.css'
+ */
+
+@import "./theme.css";
+@import "./button.css";
+@import "./switch.css";
+@import "./checkbox.css";
+@import "./radio.css";
+@import "./toggle-group.css";
+@import "./collapsible.css";
+@import "./accordion.css";
+@import "./tabs.css";
+@import "./tooltip.css";
+@import "./popover.css";
+@import "./dialog.css";
+@import "./toast.css";
+@import "./atoms.css";

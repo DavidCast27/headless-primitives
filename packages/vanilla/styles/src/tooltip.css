@@ -1,0 +1,56 @@
+/**
+ * @headless-primitives/styles — hp-tooltip (Req 11)
+ *
+ * Globo flotante con flecha. Complementa posicionamiento de base.css.
+ */
+
+/* Host (Req 11.1) */
+hp-tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+/* Content (Req 11.2) */
+hp-tooltip-content {
+  /* posicionamiento absoluto ya definido en base.css para [data-hp-tooltip-content] */
+  display: inline-block;
+  padding: var(--hp-space-1) var(--hp-space-2);
+  background-color: var(--hp-text);
+  color: var(--hp-surface);
+  font-size: var(--hp-font-size-xs);
+  font-weight: var(--hp-font-weight-medium);
+  line-height: 1.5;
+  border-radius: var(--hp-radius-sm);
+  box-shadow: var(--hp-shadow-md);
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: var(--hp-z-index-tooltip, 1300);
+  /* Animación de entrada (Req 11.5) */
+  animation: hp-tooltip-in var(--hp-transition-fast) ease forwards;
+}
+
+/* Visibilidad ya gestionada por base.css:
+   [data-hp-tooltip-content][data-state="closed"] → visibility:hidden; opacity:0
+   [data-hp-tooltip-content][data-state="open"]   → visibility:visible; opacity:1  (Req 11.3) */
+
+/* Flecha apuntando al trigger (Req 11.4) */
+hp-tooltip-content::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: var(--hp-text);
+}
+
+@keyframes hp-tooltip-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
