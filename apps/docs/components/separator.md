@@ -21,7 +21,7 @@ Así se ve `hp-separator` usando únicamente `@headless-primitives/utils/base.cs
   <hp-separator></hp-separator>
   <p>Sección B</p>
   <div style="display:flex;align-items:center;gap:8px;height:24px;">
-    <span>Uno</span><hp-separator aria-orientation="vertical"></hp-separator><span>Dos</span>
+    <span>Uno</span><hp-separator orientation="vertical"></hp-separator><span>Dos</span>
   </div>
 </div>
 

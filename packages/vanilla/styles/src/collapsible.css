@@ -4,6 +4,13 @@
  * Sección expandible con trigger de ancho completo.
  */
 
+/* Contenedor — ancho completo para evitar expansión horizontal */
+hp-collapsible {
+  display: block;
+  width: 100%;
+  min-width: 0;
+}
+
 /* Trigger — botón de ancho completo (Req 8.1) */
 hp-collapsible-trigger {
   display: flex;
@@ -11,6 +18,7 @@ hp-collapsible-trigger {
   justify-content: space-between;
   width: 100%;
   padding: var(--hp-space-3) var(--hp-space-4);
+  box-sizing: border-box;
   font-family: inherit;
   font-size: var(--hp-font-size-sm);
   font-weight: var(--hp-font-weight-medium);
@@ -43,8 +51,13 @@ hp-collapsible-trigger[aria-expanded="true"] [data-hp-icon] {
 /* Content (Req 8.3) */
 hp-collapsible-content {
   display: block;
+  width: 100%;
+  min-width: 0;
   padding: var(--hp-space-3) var(--hp-space-4);
   border-top: 1px solid var(--hp-border);
   color: var(--hp-text-secondary);
   font-size: var(--hp-font-size-sm);
+  overflow-wrap: break-word;
+  word-break: break-word;
+  box-sizing: border-box;
 }

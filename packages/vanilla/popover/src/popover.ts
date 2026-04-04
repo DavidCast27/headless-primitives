@@ -13,6 +13,16 @@ export class HeadlessPopover extends HeadlessElement {
   private _rafId: number | null = null;
   private _scrollParents: EventTarget[] = [];
 
+  static get observedAttributes() {
+    return ["align"];
+  }
+
+  /** "start" = left-aligned with trigger (default) | "end" = right-aligned */
+  get align(): "start" | "end" {
+    const val = this.getAttribute("align");
+    return val === "end" ? "end" : "start";
+  }
+
   connectedCallback() {
     super.connectedCallback();
     this._trigger = this.querySelector("hp-popover-trigger");
@@ -42,8 +52,17 @@ export class HeadlessPopover extends HeadlessElement {
     this._content.setAttribute("aria-modal", "false");
     this._content.setAttribute("data-hp-overlay-content", "");
     this._content.setAttribute("data-state", "closed");
-    this._content.style.position = "fixed";
+
+    // position: absolute relativo a hp-popover (position: relative)
+    // Evita el bug de position:fixed con ancestros que tienen transform CSS
+    this._content.style.position = "absolute";
     this._content.style.zIndex = "9999";
+    // Limpia cualquier transform de centering que pueda venir de CSS
+    // (base.css aplica translate(-50%,-50%) a role="dialog" modales, no a popovers)
+    this._content.style.transform = "none";
+
+    // hp-popover es el containing block
+    this.style.position = "relative";
   }
 
   /** Walk up the DOM and collect every scrollable ancestor */
@@ -64,28 +83,49 @@ export class HeadlessPopover extends HeadlessElement {
   private _computePosition() {
     if (!this._trigger || !this._content) return;
 
-    const anchor = this._trigger.getBoundingClientRect();
     const gap = 8;
 
-    const contentW = this._content.offsetWidth || 200;
-    const contentH = this._content.offsetHeight || 100;
+    // Use getBoundingClientRect for both elements to get accurate viewport coords,
+    // then convert to local coords relative to hp-popover (the containing block).
+    const popoverRect = this.getBoundingClientRect();
+    const triggerRect = this._trigger.getBoundingClientRect();
 
-    let top = anchor.bottom + gap;
-    let left = anchor.left;
+    // Trigger position relative to hp-popover's top-left corner
+    const triggerLeft = triggerRect.left - popoverRect.left;
+    const triggerTop = triggerRect.top - popoverRect.top;
+    const triggerWidth = triggerRect.width;
+    const triggerHeight = triggerRect.height;
 
-    // Flip to top if not enough space below
-    if (top + contentH > window.innerHeight - gap && anchor.top - contentH - gap > 0) {
-      top = anchor.top - contentH - gap;
+    const contentW = this._content.offsetWidth || 0;
+    const contentH = this._content.offsetHeight || 0;
+
+    // --- Vertical: flip to top if not enough space below ---
+    let top = triggerTop + triggerHeight + gap;
+    let side: "bottom" | "top" = "bottom";
+
+    const spaceBelow = window.innerHeight - triggerRect.bottom;
+    const spaceAbove = triggerRect.top;
+    if (contentH > 0 && spaceBelow < contentH + gap && spaceAbove > contentH + gap) {
+      top = triggerTop - contentH - gap;
+      side = "top";
     }
 
-    // Keep within horizontal viewport
-    if (left + contentW > window.innerWidth - gap) {
-      left = window.innerWidth - contentW - gap;
-    }
-    if (left < gap) left = gap;
+    // --- Horizontal: align start (left edge) or end (right edge) of trigger ---
+    let left =
+      this.align === "end"
+        ? triggerLeft + triggerWidth - contentW // right edge of content = right edge of trigger
+        : triggerLeft; // left edge of content = left edge of trigger
+
+    // Clamp to viewport bounds (converted to popover-local coords)
+    const minLeft = gap - popoverRect.left;
+    const maxLeft = window.innerWidth - contentW - gap - popoverRect.left;
+    left = Math.max(minLeft, Math.min(left, maxLeft));
 
     this._content.style.top = `${top}px`;
     this._content.style.left = `${left}px`;
+
+    this._content.setAttribute("data-side", side);
+    this._content.setAttribute("data-align", this.align);
   }
 
   /** rAF loop: recompute position every frame while open */

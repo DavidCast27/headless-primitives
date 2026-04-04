@@ -14,8 +14,13 @@ hp-dialog-backdrop {
   backdrop-filter: blur(2px);
 }
 
+/* Animaciones — reutiliza @keyframes hp-backdrop-in/out y hp-dialog-in/out de base.css */
 hp-dialog-backdrop[data-state="open"] {
-  animation: hp-backdrop-in var(--hp-transition-slow) ease forwards;
+  animation: hp-backdrop-in var(--hp-transition-slow) ease both;
+}
+
+hp-dialog-backdrop[data-state="closed"] {
+  animation: hp-backdrop-out var(--hp-transition) ease both;
 }
 
 /* Content — apariencia visual del panel (Req 13.2)
@@ -33,9 +38,14 @@ hp-dialog-content {
   font-size: var(--hp-font-size-sm);
 }
 
-/* Animación de entrada (Req 13.4) */
+/* Animaciones — reutiliza @keyframes hp-dialog-in/out de base.css (Req 13.4) */
 hp-dialog-content[data-state="open"] {
-  animation: hp-dialog-in var(--hp-transition-slow) ease forwards;
+  animation: hp-dialog-in var(--hp-transition-slow)
+    var(--hp-ease-out, cubic-bezier(0.16, 1, 0.3, 1)) both;
+}
+
+hp-dialog-content[data-state="closed"] {
+  animation: hp-dialog-out var(--hp-transition) ease both;
 }
 
 /* Título (Req 13.5) */
@@ -81,22 +91,4 @@ hp-dialog-close:focus-visible {
   outline-offset: 2px;
 }
 
-@keyframes hp-backdrop-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes hp-dialog-in {
-  from {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-  }
-}
+/* @keyframes definidos en base.css — no se duplican aquí */
