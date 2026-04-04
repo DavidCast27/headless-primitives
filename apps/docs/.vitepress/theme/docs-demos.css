@@ -21,7 +21,7 @@
   justify-content: center;
   gap: 1.5rem;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
 }
 
 /* Badge de estatus premium */

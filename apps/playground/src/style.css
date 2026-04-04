@@ -48,6 +48,7 @@ body {
   display: flex;
   flex-direction: column;
   padding: 1.5rem;
+  min-height: 100vh;
 }
 
 .sidebar-header {
@@ -62,14 +63,43 @@ body {
   height: 32px;
 }
 
+.sidebar-nav {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+  scroll-behavior: smooth;
+
+  /* Firefox support */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 163, 184, 0.4) transparent;
+}
+
+/* Webkit browsers (Chrome, Safari, Edge) scrollbar styling */
+.sidebar-nav::-webkit-scrollbar {
+  width: 8px;
+}
+
+.sidebar-nav::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar-nav::-webkit-scrollbar-thumb {
+  background-color: rgba(148, 163, 184, 0.4);
+  border-radius: 4px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+  transition: background-color 0.2s;
+}
+
+.sidebar-nav::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(148, 163, 184, 0.7);
+  background-clip: content-box;
+}
+
 .sidebar-header h1 {
   font-size: 1.1rem;
   font-weight: 700;
   letter-spacing: -0.02em;
-}
-
-.sidebar-nav {
-  flex: 1;
 }
 
 .nav-label {

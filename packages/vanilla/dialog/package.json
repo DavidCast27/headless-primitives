@@ -1,0 +1,45 @@
+{
+  "name": "@headless-primitives/dialog",
+  "version": "0.1.0",
+  "description": "Headless dialog primitive for modal overlays",
+  "keywords": [
+    "a11y",
+    "accessibility",
+    "dialog",
+    "focus-trap",
+    "headless",
+    "modal",
+    "overlay",
+    "web-components"
+  ],
+  "license": "MIT",
+  "author": "David Castrillón",
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.umd.cjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc && vite build",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@headless-primitives/utils": "workspace:*"
+  },
+  "devDependencies": {
+    "happy-dom": "^14.12.3",
+    "typescript": "^5.5.4",
+    "vite": "^5.4.2",
+    "vitest": "^2.0.5"
+  }
+}

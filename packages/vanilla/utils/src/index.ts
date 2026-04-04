@@ -61,3 +61,97 @@ export class RovingTabindex {
     el.focus();
   }
 }
+
+/**
+ * Focus Trap utility for containing focus within a container.
+ */
+export class FocusTrap {
+  private _container: HTMLElement;
+  private _active = false;
+  private _previouslyFocusedElement: HTMLElement | null = null;
+  private _focusableElements: HTMLElement[] = [];
+
+  constructor(container: HTMLElement) {
+    this._container = container;
+  }
+
+  activate() {
+    if (this._active) return;
+    this._active = true;
+
+    // Save the currently focused element
+    this._previouslyFocusedElement = document.activeElement as HTMLElement;
+
+    // Get all focusable elements within the container
+    this._updateFocusableElements();
+
+    // Focus the first focusable element
+    if (this._focusableElements.length > 0) {
+      this._focusableElements[0].focus();
+    }
+
+    // Listen for focus events
+    document.addEventListener("focusin", this._handleFocusIn);
+    document.addEventListener("keydown", this._handleKeyDown);
+  }
+
+  deactivate() {
+    if (!this._active) return;
+    this._active = false;
+
+    document.removeEventListener("focusin", this._handleFocusIn);
+    document.removeEventListener("keydown", this._handleKeyDown);
+
+    // Restore previous focus
+    if (this._previouslyFocusedElement) {
+      this._previouslyFocusedElement.focus();
+    }
+  }
+
+  private _updateFocusableElements() {
+    const focusableSelectors = [
+      "a[href]",
+      "button:not([disabled])",
+      "textarea:not([disabled])",
+      "input:not([disabled])",
+      "select:not([disabled])",
+      "[tabindex]:not([tabindex='-1'])",
+      "[contenteditable='true']",
+    ];
+
+    this._focusableElements = Array.from(
+      this._container.querySelectorAll(focusableSelectors.join(", ")),
+    ) as HTMLElement[];
+  }
+
+  private _handleFocusIn = (event: FocusEvent) => {
+    if (!this._active) return;
+
+    const target = event.target as HTMLElement;
+    if (!this._container.contains(target)) {
+      // Focus is outside the container, bring it back
+      if (this._focusableElements.length > 0) {
+        this._focusableElements[0].focus();
+      }
+    }
+  };
+
+  private _handleKeyDown = (event: KeyboardEvent) => {
+    if (!this._active || event.key !== "Tab") return;
+
+    event.preventDefault();
+
+    const currentIndex = this._focusableElements.indexOf(document.activeElement as HTMLElement);
+    let nextIndex;
+
+    if (event.shiftKey) {
+      // Shift+Tab: move to previous
+      nextIndex = currentIndex > 0 ? currentIndex - 1 : this._focusableElements.length - 1;
+    } else {
+      // Tab: move to next
+      nextIndex = currentIndex < this._focusableElements.length - 1 ? currentIndex + 1 : 0;
+    }
+
+    this._focusableElements[nextIndex].focus();
+  };
+}

@@ -13,6 +13,10 @@ import "@headless-primitives/collapsible";
 import "@headless-primitives/field";
 import "@headless-primitives/toggle-group";
 import "@headless-primitives/accordion";
+import "@headless-primitives/tooltip";
+import "@headless-primitives/popover";
+import "@headless-primitives/dialog";
+import "@headless-primitives/toast";
 import "@headless-primitives/tabs";
 
 import { Shell } from "./components/Shell";
@@ -31,6 +35,11 @@ import { fieldDemo } from "./demos/field.demo";
 import { toggleGroupDemo } from "./demos/toggle-group.demo";
 import { collapsibleDemo } from "./demos/collapsible.demo";
 import { accordionDemo } from "./demos/accordion.demo";
+import { tooltipDemo } from "./demos/tooltip.demo";
+import { popoverDemo } from "./demos/popover.demo";
+import { dialogDemo } from "./demos/dialog.demo";
+import { alertDialogDemo } from "./demos/alert-dialog.demo";
+import { toastDemo } from "./demos/toast.demo";
 import { tabsDemo } from "./demos/tabs.demo";
 
 // --- Route Registry ---
@@ -47,6 +56,11 @@ const ROUTES: Record<string, ComponentDemo> = {
   "toggle-group": toggleGroupDemo,
   collapsible: collapsibleDemo,
   accordion: accordionDemo,
+  tooltip: tooltipDemo,
+  popover: popoverDemo,
+  dialog: dialogDemo,
+  "alert-dialog": alertDialogDemo,
+  toast: toastDemo,
   tabs: tabsDemo,
 };
 
