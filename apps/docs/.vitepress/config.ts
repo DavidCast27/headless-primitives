@@ -46,7 +46,6 @@ export default defineConfig({
     nav: [
       { text: "Inicio", link: "/" },
       { text: "Guía", link: "/guide/quick-start" },
-      { text: "Theming", link: "/guide/theming" },
       { text: "Componentes", link: "/components/button" },
     ],
 
@@ -59,8 +58,12 @@ export default defineConfig({
         ],
       },
       {
-        text: "Estilos Base",
+        text: "Guías",
         items: [
+          { text: "Accesibilidad", link: "/guide/accessibility" },
+          { text: "Styling", link: "/guide/styling" },
+          { text: "Animaciones", link: "/guide/animation" },
+          { text: "Eventos", link: "/guide/events" },
           { text: "Theming & Tokens", link: "/guide/theming" },
         ],
       },

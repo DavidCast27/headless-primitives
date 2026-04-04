@@ -68,7 +68,7 @@ hp-accordion-content[hidden] {
   border: 1px solid var(--vp-c-divider);
   border-radius: 8px;
   overflow: hidden;
-  background: white;
+  background: var(--vp-c-bg-soft);
   max-width: 500px;
 }
 hp-accordion-item {
@@ -102,7 +102,7 @@ hp-accordion-item:last-child {
 }
 .demo-content {
   padding: 16px;
-  background: white;
+  background: var(--vp-c-bg);
   border-top: 1px solid var(--vp-c-divider);
 }
 .demo-content[hidden] {

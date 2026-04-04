@@ -58,20 +58,6 @@ Así se ve `hp-checkbox` usando únicamente `@headless-primitives/utils/base.css
   border-color: var(--vp-c-brand-1);
 }
 
-.demo-checkbox[aria-checked="true"]::after {
-  content: "✓";
-  color: white;
-  font-size: 14px;
-  font-weight: bold;
-}
-
-.demo-checkbox[aria-checked="mixed"]::after {
-  content: "";
-  width: 10px;
-  height: 2px;
-  background: white;
-}
-
 .demo-checkbox:focus-visible {
   outline: 2px solid var(--vp-c-brand-1);
   outline-offset: 2px;
