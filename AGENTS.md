@@ -118,9 +118,9 @@ connectedCallback() {
 ### Visibilidad de paneles/contenido
 
 - **No uses el atributo nativo `hidden`** para ocultar paneles en componentes con estado inicial. El parser HTML aplica `display:none` inmediatamente y si el JS no corre a tiempo (SSR/hydration), el contenido queda oculto permanentemente.
-- **Usa un atributo propio** (ej. `selected`) y controla la visibilidad con CSS:
+- **Usa un atributo propio de estado** y controla la visibilidad con CSS canónico basado en `data-state`:
   ```css
-  hp-tab-panel:not([selected]) {
+  hp-tab-panel[data-state="unselected"] {
     display: none;
   }
   ```

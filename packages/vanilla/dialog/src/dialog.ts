@@ -2,166 +2,148 @@
  * Headless Dialog Primitive
  *
  * Modal overlay with focus trap and scroll lock.
+ * Migrated to HeadlessElement + @customElement + @property (Req 19).
+ * All visual styles live in @headless-primitives/styles/dialog.css (Req 13).
+ * Positioning and visibility are handled by base.css archetypes:
+ *   [data-hp-overlay-content], [data-hp-backdrop]
  */
-import { FocusTrap } from "@headless-primitives/utils";
+import { FocusTrap, HeadlessElement, customElement } from "@headless-primitives/utils";
+import { property } from "lit/decorators.js";
 
-export class HeadlessDialog extends HTMLElement {
-  private _trigger: HTMLElement | null = null;
-  private _content: HTMLElement | null = null;
-  private _backdrop: HTMLElement | null = null;
+@customElement("hp-dialog")
+export class HeadlessDialog extends HeadlessElement {
+  /**
+   * When present, switches to alertdialog semantics:
+   * - role="alertdialog" on content
+   * - ESC key does NOT close
+   * - Backdrop click does NOT close
+   */
+  @property({ type: Boolean, reflect: true, attribute: "data-alert" }) alert = false;
+
   private _isOpen = false;
   private _focusTrap: FocusTrap | null = null;
-  private _isAlert = false; // New: Track if this is an alert dialog
+  private _previousScrollPosition = 0;
 
   connectedCallback() {
-    this._isAlert = this.hasAttribute("data-alert");
-    this._trigger = this.querySelector("hp-dialog-trigger");
-    this._content = this.querySelector("hp-dialog-content");
-    this._backdrop = this.querySelector("hp-dialog-backdrop");
+    super.connectedCallback();
+    this.setAttribute("data-hp-component", "dialog");
+    this.addEventListener("hp-close", this._close);
+    // rAF ensures children are connected before we query them (parent connectedCallback
+    // runs before children in Custom Elements — same pattern as accordion/collapsible)
+    requestAnimationFrame(() => this._setup());
+  }
 
-    if (this._content) {
-      this._setupContent();
-      this._focusTrap = new FocusTrap(this._content);
-      this.addEventListener("hp-close", this._close);
+  private _setup() {
+    const content = this._content;
+    const backdrop = this._backdrop;
+    const trigger = this._trigger;
+
+    if (content) {
+      // Only set role if not already set by consumer (alert-dialog pattern)
+      if (!content.hasAttribute("role")) {
+        content.setAttribute("role", this.alert ? "alertdialog" : "dialog");
+      }
+      content.setAttribute("aria-modal", "true");
+      content.setAttribute("data-hp-overlay-content", "");
+      content.setAttribute("data-state", "closed");
+      content.addEventListener("keydown", this._handleKeyDown);
+      this._focusTrap = new FocusTrap(content);
     }
-    if (this._backdrop) {
-      this._setupBackdrop();
+
+    if (backdrop) {
+      backdrop.setAttribute("data-hp-backdrop", "");
+      backdrop.setAttribute("data-state", "closed");
+      if (!this.alert) {
+        backdrop.addEventListener("click", this._close);
+      }
     }
-    if (this._trigger && this._content) {
-      this._setupTrigger();
+
+    if (trigger) {
+      trigger.addEventListener("click", this._open);
     }
   }
 
-  private _setupTrigger() {
-    if (!this._trigger) return;
-
-    this._trigger.addEventListener("click", this._open);
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this._content?.removeEventListener("keydown", this._handleKeyDown);
+    this._backdrop?.removeEventListener("click", this._close);
+    this._trigger?.removeEventListener("click", this._open);
+    this.removeEventListener("hp-close", this._close);
+  }
+  private get _trigger() {
+    return this.querySelector<HTMLElement>("hp-dialog-trigger");
   }
 
-  private _setupContent() {
-    if (!this._content) return;
-
-    this._content.setAttribute("role", "dialog");
-    this._content.setAttribute("aria-modal", "true");
-    this._content.style.position = "fixed";
-    this._content.style.top = "50%";
-    this._content.style.left = "50%";
-    this._content.style.transform = "translate(-50%, -50%)";
-    this._content.style.visibility = "hidden";
-    this._content.style.opacity = "0";
-    this._content.style.pointerEvents = "none";
-    this._content.style.transition = "opacity 0.2s ease, visibility 0.2s ease";
-    this._content.style.zIndex = "9999";
-    this._content.addEventListener("keydown", this._handleKeyDown);
+  private get _content() {
+    return this.querySelector<HTMLElement>("hp-dialog-content");
   }
 
-  private _setupBackdrop() {
-    if (!this._backdrop) return;
-
-    this._backdrop.style.position = "fixed";
-    this._backdrop.style.top = "0";
-    this._backdrop.style.left = "0";
-    this._backdrop.style.right = "0";
-    this._backdrop.style.bottom = "0";
-    this._backdrop.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
-    this._backdrop.style.visibility = "hidden";
-    this._backdrop.style.opacity = "0";
-    this._backdrop.style.transition = "opacity 0.2s ease, visibility 0.2s ease";
-    this._backdrop.style.zIndex = "9998";
-    
-    // Alert dialogs: don't close on backdrop click
-    if (!this._isAlert) {
-      this._backdrop.addEventListener("click", this._close);
-    }
+  private get _backdrop() {
+    return this.querySelector<HTMLElement>("hp-dialog-backdrop");
   }
 
   private _open = () => {
     if (this._isOpen) return;
     this._isOpen = true;
 
-    // Scroll lock — preserve scroll position without layout shift
     this._previousScrollPosition = window.scrollY;
     document.body.style.overflow = "hidden";
 
-    if (this._content) {
-      this._content.style.visibility = "visible";
-      this._content.style.opacity = "1";
-      this._content.style.pointerEvents = "auto";
-      this._content.setAttribute("aria-hidden", "false");
-    }
+    const content = this._content;
+    const backdrop = this._backdrop;
+    const trigger = this._trigger;
 
-    if (this._backdrop) {
-      this._backdrop.style.visibility = "visible";
-      this._backdrop.style.opacity = "1";
+    if (content) {
+      content.setAttribute("data-state", "open");
+      content.removeAttribute("aria-hidden");
     }
-
-    if (this._trigger && this._content) {
-      this._trigger.setAttribute("aria-expanded", "true");
-      this._trigger.setAttribute("aria-controls", this._content.id || "");
+    if (backdrop) backdrop.setAttribute("data-state", "open");
+    if (trigger && content) {
+      trigger.setAttribute("aria-expanded", "true");
+      trigger.setAttribute("aria-controls", content.id || "");
     }
 
     this._focusTrap?.activate();
-
-    this.dispatchEvent(
-      new CustomEvent("hp-open", {
-        bubbles: true,
-        composed: true,
-      }),
-    );
+    this.emit("open");
   };
 
   private _close = () => {
     if (!this._isOpen) return;
     this._isOpen = false;
 
-    // Restore scroll
     document.body.style.overflow = "";
+    window.scrollTo(0, this._previousScrollPosition);
 
-    if (this._content) {
-      this._content.style.visibility = "hidden";
-      this._content.style.opacity = "0";
-      this._content.style.pointerEvents = "none";
-      this._content.setAttribute("aria-hidden", "true");
+    const content = this._content;
+    const backdrop = this._backdrop;
+    const trigger = this._trigger;
+
+    if (content) {
+      content.setAttribute("data-state", "closed");
+      content.setAttribute("aria-hidden", "true");
     }
-
-    if (this._backdrop) {
-      this._backdrop.style.visibility = "hidden";
-      this._backdrop.style.opacity = "0";
-    }
-
-    if (this._trigger) {
-      this._trigger.setAttribute("aria-expanded", "false");
-      this._trigger.removeAttribute("aria-controls");
+    if (backdrop) backdrop.setAttribute("data-state", "closed");
+    if (trigger) {
+      trigger.setAttribute("aria-expanded", "false");
+      trigger.removeAttribute("aria-controls");
     }
 
     this._focusTrap?.deactivate();
-
-    this.dispatchEvent(
-      new CustomEvent("hp-close", {
-        bubbles: true,
-        composed: true,
-      }),
-    );
+    this.emit("close");
   };
 
-  /**
-   * Public API: Open the dialog
-   */
+  /** Public API */
   open() {
     this._open();
   }
-
-  /**
-   * Public API: Close the dialog
-   */
   close() {
     this._close();
   }
 
   private _handleKeyDown = (event: KeyboardEvent) => {
     if (event.key === "Escape") {
-      // Alert dialogs: don't close on ESC
-      if (this._isAlert) {
+      // Alert dialogs: ESC does NOT close (WAI-ARIA alertdialog pattern)
+      if (this.alert) {
         event.preventDefault();
         return;
       }
@@ -171,33 +153,68 @@ export class HeadlessDialog extends HTMLElement {
   };
 }
 
-/**
- * Dialog Trigger - The element that opens the dialog.
- */
-export class HeadlessDialogTrigger extends HTMLElement {
+@customElement("hp-dialog-trigger")
+export class HeadlessDialogTrigger extends HeadlessElement {
+  @property({ type: Boolean, reflect: true }) disabled = false;
+
   connectedCallback() {
-    // Ensure it's focusable
-    if (!this.hasAttribute("tabindex") && !this.hasAttribute("disabled")) {
-      this.setAttribute("tabindex", "0");
-    }
+    super.connectedCallback();
+    this.setAttribute("data-hp-component", "dialog-trigger");
+    if (!this.hasAttribute("role")) this.setAttribute("role", "button");
+    if (!this.disabled) this.setAttribute("tabindex", "0");
   }
 }
 
-/**
- * Dialog Content - The modal content with focus trap.
- */
-export class HeadlessDialogContent extends HTMLElement {
+@customElement("hp-dialog-content")
+export class HeadlessDialogContent extends HeadlessElement {
   connectedCallback() {
-    // Generate ID if not provided
-    if (!this.id) {
-      this.id = `hp-dialog-content-${Math.random().toString(36).slice(2, 9)}`;
-    }
+    super.connectedCallback();
+    this.setAttribute("data-hp-component", "dialog-content");
+    if (!this.id) this.id = `hp-dialog-content-${this.hpId}`;
   }
 }
 
-/**
- * Dialog Backdrop - The overlay that blocks interaction.
- */
-export class HeadlessDialogBackdrop extends HTMLElement {
-  // Just a container for styling
+@customElement("hp-dialog-backdrop")
+export class HeadlessDialogBackdrop extends HeadlessElement {
+  connectedCallback() {
+    super.connectedCallback();
+    this.setAttribute("data-hp-component", "dialog-backdrop");
+  }
+}
+
+@customElement("hp-dialog-title")
+export class HeadlessDialogTitle extends HeadlessElement {
+  connectedCallback() {
+    super.connectedCallback();
+    this.setAttribute("data-hp-component", "dialog-title");
+  }
+}
+
+@customElement("hp-dialog-close")
+export class HeadlessDialogClose extends HeadlessElement {
+  connectedCallback() {
+    super.connectedCallback();
+    this.setAttribute("data-hp-component", "dialog-close");
+    if (!this.hasAttribute("role")) this.setAttribute("role", "button");
+    if (!this.hasAttribute("tabindex")) this.setAttribute("tabindex", "0");
+    this.addEventListener("click", this._onClick);
+    this.addEventListener("keydown", this._onKeyDown);
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this.removeEventListener("click", this._onClick);
+    this.removeEventListener("keydown", this._onKeyDown);
+  }
+
+  private _onClick = () => {
+    this.dispatchEvent(new CustomEvent("hp-close", { bubbles: true }));
+  };
+
+  private _onKeyDown = (e: KeyboardEvent) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      this._onClick();
+    }
+  };
 }

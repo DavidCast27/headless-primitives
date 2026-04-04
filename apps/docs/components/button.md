@@ -36,7 +36,15 @@ pnpm add @headless-primitives/button
 .demo-btn[disabled] { opacity: 0.5; cursor: not-allowed; }
 </style>
 
-<CodeSnippet>
+### Sin estilos (solo base.css)
+
+Así se ve `hp-button` usando únicamente `@headless-primitives/utils/base.css` — sin ningún estilo visual adicional. El comportamiento (foco, disabled, teclado) funciona completamente.
+
+<div class="hp-demo-card">
+  <hp-button>Botón</hp-button>
+  <hp-button disabled>Deshabilitado</hp-button>
+  <hp-button aria-pressed="false">Toggle</hp-button>
+</div><CodeSnippet>
 
 <Flavor only="css">
 

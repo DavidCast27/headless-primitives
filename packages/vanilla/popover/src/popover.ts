@@ -3,9 +3,9 @@
  *
  * Floating content that opens on click, with focus management.
  */
-import { FocusTrap } from "@headless-primitives/utils";
+import { FocusTrap, HeadlessElement } from "@headless-primitives/utils";
 
-export class HeadlessPopover extends HTMLElement {
+export class HeadlessPopover extends HeadlessElement {
   private _trigger: HTMLElement | null = null;
   private _content: HTMLElement | null = null;
   private _isOpen = false;
@@ -14,6 +14,7 @@ export class HeadlessPopover extends HTMLElement {
   private _scrollParents: EventTarget[] = [];
 
   connectedCallback() {
+    super.connectedCallback();
     this._trigger = this.querySelector("hp-popover-trigger");
     this._content = this.querySelector("hp-popover-content");
 
@@ -25,6 +26,7 @@ export class HeadlessPopover extends HTMLElement {
   }
 
   disconnectedCallback() {
+    super.disconnectedCallback();
     this._removeGlobalListeners();
   }
 
@@ -38,11 +40,9 @@ export class HeadlessPopover extends HTMLElement {
 
     this._content.setAttribute("role", "dialog");
     this._content.setAttribute("aria-modal", "false");
+    this._content.setAttribute("data-hp-overlay-content", "");
+    this._content.setAttribute("data-state", "closed");
     this._content.style.position = "fixed";
-    this._content.style.visibility = "hidden";
-    this._content.style.opacity = "0";
-    this._content.style.pointerEvents = "none";
-    this._content.style.transition = "opacity 0.2s ease, visibility 0.2s ease";
     this._content.style.zIndex = "9999";
   }
 
@@ -124,9 +124,7 @@ export class HeadlessPopover extends HTMLElement {
 
     // Show first so offsetWidth/Height are measurable
     if (this._content) {
-      this._content.style.visibility = "visible";
-      this._content.style.opacity = "1";
-      this._content.style.pointerEvents = "auto";
+      this._content.setAttribute("data-state", "open");
       this._content.setAttribute("aria-hidden", "false");
     }
 
@@ -145,13 +143,15 @@ export class HeadlessPopover extends HTMLElement {
     if (this._trigger) {
       this._scrollParents = this._getScrollParents(this._trigger);
       for (const parent of this._scrollParents) {
-        parent.addEventListener("scroll", this._handleScrollOrResize, { passive: true } as AddEventListenerOptions);
+        parent.addEventListener("scroll", this._handleScrollOrResize, {
+          passive: true,
+        } as AddEventListenerOptions);
       }
     }
     window.addEventListener("resize", this._handleScrollOrResize, { passive: true });
 
     this._focusTrap?.activate();
-    this.dispatchEvent(new CustomEvent("hp-open", { bubbles: true, composed: true }));
+    this.emit("open");
   }
 
   private _close() {
@@ -161,9 +161,7 @@ export class HeadlessPopover extends HTMLElement {
     this._stopPositionLoop();
 
     if (this._content) {
-      this._content.style.visibility = "hidden";
-      this._content.style.opacity = "0";
-      this._content.style.pointerEvents = "none";
+      this._content.setAttribute("data-state", "closed");
       this._content.setAttribute("aria-hidden", "true");
     }
 
@@ -174,7 +172,7 @@ export class HeadlessPopover extends HTMLElement {
 
     this._removeGlobalListeners();
     this._focusTrap?.deactivate();
-    this.dispatchEvent(new CustomEvent("hp-close", { bubbles: true, composed: true }));
+    this.emit("close");
   }
 
   private _removeGlobalListeners() {
@@ -212,16 +210,23 @@ export class HeadlessPopover extends HTMLElement {
   };
 
   /** Public API */
-  open() { this._open(); }
-  close() { this._close(); }
-  toggle() { this._toggle(); }
+  open() {
+    this._open();
+  }
+  close() {
+    this._close();
+  }
+  toggle() {
+    this._toggle();
+  }
 }
 
 /**
  * Popover Trigger - The element that opens/closes the popover.
  */
-export class HeadlessPopoverTrigger extends HTMLElement {
+export class HeadlessPopoverTrigger extends HeadlessElement {
   connectedCallback() {
+    super.connectedCallback();
     // Ensure it's focusable
     if (!this.hasAttribute("tabindex") && !this.hasAttribute("disabled")) {
       this.setAttribute("tabindex", "0");
@@ -232,9 +237,10 @@ export class HeadlessPopoverTrigger extends HTMLElement {
 /**
  * Popover Content - The floating content with focus trap.
  */
-export class HeadlessPopoverContent extends HTMLElement {
+export class HeadlessPopoverContent extends HeadlessElement {
   connectedCallback() {
-    // Generate ID if not provided
+    super.connectedCallback();
+    this.setAttribute("data-hp-component", "popover-content");
     if (!this.id) {
       this.id = `hp-popover-content-${Math.random().toString(36).slice(2, 9)}`;
     }

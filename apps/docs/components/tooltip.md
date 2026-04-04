@@ -16,6 +16,19 @@ pnpm add @headless-primitives/tooltip
 
 ## Demostración
 
+### Sin estilos (solo base.css)
+
+Así se ve `hp-tooltip` usando únicamente `@headless-primitives/utils/base.css`. El hover/focus, `aria-describedby` y visibilidad funcionan completamente.
+
+<div class="hp-demo-card" style="overflow: visible; min-height: 100px;">
+  <hp-tooltip>
+    <hp-tooltip-trigger><button>Hover aquí</button></hp-tooltip-trigger>
+    <hp-tooltip-content>Texto del tooltip sin estilos</hp-tooltip-content>
+  </hp-tooltip>
+</div>
+
+### Con estilos personalizados
+
 <div class="hp-demo-card" style="overflow: visible; min-height: 120px;">
   <hp-tooltip class="demo-tooltip">
     <hp-tooltip-trigger>
@@ -30,7 +43,6 @@ pnpm add @headless-primitives/tooltip
 <style>
 hp-tooltip { display: inline-block; position: relative; }
 hp-tooltip-trigger { display: inline-block; }
-hp-tooltip-content { display: block; }
 .demo-btn {
   font-family: inherit;
   font-size: 0.9rem;
@@ -91,9 +103,7 @@ hp-tooltip {
 hp-tooltip-trigger {
   display: inline-block;
 }
-hp-tooltip-content {
-  display: block;
-}
+/* hp-tooltip-content visibility via base.css: [data-hp-tooltip-content][data-state="closed"] */
 
 .tooltip-trigger {
   padding: 8px 16px;
@@ -196,6 +206,6 @@ El contenido flotante del tooltip.
 
 ## Notas
 
-- El componente aplica `visibility: hidden/visible` y `opacity` al content — el posicionamiento lo controla el CSS del usuario.
+- La visibilidad del content se controla via `data-state="open|closed"` — usa `base.css` o tus propios estilos basados en `[data-hp-tooltip-content][data-state="closed"]`.
 - Usa `position: relative` en `hp-tooltip` y `position: absolute` en `hp-tooltip-content` para posicionamiento relativo al trigger.
 - Para posicionamiento dinámico (flip, collision detection), aplica las coordenadas desde JS escuchando el evento `hp-open`.

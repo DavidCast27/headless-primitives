@@ -1,0 +1,30 @@
+{
+  "name": "@headless-primitives/styles",
+  "version": "0.1.0",
+  "description": "Optional base styles for Headless Primitives components, inspired by Base UI",
+  "files": [
+    "src"
+  ],
+  "type": "module",
+  "exports": {
+    "./index.css": "./src/index.css",
+    "./theme.css": "./src/theme.css",
+    "./button.css": "./src/button.css",
+    "./switch.css": "./src/switch.css",
+    "./checkbox.css": "./src/checkbox.css",
+    "./radio.css": "./src/radio.css",
+    "./toggle-group.css": "./src/toggle-group.css",
+    "./collapsible.css": "./src/collapsible.css",
+    "./accordion.css": "./src/accordion.css",
+    "./tabs.css": "./src/tabs.css",
+    "./tooltip.css": "./src/tooltip.css",
+    "./popover.css": "./src/popover.css",
+    "./dialog.css": "./src/dialog.css",
+    "./toast.css": "./src/toast.css",
+    "./atoms.css": "./src/atoms.css",
+    "./field.css": "./src/field.css",
+    "./verify-aria.js": "./src/verify-aria.js"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

@@ -1,9 +1,6 @@
-/**
- * Generates a unique ID with an optional prefix.
- */
-export function uid(prefix = "hp") {
-  return `${prefix}-${Math.random().toString(36).substring(2, 9)}`;
-}
+export * from "./headless-element";
+export * from "./uid";
+export * from "./custom-element";
 
 /**
  * Handles roving tabindex for a group of elements.

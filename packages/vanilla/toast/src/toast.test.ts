@@ -12,12 +12,14 @@ describe("HeadlessToast", () => {
     expect(toast.getAttribute("aria-atomic")).toBe("true");
   });
 
-  it("applies default styles", () => {
+  it("renders with correct data-hp attributes", () => {
     const toast = document.createElement("hp-toast") as HeadlessToast;
     document.body.appendChild(toast);
 
-    expect(toast.style.display).toBe("flex");
-    expect(toast.style.alignItems).toBe("center");
+    expect(toast.getAttribute("data-hp-component")).toBe("toast");
+    expect(toast.getAttribute("role")).toBe("alert");
+    expect(toast.getAttribute("aria-live")).toBe("polite");
+    expect(toast.getAttribute("aria-atomic")).toBe("true");
   });
 
   it("closes toast on close() call", async () => {
@@ -48,23 +50,23 @@ describe("HeadlessToast", () => {
 });
 
 describe("HeadlessToastContainer", () => {
-  it("renders as fixed positioned container", () => {
+  it("renders with correct data-hp-component attribute", () => {
     const container = document.createElement("hp-toast-container") as HeadlessToastContainer;
     document.body.appendChild(container);
 
-    expect(container.style.position).toBe("fixed");
-    expect(container.style.zIndex).toBe("9999");
+    // Positioning is now handled by CSS (toast.css), not inline styles
+    expect(container.getAttribute("data-hp-component")).toBe("toast-container");
 
     document.body.removeChild(container);
   });
 
-  it("applies position from data-position attribute", () => {
+  it("reflects data-position attribute for CSS targeting", () => {
     const container = document.createElement("hp-toast-container") as HeadlessToastContainer;
     container.setAttribute("data-position", "bottom-left");
     document.body.appendChild(container);
 
-    expect(container.style.bottom).toMatch(/^0/);
-    expect(container.style.left).toMatch(/^0/);
+    // Positioning is CSS-driven via [data-position] attribute selector in toast.css
+    expect(container.getAttribute("data-position")).toBe("bottom-left");
 
     document.body.removeChild(container);
   });
@@ -118,5 +120,3 @@ describe("HeadlessToastContainer", () => {
     document.body.removeChild(container);
   });
 });
-
-

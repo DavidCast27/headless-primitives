@@ -19,6 +19,8 @@ import "@headless-primitives/tabs";
 import "@headless-primitives/toast";
 import "@headless-primitives/tooltip";
 import "@headless-primitives/toggle-group";
+// Base functional CSS for headless components
+import "@headless-primitives/utils/base.css";
 import "./docs-demos.css";
 
 // Importar componentes del tema

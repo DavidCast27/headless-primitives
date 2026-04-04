@@ -1,44 +1,41 @@
+import { HeadlessElement, customElement } from "@headless-primitives/utils";
+import { property } from "lit/decorators.js";
 import { SeparatorOrientation } from "./types";
 
-export class HeadlessSeparator extends HTMLElement {
-  static readonly observedAttributes = ["orientation"];
-
-  private _orientation: SeparatorOrientation = "horizontal";
-
-  constructor() {
-    super();
-  }
-
-  connectedCallback() {
-    if (!this.hasAttribute("role")) {
-      this.setAttribute("role", "separator");
-    }
-    this._updateAria();
-  }
-
-  attributeChangedCallback(name: string, oldValue: string, newValue: string) {
-    if (oldValue === newValue) return;
-
-    if (name === "orientation") {
-      this._orientation =
-        (newValue as SeparatorOrientation) === "vertical" ? "vertical" : "horizontal";
-      this._updateAria();
-    }
-  }
-
-  /**
-   * Obtiene o establece la orientación del separador.
-   * Valores válidos: 'horizontal' (por defecto), 'vertical'.
-   */
+@customElement("hp-separator")
+export class HeadlessSeparator extends HeadlessElement {
+  @property({ type: String, reflect: true })
   get orientation(): SeparatorOrientation {
     return this._orientation;
   }
+  set orientation(val: SeparatorOrientation) {
+    this._orientation = val === "vertical" ? "vertical" : "horizontal";
+    this.setAttribute("orientation", this._orientation);
+    if (this.isConnected) this._sync();
+  }
+  private _orientation: SeparatorOrientation = "horizontal";
 
-  set orientation(value: SeparatorOrientation) {
-    this.setAttribute("orientation", value);
+  connectedCallback() {
+    super.connectedCallback();
+    this.setAttribute("data-hp-component", "separator");
+    if (!this.hasAttribute("role")) this.setAttribute("role", "separator");
+    this._sync();
   }
 
-  private _updateAria() {
-    this.setAttribute("aria-orientation", this._orientation);
+  // Call when orientation changes from JS
+  setOrientation(value: SeparatorOrientation) {
+    this.orientation = value;
+  }
+
+  attributeChangedCallback(name: string, old: string | null, next: string | null) {
+    super.attributeChangedCallback(name, old, next);
+    if (name === "orientation" && old !== next && this.isConnected) {
+      this._orientation = next === "vertical" ? "vertical" : "horizontal";
+      this._sync();
+    }
+  }
+
+  private _sync() {
+    this.setAttribute("aria-orientation", this.orientation);
   }
 }

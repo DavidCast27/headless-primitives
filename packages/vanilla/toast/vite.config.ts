@@ -1,18 +1,14 @@
-import { defineConfig } from "vite";
+import { defineConfig } from "vitest/config";
+import { resolve } from "path";
 
 export default defineConfig({
   build: {
     lib: {
-      entry: "src/index.ts",
-      name: "HeadlessToast",
-      fileName: (format) => (format === "umd" ? "index.umd.cjs" : "index.js"),
+      entry: resolve(__dirname, "src/index.ts"),
+      name: "HeadlessPrimitivesToast",
+      fileName: "index",
     },
-    rollupOptions: {
-      external: [],
-      output: {
-        globals: {},
-      },
-    },
+    target: "esnext",
   },
   test: {
     environment: "happy-dom",

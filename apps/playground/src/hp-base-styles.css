@@ -1,0 +1,5 @@
+/**
+ * Relay: importa todos los estilos base de @headless-primitives/styles.
+ * Este archivo permite que Vite resuelva y sirva el paquete CSS correctamente.
+ */
+@import "@headless-primitives/styles/index.css";

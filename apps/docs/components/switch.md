@@ -12,6 +12,18 @@ pnpm add @headless-primitives/switch
 
 ## Demostración
 
+### Sin estilos (solo base.css)
+
+Así se ve `hp-switch` usando únicamente `@headless-primitives/utils/base.css`. El toggle, `aria-checked` y teclado funcionan completamente.
+
+<div class="hp-demo-card">
+  <hp-switch></hp-switch>
+  <hp-switch aria-checked="true"></hp-switch>
+  <hp-switch disabled></hp-switch>
+</div>
+
+### Con estilos personalizados
+
 <div class="hp-demo-card">
   <div style="display: flex; flex-direction: column; gap: 1rem; align-items: center;">
     <hp-label for="sw-demo">Activar modo oscuro</hp-label>
@@ -30,7 +42,7 @@ pnpm add @headless-primitives/switch
   transition: background 0.2s;
   border: 1px solid transparent;
 }
-.demo-switch[checked] {
+.demo-switch[data-state="checked"] {
   background: var(--vp-c-brand-1);
 }
 .demo-switch::after {
@@ -44,7 +56,7 @@ pnpm add @headless-primitives/switch
   border-radius: 50%;
   transition: transform 0.2s;
 }
-.demo-switch[checked]::after {
+.demo-switch[data-state="checked"]::after {
   transform: translateX(20px);
 }
 .demo-switch:focus-visible {
@@ -84,7 +96,7 @@ pnpm add @headless-primitives/switch
   display: inline-block;
 }
 
-.my-switch[checked] {
+.my-switch[data-state="checked"] {
   background: green;
 }
 
@@ -101,7 +113,7 @@ pnpm add @headless-primitives/switch
   transition: transform 0.2s;
 }
 
-.my-switch[checked]::after {
+.my-switch[data-state="checked"]::after {
   transform: translateX(20px);
 }
 ```
@@ -119,10 +131,10 @@ pnpm add @headless-primitives/switch
   <hp-label for="airplane-mode">Modo Avión</hp-label>
   <hp-switch
     id="airplane-mode"
-    class="group relative h-5 w-10 cursor-pointer rounded-full bg-gray-400 transition-colors [&[checked]]:bg-green-600"
+    class="group relative h-5 w-10 cursor-pointer rounded-full bg-gray-400 transition-colors [&[data-state=checked]]:bg-green-600"
   >
     <span
-      class="absolute left-0.5 top-0.5 h-4 w-4 rounded-full bg-white transition-transform group-[&[checked]]:translate-x-5"
+      class="absolute left-0.5 top-0.5 h-4 w-4 rounded-full bg-white transition-transform group-[&[data-state=checked]]:translate-x-5"
     ></span>
   </hp-switch>
 </div>

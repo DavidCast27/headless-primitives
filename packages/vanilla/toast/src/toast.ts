@@ -1,65 +1,47 @@
 /**
  * Headless Toast / Alert Primitive
  *
- * A simple, accessible notification component that auto-dismisses.
- * Supports role="alert" for screen readers and automatic cleanup.
+ * Accessible notification component that auto-dismisses.
+ * Migrated to HeadlessElement + @customElement + @property (Req 19).
+ * All visual styles live in @headless-primitives/styles/toast.css (Req 14).
  */
+import { HeadlessElement, customElement } from "@headless-primitives/utils";
+import { property } from "lit/decorators.js";
 
 export interface ToastOptions {
-  duration?: number; // ms before auto-dismiss (0 = manual dismiss only)
+  duration?: number;
   id?: string;
 }
 
-export class HeadlessToast extends HTMLElement {
-  private _duration: number = 3000;
+@customElement("hp-toast")
+export class HeadlessToast extends HeadlessElement {
+  /** Auto-dismiss duration in ms. 0 = manual dismiss only. */
+  @property({ type: Number, attribute: "data-duration" }) duration = 3000;
+
   private _closeTimeout: number | null = null;
 
   connectedCallback() {
-    // Apply default styles
-    this._applyDefaultStyles();
-
-    // Handle close button if present
-    const closeBtn = this.querySelector("hp-toast-close");
-    if (closeBtn) {
-      closeBtn.addEventListener("click", () => this._close());
-    }
-
-    // Set ARIA attributes
+    super.connectedCallback();
+    this.setAttribute("data-hp-component", "toast");
     this.setAttribute("role", "alert");
     this.setAttribute("aria-live", "polite");
     this.setAttribute("aria-atomic", "true");
+    this.setAttribute("data-state", "open");
 
-    // Parse duration from attribute if set
-    const duration = this.getAttribute("data-duration");
-    if (duration && !isNaN(Number(duration))) {
-      this._duration = Number(duration);
-    }
+    const closeBtn = this.querySelector("hp-toast-close");
+    if (closeBtn) closeBtn.addEventListener("click", () => this._close());
 
-    // Start auto-dismiss timer if duration > 0
-    if (this._duration > 0) {
-      this._closeTimeout = window.setTimeout(() => this._close(), this._duration);
+    if (this.duration > 0) {
+      this._closeTimeout = window.setTimeout(() => this._close(), this.duration);
     }
   }
 
   disconnectedCallback() {
-    // Clean up timeout
+    super.disconnectedCallback();
     if (this._closeTimeout) {
       clearTimeout(this._closeTimeout);
       this._closeTimeout = null;
     }
-  }
-
-  private _applyDefaultStyles() {
-    this.style.display = "flex";
-    this.style.alignItems = "center";
-    this.style.gap = "0.75rem";
-    this.style.padding = "0.75rem 1rem";
-    this.style.borderRadius = "6px";
-    this.style.fontFamily = "inherit";
-    this.style.fontSize = "0.875rem";
-    this.style.lineHeight = "1.5";
-    this.style.zIndex = "9999";
-    this.style.animation = "slideIn 0.2s ease-out";
   }
 
   private _close = () => {
@@ -68,154 +50,92 @@ export class HeadlessToast extends HTMLElement {
       this._closeTimeout = null;
     }
 
-    this.style.animation = "slideOut 0.2s ease-out forwards";
+    // Trigger CSS exit animation via data-state (Req 14.4)
+    this.setAttribute("data-state", "closed");
 
+    // Wait for animation to finish before removing (matches --hp-transition-slow: 200ms)
     setTimeout(() => {
-      this.dispatchEvent(
-        new CustomEvent("hp-dismiss", {
-          bubbles: true,
-          composed: true,
-        }),
-      );
+      this.emit("dismiss");
       this.remove();
     }, 200);
   };
 
-  /**
-   * Public API: Programmatically close the toast
-   */
+  /** Public API: Programmatically close the toast */
   close() {
     this._close();
   }
-
-  /**
-   * Public API: Get remaining time until auto-dismiss
-   */
-  getRemainingTime(): number | null {
-    if (this._closeTimeout === null) return null;
-    return this._duration;
-  }
 }
 
-/**
- * Toast Container - Holds multiple toasts and manages their layout
- */
-export class HeadlessToastContainer extends HTMLElement {
-  connectedCallback() {
-    this.style.position = "fixed";
-    this.style.display = "flex";
-    this.style.flexDirection = "column";
-    this.style.gap = "0.5rem";
-    this.style.pointerEvents = "none";
-    this.style.zIndex = "9999";
-
-    // Default position: top-right
-    const position = this.getAttribute("data-position") || "top-right";
-    this._applyPosition(position);
-
-    // Track child toasts and allow pointer events on them
-    this.addEventListener("hp-dismiss", () => {
-      // Child toast will remove itself, container stays
-    });
-  }
-
-  private _applyPosition(position: string) {
-    this.style.padding = "1rem";
-
-    switch (position) {
-      case "top-left":
-        this.style.top = "0";
-        this.style.left = "0";
-        this.style.alignItems = "flex-start";
-        break;
-      case "top-center":
-        this.style.top = "0";
-        this.style.left = "50%";
-        this.style.transform = "translateX(-50%)";
-        this.style.alignItems = "center";
-        break;
-      case "top-right":
-        this.style.top = "0";
-        this.style.right = "0";
-        this.style.alignItems = "flex-end";
-        break;
-      case "bottom-left":
-        this.style.bottom = "0";
-        this.style.left = "0";
-        this.style.alignItems = "flex-start";
-        break;
-      case "bottom-center":
-        this.style.bottom = "0";
-        this.style.left = "50%";
-        this.style.transform = "translateX(-50%)";
-        this.style.alignItems = "center";
-        break;
-      case "bottom-right":
-        this.style.bottom = "0";
-        this.style.right = "0";
-        this.style.alignItems = "flex-end";
-        break;
-    }
-  }
-
+@customElement("hp-toast-container")
+export class HeadlessToastContainer extends HeadlessElement {
   /**
-   * Public API: Add a new toast to the container
+   * Position of the container.
+   * Values: top-left | top-center | top-right | bottom-left | bottom-center | bottom-right
+   * Positioning is handled by CSS in @headless-primitives/styles/toast.css (Req 14.1).
+   * This attribute is reflected so CSS attribute selectors can target it.
    */
+  @property({ type: String, reflect: true, attribute: "data-position" }) position = "bottom-right";
+
+  connectedCallback() {
+    super.connectedCallback();
+    this.setAttribute("data-hp-component", "toast-container");
+  }
+
+  /** Public API: Add a new toast to the container */
   addToast(content: string, options?: ToastOptions): HeadlessToast {
     const toast = document.createElement("hp-toast") as HeadlessToast;
 
-    if (options?.id) {
-      toast.id = options.id;
-    }
-
+    if (options?.id) toast.id = options.id;
     if (options?.duration !== undefined) {
       toast.setAttribute("data-duration", String(options.duration));
     }
 
     toast.textContent = content;
-    toast.style.pointerEvents = "auto";
-
     this.appendChild(toast);
     return toast;
   }
 
-  /**
-   * Public API: Clear all toasts
-   */
+  /** Public API: Clear all toasts */
   clearAll() {
-    const toasts = this.querySelectorAll("hp-toast");
-    toasts.forEach((toast: Element) => {
-      (toast as any).close?.();
-    });
+    this.querySelectorAll("hp-toast").forEach((t) => (t as HeadlessToast).close());
   }
 }
 
-// Define animation keyframes (global style injection)
-if (typeof window !== "undefined" && !document.querySelector("style[data-hp-toast-animations]")) {
-  const style = document.createElement("style");
-  style.setAttribute("data-hp-toast-animations", "");
-  style.textContent = `
-    @keyframes slideIn {
-      from {
-        opacity: 0;
-        transform: translateX(100%);
-      }
-      to {
-        opacity: 1;
-        transform: translateX(0);
-      }
-    }
+@customElement("hp-toast-title")
+export class HeadlessToastTitle extends HeadlessElement {
+  connectedCallback() {
+    super.connectedCallback();
+    this.setAttribute("data-hp-component", "toast-title");
+  }
+}
 
-    @keyframes slideOut {
-      from {
-        opacity: 1;
-        transform: translateX(0);
-      }
-      to {
-        opacity: 0;
-        transform: translateX(100%);
-      }
+@customElement("hp-toast-description")
+export class HeadlessToastDescription extends HeadlessElement {
+  connectedCallback() {
+    super.connectedCallback();
+    this.setAttribute("data-hp-component", "toast-description");
+  }
+}
+
+@customElement("hp-toast-close")
+export class HeadlessToastClose extends HeadlessElement {
+  connectedCallback() {
+    super.connectedCallback();
+    this.setAttribute("data-hp-component", "toast-close");
+    if (!this.hasAttribute("role")) this.setAttribute("role", "button");
+    if (!this.hasAttribute("tabindex")) this.setAttribute("tabindex", "0");
+    this.addEventListener("keydown", this._onKeyDown);
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this.removeEventListener("keydown", this._onKeyDown);
+  }
+
+  private _onKeyDown = (e: KeyboardEvent) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      this.click();
     }
-  `;
-  document.head.appendChild(style);
+  };
 }

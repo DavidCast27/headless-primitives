@@ -98,6 +98,9 @@ importers:
       '@headless-primitives/tooltip':
         specifier: workspace:*
         version: link:../../packages/vanilla/tooltip
+      '@headless-primitives/utils':
+        specifier: workspace:*
+        version: link:../../packages/vanilla/utils
     devDependencies:
       vitepress:
         specifier: ^1.5.0
@@ -141,6 +144,9 @@ importers:
       '@headless-primitives/separator':
         specifier: workspace:*
         version: link:../../packages/vanilla/separator
+      '@headless-primitives/styles':
+        specifier: workspace:*
+        version: link:../../packages/vanilla/styles
       '@headless-primitives/switch':
         specifier: workspace:*
         version: link:../../packages/vanilla/switch
@@ -173,16 +179,27 @@ importers:
         specifier: ^8.0.3
         version: 8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@25.5.0)(jiti@2.6.1)(yaml@2.8.3)
 
-  packages/vanilla/accordion: {}
+  packages/vanilla/accordion:
+    dependencies:
+      '@headless-primitives/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lit:
+        specifier: ^3.3.2
+        version: 3.3.2
 
   packages/vanilla/avatar:
+    dependencies:
+      '@headless-primitives/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lit:
+        specifier: ^3.3.2
+        version: 3.3.2
     devDependencies:
       happy-dom:
         specifier: ^14.12.3
         version: 14.12.3
-      typescript:
-        specifier: ^5.5.4
-        version: 5.9.3
       vite:
         specifier: ^5.4.2
         version: 5.4.21(@types/node@25.5.0)(lightningcss@1.32.0)
@@ -190,24 +207,45 @@ importers:
         specifier: ^2.0.5
         version: 2.1.9(@types/node@25.5.0)(happy-dom@14.12.3)(jsdom@29.0.1)(lightningcss@1.32.0)
 
-  packages/vanilla/button: {}
+  packages/vanilla/button:
+    dependencies:
+      '@headless-primitives/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lit:
+        specifier: ^3.3.2
+        version: 3.3.2
 
-  packages/vanilla/checkbox: {}
+  packages/vanilla/checkbox:
+    dependencies:
+      '@headless-primitives/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lit:
+        specifier: ^3.3.2
+        version: 3.3.2
 
-  packages/vanilla/collapsible: {}
+  packages/vanilla/collapsible:
+    dependencies:
+      '@headless-primitives/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lit:
+        specifier: ^3.3.2
+        version: 3.3.2
 
   packages/vanilla/dialog:
     dependencies:
       '@headless-primitives/utils':
         specifier: workspace:*
         version: link:../utils
+      lit:
+        specifier: ^3.3.2
+        version: 3.3.2
     devDependencies:
       happy-dom:
         specifier: ^14.12.3
         version: 14.12.3
-      typescript:
-        specifier: ^5.5.4
-        version: 5.9.3
       vite:
         specifier: ^5.4.2
         version: 5.4.21(@types/node@25.5.0)(lightningcss@1.32.0)
@@ -216,13 +254,17 @@ importers:
         version: 2.1.9(@types/node@25.5.0)(happy-dom@14.12.3)(jsdom@29.0.1)(lightningcss@1.32.0)
 
   packages/vanilla/field:
+    dependencies:
+      '@headless-primitives/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lit:
+        specifier: ^3.3.2
+        version: 3.3.2
     devDependencies:
       happy-dom:
         specifier: ^14.12.3
         version: 14.12.3
-      typescript:
-        specifier: ^5.5.4
-        version: 5.9.3
       vite:
         specifier: ^5.4.2
         version: 5.4.21(@types/node@25.5.0)(lightningcss@1.32.0)
@@ -231,13 +273,17 @@ importers:
         version: 2.1.9(@types/node@25.5.0)(happy-dom@14.12.3)(jsdom@29.0.1)(lightningcss@1.32.0)
 
   packages/vanilla/label:
+    dependencies:
+      '@headless-primitives/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lit:
+        specifier: ^3.3.2
+        version: 3.3.2
     devDependencies:
       happy-dom:
         specifier: ^14.12.3
         version: 14.12.3
-      typescript:
-        specifier: ^5.5.4
-        version: 5.9.3
       vite:
         specifier: ^5.4.2
         version: 5.4.21(@types/node@25.5.0)(lightningcss@1.32.0)
@@ -254,9 +300,6 @@ importers:
       happy-dom:
         specifier: ^14.12.3
         version: 14.12.3
-      typescript:
-        specifier: ^5.5.4
-        version: 5.9.3
       vite:
         specifier: ^5.4.2
         version: 5.4.21(@types/node@25.5.0)(lightningcss@1.32.0)
@@ -265,13 +308,17 @@ importers:
         version: 2.1.9(@types/node@25.5.0)(happy-dom@14.12.3)(jsdom@29.0.1)(lightningcss@1.32.0)
 
   packages/vanilla/progress:
+    dependencies:
+      '@headless-primitives/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lit:
+        specifier: ^3.3.2
+        version: 3.3.2
     devDependencies:
       happy-dom:
         specifier: ^14.12.3
         version: 14.12.3
-      typescript:
-        specifier: ^5.5.4
-        version: 5.9.3
       vite:
         specifier: ^5.4.2
         version: 5.4.21(@types/node@25.5.0)(lightningcss@1.32.0)
@@ -284,15 +331,22 @@ importers:
       '@headless-primitives/utils':
         specifier: workspace:*
         version: link:../utils
+      lit:
+        specifier: ^3.3.2
+        version: 3.3.2
 
   packages/vanilla/separator:
+    dependencies:
+      '@headless-primitives/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lit:
+        specifier: ^3.3.2
+        version: 3.3.2
     devDependencies:
       happy-dom:
         specifier: ^14.12.3
         version: 14.12.3
-      typescript:
-        specifier: ^5.5.4
-        version: 5.9.3
       vite:
         specifier: ^5.4.2
         version: 5.4.21(@types/node@25.5.0)(lightningcss@1.32.0)
@@ -300,18 +354,38 @@ importers:
         specifier: ^2.0.5
         version: 2.1.9(@types/node@25.5.0)(happy-dom@14.12.3)(jsdom@29.0.1)(lightningcss@1.32.0)
 
-  packages/vanilla/switch: {}
+  packages/vanilla/styles: {}
 
-  packages/vanilla/tabs: {}
+  packages/vanilla/switch:
+    dependencies:
+      '@headless-primitives/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lit:
+        specifier: ^3.3.2
+        version: 3.3.2
+
+  packages/vanilla/tabs:
+    dependencies:
+      '@headless-primitives/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lit:
+        specifier: ^3.3.2
+        version: 3.3.2
 
   packages/vanilla/toast:
+    dependencies:
+      '@headless-primitives/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lit:
+        specifier: ^3.3.2
+        version: 3.3.2
     devDependencies:
       happy-dom:
         specifier: ^14.12.3
         version: 14.12.3
-      typescript:
-        specifier: ^5.5.4
-        version: 5.9.3
       vite:
         specifier: ^5.4.2
         version: 5.4.21(@types/node@25.5.0)(lightningcss@1.32.0)
@@ -319,16 +393,27 @@ importers:
         specifier: ^2.0.5
         version: 2.1.9(@types/node@25.5.0)(happy-dom@14.12.3)(jsdom@29.0.1)(lightningcss@1.32.0)
 
-  packages/vanilla/toggle-group: {}
+  packages/vanilla/toggle-group:
+    dependencies:
+      '@headless-primitives/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lit:
+        specifier: ^3.3.2
+        version: 3.3.2
 
   packages/vanilla/tooltip:
+    dependencies:
+      '@headless-primitives/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lit:
+        specifier: ^3.3.2
+        version: 3.3.2
     devDependencies:
       happy-dom:
         specifier: ^14.12.3
         version: 14.12.3
-      typescript:
-        specifier: ^5.5.4
-        version: 5.9.3
       vite:
         specifier: ^5.4.2
         version: 5.4.21(@types/node@25.5.0)(lightningcss@1.32.0)
@@ -336,7 +421,18 @@ importers:
         specifier: ^2.0.5
         version: 2.1.9(@types/node@25.5.0)(happy-dom@14.12.3)(jsdom@29.0.1)(lightningcss@1.32.0)
 
-  packages/vanilla/utils: {}
+  packages/vanilla/utils:
+    dependencies:
+      lit:
+        specifier: ^3.3.2
+        version: 3.3.2
+      uuid:
+        specifier: ^13.0.0
+        version: 13.0.0
+    devDependencies:
+      '@types/uuid':
+        specifier: ^11.0.0
+        version: 11.0.0
 
 packages:
 
@@ -835,6 +931,12 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
+
+  '@lit-labs/ssr-dom-shim@1.5.1':
+    resolution: {integrity: sha512-Aou5UdlSpr5whQe8AA/bZG0jMj96CoJIWbGfZ91qieWu5AWUMKw8VR/pAkQkJYvBNhmCcWnZlyyk5oze8JIqYA==}
+
+  '@lit/reactive-element@2.1.2':
+    resolution: {integrity: sha512-pbCDiVMnne1lYUIaYNN5wrwQXDtHaYtg7YEFPeW+hws6U47WeFvISGUWekPGKWOP1ygrs0ef0o1VJMk1exos5A==}
 
   '@manypkg/find-root@1.1.0':
     resolution: {integrity: sha512-mki5uBvhHzO8kYYix/WRy2WX8S3B5wdVSc9D6KcU5lQNglP2yt58/VfLuAK49glRXChosY8ap2oJ1qgma3GUVA==}
@@ -1379,8 +1481,15 @@ packages:
   '@types/prismjs@1.26.6':
     resolution: {integrity: sha512-vqlvI7qlMvcCBbVe0AKAb4f97//Hy0EBTaiW8AalRnG/xAN5zOiWWyrNqNXeq8+KAuvRewjCVY1+IPxk4RdNYw==}
 
+  '@types/trusted-types@2.0.7':
+    resolution: {integrity: sha512-ScaPdn1dQczgbl0QFTeTOmVHFULt394XJgOQNoyVhZ6r2vLnMLJfBPd53SB52T/3G36VI1/g2MZaX0cwDuXsfw==}
+
   '@types/unist@3.0.3':
     resolution: {integrity: sha512-ko/gIFJRv177XgZsZcBwnqJN5x/Gien8qNOn0D5bQU/zAzVf9Zt3BlcUiLqhV9y4ARk0GbT3tnUiPNgnTXzc/Q==}
+
+  '@types/uuid@11.0.0':
+    resolution: {integrity: sha512-HVyk8nj2m+jcFRNazzqyVKiZezyhDKrGUA3jlEcg/nZ6Ms+qHwocba1Y/AaVaznJTAM9xpdFSh+ptbNrhOGvZA==}
+    deprecated: This is a stub types definition. uuid provides its own type definitions, so you do not need this installed.
 
   '@types/web-bluetooth@0.0.21':
     resolution: {integrity: sha512-oIQLCGWtcFZy2JW77j9k8nHzAOpqMHLQejDA48XXMWH6tjCQHz5RCFz1bzsmROyL6PUm+LLnUiI4BCn221inxA==}
@@ -2160,6 +2269,15 @@ packages:
     resolution: {integrity: sha512-ME4Fb83LgEgwNw96RKNvKV4VTLuXfoKudAmm2lP8Kk87KaMK0/Xrx/aAkMWmT8mDb+3MlFDspfbCs7adjRxA2g==}
     engines: {node: '>=20.0.0'}
 
+  lit-element@4.2.2:
+    resolution: {integrity: sha512-aFKhNToWxoyhkNDmWZwEva2SlQia+jfG0fjIWV//YeTaWrVnOxD89dPKfigCUspXFmjzOEUQpOkejH5Ly6sG0w==}
+
+  lit-html@3.3.2:
+    resolution: {integrity: sha512-Qy9hU88zcmaxBXcc10ZpdK7cOLXvXpRoBxERdtqV9QOrfpMZZ6pSYP91LhpPtap3sFMUiL7Tw2RImbe0Al2/kw==}
+
+  lit@3.3.2:
+    resolution: {integrity: sha512-NF9zbsP79l4ao2SNrH3NkfmFgN/hBYSQo90saIVI1o5GpjAdCPVstVzO1MrLOakHoEhYkrtRjPK6Ob521aoYWQ==}
+
   locate-path@5.0.0:
     resolution: {integrity: sha512-t7hw9pI+WvuwNJXwk5zVHpyhIqzg2qTlklJOf0mVxGSbe3Fp2VieZcduNYjaLDoy6p9uGpQEGWG87WpMKlNq8g==}
     engines: {node: '>=8'}
@@ -2662,6 +2780,10 @@ packages:
   universalify@0.1.2:
     resolution: {integrity: sha512-rBJeI5CXAlmy1pV+617WB9J63U6XcazHHF2f2dbJix4XzpUF0RS3Zbj0FGIOCAva5P/d/GBOYaACQ1w+0azUkg==}
     engines: {node: '>= 4.0.0'}
+
+  uuid@13.0.0:
+    resolution: {integrity: sha512-XQegIaBTVUjSHliKqcnFqYypAd4S+WCYt5NIeRs6w/UAry7z8Y9j5ZwRRL4kzq9U3sD6v+85er9FvkEaBpji2w==}
+    hasBin: true
 
   vfile-message@4.0.3:
     resolution: {integrity: sha512-QTHzsGd1EhbZs4AsQ20JX1rC3cOlt/IWJruk893DfLRr57lcnOeMaWG4K0JrRta4mIJZKth2Au3mM3u03/JWKw==}
@@ -3501,6 +3623,12 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
 
+  '@lit-labs/ssr-dom-shim@1.5.1': {}
+
+  '@lit/reactive-element@2.1.2':
+    dependencies:
+      '@lit-labs/ssr-dom-shim': 1.5.1
+
   '@manypkg/find-root@1.1.0':
     dependencies:
       '@babel/runtime': 7.29.2
@@ -3866,7 +3994,13 @@ snapshots:
 
   '@types/prismjs@1.26.6': {}
 
+  '@types/trusted-types@2.0.7': {}
+
   '@types/unist@3.0.3': {}
+
+  '@types/uuid@11.0.0':
+    dependencies:
+      uuid: 13.0.0
 
   '@types/web-bluetooth@0.0.21': {}
 
@@ -4676,6 +4810,22 @@ snapshots:
       rfdc: 1.4.1
       wrap-ansi: 9.0.2
 
+  lit-element@4.2.2:
+    dependencies:
+      '@lit-labs/ssr-dom-shim': 1.5.1
+      '@lit/reactive-element': 2.1.2
+      lit-html: 3.3.2
+
+  lit-html@3.3.2:
+    dependencies:
+      '@types/trusted-types': 2.0.7
+
+  lit@3.3.2:
+    dependencies:
+      '@lit/reactive-element': 2.1.2
+      lit-element: 4.2.2
+      lit-html: 3.3.2
+
   locate-path@5.0.0:
     dependencies:
       p-locate: 4.1.0
@@ -5201,6 +5351,8 @@ snapshots:
       unist-util-visit-parents: 6.0.2
 
   universalify@0.1.2: {}
+
+  uuid@13.0.0: {}
 
   vfile-message@4.0.3:
     dependencies:

@@ -62,14 +62,56 @@ Componentes que crean capas flotantes sobre la UI.
 Requieren Focus Trap, manejo de Escape, y control del scroll.
 
 | #   | Componente       | Patrón WAI-ARIA                                                          | Complejidad | Dependencias                     |
-| :-- | :--------------- | :----------------------------------------------------------------------- | :---------- | :------------------------------- | -------------- |
-| 13  | **Tooltip**      | [Tooltip](https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/)             | 🟡 Media    | —                                | ✅ Hecho       |
-| 14  | **Popover**      | — (click-triggered floating)                                             | 🔴 Alta     | Focus Trap util                  | ✅ Hecho       |
-| 15  | **Dialog**       | [Dialog (Modal)](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/) | 🔴 Alta     | Focus Trap util, Popover pattern | ✅ Hecho       |
+| :-- | :--------------- | :----------------------------------------------------------------------- | :---------- | :------------------------------- | ---------------------------------------------- |
+| 13  | **Tooltip**      | [Tooltip](https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/)             | 🟡 Media    | —                                | ✅ Hecho                                       |
+| 14  | **Popover**      | — (click-triggered floating)                                             | 🔴 Alta     | Focus Trap util                  | ✅ Hecho                                       |
+| 15  | **Dialog**       | [Dialog (Modal)](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/) | 🔴 Alta     | Focus Trap util, Popover pattern | ✅ Hecho                                       |
 | 16  | **Alert Dialog** | [Alert Dialog](https://www.w3.org/WAI/ARIA/apg/patterns/alertdialog/)    | 🔴 Alta     | Dialog                           | ✅ Hecho (variante de Dialog con `data-alert`) |
-| 17  | **Toast/Alert**  | [Alert](https://www.w3.org/WAI/ARIA/apg/patterns/alert/)                 | 🟡 Media    | —                                | ✅ Hecho       |
+| 17  | **Toast/Alert**  | [Alert](https://www.w3.org/WAI/ARIA/apg/patterns/alert/)                 | 🟡 Media    | —                                | ✅ Hecho                                       |
 
 **Por qué este orden:** Tooltip es floating pero no atrapa foco (es el caso más simple de overlay). Popover introduce Focus Trap. Dialog se construye sobre esos mismos patterns pero añade scroll lock. Alert Dialog es una variante del Dialog.
+
+---
+
+## Tier 3.1 — Estilos Base por Defecto y Migración a Lit
+
+Capa opcional entre el Tier 3 y el Tier 4. Provee estilos CSS base inspirados en Base UI
+que los Consumers pueden adoptar como punto de partida y sobrescribir libremente.
+La filosofía headless se mantiene: los estilos son 100% opcionales y externos a los Custom Elements.
+
+Adicionalmente, este tier completa la migración de todos los componentes a `HeadlessElement`
+(que extiende `LitElement` con Light DOM garantizado), unificando la base de código.
+
+### Paquete `@headless-primitives/styles`
+
+| Componente       | CSS Base | Tokens | Demo Playground | Override verificado | Migración Lit |
+| :--------------- | :------: | :----: | :-------------: | :-----------------: | :-----------: |
+| **Button**       |    ✅    |   ✅   |       ✅        |         ✅          |      ✅       |
+| **Switch**       |    ✅    |   ✅   |       ✅        |         ✅          |      ✅       |
+| **Checkbox**     |    ✅    |   ✅   |       ✅        |         ✅          |      ✅       |
+| **Radio Group**  |    ✅    |   ✅   |       ✅        |         ✅          |      ✅       |
+| **Toggle Group** |    ✅    |   ✅   |       ✅        |         ✅          |      ✅       |
+| **Collapsible**  |    ✅    |   ✅   |       ✅        |         ✅          |      ✅       |
+| **Accordion**    |    ✅    |   ✅   |       ✅        |         ✅          |      ✅       |
+| **Tabs**         |    ✅    |   ✅   |       ✅        |         ✅          |      ✅       |
+| **Tooltip**      |    ✅    |   ✅   |       ✅        |         ✅          |      ✅       |
+| **Popover**      |    ✅    |   ✅   |       ✅        |         ✅          |      ✅       |
+| **Dialog**       |    ✅    |   ✅   |       ✅        |         ✅          |      ✅       |
+| **Toast**        |    ✅    |   ✅   |       ✅        |         ✅          |      ✅       |
+| **Separator**    |    ✅    |   ✅   |       ✅        |         ✅          |      ✅       |
+| **Progress**     |    ✅    |   ✅   |       ✅        |         ✅          |      ✅       |
+| **Label**        |    ✅    |   ✅   |       ✅        |         ✅          |      ✅       |
+| **Avatar**       |    ✅    |   ✅   |       ✅        |         ✅          |      ✅       |
+| **Field**        |    —     |   —    |        —        |          —          |      ✅       |
+| **Input Group**  |    —     |   —    |        —        |          —          |       —       |
+
+### Criterios de "componente terminado" en Tier 3.1
+
+- [ ] `@headless-primitives/styles/<componente>.css` creado con selectores de especificidad mínima
+- [ ] Tokens CSS documentados en `README.md` del paquete
+- [ ] Migración a `HeadlessElement` completada (ADR 0010)
+- [ ] Demo en Playground con toggle headless/con-estilos actualizada
+- [ ] Override verificado: las clases del Consumer tienen precedencia sobre los estilos base
 
 ---
 
@@ -107,7 +149,7 @@ Componentes que no todos los proyectos necesitan pero añaden mucho valor.
 
 ## Grafo de Dependencias
 
-```
+```text
 Button ✅
 ├── Toggle Group ✅
 ├── Dropdown Menu ──► Context Menu

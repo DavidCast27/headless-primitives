@@ -16,11 +16,15 @@
     }
   },
   "scripts": {
-    "build": "tsc && vite build",
+    "build": "vite build && tsc",
     "test": "vitest run",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@headless-primitives/utils": "workspace:*"
+    "@headless-primitives/utils": "workspace:*",
+    "lit": "^3.3.2"
+  },
+  "peerDependencies": {
+    "lit": "^3.3.2"
   }
 }

@@ -12,6 +12,21 @@ pnpm add @headless-primitives/separator
 
 ## Demostración
 
+### Sin estilos (solo base.css)
+
+Así se ve `hp-separator` usando únicamente `@headless-primitives/utils/base.css`.
+
+<div class="hp-demo-card">
+  <p>Sección A</p>
+  <hp-separator></hp-separator>
+  <p>Sección B</p>
+  <div style="display:flex;align-items:center;gap:8px;height:24px;">
+    <span>Uno</span><hp-separator aria-orientation="vertical"></hp-separator><span>Dos</span>
+  </div>
+</div>
+
+### Con estilos personalizados
+
 <div class="hp-demo-card">
   <div style="width: 100%; max-width: 300px;">
     <p style="margin-bottom: 8px; font-weight: 500;">Opciones de cuenta</p>

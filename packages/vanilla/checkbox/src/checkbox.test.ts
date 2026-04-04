@@ -38,8 +38,9 @@ describe("hp-checkbox", () => {
     expect(checkbox.checked).toBe(false);
   });
 
-  test("should handle mixed state", () => {
+  test("should handle mixed state", async () => {
     checkbox.checked = "mixed";
+    await (checkbox as any).updateComplete;
     expect(checkbox.getAttribute("aria-checked")).toBe("mixed");
 
     checkbox.click();

@@ -1,0 +1,78 @@
+/**
+ * @headless-primitives/styles — hp-accordion (Req 9)
+ *
+ * Acordeón con borde exterior y separadores entre ítems.
+ * Complementa [data-hp-panel][data-state="closed"] de base.css.
+ */
+
+/* Contenedor (Req 9.1) */
+hp-accordion {
+  border: 1px solid var(--hp-border);
+  border-radius: var(--hp-radius-md);
+  overflow: hidden;
+  background-color: var(--hp-surface);
+}
+
+/* Ítem — borde inferior excepto el último (Req 9.2) */
+hp-accordion-item {
+  display: block;
+  border-bottom: 1px solid var(--hp-border);
+}
+
+hp-accordion-item:last-child {
+  border-bottom: none;
+}
+
+/* Trigger — ancho completo con flex (Req 9.3) */
+hp-accordion-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: var(--hp-space-3) var(--hp-space-4);
+  font-family: inherit;
+  font-size: var(--hp-font-size-sm);
+  font-weight: var(--hp-font-weight-medium);
+  color: var(--hp-text);
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  user-select: none;
+  text-align: left;
+  transition: background-color var(--hp-transition);
+  box-sizing: border-box;
+}
+
+hp-accordion-trigger:hover {
+  background-color: var(--hp-bg-muted);
+}
+
+hp-accordion-trigger:focus-visible {
+  outline: var(--hp-focus-outline-width) solid var(--hp-focus-outline-color);
+  outline-offset: -2px;
+}
+
+/* Expanded — estilo diferenciado + rotación de ícono (Req 9.4) */
+hp-accordion-trigger[aria-expanded="true"] {
+  color: var(--hp-accent);
+}
+
+hp-accordion-trigger[aria-expanded="true"] .hp-icon,
+hp-accordion-trigger[aria-expanded="true"] [data-hp-icon] {
+  transform: rotate(180deg);
+  transition: transform var(--hp-transition);
+}
+
+hp-accordion-trigger[aria-expanded="false"] .hp-icon,
+hp-accordion-trigger[aria-expanded="false"] [data-hp-icon] {
+  transform: rotate(0deg);
+  transition: transform var(--hp-transition);
+}
+
+/* Content — padding interno (Req 9.5) */
+hp-accordion-content {
+  display: block;
+  padding: var(--hp-space-3) var(--hp-space-4);
+  color: var(--hp-text-secondary);
+  font-size: var(--hp-font-size-sm);
+}

@@ -34,7 +34,7 @@ pnpm add @headless-primitives/dialog
 </div>
 
 <style>
-hp-dialog, hp-dialog-trigger, hp-dialog-content, hp-dialog-backdrop { display: block; }
+/* hp-* display:block via base.css [data-hp-component] */
 .dlg-btn {
   font-family: inherit;
   font-size: 0.875rem;
@@ -93,6 +93,21 @@ hp-dialog, hp-dialog-trigger, hp-dialog-content, hp-dialog-backdrop { display: b
   border-top: 1px solid var(--vp-c-divider);
 }
 </style>
+
+### Sin estilos (solo base.css)
+
+Así se ve `hp-dialog` usando únicamente `@headless-primitives/utils/base.css`. El focus trap, scroll lock, ESC para cerrar y todos los atributos ARIA funcionan completamente sin ningún estilo visual.
+
+<div class="hp-demo-card">
+  <hp-dialog id="bare-dialog">
+    <hp-dialog-trigger><button>Abrir Dialog (sin estilos)</button></hp-dialog-trigger>
+    <hp-dialog-backdrop></hp-dialog-backdrop>
+    <hp-dialog-content>
+      <p>Contenido del dialog sin estilos. El foco queda atrapado aquí.</p>
+      <button onclick="this.closest('hp-dialog').close()">Cerrar</button>
+    </hp-dialog-content>
+  </hp-dialog>
+</div>
 
 <CodeSnippet>
 

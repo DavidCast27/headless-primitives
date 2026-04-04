@@ -1,4 +1,6 @@
+import "@headless-primitives/utils/base.css";
 import "./style.css";
+import baseStylesUrl from "./hp-base-styles.css?url";
 
 // Primitives registration
 import "@headless-primitives/button";
@@ -108,4 +110,36 @@ function initApp() {
   if (initialBtn) initialBtn.click();
 }
 
-window.addEventListener("DOMContentLoaded", initApp);
+// --- Styles Toggle (Req 17) ---
+function initStylesToggle() {
+  const toggleBtn = document.getElementById("styles-toggle") as HTMLButtonElement | null;
+  if (!toggleBtn) return;
+
+  let stylesLink: HTMLLinkElement | null = null;
+  let enabled = false;
+
+  toggleBtn.addEventListener("click", () => {
+    enabled = !enabled;
+    toggleBtn.setAttribute("aria-pressed", String(enabled));
+    toggleBtn.classList.toggle("active", enabled);
+
+    if (enabled) {
+      if (!stylesLink) {
+        stylesLink = document.createElement("link");
+        stylesLink.id = "hp-base-styles-link";
+        stylesLink.rel = "stylesheet";
+        stylesLink.href = baseStylesUrl;
+        document.head.appendChild(stylesLink);
+      } else {
+        stylesLink.disabled = false;
+      }
+    } else {
+      if (stylesLink) stylesLink.disabled = true;
+    }
+  });
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  initApp();
+  initStylesToggle();
+});

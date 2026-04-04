@@ -12,6 +12,25 @@ pnpm add @headless-primitives/accordion
 
 ## Demostración
 
+### Sin estilos (solo base.css)
+
+Así se ve `hp-accordion` usando únicamente `@headless-primitives/utils/base.css`. La navegación por teclado, `aria-expanded` y la visibilidad de paneles funcionan completamente.
+
+<div class="hp-demo-card">
+  <hp-accordion>
+    <hp-accordion-item value="a1">
+      <hp-accordion-trigger>¿Qué es Headless Primitives?</hp-accordion-trigger>
+      <hp-accordion-content><p>Una librería de componentes headless accesibles.</p></hp-accordion-content>
+    </hp-accordion-item>
+    <hp-accordion-item value="a2">
+      <hp-accordion-trigger>¿Por qué usarla?</hp-accordion-trigger>
+      <hp-accordion-content><p>Comportamiento y accesibilidad listos, tú pones los estilos.</p></hp-accordion-content>
+    </hp-accordion-item>
+  </hp-accordion>
+</div>
+
+### Con estilos personalizados
+
 <div class="hp-demo-card">
   <hp-accordion class="demo-accordion">
     <hp-accordion-item value="demo-1">

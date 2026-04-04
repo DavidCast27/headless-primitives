@@ -13,11 +13,22 @@
     ".": {
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
-    }
+    },
+    "./base.css": "./src/base.css"
   },
   "scripts": {
-    "build": "tsc && vite build",
+    "build": "vite build && tsc",
     "test": "vitest run",
     "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "lit": "^3.3.2",
+    "uuid": "^13.0.0"
+  },
+  "devDependencies": {
+    "@types/uuid": "^11.0.0"
+  },
+  "peerDependencies": {
+    "lit": "^3.3.2"
   }
 }

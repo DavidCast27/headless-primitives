@@ -68,5 +68,22 @@ export const tabsDemo = {
     </hp-tab-panel>
   </hp-tabs>
 </div>
+
+<div class="demo-section">
+  <h2>Pure Headless (solo base.css)</h2>
+  <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:1rem;">
+    Sin clases de demo. Solo <code>base.css</code> controla la visibilidad de los paneles.
+  </p>
+  <hp-tabs value="a">
+    <hp-tab-list>
+      <hp-tab value="a">Tab A</hp-tab>
+      <hp-tab value="b">Tab B</hp-tab>
+      <hp-tab value="c">Tab C</hp-tab>
+    </hp-tab-list>
+    <hp-tab-panel value="a"><p>Panel A — visible por base.css vía [data-state="selected"]</p></hp-tab-panel>
+    <hp-tab-panel value="b"><p>Panel B</p></hp-tab-panel>
+    <hp-tab-panel value="c"><p>Panel C</p></hp-tab-panel>
+  </hp-tabs>
+</div>
 `,
 };

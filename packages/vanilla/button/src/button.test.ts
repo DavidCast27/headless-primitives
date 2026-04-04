@@ -24,15 +24,17 @@ describe("HpButton (Headless Primitive Button)", () => {
     expect(btn.getAttribute("tabindex")).toBe("0");
   });
 
-  it("debería volverse inaniblitado perdiendo su funcionalidad del teclado si tiene el atributo disabled", () => {
+  it("debería volverse inaniblitado perdiendo su funcionalidad del teclado si tiene el atributo disabled", async () => {
     btn.setAttribute("disabled", "");
+    await (btn as any).updateComplete;
 
     expect(btn.getAttribute("aria-disabled")).toBe("true");
-    expect(btn.hasAttribute("tabindex")).toBe(false); // No enfoca
+    expect(btn.hasAttribute("tabindex")).toBe(false);
 
     btn.removeAttribute("disabled");
+    await (btn as any).updateComplete;
     expect(btn.hasAttribute("aria-disabled")).toBe(false);
-    expect(btn.getAttribute("tabindex")).toBe("0"); // Vuelve a enfocar
+    expect(btn.getAttribute("tabindex")).toBe("0");
   });
 
   it("debería fungir como toggle emitiendo el evento <hp-change> al cliquearlo", () => {

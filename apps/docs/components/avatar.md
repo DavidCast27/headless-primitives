@@ -12,6 +12,23 @@ pnpm add @headless-primitives/avatar
 
 ## Demostración
 
+### Sin estilos (solo base.css)
+
+Así se ve `hp-avatar` usando únicamente `@headless-primitives/utils/base.css`. La gestión de carga, error y fallback funcionan completamente.
+
+<div class="hp-demo-card">
+  <hp-avatar>
+    <hp-avatar-image src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=64&h=64&fit=crop" alt="User"></hp-avatar-image>
+    <hp-avatar-fallback>JD</hp-avatar-fallback>
+  </hp-avatar>
+  <hp-avatar>
+    <hp-avatar-image src="broken.jpg" alt="Error"></hp-avatar-image>
+    <hp-avatar-fallback>ER</hp-avatar-fallback>
+  </hp-avatar>
+</div>
+
+### Con estilos personalizados
+
 <div class="hp-demo-card">
   <div style="display: flex; gap: 2rem; align-items: center; flex-wrap: wrap; justify-content: center;">
     <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">

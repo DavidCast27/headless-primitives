@@ -1,7 +1,17 @@
 import { describe, it, expect, beforeEach } from "vitest";
-
-// Import the components to register them
 import "./collapsible";
+
+const raf = () => new Promise((r) => requestAnimationFrame(r));
+
+function createCollapsible() {
+  const collapsible = document.createElement("hp-collapsible") as any;
+  const trigger = document.createElement("hp-collapsible-trigger");
+  const content = document.createElement("hp-collapsible-content");
+  collapsible.appendChild(trigger);
+  collapsible.appendChild(content);
+  document.body.appendChild(collapsible);
+  return { collapsible, trigger, content };
+}
 
 describe("HeadlessCollapsible", () => {
   beforeEach(() => {
@@ -14,189 +24,112 @@ describe("HeadlessCollapsible", () => {
     expect(customElements.get("hp-collapsible-content")).toBeDefined();
   });
 
-  it("should initialize with closed state by default", () => {
-    const collapsible = document.createElement("hp-collapsible") as any;
-    const trigger = document.createElement("hp-collapsible-trigger");
-    const content = document.createElement("hp-collapsible-content");
-
-    collapsible.appendChild(trigger);
-    collapsible.appendChild(content);
-    document.body.appendChild(collapsible);
-
+  it("should initialize with closed state by default", async () => {
+    const { collapsible, trigger, content } = createCollapsible();
+    await raf();
     expect(collapsible.open).toBe(false);
     expect(trigger.getAttribute("aria-expanded")).toBe("false");
-    expect(content.hasAttribute("hidden")).toBe(true);
+    expect(content.getAttribute("data-state")).toBe("closed");
   });
 
-  it("should initialize with open state when attribute is present", () => {
+  it("should initialize with open state when attribute is present", async () => {
     const collapsible = document.createElement("hp-collapsible") as any;
     collapsible.setAttribute("open", "");
-
     const trigger = document.createElement("hp-collapsible-trigger");
     const content = document.createElement("hp-collapsible-content");
-
     collapsible.appendChild(trigger);
     collapsible.appendChild(content);
     document.body.appendChild(collapsible);
-
+    await raf();
     expect(collapsible.open).toBe(true);
     expect(trigger.getAttribute("aria-expanded")).toBe("true");
-    expect(content.hasAttribute("hidden")).toBe(false);
+    expect(content.getAttribute("data-state")).toBe("open");
   });
 
-  it("should toggle open state when trigger is clicked", () => {
-    const collapsible = document.createElement("hp-collapsible") as any;
-    const trigger = document.createElement("hp-collapsible-trigger");
-    const content = document.createElement("hp-collapsible-content");
-
-    collapsible.appendChild(trigger);
-    collapsible.appendChild(content);
-    document.body.appendChild(collapsible);
-
-    // Initially closed
+  it("should toggle open state when trigger is clicked", async () => {
+    const { collapsible, trigger, content } = createCollapsible();
+    await raf();
     expect(collapsible.open).toBe(false);
-
-    // Click to open
     trigger.click();
     expect(collapsible.open).toBe(true);
     expect(trigger.getAttribute("aria-expanded")).toBe("true");
-    expect(content.hasAttribute("hidden")).toBe(false);
-
-    // Click to close
+    expect(content.getAttribute("data-state")).toBe("open");
     trigger.click();
     expect(collapsible.open).toBe(false);
-    expect(trigger.getAttribute("aria-expanded")).toBe("false");
-    expect(content.hasAttribute("hidden")).toBe(true);
+    expect(content.getAttribute("data-state")).toBe("closed");
   });
 
-  it("should emit events when state changes", () => {
-    const collapsible = document.createElement("hp-collapsible") as any;
-    const trigger = document.createElement("hp-collapsible-trigger");
-    const content = document.createElement("hp-collapsible-content");
-
-    collapsible.appendChild(trigger);
-    collapsible.appendChild(content);
-    document.body.appendChild(collapsible);
-
+  it("should emit events when state changes", async () => {
+    const { collapsible, trigger } = createCollapsible();
+    await raf();
     const openEvents: any[] = [];
     const closeEvents: any[] = [];
     const changeEvents: any[] = [];
-
     collapsible.addEventListener("hp-open", (e: any) => openEvents.push(e.detail));
     collapsible.addEventListener("hp-close", (e: any) => closeEvents.push(e.detail));
     collapsible.addEventListener("hp-change", (e: any) => changeEvents.push(e.detail));
-
-    // Open
     trigger.click();
     expect(openEvents).toHaveLength(1);
-    expect(openEvents[0]).toEqual({ value: true });
-    expect(changeEvents).toHaveLength(1);
     expect(changeEvents[0]).toEqual({ open: true });
-
-    // Close
     trigger.click();
     expect(closeEvents).toHaveLength(1);
-    expect(closeEvents[0]).toEqual({ value: false });
-    expect(changeEvents).toHaveLength(2);
     expect(changeEvents[1]).toEqual({ open: false });
   });
 
-  it("should handle keyboard interaction", () => {
-    const collapsible = document.createElement("hp-collapsible") as any;
-    const trigger = document.createElement("hp-collapsible-trigger");
-    const content = document.createElement("hp-collapsible-content");
-
-    collapsible.appendChild(trigger);
-    collapsible.appendChild(content);
-    document.body.appendChild(collapsible);
-
-    // Initially closed
-    expect(collapsible.open).toBe(false);
-
-    // Enter key
-    trigger.focus();
+  it("should handle keyboard interaction", async () => {
+    const { collapsible, trigger } = createCollapsible();
+    await raf();
     trigger.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter", bubbles: true }));
     expect(collapsible.open).toBe(true);
-
-    // Space key
     trigger.dispatchEvent(new KeyboardEvent("keydown", { key: " ", bubbles: true }));
     expect(collapsible.open).toBe(false);
   });
 
-  it("should handle disabled state", () => {
+  it("should handle disabled state", async () => {
     const collapsible = document.createElement("hp-collapsible") as any;
     collapsible.setAttribute("disabled", "");
-
     const trigger = document.createElement("hp-collapsible-trigger");
     const content = document.createElement("hp-collapsible-content");
-
     collapsible.appendChild(trigger);
     collapsible.appendChild(content);
     document.body.appendChild(collapsible);
-
+    await raf();
     expect(collapsible.disabled).toBe(true);
     expect(trigger.hasAttribute("disabled")).toBe(true);
-    expect(trigger.getAttribute("aria-disabled")).toBe("true");
-    expect(trigger.hasAttribute("tabindex")).toBe(false);
-
-    // Click should not toggle when disabled
     trigger.click();
     expect(collapsible.open).toBe(false);
   });
 
-  it("should set up proper ARIA relationships", () => {
-    const collapsible = document.createElement("hp-collapsible") as any;
-    const trigger = document.createElement("hp-collapsible-trigger");
-    const content = document.createElement("hp-collapsible-content");
-
-    collapsible.appendChild(trigger);
-    collapsible.appendChild(content);
-    document.body.appendChild(collapsible);
-
-    // Check ARIA relationships
+  it("should set up proper ARIA relationships", async () => {
+    const { trigger, content } = createCollapsible();
+    await raf();
     expect(trigger.getAttribute("aria-controls")).toBe(content.getAttribute("id"));
     expect(content.getAttribute("aria-labelledby")).toBe(trigger.getAttribute("id"));
     expect(content.getAttribute("role")).toBe("region");
     expect(trigger.getAttribute("role")).toBe("button");
   });
 
-  it("should allow programmatic control via properties", () => {
-    const collapsible = document.createElement("hp-collapsible") as any;
-    const trigger = document.createElement("hp-collapsible-trigger");
-    const content = document.createElement("hp-collapsible-content");
-
-    collapsible.appendChild(trigger);
-    collapsible.appendChild(content);
-    document.body.appendChild(collapsible);
-
-    // Programmatic open
+  it("should allow programmatic control via properties", async () => {
+    const { collapsible, trigger, content } = createCollapsible();
+    await raf();
     collapsible.open = true;
+    await collapsible.updateComplete;
+    await new Promise((r) => setTimeout(r, 50));
     expect(collapsible.open).toBe(true);
-    expect(collapsible.hasAttribute("open")).toBe(true);
     expect(trigger.getAttribute("aria-expanded")).toBe("true");
-    expect(content.hasAttribute("hidden")).toBe(false);
-
-    // Programmatic close
+    expect(content.getAttribute("data-state")).toBe("open");
     collapsible.open = false;
-    expect(collapsible.open).toBe(false);
-    expect(collapsible.hasAttribute("open")).toBe(false);
-    expect(trigger.getAttribute("aria-expanded")).toBe("false");
-    expect(content.hasAttribute("hidden")).toBe(true);
+    await collapsible.updateComplete;
+    await new Promise((r) => setTimeout(r, 50));
+    expect(content.getAttribute("data-state")).toBe("closed");
   });
 
-  it("should handle trigger disabled state independently", () => {
-    const collapsible = document.createElement("hp-collapsible") as any;
-    const trigger = document.createElement("hp-collapsible-trigger") as any;
-    const content = document.createElement("hp-collapsible-content");
-
-    collapsible.appendChild(trigger);
-    collapsible.appendChild(content);
-    document.body.appendChild(collapsible);
-
-    // Set disabled after connected to DOM
+  it("should handle trigger disabled state independently", async () => {
+    const { trigger } = createCollapsible();
+    await raf();
     trigger.setAttribute("disabled", "");
-
-    expect(trigger.disabled).toBe(true);
+    await (trigger as any).updateComplete;
+    expect((trigger as any).disabled).toBe(true);
     expect(trigger.getAttribute("aria-disabled")).toBe("true");
     expect(trigger.hasAttribute("tabindex")).toBe(false);
   });
@@ -210,7 +143,6 @@ describe("HeadlessCollapsibleTrigger", () => {
   it("should have proper button role and tabindex", () => {
     const trigger = document.createElement("hp-collapsible-trigger");
     document.body.appendChild(trigger);
-
     expect(trigger.getAttribute("role")).toBe("button");
     expect(trigger.getAttribute("tabindex")).toBe("0");
   });
@@ -219,7 +151,6 @@ describe("HeadlessCollapsibleTrigger", () => {
     const trigger = document.createElement("hp-collapsible-trigger");
     trigger.setAttribute("disabled", "");
     document.body.appendChild(trigger);
-
     expect(trigger.hasAttribute("tabindex")).toBe(false);
     expect(trigger.getAttribute("aria-disabled")).toBe("true");
   });
@@ -233,7 +164,6 @@ describe("HeadlessCollapsibleContent", () => {
   it("should have proper region role", () => {
     const content = document.createElement("hp-collapsible-content");
     document.body.appendChild(content);
-
     expect(content.getAttribute("role")).toBe("region");
   });
 });

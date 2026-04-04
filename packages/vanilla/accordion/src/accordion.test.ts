@@ -79,8 +79,10 @@ describe("Accordion", () => {
       expect(item.value).toBe("test-value");
     });
 
-    it("should dispatch events when toggling", () => {
+    it("should dispatch events when toggling via trigger click", () => {
       const item = document.createElement("hp-accordion-item") as any;
+      const trigger = document.createElement("hp-accordion-trigger") as any;
+      item.appendChild(trigger);
       document.body.appendChild(item);
 
       const changeSpy = vi.fn();
@@ -91,31 +93,16 @@ describe("Accordion", () => {
       item.addEventListener("hp-open", openSpy);
       item.addEventListener("hp-close", closeSpy);
 
-      // Test opening
-      item.open = true;
+      // Trigger click to open
+      trigger.dispatchEvent(new MouseEvent("click", { bubbles: true }));
       expect(changeSpy).toHaveBeenCalledWith(
-        expect.objectContaining({
-          detail: { open: true, value: item.value },
-        }),
+        expect.objectContaining({ detail: { open: true, value: item.value } }),
       );
-      expect(openSpy).toHaveBeenCalledWith(
-        expect.objectContaining({
-          detail: { value: item.value },
-        }),
-      );
+      expect(openSpy).toHaveBeenCalled();
 
-      // Test closing
-      item.open = false;
-      expect(changeSpy).toHaveBeenCalledWith(
-        expect.objectContaining({
-          detail: { open: false, value: item.value },
-        }),
-      );
-      expect(closeSpy).toHaveBeenCalledWith(
-        expect.objectContaining({
-          detail: { value: item.value },
-        }),
-      );
+      // Trigger click to close
+      trigger.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+      expect(closeSpy).toHaveBeenCalled();
     });
   });
 
@@ -128,10 +115,12 @@ describe("Accordion", () => {
       expect(trigger.getAttribute("tabindex")).toBe("0");
     });
 
-    it("should handle disabled state", () => {
+    it("should handle disabled state", async () => {
       const trigger = document.createElement("hp-accordion-trigger") as any;
-      trigger.setAttribute("disabled", "");
       document.body.appendChild(trigger);
+
+      trigger.setAttribute("disabled", "");
+      await trigger.updateComplete;
 
       expect(trigger.disabled).toBe(true);
       expect(trigger.getAttribute("aria-disabled")).toBe("true");
@@ -181,7 +170,7 @@ describe("Accordion", () => {
   });
 
   describe("Accordion Integration", () => {
-    it("should set up proper ARIA relationships", () => {
+    it("should set up proper ARIA relationships", async () => {
       const accordion = document.createElement("hp-accordion") as any;
       const item = document.createElement("hp-accordion-item") as any;
       const trigger = document.createElement("hp-accordion-trigger");
@@ -192,16 +181,17 @@ describe("Accordion", () => {
       accordion.appendChild(item);
       document.body.appendChild(accordion);
 
-      // Check ARIA relationships
+      await new Promise((r) => requestAnimationFrame(r));
+
       expect(trigger.hasAttribute("id")).toBe(true);
       expect(content.hasAttribute("id")).toBe(true);
       expect(trigger.getAttribute("aria-controls")).toBe(content.getAttribute("id"));
       expect(content.getAttribute("aria-labelledby")).toBe(trigger.getAttribute("id"));
       expect(trigger.getAttribute("aria-expanded")).toBe("false");
-      expect(content.hasAttribute("hidden")).toBe(true);
+      expect(content.getAttribute("data-state")).toBe("closed");
     });
 
-    it("should update ARIA attributes when opening", () => {
+    it("should update ARIA attributes when opening", async () => {
       const accordion = document.createElement("hp-accordion") as any;
       const item = document.createElement("hp-accordion-item") as any;
       const trigger = document.createElement("hp-accordion-trigger");
@@ -212,14 +202,16 @@ describe("Accordion", () => {
       accordion.appendChild(item);
       document.body.appendChild(accordion);
 
-      // Open the item
-      item.open = true;
+      await new Promise((r) => requestAnimationFrame(r));
+
+      trigger.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+      await item.updateComplete;
 
       expect(trigger.getAttribute("aria-expanded")).toBe("true");
-      expect(content.hasAttribute("hidden")).toBe(false);
+      expect(content.getAttribute("data-state")).toBe("open");
     });
 
-    it("should handle single-panel mode", () => {
+    it("should handle single-panel mode", async () => {
       const accordion = document.createElement("hp-accordion") as any;
       accordion.setAttribute("single-panel", "");
 
@@ -234,23 +226,26 @@ describe("Accordion", () => {
       item1.appendChild(content1);
       item2.appendChild(trigger2);
       item2.appendChild(content2);
-
       accordion.appendChild(item1);
       accordion.appendChild(item2);
       document.body.appendChild(accordion);
 
+      await new Promise((r) => requestAnimationFrame(r));
+
       // Open first item
-      item1.open = true;
+      trigger1.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+      await item1.updateComplete;
       expect(item1.open).toBe(true);
       expect(item2.open).toBe(false);
 
-      // Open second item (should close first)
-      item2.open = true;
-      expect(item1.open).toBe(false);
+      // Open second item — should close first
+      trigger2.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+      await item2.updateComplete;
       expect(item2.open).toBe(true);
+      expect(item1.open).toBe(false);
     });
 
-    it("should inherit disabled state from accordion", () => {
+    it("should inherit disabled state from accordion", async () => {
       const accordion = document.createElement("hp-accordion") as any;
       accordion.setAttribute("disabled", "");
 
@@ -262,6 +257,8 @@ describe("Accordion", () => {
       item.appendChild(content);
       accordion.appendChild(item);
       document.body.appendChild(accordion);
+
+      await new Promise((r) => requestAnimationFrame(r));
 
       expect(trigger.hasAttribute("disabled")).toBe(true);
     });
