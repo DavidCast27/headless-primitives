@@ -2,12 +2,9 @@
   "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "./dist",
-    "rootDir": "../../",
+    "rootDir": "./src",
     "declaration": true,
-    "emitDeclarationOnly": true,
-    "paths": {
-      "@headless-primitives/utils": ["../utils/src/index.ts"]
-    }
+    "emitDeclarationOnly": true
   },
   "include": ["src"]
 }

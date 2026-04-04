@@ -1,3 +1,4 @@
+import "@headless-primitives/utils/base.css";
 import "./style.css";
 
 // Primitives registration

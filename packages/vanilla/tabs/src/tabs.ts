@@ -1,113 +1,86 @@
-export class Tabs extends HTMLElement {
-  static readonly observedAttributes = ["value"];
+import { HeadlessElement, customElement } from "@headless-primitives/utils";
+import { property } from "lit/decorators.js";
 
-  private _value = "";
-  private _observer: MutationObserver | null = null;
-
-  constructor() {
-    super();
-    this._observer = new MutationObserver(() => {
-      this._syncPanels();
-    });
-  }
+@customElement("hp-tabs")
+export class Tabs extends HeadlessElement {
+  @property({ type: String, reflect: true }) value = "";
 
   connectedCallback() {
-    // Read initial value from attribute — same pattern as toggle-group/collapsible
-    this._value = this.getAttribute("value") || "";
+    super.connectedCallback();
+    this.setAttribute("data-hp-component", "tabs");
 
-    this._observer?.observe(this, { childList: true, subtree: true });
+    // React to slotted children changes
+    this.addEventListener("slotchange", this._onSlotChange.bind(this));
+
+    // Initial fallback only if author didn't set attribute
+    if (!this.value && !this.hasAttribute("value")) {
+      const firstTab = this.querySelector("hp-tab");
+      if (firstTab) {
+        this.value = firstTab.getAttribute("value") || "";
+      }
+    }
 
     this._syncPanels();
-    requestAnimationFrame(() => {
-      this._syncPanels();
-    });
+    requestAnimationFrame(() => this._syncPanels());
   }
 
   disconnectedCallback() {
-    this._observer?.disconnect();
+    super.disconnectedCallback();
+    this.removeEventListener("slotchange", this._onSlotChange.bind(this));
   }
 
-  attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null) {
-    if (oldValue === newValue) return;
-    if (name === "value") {
-      this._value = newValue || "";
+  protected updated(changed: Map<string, unknown>) {
+    if (changed.has("value")) {
       this._syncPanels();
+      const oldValue = changed.get("value");
+      if (oldValue !== undefined) {
+        this.emit("change", { value: this.value });
+      }
     }
+  }
+
+  private _onSlotChange() {
+    this._syncPanels();
   }
 
   private _syncPanels() {
-    const tabs = this.getTabs();
-    const panels = this.getPanels();
-    if (tabs.length === 0) return;
+    const triggers = Array.from(this.querySelectorAll<HTMLElement>("hp-tab"));
+    const panels = Array.from(this.querySelectorAll<HTMLElement>("hp-tab-panel"));
 
-    // If no value set, default to first tab
-    if (!this._value && tabs[0]) {
-      this._value = tabs[0].getAttribute("value") || "";
-    }
-
-    tabs.forEach((tab) => {
-      const isActive = tab.getAttribute("value") === this._value;
-      tab.setAttribute("aria-selected", String(isActive));
-      tab.setAttribute("tabindex", isActive ? "0" : "-1");
+    triggers.forEach((trigger) => {
+      const isSelected = trigger.getAttribute("value") === this.value;
+      trigger.setAttribute("data-state", isSelected ? "selected" : "unselected");
+      trigger.setAttribute("aria-selected", String(isSelected));
+      trigger.setAttribute("tabindex", isSelected ? "0" : "-1");
     });
 
     panels.forEach((panel) => {
-      const isActive = panel.getAttribute("value") === this._value;
-      if (isActive) {
-        panel.setAttribute("selected", "");
-      } else {
-        panel.removeAttribute("selected");
-      }
+      const isSelected = panel.getAttribute("value") === this.value;
+      panel.setAttribute("data-state", isSelected ? "selected" : "unselected");
+      panel.setAttribute("aria-hidden", String(!isSelected));
     });
   }
 
-  getTabs(): TabTrigger[] {
-    return Array.from(this.querySelectorAll<TabTrigger>("hp-tab"));
-  }
-
-  getPanels(): TabPanel[] {
-    return Array.from(this.querySelectorAll<TabPanel>("hp-tab-panel"));
-  }
-
   activateByValue(value: string) {
-    this._value = value;
-    this.setAttribute("value", value);
+    this.value = value;
     this._syncPanels();
-
-    this.dispatchEvent(
-      new CustomEvent("hp-change", {
-        detail: { value },
-        bubbles: true,
-        composed: true,
-      }),
-    );
-  }
-
-  get value(): string {
-    return this._value;
-  }
-
-  set value(val: string) {
-    this.setAttribute("value", val);
   }
 }
 
-export class TabList extends HTMLElement {
+@customElement("hp-tab-list")
+export class TabList extends HeadlessElement {
   connectedCallback() {
+    super.connectedCallback();
     this.setAttribute("role", "tablist");
+    this.setAttribute("data-hp-component", "tab-list");
+    this.setAttribute("data-hp-tabs-list", "");
     this.addEventListener("keydown", this._handleKeyDown.bind(this));
   }
 
-  private _getTabs(): TabTrigger[] {
-    return Array.from(this.querySelectorAll<TabTrigger>("hp-tab"));
-  }
-
-  private _getRoot(): Tabs | null {
-    return this.closest("hp-tabs");
-  }
-
   private _handleKeyDown(event: KeyboardEvent) {
-    const tabs = this._getTabs().filter((t) => !t.hasAttribute("disabled"));
+    const tabs = Array.from(this.querySelectorAll<HTMLElement>("hp-tab")).filter(
+      (t) => !t.hasAttribute("disabled"),
+    );
     const active = tabs.find((t) => t.getAttribute("aria-selected") === "true");
     const currentIndex = active ? tabs.indexOf(active) : 0;
     let nextIndex = currentIndex;
@@ -137,7 +110,7 @@ export class TabList extends HTMLElement {
 
     if (nextIndex !== currentIndex) {
       const nextTab = tabs[nextIndex];
-      const root = this._getRoot();
+      const root = this.closest<Tabs>("hp-tabs");
       if (root && nextTab) {
         root.activateByValue(nextTab.getAttribute("value") || "");
         nextTab.focus();
@@ -146,50 +119,51 @@ export class TabList extends HTMLElement {
   }
 }
 
-export class TabTrigger extends HTMLElement {
-  static readonly observedAttributes = ["disabled"];
+@customElement("hp-tab")
+export class TabTrigger extends HeadlessElement {
+  @property({ type: String, reflect: true }) value = "";
+  @property({ type: Boolean, reflect: true }) disabled = false;
 
   connectedCallback() {
-    if (!this.hasAttribute("role")) this.setAttribute("role", "tab");
-    if (!this.hasAttribute("tabindex")) this.setAttribute("tabindex", "-1");
+    super.connectedCallback();
+    this.setAttribute("role", "tab");
+    this.setAttribute("data-hp-component", "tab");
+    this.setAttribute("data-hp-tabs-trigger", "");
     this.addEventListener("click", this._handleClick.bind(this));
+    if (!this.hasAttribute("tabindex")) this.setAttribute("tabindex", "-1");
+    this.setAttribute(
+      "aria-disabled",
+      this.disabled || this.hasAttribute("disabled") ? "true" : "false",
+    );
   }
 
-  attributeChangedCallback(name: string, _old: string | null, next: string | null) {
-    if (name === "disabled") {
-      this.setAttribute("aria-disabled", next !== null ? "true" : "false");
+  protected updated(changed: Map<string, unknown>) {
+    if (changed.has("disabled")) {
+      this.setAttribute("aria-disabled", this.disabled ? "true" : "false");
     }
   }
 
   private _handleClick() {
-    if (this.hasAttribute("disabled")) return;
+    if (this.disabled || this.hasAttribute("disabled")) return;
     const root = this.closest<Tabs>("hp-tabs");
-    const value = this.getAttribute("value");
-    if (root && value) {
-      root.activateByValue(value);
+    if (root && this.value) {
+      root.activateByValue(this.value);
       this.focus();
     }
   }
-
-  get value(): string {
-    return this.getAttribute("value") || this.textContent?.trim() || "";
-  }
 }
 
-export class TabPanel extends HTMLElement {
+@customElement("hp-tab-panel")
+export class TabPanel extends HeadlessElement {
+  @property({ type: String, reflect: true }) value = "";
+
   connectedCallback() {
-    if (!this.hasAttribute("role")) this.setAttribute("role", "tabpanel");
-    if (!this.hasAttribute("tabindex")) this.setAttribute("tabindex", "0");
+    super.connectedCallback();
+    this.setAttribute("role", "tabpanel");
+    this.setAttribute("data-hp-component", "tab-panel");
+    this.setAttribute("data-hp-panel", "");
+    if (!this.hasAttribute("tabindex")) {
+      this.setAttribute("tabindex", "0");
+    }
   }
-
-  get value(): string {
-    return this.getAttribute("value") || "";
-  }
-}
-
-if (typeof window !== "undefined") {
-  if (!customElements.get("hp-tabs")) customElements.define("hp-tabs", Tabs);
-  if (!customElements.get("hp-tab-list")) customElements.define("hp-tab-list", TabList);
-  if (!customElements.get("hp-tab")) customElements.define("hp-tab", TabTrigger);
-  if (!customElements.get("hp-tab-panel")) customElements.define("hp-tab-panel", TabPanel);
 }

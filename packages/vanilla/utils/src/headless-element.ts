@@ -1,5 +1,5 @@
 import { LitElement } from "lit";
-import { uid } from "./index"; // Reutilizar helper existente
+import { uid } from "./uid";
 
 export class HeadlessElement extends LitElement {
   // Garantiza Light DOM (ADR 0002)

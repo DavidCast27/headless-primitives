@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "description": "Headless tabs primitive",
   "files": [
-    "dist"
+    "dist",
+    "src/styles.css"
   ],
   "type": "module",
   "main": "dist/index.js",
@@ -13,12 +14,20 @@
     ".": {
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
-    }
+    },
+    "./styles.css": "./src/styles.css"
   },
   "scripts": {
-    "build": "tsc && vite build",
+    "build": "vite build && tsc",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
     "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@headless-primitives/utils": "workspace:*",
+    "lit": "^3.3.2"
+  },
+  "peerDependencies": {
+    "lit": "^3.3.2"
   }
 }
