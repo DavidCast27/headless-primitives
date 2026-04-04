@@ -98,6 +98,9 @@ importers:
       '@headless-primitives/tooltip':
         specifier: workspace:*
         version: link:../../packages/vanilla/tooltip
+      '@headless-primitives/utils':
+        specifier: workspace:*
+        version: link:../../packages/vanilla/utils
     devDependencies:
       vitepress:
         specifier: ^1.5.0
@@ -180,9 +183,6 @@ importers:
       happy-dom:
         specifier: ^14.12.3
         version: 14.12.3
-      typescript:
-        specifier: ^5.5.4
-        version: 5.9.3
       vite:
         specifier: ^5.4.2
         version: 5.4.21(@types/node@25.5.0)(lightningcss@1.32.0)
@@ -205,9 +205,6 @@ importers:
       happy-dom:
         specifier: ^14.12.3
         version: 14.12.3
-      typescript:
-        specifier: ^5.5.4
-        version: 5.9.3
       vite:
         specifier: ^5.4.2
         version: 5.4.21(@types/node@25.5.0)(lightningcss@1.32.0)
@@ -220,9 +217,6 @@ importers:
       happy-dom:
         specifier: ^14.12.3
         version: 14.12.3
-      typescript:
-        specifier: ^5.5.4
-        version: 5.9.3
       vite:
         specifier: ^5.4.2
         version: 5.4.21(@types/node@25.5.0)(lightningcss@1.32.0)
@@ -235,9 +229,6 @@ importers:
       happy-dom:
         specifier: ^14.12.3
         version: 14.12.3
-      typescript:
-        specifier: ^5.5.4
-        version: 5.9.3
       vite:
         specifier: ^5.4.2
         version: 5.4.21(@types/node@25.5.0)(lightningcss@1.32.0)
@@ -254,9 +245,6 @@ importers:
       happy-dom:
         specifier: ^14.12.3
         version: 14.12.3
-      typescript:
-        specifier: ^5.5.4
-        version: 5.9.3
       vite:
         specifier: ^5.4.2
         version: 5.4.21(@types/node@25.5.0)(lightningcss@1.32.0)
@@ -269,9 +257,6 @@ importers:
       happy-dom:
         specifier: ^14.12.3
         version: 14.12.3
-      typescript:
-        specifier: ^5.5.4
-        version: 5.9.3
       vite:
         specifier: ^5.4.2
         version: 5.4.21(@types/node@25.5.0)(lightningcss@1.32.0)
@@ -290,9 +275,6 @@ importers:
       happy-dom:
         specifier: ^14.12.3
         version: 14.12.3
-      typescript:
-        specifier: ^5.5.4
-        version: 5.9.3
       vite:
         specifier: ^5.4.2
         version: 5.4.21(@types/node@25.5.0)(lightningcss@1.32.0)
@@ -302,16 +284,20 @@ importers:
 
   packages/vanilla/switch: {}
 
-  packages/vanilla/tabs: {}
+  packages/vanilla/tabs:
+    dependencies:
+      '@headless-primitives/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lit:
+        specifier: ^3.3.2
+        version: 3.3.2
 
   packages/vanilla/toast:
     devDependencies:
       happy-dom:
         specifier: ^14.12.3
         version: 14.12.3
-      typescript:
-        specifier: ^5.5.4
-        version: 5.9.3
       vite:
         specifier: ^5.4.2
         version: 5.4.21(@types/node@25.5.0)(lightningcss@1.32.0)
@@ -326,9 +312,6 @@ importers:
       happy-dom:
         specifier: ^14.12.3
         version: 14.12.3
-      typescript:
-        specifier: ^5.5.4
-        version: 5.9.3
       vite:
         specifier: ^5.4.2
         version: 5.4.21(@types/node@25.5.0)(lightningcss@1.32.0)
@@ -337,10 +320,17 @@ importers:
         version: 2.1.9(@types/node@25.5.0)(happy-dom@14.12.3)(jsdom@29.0.1)(lightningcss@1.32.0)
 
   packages/vanilla/utils:
-    devDependencies:
+    dependencies:
       lit:
         specifier: ^3.3.2
         version: 3.3.2
+      uuid:
+        specifier: ^13.0.0
+        version: 13.0.0
+    devDependencies:
+      '@types/uuid':
+        specifier: ^11.0.0
+        version: 11.0.0
 
 packages:
 
@@ -1394,6 +1384,10 @@ packages:
 
   '@types/unist@3.0.3':
     resolution: {integrity: sha512-ko/gIFJRv177XgZsZcBwnqJN5x/Gien8qNOn0D5bQU/zAzVf9Zt3BlcUiLqhV9y4ARk0GbT3tnUiPNgnTXzc/Q==}
+
+  '@types/uuid@11.0.0':
+    resolution: {integrity: sha512-HVyk8nj2m+jcFRNazzqyVKiZezyhDKrGUA3jlEcg/nZ6Ms+qHwocba1Y/AaVaznJTAM9xpdFSh+ptbNrhOGvZA==}
+    deprecated: This is a stub types definition. uuid provides its own type definitions, so you do not need this installed.
 
   '@types/web-bluetooth@0.0.21':
     resolution: {integrity: sha512-oIQLCGWtcFZy2JW77j9k8nHzAOpqMHLQejDA48XXMWH6tjCQHz5RCFz1bzsmROyL6PUm+LLnUiI4BCn221inxA==}
@@ -2685,6 +2679,10 @@ packages:
     resolution: {integrity: sha512-rBJeI5CXAlmy1pV+617WB9J63U6XcazHHF2f2dbJix4XzpUF0RS3Zbj0FGIOCAva5P/d/GBOYaACQ1w+0azUkg==}
     engines: {node: '>= 4.0.0'}
 
+  uuid@13.0.0:
+    resolution: {integrity: sha512-XQegIaBTVUjSHliKqcnFqYypAd4S+WCYt5NIeRs6w/UAry7z8Y9j5ZwRRL4kzq9U3sD6v+85er9FvkEaBpji2w==}
+    hasBin: true
+
   vfile-message@4.0.3:
     resolution: {integrity: sha512-QTHzsGd1EhbZs4AsQ20JX1rC3cOlt/IWJruk893DfLRr57lcnOeMaWG4K0JrRta4mIJZKth2Au3mM3u03/JWKw==}
 
@@ -3897,6 +3895,10 @@ snapshots:
   '@types/trusted-types@2.0.7': {}
 
   '@types/unist@3.0.3': {}
+
+  '@types/uuid@11.0.0':
+    dependencies:
+      uuid: 13.0.0
 
   '@types/web-bluetooth@0.0.21': {}
 
@@ -5247,6 +5249,8 @@ snapshots:
       unist-util-visit-parents: 6.0.2
 
   universalify@0.1.2: {}
+
+  uuid@13.0.0: {}
 
   vfile-message@4.0.3:
     dependencies:

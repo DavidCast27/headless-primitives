@@ -26,23 +26,12 @@ pnpm add @headless-primitives/tabs
 </div>
 
 <style>
-hp-tabs,
-hp-tab-list,
-hp-tab,
-hp-tab-panel {
-  display: block;
-}
-hp-tab-list {
-  display: flex;
-}
-hp-tab-panel:not([selected]) {
-  display: none;
-}
 .demo-tabs {
   width: 100%;
   max-width: 500px;
 }
 .demo-tab-list {
+  display: flex;
   border-bottom: 2px solid var(--vp-c-divider);
   margin-bottom: 0;
 }
@@ -110,20 +99,8 @@ hp-tab-panel:not([selected]) {
 ```
 
 ```css [style.css]
-hp-tabs,
-hp-tab-list,
-hp-tab,
-hp-tab-panel {
-  display: block;
-}
-hp-tab-list {
-  display: flex;
-}
-hp-tab-panel:not([selected]) {
-  display: none;
-}
-
 .tab-list {
+  display: flex;
   border-bottom: 2px solid #e2e8f0;
 }
 
@@ -194,13 +171,13 @@ hp-tab-panel:not([selected]) {
   </hp-tab-list>
   <hp-tab-panel
     value="tab1"
-    class="p-4 border border-t-0 border-gray-200 rounded-b-lg [&:not([selected])]:hidden"
+    class="p-4 border border-t-0 border-gray-200 rounded-b-lg [&[data-state=unselected]]:hidden"
   >
     <p class="m-0 text-gray-600">Contenido del Tab 1</p>
   </hp-tab-panel>
   <hp-tab-panel
     value="tab2"
-    class="p-4 border border-t-0 border-gray-200 rounded-b-lg [&:not([selected])]:hidden"
+    class="p-4 border border-t-0 border-gray-200 rounded-b-lg [&[data-state=unselected]]:hidden"
   >
     <p class="m-0 text-gray-600">Contenido del Tab 2</p>
   </hp-tab-panel>
@@ -283,15 +260,15 @@ Panel de contenido asociado a una pestaña por `value`.
 
 #### Atributos
 
-| Atributo   | Tipo                  | Por defecto | Descripción                                          |
-| :--------- | :-------------------- | :---------- | :--------------------------------------------------- |
-| `value`    | _string_              | —           | Debe coincidir con el `value` del `hp-tab` asociado. |
-| `selected` | _boolean (presencia)_ | gestionado  | Presente cuando el panel está activo.                |
+| Atributo | Tipo     | Por defecto | Descripción                                          |
+| :------- | :------- | :---------- | :--------------------------------------------------- |
+| `value`  | _string_ | —           | Debe coincidir con el `value` del `hp-tab` asociado. |
 
-#### Atributos ARIA gestionados
+#### Atributos ARIA y de estado
 
 - `role="tabpanel"`
 - `tabindex="0"`
+- `data-state` — `selected` / `unselected` (para estilos)
 
 ## Accesibilidad
 
@@ -311,3 +288,42 @@ Panel de contenido asociado a una pestaña por `value`.
 | `Home`                     | Primera pestaña              |
 | `End`                      | Última pestaña               |
 | `Tab`                      | Siguiente elemento enfocable |
+
+## Estados y Selectores
+
+Referencia completa de atributos `data-hp-*`, estados canónicos y roles ARIA para usar con `base.css` o estilos propios.
+
+| Parte          | `data-hp-*`                                         | `data-state`              | Rol ARIA   | Atributos ARIA                               |
+| :------------- | :-------------------------------------------------- | :------------------------ | :--------- | :------------------------------------------- |
+| `hp-tabs`      | `data-hp-component="tabs"`                          | —                         | —          | —                                            |
+| `hp-tab-list`  | `data-hp-component="tab-list"`, `data-hp-tabs-list` | —                         | `tablist`  | —                                            |
+| `hp-tab`       | `data-hp-component="tab"`, `data-hp-tabs-trigger`   | `selected` / `unselected` | `tab`      | `aria-selected`, `aria-disabled`, `tabindex` |
+| `hp-tab-panel` | `data-hp-component="tab-panel"`, `data-hp-panel`    | `selected` / `unselected` | `tabpanel` | `aria-hidden`, `tabindex="0"`                |
+
+### Selectores CSS útiles
+
+```css
+/* Panel activo */
+hp-tab-panel[data-state="selected"] {
+}
+
+/* Panel oculto — ya incluido en base.css */
+[data-hp-panel][data-state="unselected"] {
+  display: none;
+}
+
+/* Tab activo */
+hp-tab[data-state="selected"] {
+}
+hp-tab[aria-selected="true"] {
+}
+
+/* Tab deshabilitado */
+hp-tab[disabled],
+hp-tab[aria-disabled="true"] {
+}
+
+/* Focus ring — ya incluido en base.css */
+[data-hp-component]:focus-visible {
+}
+```

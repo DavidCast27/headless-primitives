@@ -35,6 +35,8 @@ Usamos `display: none` ya que los paneles no suelen requerir transiciones de sal
 }
 ```
 
+Nota: No dupliques esta regla en los CSS de demos (`apps/playground` o páginas de docs). Las demos deben apoyarse en `base.css` para la visibilidad funcional mínima y solo añadir estilos presentacionales (bordes, espaciados, etc.).
+
 ### B. Overlays (Dialog, Popover, Tooltip)
 
 Usamos `visibility` y `opacity` para permitir que el consumidor aplique transiciones CSS basadas en `data-state`.

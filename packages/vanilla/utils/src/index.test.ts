@@ -5,12 +5,12 @@ describe("Utils", () => {
   describe("uid", () => {
     it("should generate a unique ID with default prefix", () => {
       const id = uid();
-      expect(id).toMatch(/^hp-[a-z0-9]{7}$/);
+      expect(id).toMatch(/^hp-[a-f0-9-]{36}$/);
     });
 
     it("should generate a unique ID with custom prefix", () => {
       const id = uid("custom");
-      expect(id).toMatch(/^custom-[a-z0-9]{7}$/);
+      expect(id).toMatch(/^custom-[a-f0-9-]{36}$/);
     });
 
     it("should generate different IDs on multiple calls", () => {

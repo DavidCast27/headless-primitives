@@ -90,6 +90,42 @@ Asegurar que el render de Lit inyecte los atributos que `base.css` espera:
 - [ ] Mantener el `library mode` de Vite para generar bundles CJS/ESM limpios.
 - [ ] Verificar que las apps consumidoras no bundlean múltiples copias de `lit` y documentar estrategia de dedupe.
 
+## 6. Lecciones Aprendidas (Tabs)
+
+Resumen de decisiones y patrones que funcionaron en la migración de Tabs a Lit, para aplicar al resto de componentes.
+
+- Decoradores Lit sí, pero con cautela:
+  - Usar `@property({ reflect: true })` para propiedades públicas que impactan UI (`value`, `disabled`, `open`, etc.).
+  - Evitar `@customElement` en el entry universal para no registrar en import-time bajo SSR. Mantener `customElements.define` con guard: `if (typeof window !== 'undefined') { ... }`.
+  - `@state` y `@query*` sólo si hay Shadow DOM o estado interno que impacta el render. Con Light DOM, suelen ser innecesarios.
+
+- Sincronización estado/UI robusta:
+  - Conducir cambios desde la propiedad y dejar que `reflect: true` sincronice el atributo (fuente de verdad = propiedad).
+  - Al exponer un método público tipo `activateByValue(...)`, actualizar la propiedad y forzar sincronización inmediata de atributos `data-state` en el DOM (llamada directa a `_sync*()`), para evitar depender del ciclo de actualización en escenarios con SSR/hydration.
+  - Observar `attributes` clave (ej. `value`) además de `childList` en el `MutationObserver` para reaccionar a cambios externos o reflejados.
+  - En `connectedCallback`, hacer fallback de estado inicial sólo si el autor NO pasó el atributo (p. ej., `!this.value && !this.hasAttribute('value')`).
+
+- Eventos y compatibilidad:
+  - Emitir eventos con prefijo `hp-*` en `updated()` cuando cambie la propiedad pública (evitar emitir en el primer render cuando `oldValue` es `undefined`).
+  - Mantener roles y ARIA sincronizados con el estado (`aria-selected`, `aria-hidden`, `tabindex`, etc.).
+
+- `data-hp-*` y `data-state` canónicos:
+  - Raíz: `data-hp-component`.
+  - Partes: `data-hp-tabs-list`, `data-hp-tabs-trigger`, `data-hp-panel`.
+  - Estados: `selected/unselected` para Tabs y paneles; `open/closed` para overlays.
+  - `base.css` usa `[data-hp-panel][data-state="unselected"] { display: none; }` — no usar `[selected]`/`[hidden]`.
+
+- Documentación y demos alineados:
+  - Ejemplos en docs y playground deben usar los nuevos estados/atributos. Selectores: `[data-state="unselected"]` en lugar de `[selected]`.
+  - Importar `@headless-primitives/utils/base.css` en docs/playground para un render funcional mínimo.
+
+- Testing recomendado:
+  - Click y teclado (flechas/Home/End) actualizan `value` y foco.
+  - `hp-change` emite con `{ value }` al cambiar.
+  - Cambios vía atributo (ej. `setAttribute('value', ...)`) reflejan estado.
+  - Estados `disabled`/`aria-disabled` bloquean interacción.
+  - Guard SSR en `customElements.define` para evitar fallos de registro.
+
 ## 6. Template de Plan Individual (Ampliado)
 
 ```markdown
