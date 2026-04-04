@@ -26,8 +26,7 @@ pnpm add @headless-primitives/toast
 </div>
 
 <style>
-hp-toast-container { display: block; }
-hp-toast { display: block; }
+/* hp-* display:block via base.css [data-hp-component] */
 .demo-btn {
   font-family: inherit;
   font-size: 0.9rem;

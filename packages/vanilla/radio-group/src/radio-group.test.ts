@@ -14,8 +14,8 @@ describe("hp-radio-group", () => {
       </hp-radio-group>
     `;
     group = document.querySelector("hp-radio-group") as HeadlessRadioGroup;
-    // Wait for MutationObserver
-    await new Promise((resolve) => setTimeout(resolve, 0));
+    // Wait for double requestAnimationFrame sync
+    await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
   });
 
   test("should initialize with correct role", () => {

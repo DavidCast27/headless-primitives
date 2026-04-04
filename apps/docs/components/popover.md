@@ -32,7 +32,6 @@ pnpm add @headless-primitives/popover
 <style>
 hp-popover { display: inline-block; }
 hp-popover-trigger { display: inline-block; }
-hp-popover-content { display: block; }
 .demo-btn {
   font-family: inherit;
   font-size: 0.9rem;
@@ -87,9 +86,7 @@ hp-popover {
 hp-popover-trigger {
   display: inline-block;
 }
-hp-popover-content {
-  display: block;
-}
+/* hp-popover-content visibility via base.css: [data-hp-overlay-content][data-state="closed"] */
 
 /* El componente gestiona position:fixed y coordenadas automáticamente.
    Solo necesitas estilos visuales: */

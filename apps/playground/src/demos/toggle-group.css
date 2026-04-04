@@ -49,18 +49,14 @@
   box-shadow: var(--focus-ring);
 }
 
-.demo-toggle[pressed="true"],
-.demo-toggle[pressed],
-.demo-toggle[data-pressed="true"] {
+.demo-toggle[data-state="on"] {
   background: var(--primary-color);
   color: white;
   border-color: var(--primary-color);
   transform: translateY(0);
 }
 
-.demo-toggle[pressed="true"]:hover,
-.demo-toggle[pressed]:hover,
-.demo-toggle[data-pressed="true"]:hover {
+.demo-toggle[data-state="on"]:hover {
   background: var(--primary-hover);
   border-color: var(--primary-hover);
 }

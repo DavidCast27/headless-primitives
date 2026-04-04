@@ -12,12 +12,14 @@ describe("HeadlessToast", () => {
     expect(toast.getAttribute("aria-atomic")).toBe("true");
   });
 
-  it("applies default styles", () => {
+  it("renders with correct data-hp attributes", () => {
     const toast = document.createElement("hp-toast") as HeadlessToast;
     document.body.appendChild(toast);
 
-    expect(toast.style.display).toBe("flex");
-    expect(toast.style.alignItems).toBe("center");
+    expect(toast.getAttribute("data-hp-component")).toBe("toast");
+    expect(toast.getAttribute("role")).toBe("alert");
+    expect(toast.getAttribute("aria-live")).toBe("polite");
+    expect(toast.getAttribute("aria-atomic")).toBe("true");
   });
 
   it("closes toast on close() call", async () => {
@@ -53,7 +55,7 @@ describe("HeadlessToastContainer", () => {
     document.body.appendChild(container);
 
     expect(container.style.position).toBe("fixed");
-    expect(container.style.zIndex).toBe("9999");
+    expect(container.getAttribute("data-hp-component")).toBe("toast-container");
 
     document.body.removeChild(container);
   });
@@ -118,5 +120,3 @@ describe("HeadlessToastContainer", () => {
     document.body.removeChild(container);
   });
 });
-
-

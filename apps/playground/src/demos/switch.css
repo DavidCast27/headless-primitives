@@ -52,12 +52,12 @@ hp-switch.switch::after {
 }
 
 /* REACCIÓN AL ESTADO ACCESIBLE */
-hp-switch.switch[aria-checked="true"] {
+hp-switch.switch[data-state="checked"] {
   background-color: var(--primary-color);
   border-color: transparent;
 }
 
-hp-switch.switch[aria-checked="true"]::after {
+hp-switch.switch[data-state="checked"]::after {
   transform: translateX(22px);
 }
 

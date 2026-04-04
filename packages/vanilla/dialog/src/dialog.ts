@@ -12,6 +12,7 @@ export class HeadlessDialog extends HTMLElement {
   private _isOpen = false;
   private _focusTrap: FocusTrap | null = null;
   private _isAlert = false; // New: Track if this is an alert dialog
+  private _previousScrollPosition = 0;
 
   connectedCallback() {
     this._isAlert = this.hasAttribute("data-alert");
@@ -41,16 +42,14 @@ export class HeadlessDialog extends HTMLElement {
   private _setupContent() {
     if (!this._content) return;
 
-    this._content.setAttribute("role", "dialog");
+    this._content.setAttribute("role", this._isAlert ? "alertdialog" : "dialog");
     this._content.setAttribute("aria-modal", "true");
+    this._content.setAttribute("data-hp-overlay-content", "");
+    this._content.setAttribute("data-state", "closed");
     this._content.style.position = "fixed";
     this._content.style.top = "50%";
     this._content.style.left = "50%";
     this._content.style.transform = "translate(-50%, -50%)";
-    this._content.style.visibility = "hidden";
-    this._content.style.opacity = "0";
-    this._content.style.pointerEvents = "none";
-    this._content.style.transition = "opacity 0.2s ease, visibility 0.2s ease";
     this._content.style.zIndex = "9999";
     this._content.addEventListener("keydown", this._handleKeyDown);
   }
@@ -58,18 +57,10 @@ export class HeadlessDialog extends HTMLElement {
   private _setupBackdrop() {
     if (!this._backdrop) return;
 
-    this._backdrop.style.position = "fixed";
-    this._backdrop.style.top = "0";
-    this._backdrop.style.left = "0";
-    this._backdrop.style.right = "0";
-    this._backdrop.style.bottom = "0";
+    this._backdrop.setAttribute("data-hp-backdrop", "");
+    this._backdrop.setAttribute("data-state", "closed");
     this._backdrop.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
-    this._backdrop.style.visibility = "hidden";
-    this._backdrop.style.opacity = "0";
-    this._backdrop.style.transition = "opacity 0.2s ease, visibility 0.2s ease";
-    this._backdrop.style.zIndex = "9998";
-    
-    // Alert dialogs: don't close on backdrop click
+
     if (!this._isAlert) {
       this._backdrop.addEventListener("click", this._close);
     }
@@ -84,15 +75,12 @@ export class HeadlessDialog extends HTMLElement {
     document.body.style.overflow = "hidden";
 
     if (this._content) {
-      this._content.style.visibility = "visible";
-      this._content.style.opacity = "1";
-      this._content.style.pointerEvents = "auto";
+      this._content.setAttribute("data-state", "open");
       this._content.setAttribute("aria-hidden", "false");
     }
 
     if (this._backdrop) {
-      this._backdrop.style.visibility = "visible";
-      this._backdrop.style.opacity = "1";
+      this._backdrop.setAttribute("data-state", "open");
     }
 
     if (this._trigger && this._content) {
@@ -116,17 +104,15 @@ export class HeadlessDialog extends HTMLElement {
 
     // Restore scroll
     document.body.style.overflow = "";
+    window.scrollTo(0, this._previousScrollPosition);
 
     if (this._content) {
-      this._content.style.visibility = "hidden";
-      this._content.style.opacity = "0";
-      this._content.style.pointerEvents = "none";
+      this._content.setAttribute("data-state", "closed");
       this._content.setAttribute("aria-hidden", "true");
     }
 
     if (this._backdrop) {
-      this._backdrop.style.visibility = "hidden";
-      this._backdrop.style.opacity = "0";
+      this._backdrop.setAttribute("data-state", "closed");
     }
 
     if (this._trigger) {
@@ -188,16 +174,15 @@ export class HeadlessDialogTrigger extends HTMLElement {
  */
 export class HeadlessDialogContent extends HTMLElement {
   connectedCallback() {
-    // Generate ID if not provided
+    this.setAttribute("data-hp-component", "dialog-content");
     if (!this.id) {
       this.id = `hp-dialog-content-${Math.random().toString(36).slice(2, 9)}`;
     }
   }
 }
 
-/**
- * Dialog Backdrop - The overlay that blocks interaction.
- */
 export class HeadlessDialogBackdrop extends HTMLElement {
-  // Just a container for styling
+  connectedCallback() {
+    this.setAttribute("data-hp-component", "dialog-backdrop");
+  }
 }

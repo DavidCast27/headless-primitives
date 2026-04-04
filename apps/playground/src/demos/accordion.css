@@ -1,15 +1,3 @@
-/* Accordion Demo Styles */
-hp-accordion,
-hp-accordion-item,
-hp-accordion-trigger,
-hp-accordion-content {
-  display: block;
-}
-
-hp-accordion-content[hidden] {
-  display: none;
-}
-
 /* Demo section styling - consistent with other components */
 .demo-section {
   margin-bottom: 2rem;

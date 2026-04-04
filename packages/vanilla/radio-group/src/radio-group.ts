@@ -1,116 +1,76 @@
-export class HeadlessRadioGroup extends HTMLElement {
-  static readonly observedAttributes = ["value", "disabled", "required", "orientation"];
+import { HeadlessElement, customElement } from "@headless-primitives/utils";
+import { property } from "lit/decorators.js";
 
-  private _value = "";
-  private _disabled = false;
-  private _required = false;
-  private _orientation: "horizontal" | "vertical" = "vertical";
-  private _observer: MutationObserver | null = null;
-
-  constructor() {
-    super();
-    this.addEventListener("hp-radio-select", this._handleRadioSelect.bind(this) as EventListener);
-    this.addEventListener("keydown", this._handleKeyDown.bind(this));
-    this._observer = new MutationObserver(() => {
-      this._updateRadios();
-    });
-  }
+@customElement("hp-radio-group")
+export class HeadlessRadioGroup extends HeadlessElement {
+  @property({ type: String, reflect: true }) value = "";
+  @property({ type: Boolean, reflect: true }) disabled = false;
+  @property({ type: Boolean, reflect: true }) required = false;
+  @property({ type: String, reflect: true }) orientation: "horizontal" | "vertical" = "vertical";
 
   connectedCallback() {
-    if (!this.hasAttribute("role")) {
-      this.setAttribute("role", "radiogroup");
-    }
-    this._value = this.getAttribute("value") || "";
-    this._observer?.observe(this, { childList: true, subtree: true });
+    super.connectedCallback();
+    this.setAttribute("data-hp-component", "radio-group");
+    if (!this.hasAttribute("role")) this.setAttribute("role", "radiogroup");
+    this.addEventListener("hp-radio-select", this._handleRadioSelect as EventListener);
+    this.addEventListener("keydown", this._handleKeyDown);
+    this.addEventListener("slotchange", () => this._updateRadios());
+    this._sync();
     this._updateRadios();
+    requestAnimationFrame(() => this._updateRadios());
   }
 
   disconnectedCallback() {
-    this._observer?.disconnect();
+    super.disconnectedCallback();
+    this.removeEventListener("hp-radio-select", this._handleRadioSelect as EventListener);
+    this.removeEventListener("keydown", this._handleKeyDown);
   }
 
-  attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null) {
-    if (oldValue === newValue) return;
-
-    switch (name) {
-      case "value":
-        this._value = newValue || "";
-        this._syncRadios();
-        break;
-      case "disabled":
-        this._disabled = newValue !== null;
-        this._updateRadios();
-        break;
-      case "required":
-        this._required = newValue !== null;
-        if (this._required) {
-          this.setAttribute("aria-required", "true");
-        } else {
-          this.removeAttribute("aria-required");
-        }
-        break;
-      case "orientation":
-        this._orientation = (newValue as "horizontal" | "vertical") || "vertical";
-        this.setAttribute("aria-orientation", this._orientation);
-        break;
+  private _sync() {
+    this.setAttribute("aria-orientation", this.orientation);
+    if (this.required) {
+      this.setAttribute("aria-required", "true");
+    } else {
+      this.removeAttribute("aria-required");
     }
   }
 
-  get value() {
-    return this._value;
-  }
-
-  set value(val: string) {
-    this.setAttribute("value", val);
+  private _getRadios(): HeadlessRadio[] {
+    const byTag = Array.from(this.querySelectorAll("hp-radio")) as HeadlessRadio[];
+    if (byTag.length > 0) return byTag;
+    return Array.from(this.querySelectorAll('[data-hp-component="radio"]')) as HeadlessRadio[];
   }
 
   private _updateRadios() {
-    const radios = Array.from(this.querySelectorAll("hp-radio")) as HeadlessRadio[];
-    radios.forEach((radio) => {
-      if (this._disabled) {
-        radio.setAttribute("disabled", "");
-      }
-    });
+    const radios = this._getRadios();
+    if (this.disabled) radios.forEach((r) => r.setAttribute("disabled", ""));
+    this._sync();
     this._syncRadios();
   }
 
   private _syncRadios() {
-    const radios = Array.from(this.querySelectorAll("hp-radio"));
+    const radios = this._getRadios();
     let hasChecked = false;
-
     radios.forEach((radio) => {
-      const isChecked = (radio as any).value === this._value;
-      // Forzar el setter usando el prototype
-      const radioElement = radio as any;
-      if ("checked" in radioElement) {
-        radioElement.checked = isChecked;
-      }
+      // Read value from attribute as fallback for timing issues
+      const radioValue = radio.value || radio.getAttribute("value") || "";
+      const isChecked = radioValue === this.value;
+      radio.setChecked(isChecked);
       if (isChecked) hasChecked = true;
     });
-
-    // If none are checked, the first one should be focusable
-    if (!hasChecked && radios.length > 0) {
-      (radios[0] as any).tabIndex = 0;
-    }
+    if (!hasChecked && radios.length > 0) radios[0].tabIndex = 0;
   }
 
-  private _handleRadioSelect(event: CustomEvent) {
+  private _handleRadioSelect = (event: CustomEvent) => {
     this.value = event.detail.value;
-    this.dispatchEvent(
-      new CustomEvent("hp-change", {
-        detail: { value: this.value },
-        bubbles: true,
-      }),
-    );
-  }
+    this._syncRadios();
+    this.emit("change", { value: this.value });
+  };
 
-  private _handleKeyDown(event: KeyboardEvent) {
-    if (this._disabled) return;
-
-    const radios = Array.from(this.querySelectorAll("hp-radio:not([disabled])")) as HeadlessRadio[];
-    const target = event.target as HeadlessRadio;
-    const currentIndex = radios.indexOf(target);
-
+  private _handleKeyDown = (event: KeyboardEvent) => {
+    if (this.disabled) return;
+    const radios = this._getRadios().filter((r) => !r.hasAttribute("disabled"));
+    const currentIndex = radios.indexOf(event.target as HeadlessRadio);
     if (currentIndex === -1) return;
 
     let nextIndex = -1;
@@ -136,97 +96,62 @@ export class HeadlessRadioGroup extends HTMLElement {
     }
 
     if (nextIndex !== -1) {
-      const nextRadio = radios[nextIndex];
-      nextRadio.focus();
-      this.value = nextRadio.value;
-      this.dispatchEvent(
-        new CustomEvent("hp-change", {
-          detail: { value: this.value },
-          bubbles: true,
-        }),
-      );
+      radios[nextIndex].focus();
+      this.value = radios[nextIndex].value;
+      this._syncRadios();
+      this.emit("change", { value: this.value });
     }
-  }
+  };
 }
 
-export class HeadlessRadio extends HTMLElement {
-  static readonly observedAttributes = ["value", "checked", "disabled"];
+@customElement("hp-radio")
+export class HeadlessRadio extends HeadlessElement {
+  @property({ type: String, reflect: true }) value = "";
+  @property({ type: Boolean, reflect: true }) disabled = false;
 
-  private _value = "";
   private _checked = false;
-  private _disabled = false;
-
-  constructor() {
-    super();
-    this.addEventListener("click", this._handleClick.bind(this));
-  }
-
-  connectedCallback() {
-    if (!this.hasAttribute("role")) {
-      this.setAttribute("role", "radio");
-    }
-    if (!this.hasAttribute("tabindex")) {
-      this.setAttribute("tabindex", this._checked ? "0" : "-1");
-    }
-    this._updateAria();
-  }
-
-  attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null) {
-    if (oldValue === newValue) return;
-
-    switch (name) {
-      case "value":
-        this._value = newValue || "";
-        break;
-      case "checked":
-        this._checked = newValue !== null;
-        this.setAttribute("tabindex", this._checked ? "0" : "-1");
-        this._updateAria();
-        break;
-      case "disabled":
-        this._disabled = newValue !== null;
-        if (this._disabled) {
-          this.setAttribute("aria-disabled", "true");
-          this.removeAttribute("tabindex");
-        } else {
-          this.removeAttribute("aria-disabled");
-          this.setAttribute("tabindex", this._checked ? "0" : "-1");
-        }
-        break;
-    }
-  }
-
-  get value() {
-    return this._value;
-  }
-
-  set value(val: string) {
-    this.setAttribute("value", val);
-  }
 
   get checked() {
     return this._checked;
   }
 
-  set checked(val: boolean) {
-    if (val) {
-      this.setAttribute("checked", "");
+  connectedCallback() {
+    super.connectedCallback();
+    this.setAttribute("data-hp-component", "radio");
+    if (!this.hasAttribute("role")) this.setAttribute("role", "radio");
+    this.setAttribute("tabindex", "-1");
+    this.addEventListener("click", this._handleClick);
+    this._sync();
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this.removeEventListener("click", this._handleClick);
+  }
+
+  setChecked(val: boolean) {
+    this._checked = val;
+    this._sync();
+  }
+
+  private _sync() {
+    this.setAttribute("aria-checked", String(this._checked));
+    this.setAttribute("tabindex", this._checked ? "0" : "-1");
+    if (this.disabled) {
+      this.setAttribute("aria-disabled", "true");
+      this.removeAttribute("tabindex");
     } else {
-      this.removeAttribute("checked");
+      this.removeAttribute("aria-disabled");
     }
   }
 
-  private _handleClick() {
-    if (this._disabled || this._checked) return;
+  private _handleClick = () => {
+    if (this.disabled || this._checked) return;
     this.dispatchEvent(
       new CustomEvent("hp-radio-select", {
-        detail: { value: this._value },
+        detail: { value: this.value },
         bubbles: true,
       }),
     );
-  }
-
-  private _updateAria() {
-    this.setAttribute("aria-checked", String(this._checked));
-  }
+  };
 }

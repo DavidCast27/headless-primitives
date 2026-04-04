@@ -62,8 +62,20 @@ export class Tabs extends HeadlessElement {
   }
 
   activateByValue(value: string) {
+    const oldValue = this.value;
     this.value = value;
     this._syncPanels();
+    if (oldValue !== value) {
+      this.emit("change", { value: this.value });
+    }
+  }
+
+  attributeChangedCallback(name: string, old: string | null, next: string | null) {
+    super.attributeChangedCallback(name, old, next);
+    if (name === "value" && old !== next && this.isConnected) {
+      this._syncPanels();
+      if (old !== null) this.emit("change", { value: next || "" });
+    }
   }
 }
 
@@ -140,6 +152,13 @@ export class TabTrigger extends HeadlessElement {
   protected updated(changed: Map<string, unknown>) {
     if (changed.has("disabled")) {
       this.setAttribute("aria-disabled", this.disabled ? "true" : "false");
+    }
+  }
+
+  attributeChangedCallback(name: string, old: string | null, next: string | null) {
+    super.attributeChangedCallback(name, old, next);
+    if (name === "disabled" && old !== next && this.isConnected) {
+      this.setAttribute("aria-disabled", next !== null ? "true" : "false");
     }
   }
 
