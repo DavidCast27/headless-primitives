@@ -19,6 +19,9 @@ export class HeadlessSeparator extends HeadlessElement {
     super.connectedCallback();
     this.setAttribute("data-hp-component", "separator");
     if (!this.hasAttribute("role")) this.setAttribute("role", "separator");
+    // Read initial orientation from DOM attribute directly
+    const raw = this.getAttribute("orientation");
+    this._orientation = raw === "vertical" ? "vertical" : "horizontal";
     this._sync();
   }
 
