@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import "./index";
-import { HeadlessSwitch } from "./switch";
+import type { HeadlessSwitch } from "./switch";
 
 describe("hp-switch", () => {
   let sw: HeadlessSwitch;

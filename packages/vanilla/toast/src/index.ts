@@ -4,5 +4,5 @@ export {
   HeadlessToastTitle,
   HeadlessToastDescription,
   HeadlessToastClose,
-  type ToastOptions,
 } from "./toast";
+export type { ToastOptions, ToastDismissEvent } from "./types";

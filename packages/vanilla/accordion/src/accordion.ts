@@ -122,9 +122,7 @@ export class HeadlessAccordionItem extends HeadlessElement {
     this.emit("change", { open: this.open, value: this.value });
     if (this.open) {
       this.emit("open", { value: this.value });
-      this.dispatchEvent(
-        new CustomEvent("hp-item-open", { detail: { value: this.value }, bubbles: true }),
-      );
+      this.emit("item-open", { value: this.value });
     } else {
       this.emit("close", { value: this.value });
     }
@@ -191,7 +189,7 @@ export class HeadlessAccordionTrigger extends HeadlessElement {
 
   private _handleClick = () => {
     if (this.disabled || this.hasAttribute("disabled")) return;
-    this.dispatchEvent(new CustomEvent("hp-trigger-click", { bubbles: true }));
+    this.emit("trigger-click");
   };
 
   private _handleKeyDown = (e: KeyboardEvent) => {

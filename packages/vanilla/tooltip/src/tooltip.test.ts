@@ -1,18 +1,13 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
-import { HeadlessTooltip, HeadlessTooltipTrigger, HeadlessTooltipContent } from "./tooltip";
+import "./index"; // triggers @customElement decorator registration
+import type { HeadlessTooltip, HeadlessTooltipTrigger, HeadlessTooltipContent } from "./tooltip";
 
-if (!customElements.get("hp-tooltip")) customElements.define("hp-tooltip", HeadlessTooltip);
-if (!customElements.get("hp-tooltip-trigger"))
-  customElements.define("hp-tooltip-trigger", HeadlessTooltipTrigger);
-if (!customElements.get("hp-tooltip-content"))
-  customElements.define("hp-tooltip-content", HeadlessTooltipContent);
-
-describe("HpTooltip (Headless Primitive Tooltip)", () => {
+describe("HpTooltip", () => {
   let tooltip: HeadlessTooltip;
   let trigger: HeadlessTooltipTrigger;
   let content: HeadlessTooltipContent;
 
-  beforeEach(async () => {
+  beforeEach(() => {
     vi.useFakeTimers();
     tooltip = document.createElement("hp-tooltip") as HeadlessTooltip;
     trigger = document.createElement("hp-tooltip-trigger") as HeadlessTooltipTrigger;
@@ -21,8 +16,6 @@ describe("HpTooltip (Headless Primitive Tooltip)", () => {
     tooltip.appendChild(trigger);
     tooltip.appendChild(content);
     document.body.appendChild(tooltip);
-    // Wait for rAF so _attachTriggerListeners runs before tests dispatch events
-    await new Promise((resolve) => requestAnimationFrame(resolve));
   });
 
   afterEach(() => {
@@ -30,17 +23,19 @@ describe("HpTooltip (Headless Primitive Tooltip)", () => {
     vi.useRealTimers();
   });
 
-  it("debería inicializar el trigger como focusable", () => {
+  it("inicializa el trigger como focusable con tabindex", () => {
     expect(trigger.getAttribute("tabindex")).toBe("0");
+    expect(trigger.getAttribute("data-hp-component")).toBe("tooltip-trigger");
   });
 
-  it("debería inicializar el content con role tooltip y cerrado", () => {
+  it("inicializa el content con role tooltip y data-state closed", () => {
     expect(content.getAttribute("role")).toBe("tooltip");
     expect(content.getAttribute("data-state")).toBe("closed");
     expect(content.getAttribute("aria-hidden")).toBe("true");
+    expect(content.getAttribute("data-hp-tooltip-content")).toBe("");
   });
 
-  it("debería mostrar el tooltip al hacer mouseenter en el trigger", () => {
+  it("muestra el tooltip tras el delay de mouseenter", () => {
     trigger.dispatchEvent(new MouseEvent("mouseenter"));
     vi.advanceTimersByTime(300);
     expect(content.getAttribute("data-state")).toBe("open");
@@ -48,7 +43,7 @@ describe("HpTooltip (Headless Primitive Tooltip)", () => {
     expect(trigger.getAttribute("aria-describedby")).toBe(content.id);
   });
 
-  it("debería ocultar el tooltip al hacer mouseleave en el trigger", () => {
+  it("oculta el tooltip tras el delay de mouseleave", () => {
     trigger.dispatchEvent(new MouseEvent("mouseenter"));
     vi.advanceTimersByTime(300);
     trigger.dispatchEvent(new MouseEvent("mouseleave"));
@@ -58,31 +53,48 @@ describe("HpTooltip (Headless Primitive Tooltip)", () => {
     expect(trigger.hasAttribute("aria-describedby")).toBe(false);
   });
 
-  it("debería mostrar el tooltip inmediatamente al enfocar el trigger", () => {
+  it("muestra el tooltip inmediatamente al enfocar el trigger", () => {
     trigger.dispatchEvent(new FocusEvent("focus"));
     expect(content.getAttribute("data-state")).toBe("open");
     expect(trigger.getAttribute("aria-describedby")).toBe(content.id);
   });
 
-  it("debería ocultar el tooltip al desenfocar el trigger", () => {
+  it("oculta el tooltip tras el delay de blur", () => {
     trigger.dispatchEvent(new FocusEvent("focus"));
-    expect(content.getAttribute("data-state")).toBe("open");
     trigger.dispatchEvent(new FocusEvent("blur"));
     vi.advanceTimersByTime(150);
     expect(content.getAttribute("data-state")).toBe("closed");
     expect(trigger.hasAttribute("aria-describedby")).toBe(false);
   });
 
-  it("debería emitir eventos hp-open y hp-close", () => {
-    let openEmitted = false;
-    let closeEmitted = false;
-    tooltip.addEventListener("hp-open", () => (openEmitted = true));
-    tooltip.addEventListener("hp-close", () => (closeEmitted = true));
+  it("emite hp-open y hp-close en cada transición", () => {
+    let openCount = 0;
+    let closeCount = 0;
+    tooltip.addEventListener("hp-open", () => openCount++);
+    tooltip.addEventListener("hp-close", () => closeCount++);
+
     trigger.dispatchEvent(new MouseEvent("mouseenter"));
     vi.advanceTimersByTime(300);
-    expect(openEmitted).toBe(true);
+    expect(openCount).toBe(1);
+
     trigger.dispatchEvent(new MouseEvent("mouseleave"));
     vi.advanceTimersByTime(150);
-    expect(closeEmitted).toBe(true);
+    expect(closeCount).toBe(1);
+  });
+
+  it("API pública show()/hide() funciona correctamente", () => {
+    tooltip.show();
+    expect(content.getAttribute("data-state")).toBe("open");
+
+    tooltip.hide();
+    expect(content.getAttribute("data-state")).toBe("closed");
+  });
+
+  it("no emite eventos duplicados en llamadas repetidas", () => {
+    let openCount = 0;
+    tooltip.addEventListener("hp-open", () => openCount++);
+    tooltip.show();
+    tooltip.show(); // no-op
+    expect(openCount).toBe(1);
   });
 });

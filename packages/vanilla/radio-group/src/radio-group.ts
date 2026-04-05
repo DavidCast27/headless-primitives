@@ -147,11 +147,6 @@ export class HeadlessRadio extends HeadlessElement {
 
   private _handleClick = () => {
     if (this.disabled || this._checked) return;
-    this.dispatchEvent(
-      new CustomEvent("hp-radio-select", {
-        detail: { value: this.value },
-        bubbles: true,
-      }),
-    );
+    this.emit("radio-select", { value: this.value });
   };
 }

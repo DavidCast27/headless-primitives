@@ -1,28 +1,35 @@
-import { describe, it, expect, vi } from "vitest";
-import "@headless-primitives/toast"; // Import to register custom elements
-import { HeadlessToast, HeadlessToastContainer } from "./toast";
+import { describe, it, expect, vi, afterEach } from "vitest";
+import "./index"; // triggers @customElement decorator registration
+import type { HeadlessToast, HeadlessToastContainer } from "./toast";
 
 describe("HeadlessToast", () => {
-  it("renders with correct ARIA attributes", () => {
+  afterEach(() => {
+    document.querySelectorAll("hp-toast").forEach((el) => el.remove());
+  });
+
+  it("inicia con data-state='open' al conectarse al DOM", () => {
     const toast = document.createElement("hp-toast") as HeadlessToast;
     document.body.appendChild(toast);
+    expect(toast.getAttribute("data-state")).toBe("open");
+  });
 
+  it("tiene los atributos ARIA correctos", () => {
+    const toast = document.createElement("hp-toast") as HeadlessToast;
+    document.body.appendChild(toast);
     expect(toast.getAttribute("role")).toBe("alert");
     expect(toast.getAttribute("aria-live")).toBe("polite");
     expect(toast.getAttribute("aria-atomic")).toBe("true");
-  });
-
-  it("renders with correct data-hp attributes", () => {
-    const toast = document.createElement("hp-toast") as HeadlessToast;
-    document.body.appendChild(toast);
-
     expect(toast.getAttribute("data-hp-component")).toBe("toast");
-    expect(toast.getAttribute("role")).toBe("alert");
-    expect(toast.getAttribute("aria-live")).toBe("polite");
-    expect(toast.getAttribute("aria-atomic")).toBe("true");
   });
 
-  it("closes toast on close() call", async () => {
+  it("close() establece data-state='closed' inmediatamente", () => {
+    const toast = document.createElement("hp-toast") as HeadlessToast;
+    document.body.appendChild(toast);
+    toast.close();
+    expect(toast.getAttribute("data-state")).toBe("closed");
+  });
+
+  it("close() emite hp-dismiss y elimina el elemento del DOM", async () => {
     const toast = document.createElement("hp-toast") as HeadlessToast;
     document.body.appendChild(toast);
 
@@ -30,22 +37,15 @@ describe("HeadlessToast", () => {
     toast.addEventListener("hp-dismiss", dismissSpy);
 
     toast.close();
-
-    await new Promise((resolve) => setTimeout(resolve, 300));
-    expect(dismissSpy).toHaveBeenCalled();
-  });
-
-  it("dispatchs hp-dismiss event on close", async () => {
-    const toast = document.createElement("hp-toast") as HeadlessToast;
-    document.body.appendChild(toast);
-
-    const dismissSpy = vi.fn();
-    toast.addEventListener("hp-dismiss", dismissSpy);
-
-    toast.close();
-
     await new Promise((resolve) => setTimeout(resolve, 300));
     expect(dismissSpy).toHaveBeenCalledWith(expect.any(CustomEvent));
+    expect(document.contains(toast)).toBe(false);
+  });
+
+  it("no inyecta estilos globales de animación en el documento", () => {
+    const toast = document.createElement("hp-toast") as HeadlessToast;
+    document.body.appendChild(toast);
+    expect(document.querySelector("[data-hp-toast-animations]")).toBeNull();
   });
 });
 

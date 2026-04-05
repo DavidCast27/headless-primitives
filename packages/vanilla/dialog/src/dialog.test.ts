@@ -1,26 +1,14 @@
 import { describe, it, expect, beforeEach, afterEach } from "vitest";
-import {
+import "./index"; // triggers @customElement decorator registration
+import type {
   HeadlessDialog,
   HeadlessDialogTrigger,
   HeadlessDialogContent,
   HeadlessDialogBackdrop,
-  HeadlessDialogTitle,
   HeadlessDialogClose,
 } from "./dialog";
 
-if (!customElements.get("hp-dialog")) customElements.define("hp-dialog", HeadlessDialog);
-if (!customElements.get("hp-dialog-trigger"))
-  customElements.define("hp-dialog-trigger", HeadlessDialogTrigger);
-if (!customElements.get("hp-dialog-content"))
-  customElements.define("hp-dialog-content", HeadlessDialogContent);
-if (!customElements.get("hp-dialog-backdrop"))
-  customElements.define("hp-dialog-backdrop", HeadlessDialogBackdrop);
-if (!customElements.get("hp-dialog-title"))
-  customElements.define("hp-dialog-title", HeadlessDialogTitle);
-if (!customElements.get("hp-dialog-close"))
-  customElements.define("hp-dialog-close", HeadlessDialogClose);
-
-describe("HpDialog (Headless Primitive Dialog)", () => {
+describe("HpDialog", () => {
   let dialog: HeadlessDialog;
   let trigger: HeadlessDialogTrigger;
   let content: HeadlessDialogContent;
@@ -41,52 +29,70 @@ describe("HpDialog (Headless Primitive Dialog)", () => {
     dialog.remove();
   });
 
-  it("debería inicializar el trigger como focusable", () => {
+  it("inicializa el trigger como focusable con role button", () => {
     expect(trigger.getAttribute("tabindex")).toBe("0");
+    expect(trigger.getAttribute("role")).toBe("button");
   });
 
-  it("debería inicializar el content con role dialog y aria-modal", () => {
+  it("inicializa el content con role dialog, aria-modal y data-state closed", () => {
     expect(content.getAttribute("role")).toBe("dialog");
     expect(content.getAttribute("aria-modal")).toBe("true");
     expect(content.getAttribute("data-state")).toBe("closed");
+    expect(content.getAttribute("aria-hidden")).toBe("true");
   });
 
-  it("debería abrir el dialog al hacer click en el trigger", () => {
+  it("abre el dialog al hacer click en el trigger", () => {
     trigger.dispatchEvent(new MouseEvent("click"));
     expect(content.getAttribute("data-state")).toBe("open");
-    // aria-hidden is removed (not set to "false") when open — absence means visible
     expect(content.hasAttribute("aria-hidden")).toBe(false);
     expect(backdrop.getAttribute("data-state")).toBe("open");
     expect(trigger.getAttribute("aria-expanded")).toBe("true");
   });
 
-  it("debería cerrar el dialog al hacer click en el backdrop", () => {
+  it("cierra el dialog al hacer click en el backdrop", () => {
     trigger.dispatchEvent(new MouseEvent("click"));
     backdrop.dispatchEvent(new MouseEvent("click"));
     expect(content.getAttribute("data-state")).toBe("closed");
     expect(backdrop.getAttribute("data-state")).toBe("closed");
   });
 
-  it("debería cerrar el dialog al presionar Escape", () => {
+  it("cierra el dialog al presionar Escape", () => {
     trigger.dispatchEvent(new MouseEvent("click"));
     content.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape" }));
     expect(content.getAttribute("data-state")).toBe("closed");
   });
 
-  it("debería emitir eventos hp-open y hp-close", () => {
-    let openEmitted = false;
-    let closeEmitted = false;
-    dialog.addEventListener("hp-open", () => (openEmitted = true));
-    dialog.addEventListener("hp-close", () => (closeEmitted = true));
+  it("emite hp-open y hp-close en cada transición", () => {
+    let openCount = 0;
+    let closeCount = 0;
+    dialog.addEventListener("hp-open", () => openCount++);
+    dialog.addEventListener("hp-close", () => closeCount++);
+
     trigger.dispatchEvent(new MouseEvent("click"));
-    expect(openEmitted).toBe(true);
+    expect(openCount).toBe(1);
+
     backdrop.dispatchEvent(new MouseEvent("click"));
-    expect(closeEmitted).toBe(true);
+    expect(closeCount).toBe(1);
+  });
+
+  it("open()/close() API pública funciona correctamente", () => {
+    dialog.open();
+    expect(content.getAttribute("data-state")).toBe("open");
+    dialog.close();
+    expect(content.getAttribute("data-state")).toBe("closed");
+  });
+
+  it("no emite eventos duplicados en llamadas repetidas", () => {
+    let openCount = 0;
+    dialog.addEventListener("hp-open", () => openCount++);
+    dialog.open();
+    dialog.open(); // no-op
+    expect(openCount).toBe(1);
   });
 });
 
 describe("HpDialogClose", () => {
-  it("debería cerrar el dialog al hacer click en hp-dialog-close", () => {
+  it("cierra el dialog al hacer click en hp-dialog-close", () => {
     const dialog = document.createElement("hp-dialog") as HeadlessDialog;
     const trigger = document.createElement("hp-dialog-trigger") as HeadlessDialogTrigger;
     const content = document.createElement("hp-dialog-content") as HeadlessDialogContent;
@@ -107,7 +113,7 @@ describe("HpDialogClose", () => {
 });
 
 describe("HpDialog alertdialog", () => {
-  it("no debería cerrar con ESC cuando data-alert está presente", () => {
+  it("no cierra con ESC cuando data-alert está presente", () => {
     const dialog = document.createElement("hp-dialog") as HeadlessDialog;
     dialog.setAttribute("data-alert", "");
     const trigger = document.createElement("hp-dialog-trigger") as HeadlessDialogTrigger;
@@ -127,7 +133,7 @@ describe("HpDialog alertdialog", () => {
     dialog.remove();
   });
 
-  it("debería usar role alertdialog cuando data-alert está presente", () => {
+  it("usa role alertdialog cuando data-alert está presente", () => {
     const dialog = document.createElement("hp-dialog") as HeadlessDialog;
     dialog.setAttribute("data-alert", "");
     const content = document.createElement("hp-dialog-content") as HeadlessDialogContent;
@@ -137,5 +143,22 @@ describe("HpDialog alertdialog", () => {
     expect(content.getAttribute("role")).toBe("alertdialog");
 
     dialog.remove();
+  });
+});
+
+describe("HpDialogTrigger disabled", () => {
+  it("disabled agrega aria-disabled y quita tabindex", () => {
+    const trigger = document.createElement("hp-dialog-trigger") as HeadlessDialogTrigger;
+    document.body.appendChild(trigger);
+
+    trigger.setAttribute("disabled", "");
+    expect(trigger.getAttribute("aria-disabled")).toBe("true");
+    expect(trigger.hasAttribute("tabindex")).toBe(false);
+
+    trigger.removeAttribute("disabled");
+    expect(trigger.getAttribute("tabindex")).toBe("0");
+    expect(trigger.hasAttribute("aria-disabled")).toBe(false);
+
+    trigger.remove();
   });
 });

@@ -7,11 +7,7 @@
  */
 import { HeadlessElement, customElement } from "@headless-primitives/utils";
 import { property } from "lit/decorators.js";
-
-export interface ToastOptions {
-  duration?: number;
-  id?: string;
-}
+import type { ToastOptions } from "./types";
 
 @customElement("hp-toast")
 export class HeadlessToast extends HeadlessElement {

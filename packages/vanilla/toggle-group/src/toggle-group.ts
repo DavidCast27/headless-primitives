@@ -205,11 +205,6 @@ export class HeadlessToggle extends HeadlessElement {
 
   private _handleClick = () => {
     if (this.disabled) return;
-    this.dispatchEvent(
-      new CustomEvent("hp-toggle-press", {
-        detail: { value: this.value },
-        bubbles: true,
-      }),
-    );
+    this.emit("toggle-press", { value: this.value });
   };
 }

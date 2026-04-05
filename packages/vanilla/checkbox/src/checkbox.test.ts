@@ -1,6 +1,6 @@
 import { expect, test, beforeEach, describe } from "vitest";
 import "./index";
-import { HeadlessCheckbox } from "./checkbox";
+import type { HeadlessCheckbox } from "./checkbox";
 
 describe("hp-checkbox", () => {
   let checkbox: HeadlessCheckbox;

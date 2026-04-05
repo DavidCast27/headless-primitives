@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import "./index";
-import { HeadlessLabel } from "./label";
+import type { HeadlessLabel } from "./label";
 
 describe("hp-label", () => {
   let label: HeadlessLabel;

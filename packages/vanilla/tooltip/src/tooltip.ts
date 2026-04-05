@@ -2,29 +2,32 @@
  * Headless Tooltip Primitive
  *
  * Accessible floating label shown on hover/focus.
- * Migrated to HeadlessElement + @customElement + @property (Req 19).
- * All visual styles live in @headless-primitives/styles/tooltip.css (Req 11).
- * Visibility and positioning handled by base.css archetypes:
- *   [data-hp-tooltip-content]
+ * Uses HeadlessElement (LitElement light DOM) + @customElement + @property decorators.
+ * Visibility driven by data-state + base.css [data-hp-tooltip-content].
  */
 import { HeadlessElement, customElement } from "@headless-primitives/utils";
 import { property } from "lit/decorators.js";
 
 @customElement("hp-tooltip")
 export class HeadlessTooltip extends HeadlessElement {
-  /** Delay in ms before showing the tooltip */
+  /** Delay in ms before showing the tooltip on hover. */
   @property({ type: Number, attribute: "show-delay" }) showDelay = 300;
-  /** Delay in ms before hiding the tooltip */
+  /** Delay in ms before hiding the tooltip after hover/blur. */
   @property({ type: Number, attribute: "hide-delay" }) hideDelay = 150;
 
   private _isVisible = false;
   private _showTimeout: number | null = null;
   private _hideTimeout: number | null = null;
+  // Cache trigger ref so disconnectedCallback can safely remove listeners
+  private _triggerEl: HTMLElement | null = null;
 
   connectedCallback() {
     super.connectedCallback();
     this.setAttribute("data-hp-component", "tooltip");
-    // Use rAF to ensure children are available (VitePress/SSR hydration safety)
+    // Sync attach for tests (children already connected when parent fires connectedCallback
+    // if they were appended before the parent was inserted into the document)
+    this._attachTriggerListeners();
+    // rAF pass covers VitePress/SSR hydration where children may arrive later
     requestAnimationFrame(() => this._attachTriggerListeners());
   }
 
@@ -35,8 +38,9 @@ export class HeadlessTooltip extends HeadlessElement {
   }
 
   private _attachTriggerListeners() {
-    const trigger = this._trigger;
-    if (!trigger) return;
+    const trigger = this.querySelector<HTMLElement>("hp-tooltip-trigger");
+    if (!trigger || this._triggerEl === trigger) return; // already wired
+    this._triggerEl = trigger;
     trigger.addEventListener("mouseenter", this._handleMouseEnter);
     trigger.addEventListener("mouseleave", this._handleMouseLeave);
     trigger.addEventListener("focus", this._handleFocus);
@@ -44,16 +48,12 @@ export class HeadlessTooltip extends HeadlessElement {
   }
 
   private _detachTriggerListeners() {
-    const trigger = this._trigger;
-    if (!trigger) return;
-    trigger.removeEventListener("mouseenter", this._handleMouseEnter);
-    trigger.removeEventListener("mouseleave", this._handleMouseLeave);
-    trigger.removeEventListener("focus", this._handleFocus);
-    trigger.removeEventListener("blur", this._handleBlur);
-  }
-
-  private get _trigger() {
-    return this.querySelector<HTMLElement>("hp-tooltip-trigger");
+    if (!this._triggerEl) return;
+    this._triggerEl.removeEventListener("mouseenter", this._handleMouseEnter);
+    this._triggerEl.removeEventListener("mouseleave", this._handleMouseLeave);
+    this._triggerEl.removeEventListener("focus", this._handleFocus);
+    this._triggerEl.removeEventListener("blur", this._handleBlur);
+    this._triggerEl = null;
   }
 
   private get _content() {
@@ -95,12 +95,13 @@ export class HeadlessTooltip extends HeadlessElement {
     if (this._isVisible) return;
     this._isVisible = true;
     const content = this._content;
-    const trigger = this._trigger;
     if (content) {
       content.setAttribute("data-state", "open");
       content.setAttribute("aria-hidden", "false");
     }
-    if (trigger && content?.id) trigger.setAttribute("aria-describedby", content.id);
+    if (this._triggerEl && content?.id) {
+      this._triggerEl.setAttribute("aria-describedby", content.id);
+    }
     this.emit("open");
   }
 
@@ -108,22 +109,31 @@ export class HeadlessTooltip extends HeadlessElement {
     if (!this._isVisible) return;
     this._isVisible = false;
     const content = this._content;
-    const trigger = this._trigger;
     if (content) {
       content.setAttribute("data-state", "closed");
       content.setAttribute("aria-hidden", "true");
     }
-    trigger?.removeAttribute("aria-describedby");
+    this._triggerEl?.removeAttribute("aria-describedby");
     this.emit("close");
+  }
+
+  /** Public API */
+  show() {
+    this._show();
+  }
+  hide() {
+    this._hide();
   }
 }
 
 @customElement("hp-tooltip-trigger")
 export class HeadlessTooltipTrigger extends HeadlessElement {
+  @property({ type: Boolean, reflect: true }) disabled = false;
+
   connectedCallback() {
     super.connectedCallback();
     this.setAttribute("data-hp-component", "tooltip-trigger");
-    if (!this.hasAttribute("tabindex") && !this.hasAttribute("disabled")) {
+    if (!this.hasAttribute("tabindex") && !this.disabled) {
       this.setAttribute("tabindex", "0");
     }
   }
