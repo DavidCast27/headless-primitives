@@ -96,3 +96,12 @@ hp-popover-content[data-state="closed"][data-side="top"] {
     transform: translateY(4px) scale(0.97);
   }
 }
+
+/* === Accesibilidad — prefers-reduced-motion === */
+@media (prefers-reduced-motion: reduce) {
+  hp-popover-content,
+  hp-popover-trigger {
+    animation: none;
+    transition: none;
+  }
+}

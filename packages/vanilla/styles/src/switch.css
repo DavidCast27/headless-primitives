@@ -75,3 +75,11 @@ hp-switch[aria-disabled="true"] {
   opacity: var(--hp-opacity-disabled);
   cursor: not-allowed;
 }
+
+/* === Accesibilidad — prefers-reduced-motion === */
+@media (prefers-reduced-motion: reduce) {
+  hp-switch,
+  hp-switch::after {
+    transition: none;
+  }
+}
