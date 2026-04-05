@@ -98,3 +98,16 @@ hp-avatar-fallback {
   background-color: var(--hp-bg-muted);
   border-radius: var(--hp-radius-full);
 }
+
+/* === Accesibilidad — prefers-reduced-motion === */
+@media (prefers-reduced-motion: reduce) {
+  hp-progress-indicator {
+    transition: none;
+  }
+
+  hp-progress-indicator[data-indeterminate] {
+    animation: none;
+    width: 100% !important;
+    opacity: 0.5;
+  }
+}

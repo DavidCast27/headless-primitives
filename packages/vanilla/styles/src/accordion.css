@@ -81,3 +81,12 @@ hp-accordion-content {
   overflow-wrap: break-word;
   word-break: break-word;
 }
+
+/* === Accesibilidad — prefers-reduced-motion === */
+@media (prefers-reduced-motion: reduce) {
+  hp-accordion-trigger,
+  hp-accordion-trigger .hp-icon,
+  hp-accordion-trigger [data-hp-icon] {
+    transition: none;
+  }
+}

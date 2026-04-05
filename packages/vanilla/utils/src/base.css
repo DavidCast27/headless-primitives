@@ -282,7 +282,7 @@ hp-switch::after {
   border-radius: 50%;
   background: currentColor;
   transition: transform 0.2s ease;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--hp-shadow-sm, 0 1px 2px rgb(0 0 0 / 0.15));
 }
 
 hp-switch[aria-checked="true"]::after {
@@ -535,7 +535,7 @@ hp-collapsible-content {
 
 /* --- Dialog --- */
 hp-dialog-backdrop {
-  background: rgba(0, 0, 0, 0.4);
+  background: var(--hp-backdrop-bg, rgb(0 0 0 / 0.4));
   backdrop-filter: blur(1px);
 }
 
@@ -548,9 +548,7 @@ hp-dialog-content {
   width: 100%;
   max-height: calc(100vh - 4rem);
   overflow-y: auto;
-  box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.15),
-    0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--hp-shadow-lg, 0 8px 32px rgb(0 0 0 / 0.12), 0 2px 8px rgb(0 0 0 / 0.08));
 }
 
 hp-dialog-title {
@@ -584,9 +582,7 @@ hp-popover-content {
   border-radius: 6px;
   background: Canvas;
   min-width: 160px;
-  box-shadow:
-    0 4px 16px rgba(0, 0, 0, 0.1),
-    0 1px 4px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--hp-shadow-md, 0 4px 16px rgb(0 0 0 / 0.1), 0 1px 4px rgb(0 0 0 / 0.06));
 }
 
 /* --- Tooltip --- */
@@ -605,7 +601,7 @@ hp-tooltip-content {
   bottom: calc(100% + 6px);
   left: 50%;
   transform: translateX(-50%);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--hp-shadow-md, 0 2px 8px rgb(0 0 0 / 0.15));
   border: none;
 }
 
@@ -618,9 +614,7 @@ hp-toast {
   background: Canvas;
   font-size: 0.875rem;
   min-width: 220px;
-  box-shadow:
-    0 4px 16px rgba(0, 0, 0, 0.1),
-    0 1px 4px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--hp-shadow-lg, 0 4px 16px rgb(0 0 0 / 0.1), 0 1px 4px rgb(0 0 0 / 0.06));
 }
 
 hp-toast-title {
@@ -1051,5 +1045,56 @@ hp-toast-container[data-position="bottom-center"] hp-toast {
   [data-hp-panel][data-state="open"],
   [data-hp-panel][data-state="selected"] {
     opacity: 0;
+  }
+}
+
+/* =============================================================
+ * ACCESIBILIDAD — prefers-reduced-motion
+ * Usuarios que prefieren movimiento reducido no deben ver
+ * animaciones de entrada/salida ni transiciones decorativas.
+ * Solo se preservan las transiciones funcionales (opacity para
+ * show/hide) ya que son necesarias para la comprensión del estado.
+ * ============================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  /* Overlays — sin animación de entrada/salida */
+  [data-hp-overlay-content],
+  [data-hp-backdrop],
+  hp-dialog-backdrop,
+  hp-dialog-content,
+  hp-popover-content,
+  hp-toast {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  /* Tooltips — sin animación */
+  [data-hp-tooltip-content] {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  /* Paneles — sin fade */
+  [data-hp-panel] {
+    transition: none !important;
+  }
+
+  /* Controles interactivos — sin transiciones decorativas */
+  hp-button,
+  hp-toggle,
+  hp-switch,
+  hp-checkbox,
+  hp-radio,
+  hp-accordion-trigger,
+  hp-collapsible-trigger,
+  hp-tab,
+  hp-toast-close,
+  hp-dialog-close {
+    transition: none !important;
+  }
+
+  /* Switch thumb — sin animación de deslizamiento */
+  hp-switch::after {
+    transition: none !important;
   }
 }

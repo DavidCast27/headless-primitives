@@ -66,3 +66,10 @@ hp-button[aria-pressed="true"]:hover:not([disabled]):not([aria-disabled="true"])
   background-color: var(--hp-accent-hover);
   border-color: var(--hp-accent-hover);
 }
+
+/* === Accesibilidad — prefers-reduced-motion === */
+@media (prefers-reduced-motion: reduce) {
+  hp-button {
+    transition: none;
+  }
+}

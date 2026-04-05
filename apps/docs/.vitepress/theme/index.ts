@@ -27,6 +27,7 @@ import "./docs-demos.css";
 import FlavorToggle from "./components/FlavorToggle.vue";
 import Flavor from "./components/Flavor.vue";
 import CodeSnippet from "./components/CodeSnippet.vue";
+import ThemeBuilder from "./components/ThemeBuilder.vue";
 
 export default {
   extends: DefaultTheme,
@@ -35,5 +36,6 @@ export default {
     app.component("FlavorToggle", FlavorToggle);
     app.component("Flavor", Flavor);
     app.component("CodeSnippet", CodeSnippet);
+    app.component("ThemeBuilder", ThemeBuilder);
   },
 } satisfies Theme;
