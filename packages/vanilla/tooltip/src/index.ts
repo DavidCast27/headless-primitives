@@ -1,1 +1,2 @@
-export { HeadlessTooltip, HeadlessTooltipTrigger, HeadlessTooltipContent } from "./tooltip";
+export * from "./tooltip";
+export * from "./types";

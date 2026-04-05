@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from "vitest";
 import "./index";
-import { HeadlessProgress } from "./progress";
+import type { HeadlessProgress } from "./progress";
 
 describe("hp-progress", () => {
   let progress: HeadlessProgress;

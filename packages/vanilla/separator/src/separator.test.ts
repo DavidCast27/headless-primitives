@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from "vitest";
 import "./index";
-import { HeadlessSeparator } from "./separator";
+import type { HeadlessSeparator } from "./separator";
 
 describe("hp-separator", () => {
   let sep: HeadlessSeparator;

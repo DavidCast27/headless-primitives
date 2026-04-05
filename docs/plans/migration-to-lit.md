@@ -96,7 +96,8 @@ Resumen de decisiones y patrones que funcionaron en la migración de Tabs a Lit,
 
 - Decoradores Lit sí, pero con cautela:
   - Usar `@property({ reflect: true })` para propiedades públicas que impactan UI (`value`, `disabled`, `open`, etc.).
-  - Evitar `@customElement` en el entry universal para no registrar en import-time bajo SSR. Mantener `customElements.define` con guard: `if (typeof window !== 'undefined') { ... }`.
+  - **Estandarización de Registro**: Usar siempre el decorador `@customElement('hp-name')` importado de `@headless-primitives/utils`. Este decorador ya incluye el guard de SSR (`typeof window !== 'undefined'`) y evita registros duplicados.
+  - **Entry Points (`index.ts`)**: Los archivos `index.ts` deben limitarse exclusivamente a exportar los componentes y tipos. NO deben incluir lógica de `customElements.define` manual, ya que el decorador se encarga del registro al importar el componente.
   - `@state` y `@query*` sólo si hay Shadow DOM o estado interno que impacta el render. Con Light DOM, suelen ser innecesarios.
 
 - Sincronización estado/UI robusta:

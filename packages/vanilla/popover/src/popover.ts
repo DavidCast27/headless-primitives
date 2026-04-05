@@ -1,11 +1,19 @@
 /**
  * Headless Popover Primitive
  *
- * Floating content that opens on click, with focus management.
+ * Floating content anchored to a trigger, with computed position and focus management.
+ * Uses HeadlessElement (LitElement light DOM) + @customElement + @property decorators.
+ * Visibility is driven by data-state + base.css [data-hp-overlay-content].
+ * Only top/left coordinates are set as inline styles (computed anchor position).
  */
-import { FocusTrap, HeadlessElement } from "@headless-primitives/utils";
+import { FocusTrap, HeadlessElement, customElement } from "@headless-primitives/utils";
+import { property } from "lit/decorators.js";
 
+@customElement("hp-popover")
 export class HeadlessPopover extends HeadlessElement {
+  /** Horizontal alignment relative to trigger. "start" = left edge, "end" = right edge. */
+  @property({ type: String, reflect: true }) align: "start" | "end" = "start";
+
   private _trigger: HTMLElement | null = null;
   private _content: HTMLElement | null = null;
   private _isOpen = false;
@@ -13,18 +21,9 @@ export class HeadlessPopover extends HeadlessElement {
   private _rafId: number | null = null;
   private _scrollParents: EventTarget[] = [];
 
-  static get observedAttributes() {
-    return ["align"];
-  }
-
-  /** "start" = left-aligned with trigger (default) | "end" = right-aligned */
-  get align(): "start" | "end" {
-    const val = this.getAttribute("align");
-    return val === "end" ? "end" : "start";
-  }
-
   connectedCallback() {
     super.connectedCallback();
+    this.setAttribute("data-hp-component", "popover");
     this._trigger = this.querySelector("hp-popover-trigger");
     this._content = this.querySelector("hp-popover-content");
 
@@ -42,38 +41,30 @@ export class HeadlessPopover extends HeadlessElement {
 
   private _setupTrigger() {
     if (!this._trigger) return;
+    this._trigger.setAttribute("data-hp-component", "popover-trigger");
+    if (!this._trigger.hasAttribute("tabindex") && !this._trigger.hasAttribute("disabled")) {
+      this._trigger.setAttribute("tabindex", "0");
+    }
     this._trigger.addEventListener("click", this._handleTriggerClick);
   }
 
   private _setupContent() {
     if (!this._content) return;
-
     this._content.setAttribute("role", "dialog");
     this._content.setAttribute("aria-modal", "false");
     this._content.setAttribute("data-hp-overlay-content", "");
     this._content.setAttribute("data-state", "closed");
-
-    // position: absolute relativo a hp-popover (position: relative)
-    // Evita el bug de position:fixed con ancestros que tienen transform CSS
-    this._content.style.position = "absolute";
-    this._content.style.zIndex = "9999";
-    // Limpia cualquier transform de centering que pueda venir de CSS
-    // (base.css aplica translate(-50%,-50%) a role="dialog" modales, no a popovers)
-    this._content.style.transform = "none";
-
-    // hp-popover es el containing block
+    this._content.setAttribute("aria-hidden", "true");
+    // hp-popover is the containing block for absolute positioning
     this.style.position = "relative";
   }
 
-  /** Walk up the DOM and collect every scrollable ancestor */
   private _getScrollParents(el: HTMLElement): EventTarget[] {
     const parents: EventTarget[] = [];
     let node: HTMLElement | null = el.parentElement;
     while (node) {
       const { overflow, overflowY, overflowX } = getComputedStyle(node);
-      if (/auto|scroll|overlay/.test(overflow + overflowY + overflowX)) {
-        parents.push(node);
-      }
+      if (/auto|scroll|overlay/.test(overflow + overflowY + overflowX)) parents.push(node);
       node = node.parentElement;
     }
     parents.push(window);
@@ -84,13 +75,9 @@ export class HeadlessPopover extends HeadlessElement {
     if (!this._trigger || !this._content) return;
 
     const gap = 8;
-
-    // Use getBoundingClientRect for both elements to get accurate viewport coords,
-    // then convert to local coords relative to hp-popover (the containing block).
     const popoverRect = this.getBoundingClientRect();
     const triggerRect = this._trigger.getBoundingClientRect();
 
-    // Trigger position relative to hp-popover's top-left corner
     const triggerLeft = triggerRect.left - popoverRect.left;
     const triggerTop = triggerRect.top - popoverRect.top;
     const triggerWidth = triggerRect.width;
@@ -99,10 +86,9 @@ export class HeadlessPopover extends HeadlessElement {
     const contentW = this._content.offsetWidth || 0;
     const contentH = this._content.offsetHeight || 0;
 
-    // --- Vertical: flip to top if not enough space below ---
+    // Vertical: prefer below, flip to top if not enough space
     let top = triggerTop + triggerHeight + gap;
     let side: "bottom" | "top" = "bottom";
-
     const spaceBelow = window.innerHeight - triggerRect.bottom;
     const spaceAbove = triggerRect.top;
     if (contentH > 0 && spaceBelow < contentH + gap && spaceAbove > contentH + gap) {
@@ -110,25 +96,21 @@ export class HeadlessPopover extends HeadlessElement {
       side = "top";
     }
 
-    // --- Horizontal: align start (left edge) or end (right edge) of trigger ---
-    let left =
-      this.align === "end"
-        ? triggerLeft + triggerWidth - contentW // right edge of content = right edge of trigger
-        : triggerLeft; // left edge of content = left edge of trigger
+    // Horizontal: align start or end of trigger
+    let left = this.align === "end" ? triggerLeft + triggerWidth - contentW : triggerLeft;
 
-    // Clamp to viewport bounds (converted to popover-local coords)
+    // Clamp to viewport
     const minLeft = gap - popoverRect.left;
     const maxLeft = window.innerWidth - contentW - gap - popoverRect.left;
     left = Math.max(minLeft, Math.min(left, maxLeft));
 
+    // Only top/left are allowed as inline styles (computed coordinates, not visibility)
     this._content.style.top = `${top}px`;
     this._content.style.left = `${left}px`;
-
     this._content.setAttribute("data-side", side);
     this._content.setAttribute("data-align", this.align);
   }
 
-  /** rAF loop: recompute position every frame while open */
   private _startPositionLoop() {
     const loop = () => {
       if (!this._isOpen) return;
@@ -151,18 +133,13 @@ export class HeadlessPopover extends HeadlessElement {
   };
 
   private _toggle = () => {
-    if (this._isOpen) {
-      this._close();
-    } else {
-      this._open();
-    }
+    this._isOpen ? this._close() : this._open();
   };
 
   private _open() {
     if (this._isOpen) return;
     this._isOpen = true;
 
-    // Show first so offsetWidth/Height are measurable
     if (this._content) {
       this._content.setAttribute("data-state", "open");
       this._content.setAttribute("aria-hidden", "false");
@@ -179,7 +156,6 @@ export class HeadlessPopover extends HeadlessElement {
     document.addEventListener("click", this._handleClickOutside);
     document.addEventListener("keydown", this._handleEscape);
 
-    // Listen on every scrollable ancestor, not just window
     if (this._trigger) {
       this._scrollParents = this._getScrollParents(this._trigger);
       for (const parent of this._scrollParents) {
@@ -204,7 +180,6 @@ export class HeadlessPopover extends HeadlessElement {
       this._content.setAttribute("data-state", "closed");
       this._content.setAttribute("aria-hidden", "true");
     }
-
     if (this._trigger) {
       this._trigger.setAttribute("aria-expanded", "false");
       this._trigger.removeAttribute("aria-controls");
@@ -261,28 +236,37 @@ export class HeadlessPopover extends HeadlessElement {
   }
 }
 
-/**
- * Popover Trigger - The element that opens/closes the popover.
- */
+@customElement("hp-popover-trigger")
 export class HeadlessPopoverTrigger extends HeadlessElement {
+  @property({ type: Boolean, reflect: true }) disabled = false;
+
   connectedCallback() {
     super.connectedCallback();
-    // Ensure it's focusable
-    if (!this.hasAttribute("tabindex") && !this.hasAttribute("disabled")) {
+    this.setAttribute("data-hp-component", "popover-trigger");
+    if (!this.hasAttribute("tabindex") && !this.disabled) {
       this.setAttribute("tabindex", "0");
     }
+    this.addEventListener("keydown", this._handleKeyDown);
   }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this.removeEventListener("keydown", this._handleKeyDown);
+  }
+
+  private _handleKeyDown = (e: KeyboardEvent) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      this.click();
+    }
+  };
 }
 
-/**
- * Popover Content - The floating content with focus trap.
- */
+@customElement("hp-popover-content")
 export class HeadlessPopoverContent extends HeadlessElement {
   connectedCallback() {
     super.connectedCallback();
     this.setAttribute("data-hp-component", "popover-content");
-    if (!this.id) {
-      this.id = `hp-popover-content-${Math.random().toString(36).slice(2, 9)}`;
-    }
+    if (!this.id) this.id = `hp-popover-content-${this.hpId}`;
   }
 }

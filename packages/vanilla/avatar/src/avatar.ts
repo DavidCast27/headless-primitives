@@ -5,24 +5,21 @@ import { AvatarState } from "./types";
 @customElement("hp-avatar")
 export class HeadlessAvatar extends HeadlessElement {
   @property({ type: Number, reflect: true }) delay = 0;
+  @property({ reflect: true, attribute: "data-state" }) state: AvatarState = "loading";
 
-  private _state: AvatarState = "loading";
   private _delayTimeout: number | null = null;
-
-  get state() {
-    return this._state;
-  }
 
   connectedCallback() {
     super.connectedCallback();
     this.setAttribute("data-hp-component", "avatar");
     if (!this.hasAttribute("role")) this.setAttribute("role", "img");
-    this._updateState("loading");
+    // Set initial data-state synchronously (reflect doesn't run until Lit's async cycle)
+    this.setAttribute("data-state", this.state);
 
     if (this.delay > 0) {
       this.style.setProperty("--hp-avatar-fallback-opacity", "0");
       this._delayTimeout = window.setTimeout(() => {
-        if (this._state === "loading") {
+        if (this.state === "loading") {
           this.style.setProperty("--hp-avatar-fallback-opacity", "1");
         }
       }, this.delay);
@@ -37,16 +34,13 @@ export class HeadlessAvatar extends HeadlessElement {
   }
 
   setImageStatus(status: "loaded" | "error") {
-    this._updateState(status);
-  }
-
-  private _updateState(newState: AvatarState) {
-    this._state = newState;
-    this.setAttribute("data-state", newState);
-    if (newState === "loaded") {
+    this.state = status;
+    // Sync attribute immediately — don't wait for Lit's async cycle
+    this.setAttribute("data-state", status);
+    if (status === "loaded") {
       this.style.setProperty("--hp-avatar-fallback-opacity", "0");
     }
-    this.emit("state-change", { state: newState });
+    this.emit("state-change", { state: this.state });
   }
 }
 
