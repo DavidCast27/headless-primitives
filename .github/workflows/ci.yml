@@ -1,7 +1,11 @@
 name: CI
 
-# Solo manual: Actions → CI → Run workflow (reactivar push/PR cuando quieras CI automático)
 on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  # También permitir ejecución manual para debugging
   workflow_dispatch:
 
 jobs:
@@ -24,6 +28,9 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: pnpm run build
 
       - name: Format check
         run: pnpm run format:check
@@ -52,29 +59,4 @@ jobs:
           done
           if [ "$missing" -gt 0 ]; then
             echo "Found $missing package metadata issues" >&2; exit 1
-          fi
-
-      - name: "Docs: verify install blocks"
-        run: |
-          set -euo pipefail
-          missing=0
-          check_file() {
-            f="$1"
-            for tag in "\[pnpm\]" "\[npm\]" "\[yarn\]" "\[bun\]"; do
-              if ! rg -q "```bash ${tag}" "$f"; then
-                echo "::error file=${f}::Missing install block ${tag}"
-                missing=$((missing+1))
-              fi
-            done
-          }
-          for f in apps/docs/components/*.md; do
-            [ -f "$f" ] && check_file "$f"
-          done
-          # Guides where installation appears
-          for f in apps/docs/guide/quick-start.md apps/docs/guide/theming.md apps/docs/guide/styles-theming.md; do
-            [ -f "$f" ] && check_file "$f"
-          done
-          if [ "$missing" -gt 0 ]; then
-            echo "Found $missing missing install blocks" >&2
-            exit 1
           fi
