@@ -61,7 +61,7 @@ jobs:
           check_file() {
             f="$1"
             for tag in "\[pnpm\]" "\[npm\]" "\[yarn\]" "\[bun\]"; do
-              if ! rg -q "```bash ${tag}" "$f"; then
+              if ! rg -q '```bash '"${tag}" "$f"; then
                 echo "::error file=${f}::Missing install block ${tag}"
                 missing=$((missing+1))
               fi
