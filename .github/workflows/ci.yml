@@ -54,6 +54,11 @@ jobs:
             echo "Found $missing package metadata issues" >&2; exit 1
           fi
 
+      - name: Install ripgrep
+        uses: jdx/mise-action@v2
+        with:
+          tools: ripgrep
+
       - name: "Docs: verify install blocks"
         run: |
           set -euo pipefail
