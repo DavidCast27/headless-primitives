@@ -9,7 +9,7 @@
 - **Headless**: Sin estilos. Tú decides el _"look & feel"_. La documentación incluye ejemplos listos para **Vanilla CSS** y **Tailwind CSS**.
 - **Accesible**: Atributos ARIA, navegación por teclado y manejo de foco listos para usarse (_built-in_).
 - **Framework-agnostic**: Al ser Custom Elements nativos, funcionan en cualquier stack (React, Vue, Astro, Vanilla JS, etc.).
-- **Puro**: Código escrito en Vanilla TypeScript, con **cero dependencias** de runtime.
+- **Lit 3**: Todos los componentes extienden `HeadlessElement` (basado en `LitElement`) para reactividad declarativa con `@property` y `@customElement`. Ver [ADR 0010](docs/adr/0010-headlesselement-lit-migration.md).
 
 ## Quick Start
 
@@ -35,16 +35,17 @@ import "@headless-primitives/button";
 
 ## Stack Tecnológico
 
-| Herramienta    | Propósito                       |
-| :------------- | :------------------------------ |
-| **Vite 8**     | Build (Library Mode)            |
-| **Vitest 4**   | Testing + Coverage              |
-| **Oxlint**     | Linting (reemplaza ESLint)      |
-| **Oxfmt**      | Formatting (reemplaza Prettier) |
-| **Changesets** | Versionado independiente        |
-| **VitePress**  | Documentación                   |
-| **Husky**      | Git hooks                       |
-| **pnpm**       | Gestor de paquetes (workspaces) |
+| Herramienta    | Propósito                                                              |
+| :------------- | :--------------------------------------------------------------------- |
+| **Lit 3**      | Base de componentes (`HeadlessElement`, `@property`, `@customElement`) |
+| **Vite 8**     | Build (Library Mode)                                                   |
+| **Vitest 4**   | Testing + Coverage                                                     |
+| **Oxlint**     | Linting (reemplaza ESLint)                                             |
+| **Oxfmt**      | Formatting (reemplaza Prettier)                                        |
+| **Changesets** | Versionado independiente                                               |
+| **VitePress**  | Documentación                                                          |
+| **Husky**      | Git hooks                                                              |
+| **pnpm**       | Gestor de paquetes (workspaces)                                        |
 
 ## Desarrollo Local
 

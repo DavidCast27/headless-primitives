@@ -3,67 +3,67 @@ import "./style.css";
 import baseStylesUrl from "./hp-base-styles.css?url";
 
 // Primitives registration
-import "@headless-primitives/button";
-import "@headless-primitives/switch";
-import "@headless-primitives/separator";
-import "@headless-primitives/progress";
-import "@headless-primitives/radio-group";
-import "@headless-primitives/label";
+import "@headless-primitives/accordion";
 import "@headless-primitives/avatar";
+import "@headless-primitives/button";
 import "@headless-primitives/checkbox";
 import "@headless-primitives/collapsible";
-import "@headless-primitives/field";
-import "@headless-primitives/toggle-group";
-import "@headless-primitives/accordion";
-import "@headless-primitives/tooltip";
-import "@headless-primitives/popover";
 import "@headless-primitives/dialog";
-import "@headless-primitives/toast";
+import "@headless-primitives/field";
+import "@headless-primitives/label";
+import "@headless-primitives/popover";
+import "@headless-primitives/progress";
+import "@headless-primitives/radio-group";
+import "@headless-primitives/separator";
+import "@headless-primitives/switch";
 import "@headless-primitives/tabs";
+import "@headless-primitives/toast";
+import "@headless-primitives/toggle-group";
+import "@headless-primitives/tooltip";
 
 import { Shell } from "./components/Shell";
 import { ComponentDemo } from "./types";
 
 // Import modular demos
+import { accordionDemo } from "./demos/accordion.demo";
+import { alertDialogDemo } from "./demos/alert-dialog.demo";
+import { avatarDemo } from "./demos/avatar.demo";
 import { buttonDemo } from "./demos/button.demo";
-import { switchDemo } from "./demos/switch.demo";
 import { checkboxDemo } from "./demos/checkbox.demo";
-import { separatorDemo } from "./demos/separator.demo";
+import { collapsibleDemo } from "./demos/collapsible.demo";
+import { dialogDemo } from "./demos/dialog.demo";
+import { fieldDemo } from "./demos/field.demo";
+import { labelDemo } from "./demos/label.demo";
+import { popoverDemo } from "./demos/popover.demo";
 import { progressDemo } from "./demos/progress.demo";
 import { radioGroupDemo } from "./demos/radio-group.demo";
-import { labelDemo } from "./demos/label.demo";
-import { avatarDemo } from "./demos/avatar.demo";
-import { fieldDemo } from "./demos/field.demo";
-import { toggleGroupDemo } from "./demos/toggle-group.demo";
-import { collapsibleDemo } from "./demos/collapsible.demo";
-import { accordionDemo } from "./demos/accordion.demo";
-import { tooltipDemo } from "./demos/tooltip.demo";
-import { popoverDemo } from "./demos/popover.demo";
-import { dialogDemo } from "./demos/dialog.demo";
-import { alertDialogDemo } from "./demos/alert-dialog.demo";
-import { toastDemo } from "./demos/toast.demo";
+import { separatorDemo } from "./demos/separator.demo";
+import { switchDemo } from "./demos/switch.demo";
 import { tabsDemo } from "./demos/tabs.demo";
+import { toastDemo } from "./demos/toast.demo";
+import { toggleGroupDemo } from "./demos/toggle-group.demo";
+import { tooltipDemo } from "./demos/tooltip.demo";
 
 // --- Route Registry ---
 const ROUTES: Record<string, ComponentDemo> = {
+  accordion: accordionDemo,
+  "alert-dialog": alertDialogDemo,
+  avatar: avatarDemo,
   button: buttonDemo,
-  switch: switchDemo,
   checkbox: checkboxDemo,
-  separator: separatorDemo,
+  collapsible: collapsibleDemo,
+  dialog: dialogDemo,
+  field: fieldDemo,
+  label: labelDemo,
+  popover: popoverDemo,
   progress: progressDemo,
   "radio-group": radioGroupDemo,
-  label: labelDemo,
-  avatar: avatarDemo,
-  field: fieldDemo,
-  "toggle-group": toggleGroupDemo,
-  collapsible: collapsibleDemo,
-  accordion: accordionDemo,
-  tooltip: tooltipDemo,
-  popover: popoverDemo,
-  dialog: dialogDemo,
-  "alert-dialog": alertDialogDemo,
-  toast: toastDemo,
+  separator: separatorDemo,
+  switch: switchDemo,
   tabs: tabsDemo,
+  toast: toastDemo,
+  "toggle-group": toggleGroupDemo,
+  tooltip: tooltipDemo,
 };
 
 function renderRoute(compId: string) {
@@ -104,7 +104,7 @@ function initApp() {
 
   // Load initial route from URL or default
   const params = new URLSearchParams(window.location.search);
-  const initialComp = params.get("comp") || "button";
+  const initialComp = params.get("comp") || "accordion";
 
   const initialBtn = document.querySelector(`[data-comp="${initialComp}"]`) as HTMLButtonElement;
   if (initialBtn) initialBtn.click();

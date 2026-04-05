@@ -122,13 +122,13 @@ hp-popover-trigger { display: inline-block; }
 ```css [style.css]
 hp-popover {
   display: inline-block;
+  position: relative; /* hp-popover es el containing block */
 }
 hp-popover-trigger {
   display: inline-block;
 }
 /* hp-popover-content visibility via base.css: [data-hp-overlay-content][data-state="closed"] */
-
-/* El componente gestiona position:fixed y coordenadas automáticamente.
+/* El componente gestiona position:absolute y coordenadas top/left automáticamente.
    Solo necesitas estilos visuales: */
 .popover-content {
   background: white;
@@ -249,6 +249,6 @@ El contenido flotante con focus trap.
 
 ## Notas
 
-- El componente gestiona `visibility` y `opacity` — el posicionamiento lo controla el CSS del usuario.
-- Usa `position: relative` en `hp-popover` y `position: absolute` en `hp-popover-content` para posicionamiento relativo al trigger.
+- El componente gestiona `data-state` para visibilidad — usa `base.css` o tus propios estilos basados en `[data-hp-overlay-content][data-state="closed"]`.
+- Usa `position: relative` en `hp-popover` (el containing block) y el componente gestiona `position: absolute` + coordenadas `top`/`left` en `hp-popover-content` automáticamente.
 - Para cerrar desde dentro del content, usa `this.closest('hp-popover').close()`.

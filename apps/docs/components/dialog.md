@@ -227,16 +227,14 @@ El elemento que abre el dialog al hacer click.
 
 El contenido modal con focus trap.
 
-**Atributos:**
+**Atributos gestionados:**
 
-- `role`: "dialog"
+- `role`: "dialog" (o "alertdialog" si `hp-dialog` tiene `data-alert`)
 - `aria-modal`: "true"
-- `aria-hidden`: "true" cuando cerrado, "false" cuando abierto
+- `aria-hidden`: "true" cuando cerrado, ausente cuando abierto
+- `data-state`: "closed" / "open"
+- `data-hp-overlay-content`: presente siempre (usado por `base.css` para `position: fixed` y `z-index`)
 - `id`: Generado automáticamente si no proporcionado
-
-**Propiedades CSS:**
-
-- `display`: "none" cuando cerrado, "" cuando abierto
 
 **Comportamiento:**
 

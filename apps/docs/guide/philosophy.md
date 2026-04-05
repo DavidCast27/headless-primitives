@@ -15,9 +15,9 @@ El término "Headless" (sin cabeza) significa que el componente proporciona toda
 
 Usamos **Custom Elements** nativos. Esto significa que tu código funcionará hoy, en 5 años y en cualquier framework (o sin ninguno), porque se basa en el estándar del navegador.
 
-### 2. Cero Dependencias
+### 2. Lit 3 como base
 
-La librería no tiene dependencias de runtime. Es ligera, rápida y no añade "bloat" a tu aplicación.
+Los componentes usan **Lit 3** (`HeadlessElement`) como base para reactividad declarativa con `@property` y `@customElement`. Lit es una capa mínima sobre Custom Elements nativos (~13kB) que garantiza consistencia y reduce boilerplate. Ver [ADR 0010](../../../docs/adr/0010-headlesselement-lit-migration.md).
 
 ### 3. Accesibilidad por Defecto
 

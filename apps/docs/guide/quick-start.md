@@ -13,7 +13,7 @@ Si usas [pnpm](https://pnpm.io/):
 pnpm add @headless-primitives/button
 ```
 
-## Uso básico (Vanilla puro)
+## Uso básico
 
 Dentro de tu script base:
 
@@ -27,4 +27,4 @@ En tu marcado (HTML):
 <hp-button aria-pressed="true" class="tu-clase-css">¡Así de natural!</hp-button>
 ```
 
-> **¡Y ocurre la magia al lado del cliente!** No necesitas iniciar ciclos de vida. La etiqueta reacciona al instante por poseer registro activo del DOM.
+> Los componentes se registran automáticamente al importar el paquete. No necesitas llamar a `customElements.define()` manualmente.

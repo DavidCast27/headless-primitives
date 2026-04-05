@@ -142,10 +142,9 @@ Elemento individual que representa una notificación.
 
 #### Métodos
 
-| Método               | Descripción                        |
-| :------------------- | :--------------------------------- |
-| `close()`            | Cierra el toast programáticamente  |
-| `getRemainingTime()` | Retorna ms restantes antes dismiss |
+| Método    | Descripción                       |
+| :-------- | :-------------------------------- |
+| `close()` | Cierra el toast programáticamente |
 
 #### Eventos
 
@@ -182,8 +181,8 @@ interface ToastOptions {
 ## Comportamiento
 
 - Auto-dismiss después de `data-duration` ms (default 3000ms)
-- Animación slide-in al aparecer, slide-out al desaparecer
-- El toast se elimina del DOM tras cerrarse
+- El cierre se señaliza con `data-state="closed"` — define la animación de salida en CSS con `[data-hp-component="toast"][data-state="closed"]`
+- El toast se elimina del DOM tras cerrarse (después de 200ms para que la transición CSS complete)
 - El container gestiona el stacking de múltiples toasts
 
 ## Accesibilidad
@@ -194,6 +193,6 @@ interface ToastOptions {
 
 ## Notas
 
-- Como componente headless, `hp-toast` no incluye estilos visuales. Aplica background, color y box-shadow desde JS o CSS.
-- El container inyecta keyframes de animación globales (`slideIn`/`slideOut`) automáticamente.
-- Para cerrar desde dentro del toast, usa un botón que llame `this.closest('hp-toast').close()`.
+- Como componente headless, `hp-toast` no incluye estilos visuales. Aplica background, color y box-shadow desde CSS usando `[data-hp-component="toast"]`.
+- La animación de salida se controla via `data-state="closed"` — define tu propia transición CSS en `[data-hp-component="toast"][data-state="closed"]`.
+- Para cerrar desde dentro del toast, usa un botón `hp-toast-close` o llama `this.closest('hp-toast').close()`.
