@@ -1,6 +1,6 @@
 import { expect, test, beforeEach, describe } from "vitest";
 import "./index";
-import { HeadlessRadioGroup, HeadlessRadio } from "./radio-group";
+import type { HeadlessRadioGroup, HeadlessRadio } from "./radio-group";
 
 describe("hp-radio-group", () => {
   let group: HeadlessRadioGroup;

@@ -1,6 +1,6 @@
 import { expect, test, beforeEach, describe } from "vitest";
 import "./index";
-import { HeadlessToggleGroup, HeadlessToggle } from "./toggle-group";
+import type { HeadlessToggleGroup, HeadlessToggle } from "./toggle-group";
 
 describe("hp-toggle-group", () => {
   let group: HeadlessToggleGroup;

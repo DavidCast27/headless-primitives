@@ -1,13 +1,8 @@
 import { describe, it, expect, beforeEach, afterEach } from "vitest";
-import { HeadlessPopover, HeadlessPopoverTrigger, HeadlessPopoverContent } from "./popover";
+import "./index"; // triggers @customElement decorator registration
+import type { HeadlessPopover, HeadlessPopoverTrigger, HeadlessPopoverContent } from "./popover";
 
-if (!customElements.get("hp-popover")) customElements.define("hp-popover", HeadlessPopover);
-if (!customElements.get("hp-popover-trigger"))
-  customElements.define("hp-popover-trigger", HeadlessPopoverTrigger);
-if (!customElements.get("hp-popover-content"))
-  customElements.define("hp-popover-content", HeadlessPopoverContent);
-
-describe("HpPopover (Headless Primitive Popover)", () => {
+describe("HpPopover", () => {
   let popover: HeadlessPopover;
   let trigger: HeadlessPopoverTrigger;
   let content: HeadlessPopoverContent;
@@ -25,16 +20,17 @@ describe("HpPopover (Headless Primitive Popover)", () => {
     popover.remove();
   });
 
-  it("debería inicializar el trigger como focusable", () => {
+  it("inicializa el trigger como focusable", () => {
     expect(trigger.getAttribute("tabindex")).toBe("0");
   });
 
-  it("debería inicializar el content con role dialog y cerrado", () => {
+  it("inicializa el content con role dialog y data-state closed", () => {
     expect(content.getAttribute("role")).toBe("dialog");
     expect(content.getAttribute("data-state")).toBe("closed");
+    expect(content.getAttribute("aria-hidden")).toBe("true");
   });
 
-  it("debería abrir el popover al hacer click en el trigger", () => {
+  it("abre el popover al hacer click en el trigger", () => {
     trigger.dispatchEvent(new MouseEvent("click"));
     expect(content.getAttribute("data-state")).toBe("open");
     expect(content.getAttribute("aria-hidden")).toBe("false");
@@ -42,7 +38,7 @@ describe("HpPopover (Headless Primitive Popover)", () => {
     expect(trigger.getAttribute("aria-controls")).toBe(content.id);
   });
 
-  it("debería cerrar el popover al hacer click nuevamente", () => {
+  it("cierra el popover al hacer click nuevamente en el trigger", () => {
     trigger.dispatchEvent(new MouseEvent("click"));
     trigger.dispatchEvent(new MouseEvent("click"));
     expect(content.getAttribute("data-state")).toBe("closed");
@@ -50,20 +46,58 @@ describe("HpPopover (Headless Primitive Popover)", () => {
     expect(trigger.getAttribute("aria-expanded")).toBe("false");
   });
 
-  it("debería cerrar el popover al presionar Escape", () => {
+  it("cierra el popover al presionar Escape", () => {
     trigger.dispatchEvent(new MouseEvent("click"));
     document.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
     expect(content.getAttribute("data-state")).toBe("closed");
   });
 
-  it("debería emitir eventos hp-open y hp-close", () => {
-    let openEmitted = false;
-    let closeEmitted = false;
-    popover.addEventListener("hp-open", () => (openEmitted = true));
-    popover.addEventListener("hp-close", () => (closeEmitted = true));
+  it("cierra el popover al hacer click fuera del contenido", () => {
     trigger.dispatchEvent(new MouseEvent("click"));
-    expect(openEmitted).toBe(true);
+    document.body.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+    expect(content.getAttribute("data-state")).toBe("closed");
+  });
+
+  it("emite hp-open y hp-close en cada transición", () => {
+    let openCount = 0;
+    let closeCount = 0;
+    popover.addEventListener("hp-open", () => openCount++);
+    popover.addEventListener("hp-close", () => closeCount++);
+
     trigger.dispatchEvent(new MouseEvent("click"));
-    expect(closeEmitted).toBe(true);
+    expect(openCount).toBe(1);
+
+    trigger.dispatchEvent(new MouseEvent("click"));
+    expect(closeCount).toBe(1);
+  });
+
+  it("open()/close()/toggle() API pública funciona correctamente", () => {
+    popover.open();
+    expect(content.getAttribute("data-state")).toBe("open");
+
+    popover.close();
+    expect(content.getAttribute("data-state")).toBe("closed");
+
+    popover.toggle();
+    expect(content.getAttribute("data-state")).toBe("open");
+
+    popover.toggle();
+    expect(content.getAttribute("data-state")).toBe("closed");
+  });
+
+  it("no emite eventos duplicados en llamadas repetidas", () => {
+    let openCount = 0;
+    popover.addEventListener("hp-open", () => openCount++);
+    popover.open();
+    popover.open(); // no-op
+    expect(openCount).toBe(1);
+  });
+
+  it("no tiene inline styles de visibilidad en el content", () => {
+    popover.open();
+    expect(content.style.visibility).toBe("");
+    expect(content.style.display).toBe("");
+    expect(content.style.opacity).toBe("");
+    expect(content.style.zIndex).toBe("");
   });
 });

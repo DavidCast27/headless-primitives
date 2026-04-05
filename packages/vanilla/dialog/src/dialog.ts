@@ -2,10 +2,8 @@
  * Headless Dialog Primitive
  *
  * Modal overlay with focus trap and scroll lock.
- * Migrated to HeadlessElement + @customElement + @property (Req 19).
- * All visual styles live in @headless-primitives/styles/dialog.css (Req 13).
- * Positioning and visibility are handled by base.css archetypes:
- *   [data-hp-overlay-content], [data-hp-backdrop]
+ * Uses HeadlessElement (LitElement light DOM) + @customElement + @property decorators.
+ * Visibility is driven exclusively by data-state + base.css — no inline visibility styles.
  */
 import { FocusTrap, HeadlessElement, customElement } from "@headless-primitives/utils";
 import { property } from "lit/decorators.js";
@@ -23,34 +21,41 @@ export class HeadlessDialog extends HeadlessElement {
   private _isOpen = false;
   private _focusTrap: FocusTrap | null = null;
   private _previousScrollPosition = 0;
+  private _setupDone = false;
 
   connectedCallback() {
     super.connectedCallback();
     this.setAttribute("data-hp-component", "dialog");
     this.addEventListener("hp-close", this._close);
-    // rAF ensures children are connected before we query them (parent connectedCallback
-    // runs before children in Custom Elements — same pattern as accordion/collapsible)
+    // _setup() runs synchronously — in happy-dom and real browsers, children appended
+    // before appendChild(parent) are already connected when connectedCallback fires.
+    // We also schedule a rAF pass for the VitePress/SSR hydration case where children
+    // may arrive after the parent (e.g. slot projection).
+    this._setup();
     requestAnimationFrame(() => this._setup());
   }
 
   private _setup() {
+    // Guard: only wire up listeners once per child set
     const content = this._content;
     const backdrop = this._backdrop;
     const trigger = this._trigger;
 
-    if (content) {
-      // Only set role if not already set by consumer (alert-dialog pattern)
+    if (content && !this._setupDone) {
+      this._setupDone = true;
+
       if (!content.hasAttribute("role")) {
         content.setAttribute("role", this.alert ? "alertdialog" : "dialog");
       }
       content.setAttribute("aria-modal", "true");
       content.setAttribute("data-hp-overlay-content", "");
       content.setAttribute("data-state", "closed");
+      content.setAttribute("aria-hidden", "true");
       content.addEventListener("keydown", this._handleKeyDown);
       this._focusTrap = new FocusTrap(content);
     }
 
-    if (backdrop) {
+    if (backdrop && !backdrop.hasAttribute("data-hp-backdrop")) {
       backdrop.setAttribute("data-hp-backdrop", "");
       backdrop.setAttribute("data-state", "closed");
       if (!this.alert) {
@@ -58,18 +63,21 @@ export class HeadlessDialog extends HeadlessElement {
       }
     }
 
-    if (trigger) {
+    if (trigger && !trigger.hasAttribute("data-hp-setup")) {
+      trigger.setAttribute("data-hp-setup", "");
       trigger.addEventListener("click", this._open);
     }
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
+    this._setupDone = false;
     this._content?.removeEventListener("keydown", this._handleKeyDown);
     this._backdrop?.removeEventListener("click", this._close);
     this._trigger?.removeEventListener("click", this._open);
     this.removeEventListener("hp-close", this._close);
   }
+
   private get _trigger() {
     return this.querySelector<HTMLElement>("hp-dialog-trigger");
   }
@@ -84,6 +92,9 @@ export class HeadlessDialog extends HeadlessElement {
 
   private _open = () => {
     if (this._isOpen) return;
+    // Ensure setup ran (covers the case where open() is called programmatically
+    // before the rAF fires in SSR/hydration scenarios)
+    this._setup();
     this._isOpen = true;
 
     this._previousScrollPosition = window.scrollY;
@@ -142,7 +153,6 @@ export class HeadlessDialog extends HeadlessElement {
 
   private _handleKeyDown = (event: KeyboardEvent) => {
     if (event.key === "Escape") {
-      // Alert dialogs: ESC does NOT close (WAI-ARIA alertdialog pattern)
       if (this.alert) {
         event.preventDefault();
         return;
@@ -162,7 +172,33 @@ export class HeadlessDialogTrigger extends HeadlessElement {
     this.setAttribute("data-hp-component", "dialog-trigger");
     if (!this.hasAttribute("role")) this.setAttribute("role", "button");
     if (!this.disabled) this.setAttribute("tabindex", "0");
+    this.addEventListener("keydown", this._handleKeyDown);
   }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this.removeEventListener("keydown", this._handleKeyDown);
+  }
+
+  attributeChangedCallback(name: string, old: string | null, next: string | null) {
+    super.attributeChangedCallback(name, old, next);
+    if (name === "disabled") {
+      if (next !== null) {
+        this.setAttribute("aria-disabled", "true");
+        this.removeAttribute("tabindex");
+      } else {
+        this.removeAttribute("aria-disabled");
+        this.setAttribute("tabindex", "0");
+      }
+    }
+  }
+
+  private _handleKeyDown = (e: KeyboardEvent) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      this.click();
+    }
+  };
 }
 
 @customElement("hp-dialog-content")
@@ -208,7 +244,7 @@ export class HeadlessDialogClose extends HeadlessElement {
   }
 
   private _onClick = () => {
-    this.dispatchEvent(new CustomEvent("hp-close", { bubbles: true }));
+    this.emit("close");
   };
 
   private _onKeyDown = (e: KeyboardEvent) => {

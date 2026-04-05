@@ -1,8 +1,2 @@
-export {
-  HeadlessDialog,
-  HeadlessDialogTrigger,
-  HeadlessDialogContent,
-  HeadlessDialogBackdrop,
-  HeadlessDialogTitle,
-  HeadlessDialogClose,
-} from "./dialog";
+export * from "./dialog";
+export * from "./types";

@@ -140,7 +140,7 @@ export class HeadlessCollapsibleTrigger extends HeadlessElement {
 
   private _handleClick = () => {
     if (this.disabled) return;
-    this.dispatchEvent(new CustomEvent("hp-trigger-click", { bubbles: true }));
+    this.emit("trigger-click");
   };
 
   private _handleKeyDown = (e: KeyboardEvent) => {

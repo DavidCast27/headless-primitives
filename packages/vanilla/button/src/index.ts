@@ -1,2 +1,2 @@
-export { HeadlessButton } from "./button";
-export type { HeadlessButtonEvents } from "./types";
+export * from "./button";
+export * from "./types";

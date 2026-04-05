@@ -1,11 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach } from "vitest";
-import { Tabs, TabList, TabTrigger, TabPanel } from "./tabs";
-
-// Explicitly register in the test environment
-if (!customElements.get("hp-tabs")) customElements.define("hp-tabs", Tabs);
-if (!customElements.get("hp-tab-list")) customElements.define("hp-tab-list", TabList);
-if (!customElements.get("hp-tab")) customElements.define("hp-tab", TabTrigger);
-if (!customElements.get("hp-tab-panel")) customElements.define("hp-tab-panel", TabPanel);
+import "./index"; // triggers @customElement decorator registration
+import type { Tabs, TabList, TabTrigger, TabPanel } from "./tabs";
 
 async function waitForUpdate(element?: HTMLElement) {
   if (element && "updateComplete" in element) {

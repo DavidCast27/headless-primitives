@@ -1,9 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach } from "vitest";
-import { HeadlessButton } from "./button"; // Registra el custom element automáticamente
-
-if (!customElements.get("hp-button")) {
-  customElements.define("hp-button", HeadlessButton);
-}
+import "./index"; // triggers @customElement decorator registration
+import type { HeadlessButton } from "./button";
 
 describe("HpButton (Headless Primitive Button)", () => {
   let btn: HeadlessButton;

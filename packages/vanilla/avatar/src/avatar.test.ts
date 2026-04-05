@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import "./index";
-import { HeadlessAvatar, HeadlessAvatarImage } from "./avatar";
+import type { HeadlessAvatar, HeadlessAvatarImage } from "./avatar";
 
 describe("hp-avatar", () => {
   let avatar: HeadlessAvatar;
