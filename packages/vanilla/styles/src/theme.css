@@ -84,6 +84,13 @@
 
   /* === Estados de opacidad === */
   --hp-opacity-disabled: 0.5;
+
+  /* === Color de error / destructivo === */
+  /* #dc2626 = red-600  → 5.93:1 vs blanco ✓  (supera 4.5:1 AA ✓) */
+  --hp-text-error: #dc2626;
+
+  /* === Backdrop de overlays === */
+  --hp-backdrop-bg: rgb(0 0 0 / 0.5);
 }
 
 /* === Dark Mode (Req 2.6) === */
@@ -121,5 +128,11 @@
     --hp-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.4);
 
     --hp-focus-outline-color: #38bdf8;
+
+    /* #f87171 = red-400 → 6.04:1 vs #0f172a ✓ (dark bg) */
+    --hp-text-error: #f87171;
+
+    /* Backdrop más opaco en dark para mantener legibilidad */
+    --hp-backdrop-bg: rgb(0 0 0 / 0.65);
   }
 }

@@ -51,3 +51,11 @@ hp-tooltip-content::after {
   border: 5px solid transparent;
   border-top-color: var(--hp-text);
 }
+
+/* === Accesibilidad — prefers-reduced-motion === */
+@media (prefers-reduced-motion: reduce) {
+  hp-tooltip-content {
+    animation: none;
+    transition: none;
+  }
+}

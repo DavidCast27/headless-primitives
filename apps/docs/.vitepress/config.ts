@@ -61,10 +61,19 @@ export default defineConfig({
         text: "Guías",
         items: [
           { text: "Accesibilidad", link: "/guide/accessibility" },
-          { text: "Styling", link: "/guide/styling" },
           { text: "Animaciones", link: "/guide/animation" },
           { text: "Eventos", link: "/guide/events" },
           { text: "Theming & Tokens", link: "/guide/theming" },
+          {
+            text: "Styling",
+            collapsed: false,
+            items: [
+              { text: "Overview", link: "/guide/styling" },
+              { text: "base.css — Layer 1", link: "/guide/base-css" },
+              { text: "@styles Theming — Layer 2", link: "/guide/styles-theming" },
+              { text: "Constructor de Tema", link: "/guide/theme-builder" },
+            ],
+          },
         ],
       },
       {

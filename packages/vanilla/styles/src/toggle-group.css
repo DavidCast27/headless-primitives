@@ -62,3 +62,10 @@ hp-toggle[aria-disabled="true"] {
   opacity: var(--hp-opacity-disabled);
   cursor: not-allowed;
 }
+
+/* === Accesibilidad — prefers-reduced-motion === */
+@media (prefers-reduced-motion: reduce) {
+  hp-toggle {
+    transition: none;
+  }
+}
