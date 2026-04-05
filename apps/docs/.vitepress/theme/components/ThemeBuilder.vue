@@ -412,6 +412,7 @@ const copyState = ref<"idle" | "copied">("idle");
 // Estado interactivo para la vista previa
 const previewDialogOpen = ref(false);
 const previewAlertDialogOpen = ref(false);
+const previewDrawerOpen = ref(false);
 
 // Tooltip con posicionamiento fixed
 const tooltipVisible = ref(false);
@@ -1232,6 +1233,50 @@ const totalModified = computed(() => TOKEN_GROUPS.reduce((sum, g) => sum + modif
                         @click="previewAlertDialogOpen = false"
                       >
                         Eliminar
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </Teleport>
+            </div>
+          </section>
+          <!-- DRAWER -->
+          <section class="tb-preview-section">
+            <h4 class="tb-preview-section-title">Drawer</h4>
+            <div class="tb-preview-demo">
+              <button class="tbp-btn tbp-btn--primary" @click="previewDrawerOpen = true">
+                Abrir drawer
+              </button>
+              <Teleport to="body">
+                <div
+                  v-if="previewDrawerOpen"
+                  class="tbp-drawer-overlay"
+                  @click.self="previewDrawerOpen = false"
+                >
+                  <div
+                    class="tbp-drawer-panel"
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby="tbp-drawer-title"
+                  >
+                    <div class="tbp-drawer-header">
+                      <h2 id="tbp-drawer-title" class="tbp-drawer-title">Panel lateral</h2>
+                      <button
+                        class="tbp-drawer-close"
+                        aria-label="Cerrar drawer"
+                        @click="previewDrawerOpen = false"
+                      >
+                        &times;
+                      </button>
+                    </div>
+                    <div class="tbp-drawer-body">
+                      <p class="tbp-dialog-body">
+                        Este es el contenido del drawer. Se adapta a los valores de token actuales.
+                      </p>
+                    </div>
+                    <div class="tbp-dialog-footer">
+                      <button class="tbp-btn tbp-btn--ghost" @click="previewDrawerOpen = false">
+                        Cerrar
                       </button>
                     </div>
                   </div>
@@ -2393,6 +2438,68 @@ hp-accordion-content.tbp-accordion-content[data-state="closed"] {
   font-size: var(--hp-font-size-sm, 0.875rem);
   color: var(--hp-text-secondary, #64748b);
   margin: 0;
+}
+
+/* Drawer (overlay Vue) */
+.tbp-drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--hp-backdrop-bg, rgb(0 0 0 / 0.5));
+  z-index: 1000;
+}
+
+.tbp-drawer-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 300px;
+  z-index: 1001;
+  background: var(--hp-surface, #ffffff);
+  border-right: 1px solid var(--hp-border, #e2e8f0);
+  box-shadow: var(--hp-shadow-lg, 4px 0 24px rgb(0 0 0 / 0.15));
+  display: flex;
+  flex-direction: column;
+  color: var(--hp-text, #0f172a);
+}
+
+.tbp-drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--hp-space-4, 1rem) var(--hp-space-5, 1.25rem);
+  border-bottom: 1px solid var(--hp-border, #e2e8f0);
+}
+
+.tbp-drawer-title {
+  margin: 0;
+  font-size: var(--hp-font-size-lg, 1.125rem);
+  font-weight: var(--hp-font-weight-semibold, 600);
+  color: var(--hp-text, #0f172a);
+  border: none;
+  padding: 0;
+}
+
+.tbp-drawer-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.25rem;
+  color: var(--hp-text-secondary, #64748b);
+  padding: 4px 8px;
+  border-radius: var(--hp-radius, 6px);
+  line-height: 1;
+  transition: background var(--hp-duration, 150ms);
+}
+
+.tbp-drawer-close:hover {
+  background: var(--hp-surface-hover, #f1f5f9);
+}
+
+.tbp-drawer-body {
+  padding: var(--hp-space-4, 1rem) var(--hp-space-5, 1.25rem);
+  flex: 1;
+  overflow-y: auto;
 }
 
 /* Diálogo (overlay Vue) */

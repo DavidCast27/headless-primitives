@@ -9,6 +9,7 @@ import "@headless-primitives/button";
 import "@headless-primitives/checkbox";
 import "@headless-primitives/collapsible";
 import "@headless-primitives/dialog";
+import "@headless-primitives/drawer";
 import "@headless-primitives/field";
 import "@headless-primitives/label";
 import "@headless-primitives/popover";
@@ -32,6 +33,7 @@ import { buttonDemo } from "./demos/button.demo";
 import { checkboxDemo } from "./demos/checkbox.demo";
 import { collapsibleDemo } from "./demos/collapsible.demo";
 import { dialogDemo } from "./demos/dialog.demo";
+import { drawerDemo } from "./demos/drawer.demo";
 import { fieldDemo } from "./demos/field.demo";
 import { labelDemo } from "./demos/label.demo";
 import { popoverDemo } from "./demos/popover.demo";
@@ -53,6 +55,7 @@ const ROUTES: Record<string, ComponentDemo> = {
   checkbox: checkboxDemo,
   collapsible: collapsibleDemo,
   dialog: dialogDemo,
+  drawer: drawerDemo,
   field: fieldDemo,
   label: labelDemo,
   popover: popoverDemo,
