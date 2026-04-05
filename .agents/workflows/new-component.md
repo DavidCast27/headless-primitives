@@ -44,6 +44,15 @@ mkdir -p packages/vanilla/<nombre>/src
     }
   },
   "files": ["dist"],
+  "sideEffects": false,
+  "publishConfig": { "access": "public" },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DavidCast27/headless-primitives.git"
+  },
+  "homepage": "https://davidcast27.github.io/headless-primitives/",
+  "bugs": { "url": "https://github.com/DavidCast27/headless-primitives/issues" },
   "scripts": {
     "build": "vite build && tsc",
     "test": "vitest run",
@@ -365,6 +374,7 @@ Antes de hacer commit, verifica:
 - [ ] `pnpm --filter "./packages/vanilla/<nombre>" typecheck` — sin errores TypeScript
 - [ ] Playground carga y la demo funciona visualmente
 - [ ] Documentación renderiza correctamente en VitePress
+- [ ] Bloques de instalación muestran npm/pnpm/Yarn/Bun
 - [ ] `pnpm run lint` — sin warnings de Oxlint
 - [ ] ADR creado si la decisión de diseño lo amerita (`docs/adr/`)
 

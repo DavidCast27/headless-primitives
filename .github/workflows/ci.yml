@@ -36,3 +36,45 @@ jobs:
 
       - name: Test
         run: pnpm run test
+
+      - name: "Packages: verify publishConfig and sideEffects"
+        run: |
+          set -euo pipefail
+          missing=0
+          for f in packages/vanilla/*/package.json; do
+            [ -f "$f" ] || continue
+            if ! jq -e '.publishConfig.access == "public"' "$f" >/dev/null 2>&1; then
+              echo "::error file=${f}::publishConfig.access should be 'public'"; missing=$((missing+1))
+            fi
+            if ! jq -e '.sideEffects == false' "$f" >/dev/null 2>&1; then
+              echo "::error file=${f}::sideEffects should be false"; missing=$((missing+1))
+            fi
+          done
+          if [ "$missing" -gt 0 ]; then
+            echo "Found $missing package metadata issues" >&2; exit 1
+          fi
+
+      - name: "Docs: verify install blocks"
+        run: |
+          set -euo pipefail
+          missing=0
+          check_file() {
+            f="$1"
+            for tag in "\[pnpm\]" "\[npm\]" "\[yarn\]" "\[bun\]"; do
+              if ! rg -q "```bash ${tag}" "$f"; then
+                echo "::error file=${f}::Missing install block ${tag}"
+                missing=$((missing+1))
+              fi
+            done
+          }
+          for f in apps/docs/components/*.md; do
+            [ -f "$f" ] && check_file "$f"
+          done
+          # Guides where installation appears
+          for f in apps/docs/guide/quick-start.md apps/docs/guide/theming.md apps/docs/guide/styles-theming.md; do
+            [ -f "$f" ] && check_file "$f"
+          done
+          if [ "$missing" -gt 0 ]; then
+            echo "Found $missing missing install blocks" >&2
+            exit 1
+          fi

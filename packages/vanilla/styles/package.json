@@ -6,6 +6,7 @@
     "src"
   ],
   "type": "module",
+  "sideEffects": false,
   "exports": {
     "./index.css": "./src/index.css",
     "./theme.css": "./src/theme.css",
@@ -24,6 +25,9 @@
     "./atoms.css": "./src/atoms.css",
     "./field.css": "./src/field.css",
     "./verify-aria.js": "./src/verify-aria.js"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "dependencies": {},
   "devDependencies": {}
