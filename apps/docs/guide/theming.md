@@ -226,6 +226,32 @@ El color de acento controla el estado activo/seleccionado de switches, checkboxe
   </div>
 </div>
 
+### Error y Backdrop
+
+<div class="token-grid">
+  <div class="token-row header-row">
+    <span></span>
+    <strong>Token</strong>
+    <strong>Valor (light)</strong>
+    <strong>Contraste</strong>
+    <strong>Usado en</strong>
+  </div>
+  <div class="token-row">
+    <span class="token-swatch" style="background: #dc2626;"></span>
+    <code>--hp-text-error</code>
+    <span class="token-value">#dc2626</span>
+    <span class="token-badge pass">5.93:1 ✓</span>
+    <span class="token-desc">Mensajes de error en hp-field-error</span>
+  </div>
+  <div class="token-row">
+    <span class="token-swatch" style="background: rgb(0 0 0 / 0.5);"></span>
+    <code>--hp-backdrop-bg</code>
+    <span class="token-value">rgb(0 0 0 / 0.5)</span>
+    <span class="token-badge neutral">—</span>
+    <span class="token-desc">Fondo del backdrop en dialogs (dark: 0.65)</span>
+  </div>
+</div>
+
 ### Foco y Z-indexes (de `base.css`)
 
 <div class="token-grid">

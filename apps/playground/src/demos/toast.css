@@ -47,13 +47,13 @@ hp-toast {
   display: block;
   pointer-events: all;
   padding: 0.75rem 1rem;
-  border-radius: 8px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
-  font-size: 0.9rem;
+  border-radius: var(--hp-radius-md, 8px);
+  box-shadow: var(--hp-shadow-lg, 0 6px 18px rgb(0 0 0 / 0.3));
+  font-size: var(--hp-font-size-sm, 0.875rem);
   min-width: 220px;
   max-width: 360px;
-  background: #1e293b;
-  border: 1px solid #334155;
-  color: #f8fafc;
+  background: var(--hp-surface, #1e293b);
+  border: 1px solid var(--hp-border, #334155);
+  color: var(--hp-text, #f8fafc);
   animation: slideIn 0.2s ease-out forwards;
 }

@@ -30,19 +30,12 @@ hp-field-description {
   line-height: 1.5;
 }
 
-/* Error — texto en rojo, visible solo cuando tiene contenido */
+/* Error — texto de error; color vía token sobrescribible por el Consumer */
 hp-field-error {
   display: block;
   font-size: var(--hp-font-size-xs);
-  color: #dc2626;
+  color: var(--hp-text-error);
   line-height: 1.5;
-}
-
-/* En dark mode el rojo se aclara para mantener contraste */
-@media (prefers-color-scheme: dark) {
-  hp-field-error {
-    color: #f87171;
-  }
 }
 
 /* Control wrapper — asegura que el control nativo ocupe el ancho completo */
@@ -90,4 +83,13 @@ hp-field-control textarea:disabled {
 hp-field-control textarea {
   resize: vertical;
   min-height: 80px;
+}
+
+/* === Accesibilidad — prefers-reduced-motion === */
+@media (prefers-reduced-motion: reduce) {
+  hp-field-control input,
+  hp-field-control select,
+  hp-field-control textarea {
+    transition: none;
+  }
 }

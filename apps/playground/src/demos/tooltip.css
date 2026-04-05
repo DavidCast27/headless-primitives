@@ -15,17 +15,15 @@ hp-tooltip-content[data-state="closed"] {
 
 .tooltip-content {
   position: absolute;
-  background-color: #1f2937;
-  color: white;
+  background-color: var(--hp-text, #1f2937);
+  color: var(--hp-surface, white);
   padding: 8px 12px;
   border-radius: 6px;
-  box-shadow:
-    0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--hp-shadow-md, 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -1px rgb(0 0 0 / 0.06));
   font-size: 12px;
   font-weight: 500;
   white-space: nowrap;
-  z-index: 1000;
+  z-index: var(--hp-z-index-tooltip, 1300);
   animation: fadeIn 0.15s ease-out;
   /* Simple positioning: above the trigger */
   bottom: 100%;
@@ -42,7 +40,7 @@ hp-tooltip-content[data-state="closed"] {
   left: 50%;
   transform: translateX(-50%);
   border: 4px solid transparent;
-  border-top-color: #1f2937;
+  border-top-color: var(--hp-text, #1f2937);
 }
 
 @keyframes fadeIn {
@@ -54,5 +52,11 @@ hp-tooltip-content[data-state="closed"] {
   to {
     opacity: 1;
     transform: translateX(-50%) translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tooltip-content {
+    animation: none;
   }
 }

@@ -60,3 +60,10 @@ hp-radio[aria-disabled="true"] {
   opacity: var(--hp-opacity-disabled);
   cursor: not-allowed;
 }
+
+/* === Accesibilidad — prefers-reduced-motion === */
+@media (prefers-reduced-motion: reduce) {
+  hp-radio {
+    transition: none;
+  }
+}
