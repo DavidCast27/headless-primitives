@@ -50,7 +50,7 @@ export const alertDialogDemo: ComponentDemo = {
       const originalText = confirmBtn.textContent;
       confirmBtn.textContent = "✓ Confirmado";
       confirmBtn.style.background = "#16a34a";
-      
+
       setTimeout(() => {
         dialog?.close();
         confirmBtn.textContent = originalText;

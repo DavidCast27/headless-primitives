@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import FlavorToggle from './FlavorToggle.vue'
+import FlavorToggle from "./FlavorToggle.vue";
 </script>
 
 <template>

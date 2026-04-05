@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { stylePreference } from '../state'
+import { stylePreference } from "../state";
 
 defineProps<{
-  only: 'css' | 'tailwind'
-}>()
+  only: "css" | "tailwind";
+}>();
 </script>
 
 <template>

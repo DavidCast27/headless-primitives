@@ -8,17 +8,17 @@
 
 La capa estructural solo contiene reglas que controlan la forma y el comportamiento, nunca la apariencia visual. La siguiente tabla resume las categorías que sí tienen cabida aquí:
 
-| Categoría | Ejemplos |
-|---|---|
-| Estado de visibilidad | `display: none` para paneles cerrados, `visibility: hidden` para overlays cerrados |
-| Posicionamiento | `position: fixed` para backdrops y contenido de overlay, `z-index` en capas |
-| Primitivas de layout | `display: inline-flex`, `align-items: center`, `flex-direction: column` |
-| Geometría estructural | `width: 100%`, `min-width: 0`, `overflow: hidden`, `box-sizing` |
-| Cursor y puntero | `cursor: pointer`, `pointer-events: none` para estados deshabilitados/cerrados |
-| Transiciones funcionales | Transiciones de opacidad/visibilidad para mostrar/ocultar overlays |
-| Animaciones | `@keyframes` para movimiento de entrada/salida (solo `transform` + `opacity`) |
-| Utilidades de accesibilidad | `.hp-visually-hidden`, base del anillo de foco |
-| Tokens de z-index | `--hp-z-index-backdrop`, `--hp-z-index-overlay-content`, etc. |
+| Categoría                   | Ejemplos                                                                           |
+| --------------------------- | ---------------------------------------------------------------------------------- |
+| Estado de visibilidad       | `display: none` para paneles cerrados, `visibility: hidden` para overlays cerrados |
+| Posicionamiento             | `position: fixed` para backdrops y contenido de overlay, `z-index` en capas        |
+| Primitivas de layout        | `display: inline-flex`, `align-items: center`, `flex-direction: column`            |
+| Geometría estructural       | `width: 100%`, `min-width: 0`, `overflow: hidden`, `box-sizing`                    |
+| Cursor y puntero            | `cursor: pointer`, `pointer-events: none` para estados deshabilitados/cerrados     |
+| Transiciones funcionales    | Transiciones de opacidad/visibilidad para mostrar/ocultar overlays                 |
+| Animaciones                 | `@keyframes` para movimiento de entrada/salida (solo `transform` + `opacity`)      |
+| Utilidades de accesibilidad | `.hp-visually-hidden`, base del anillo de foco                                     |
+| Tokens de z-index           | `--hp-z-index-backdrop`, `--hp-z-index-overlay-content`, etc.                      |
 
 ### Qué NO pertenece a `base.css`
 
@@ -36,19 +36,19 @@ Los siguientes elementos son responsabilidad exclusiva de la capa `@styles`:
 
 Estas propiedades están disponibles sin necesidad de cargar `@styles`. Pueden ser sobreescritas en tu propio `:root` o en cualquier selector:
 
-| Propiedad | Valor por defecto | Propósito |
-|---|---|---|
-| `--hp-focus-outline-color` | `#2563eb` | Color del anillo de foco por teclado |
-| `--hp-focus-outline-width` | `2px` | Grosor del anillo de foco por teclado |
-| `--hp-z-index-backdrop` | `1000` | Z-index para backdrops de diálogos/overlays |
-| `--hp-z-index-overlay-content` | `1100` | Z-index para contenido de diálogos/alertas y contenedor de toasts |
-| `--hp-z-index-popover` | `1200` | Z-index para contenido de popovers |
-| `--hp-z-index-tooltip` | `1300` | Z-index para contenido de tooltips |
-| `--hp-duration-fast` | `100ms` | Duración de animación rápida (tooltip) |
-| `--hp-duration` | `150ms` | Duración de animación predeterminada |
-| `--hp-duration-slow` | `200ms` | Duración de animación lenta (diálogo) |
-| `--hp-ease` | `ease` | Función de easing predeterminada |
-| `--hp-ease-out` | `cubic-bezier(0.16, 1, 0.3, 1)` | Easing con efecto muelle para overlays que entran |
+| Propiedad                      | Valor por defecto               | Propósito                                                         |
+| ------------------------------ | ------------------------------- | ----------------------------------------------------------------- |
+| `--hp-focus-outline-color`     | `#2563eb`                       | Color del anillo de foco por teclado                              |
+| `--hp-focus-outline-width`     | `2px`                           | Grosor del anillo de foco por teclado                             |
+| `--hp-z-index-backdrop`        | `1000`                          | Z-index para backdrops de diálogos/overlays                       |
+| `--hp-z-index-overlay-content` | `1100`                          | Z-index para contenido de diálogos/alertas y contenedor de toasts |
+| `--hp-z-index-popover`         | `1200`                          | Z-index para contenido de popovers                                |
+| `--hp-z-index-tooltip`         | `1300`                          | Z-index para contenido de tooltips                                |
+| `--hp-duration-fast`           | `100ms`                         | Duración de animación rápida (tooltip)                            |
+| `--hp-duration`                | `150ms`                         | Duración de animación predeterminada                              |
+| `--hp-duration-slow`           | `200ms`                         | Duración de animación lenta (diálogo)                             |
+| `--hp-ease`                    | `ease`                          | Función de easing predeterminada                                  |
+| `--hp-ease-out`                | `cubic-bezier(0.16, 1, 0.3, 1)` | Easing con efecto muelle para overlays que entran                 |
 
 ---
 
@@ -175,8 +175,14 @@ hp-toast-container {
   z-index: var(--hp-z-index-overlay-content, 1100);
 }
 
-hp-toast-container[data-position="top-right"]  { top: 0; right: 0; }
-hp-toast-container[data-position="top-left"]   { top: 0; left: 0; }
+hp-toast-container[data-position="top-right"] {
+  top: 0;
+  right: 0;
+}
+hp-toast-container[data-position="top-left"] {
+  top: 0;
+  left: 0;
+}
 hp-toast-container[data-position="top-center"] {
   top: 0;
   left: 50%;
@@ -260,17 +266,17 @@ La reducción visual de opacidad para los estados deshabilitados proviene de `@s
 
 Todas las definiciones de `@keyframes` viven en `base.css` porque son reglas de movimiento estructural, independientes del color o el tema. Los archivos de componentes de `@styles` activan estas animaciones mediante declaraciones `animation:`.
 
-| `@keyframes` | Usado por |
-|---|---|
-| `hp-backdrop-in` / `hp-backdrop-out` | `hp-dialog-backdrop` |
-| `hp-dialog-in` / `hp-dialog-out` | `hp-dialog-content` |
-| `hp-overlay-in` / `hp-overlay-out` | `hp-popover-content` (lado: abajo) |
-| `hp-overlay-in-up` / `hp-overlay-out-up` | `hp-popover-content` (lado: arriba) |
-| `hp-tooltip-in` / `hp-tooltip-out` | `hp-tooltip-content` |
-| `hp-toast-in` / `hp-toast-out` | `hp-toast` |
-| `hp-toast-in-center` | `hp-toast` (contenedor arriba/abajo centrado) |
-| `hp-panel-in` | Reservado para fade-in de paneles mediante `@starting-style` |
-| `hp-progress-indeterminate` | `hp-progress-indicator[data-indeterminate]` |
+| `@keyframes`                             | Usado por                                                    |
+| ---------------------------------------- | ------------------------------------------------------------ |
+| `hp-backdrop-in` / `hp-backdrop-out`     | `hp-dialog-backdrop`                                         |
+| `hp-dialog-in` / `hp-dialog-out`         | `hp-dialog-content`                                          |
+| `hp-overlay-in` / `hp-overlay-out`       | `hp-popover-content` (lado: abajo)                           |
+| `hp-overlay-in-up` / `hp-overlay-out-up` | `hp-popover-content` (lado: arriba)                          |
+| `hp-tooltip-in` / `hp-tooltip-out`       | `hp-tooltip-content`                                         |
+| `hp-toast-in` / `hp-toast-out`           | `hp-toast`                                                   |
+| `hp-toast-in-center`                     | `hp-toast` (contenedor arriba/abajo centrado)                |
+| `hp-panel-in`                            | Reservado para fade-in de paneles mediante `@starting-style` |
+| `hp-progress-indeterminate`              | `hp-progress-indicator[data-indeterminate]`                  |
 
 Todas las animaciones apuntan **únicamente a `transform` y `opacity`** — sin propiedades que disparen reflow — garantizando un rendimiento de 60fps compuesto por GPU.
 
@@ -309,8 +315,13 @@ Las siguientes reglas ya están en `base.css` y no necesitas añadirlas manualme
 
 ```css
 /* Ya incluidas en base.css — no es necesario agregarlas */
-[data-hp-panel][data-state="closed"]           { display: none; }
-[data-hp-overlay-content][data-state="closed"] { visibility: hidden; opacity: 0; }
+[data-hp-panel][data-state="closed"] {
+  display: none;
+}
+[data-hp-overlay-content][data-state="closed"] {
+  visibility: hidden;
+  opacity: 0;
+}
 ```
 
 ---

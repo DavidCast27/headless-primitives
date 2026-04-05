@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, watch } from 'vue'
+import { ref, computed, onMounted, watch } from "vue";
 
 // ---------------------------------------------------------------------------
 // DEFINICIÓN DE TOKENS
@@ -7,210 +7,468 @@ import { ref, computed, onMounted, watch } from 'vue'
 // ---------------------------------------------------------------------------
 
 interface Token {
-  name: string
-  label: string
-  default: string
-  type: 'color' | 'size' | 'shadow' | 'text' | 'number' | 'opacity'
-  hint?: string
+  name: string;
+  label: string;
+  default: string;
+  type: "color" | "size" | "shadow" | "text" | "number" | "opacity";
+  hint?: string;
 }
 
 interface TokenGroup {
-  id: string
-  label: string
-  tokens: Token[]
+  id: string;
+  label: string;
+  tokens: Token[];
 }
 
 const TOKEN_GROUPS: TokenGroup[] = [
   {
-    id: 'accent',
-    label: 'Acento (Marca)',
+    id: "accent",
+    label: "Acento (Marca)",
     tokens: [
-      { name: '--hp-accent', label: 'Acento', default: '#0369a1', type: 'color', hint: 'Color principal de marca' },
-      { name: '--hp-accent-hover', label: 'Acento Hover', default: '#075985', type: 'color', hint: 'Estado hover' },
-      { name: '--hp-accent-active', label: 'Acento Activo', default: '#0c4a6e', type: 'color', hint: 'Estado presionado/activo' },
-      { name: '--hp-accent-foreground', label: 'Primer plano del acento', default: '#ffffff', type: 'color', hint: 'Texto sobre fondo de acento' },
+      {
+        name: "--hp-accent",
+        label: "Acento",
+        default: "#0369a1",
+        type: "color",
+        hint: "Color principal de marca",
+      },
+      {
+        name: "--hp-accent-hover",
+        label: "Acento Hover",
+        default: "#075985",
+        type: "color",
+        hint: "Estado hover",
+      },
+      {
+        name: "--hp-accent-active",
+        label: "Acento Activo",
+        default: "#0c4a6e",
+        type: "color",
+        hint: "Estado presionado/activo",
+      },
+      {
+        name: "--hp-accent-foreground",
+        label: "Primer plano del acento",
+        default: "#ffffff",
+        type: "color",
+        hint: "Texto sobre fondo de acento",
+      },
     ],
   },
   {
-    id: 'surfaces',
-    label: 'Superficies',
+    id: "surfaces",
+    label: "Superficies",
     tokens: [
-      { name: '--hp-bg', label: 'Fondo', default: '#ffffff', type: 'color', hint: 'Fondo de la página' },
-      { name: '--hp-bg-subtle', label: 'Fondo sutil', default: '#f8fafc', type: 'color', hint: 'Fondo de zonas en reposo' },
-      { name: '--hp-bg-muted', label: 'Fondo apagado', default: '#f1f5f9', type: 'color', hint: 'Hover de botones, pista de progreso' },
-      { name: '--hp-surface', label: 'Superficie', default: '#ffffff', type: 'color', hint: 'Superficies de componentes' },
-      { name: '--hp-surface-raised', label: 'Superficie elevada', default: '#ffffff', type: 'color', hint: 'Superficies elevadas' },
+      {
+        name: "--hp-bg",
+        label: "Fondo",
+        default: "#ffffff",
+        type: "color",
+        hint: "Fondo de la página",
+      },
+      {
+        name: "--hp-bg-subtle",
+        label: "Fondo sutil",
+        default: "#f8fafc",
+        type: "color",
+        hint: "Fondo de zonas en reposo",
+      },
+      {
+        name: "--hp-bg-muted",
+        label: "Fondo apagado",
+        default: "#f1f5f9",
+        type: "color",
+        hint: "Hover de botones, pista de progreso",
+      },
+      {
+        name: "--hp-surface",
+        label: "Superficie",
+        default: "#ffffff",
+        type: "color",
+        hint: "Superficies de componentes",
+      },
+      {
+        name: "--hp-surface-raised",
+        label: "Superficie elevada",
+        default: "#ffffff",
+        type: "color",
+        hint: "Superficies elevadas",
+      },
     ],
   },
   {
-    id: 'text',
-    label: 'Texto',
+    id: "text",
+    label: "Texto",
     tokens: [
-      { name: '--hp-text', label: 'Texto primario', default: '#0f172a', type: 'color', hint: 'Texto principal' },
-      { name: '--hp-text-secondary', label: 'Texto secundario', default: '#64748b', type: 'color', hint: 'Textos secundarios / descripciones' },
-      { name: '--hp-text-disabled', label: 'Texto deshabilitado', default: '#94a3b8', type: 'color', hint: 'Estado deshabilitado (exento de WCAG)' },
-      { name: '--hp-text-on-accent', label: 'Texto sobre acento', default: '#ffffff', type: 'color', hint: 'Texto sobre fondo de acento' },
-      { name: '--hp-text-error', label: 'Texto de error', default: '#dc2626', type: 'color', hint: 'Mensajes de error en validación' },
+      {
+        name: "--hp-text",
+        label: "Texto primario",
+        default: "#0f172a",
+        type: "color",
+        hint: "Texto principal",
+      },
+      {
+        name: "--hp-text-secondary",
+        label: "Texto secundario",
+        default: "#64748b",
+        type: "color",
+        hint: "Textos secundarios / descripciones",
+      },
+      {
+        name: "--hp-text-disabled",
+        label: "Texto deshabilitado",
+        default: "#94a3b8",
+        type: "color",
+        hint: "Estado deshabilitado (exento de WCAG)",
+      },
+      {
+        name: "--hp-text-on-accent",
+        label: "Texto sobre acento",
+        default: "#ffffff",
+        type: "color",
+        hint: "Texto sobre fondo de acento",
+      },
+      {
+        name: "--hp-text-error",
+        label: "Texto de error",
+        default: "#dc2626",
+        type: "color",
+        hint: "Mensajes de error en validación",
+      },
     ],
   },
   {
-    id: 'borders',
-    label: 'Bordes',
+    id: "borders",
+    label: "Bordes",
     tokens: [
-      { name: '--hp-border', label: 'Borde', default: '#e2e8f0', type: 'color', hint: 'Separadores visuales (no interactivos)' },
-      { name: '--hp-border-strong', label: 'Borde fuerte', default: '#64748b', type: 'color', hint: 'Bordes de componentes interactivos (WCAG 3:1)' },
+      {
+        name: "--hp-border",
+        label: "Borde",
+        default: "#e2e8f0",
+        type: "color",
+        hint: "Separadores visuales (no interactivos)",
+      },
+      {
+        name: "--hp-border-strong",
+        label: "Borde fuerte",
+        default: "#64748b",
+        type: "color",
+        hint: "Bordes de componentes interactivos (WCAG 3:1)",
+      },
     ],
   },
   {
-    id: 'radius',
-    label: 'Radio de borde',
+    id: "radius",
+    label: "Radio de borde",
     tokens: [
-      { name: '--hp-radius-sm', label: 'Radio pequeño', default: '4px', type: 'size', hint: 'Checkboxes, etiquetas' },
-      { name: '--hp-radius', label: 'Radio predeterminado', default: '6px', type: 'size', hint: 'Botones, inputs' },
-      { name: '--hp-radius-md', label: 'Radio mediano', default: '8px', type: 'size', hint: 'Cards, toasts' },
-      { name: '--hp-radius-lg', label: 'Radio grande', default: '12px', type: 'size', hint: 'Diálogos' },
-      { name: '--hp-radius-full', label: 'Radio completo', default: '9999px', type: 'size', hint: 'Switch, avatar, pills' },
+      {
+        name: "--hp-radius-sm",
+        label: "Radio pequeño",
+        default: "4px",
+        type: "size",
+        hint: "Checkboxes, etiquetas",
+      },
+      {
+        name: "--hp-radius",
+        label: "Radio predeterminado",
+        default: "6px",
+        type: "size",
+        hint: "Botones, inputs",
+      },
+      {
+        name: "--hp-radius-md",
+        label: "Radio mediano",
+        default: "8px",
+        type: "size",
+        hint: "Cards, toasts",
+      },
+      {
+        name: "--hp-radius-lg",
+        label: "Radio grande",
+        default: "12px",
+        type: "size",
+        hint: "Diálogos",
+      },
+      {
+        name: "--hp-radius-full",
+        label: "Radio completo",
+        default: "9999px",
+        type: "size",
+        hint: "Switch, avatar, pills",
+      },
     ],
   },
   {
-    id: 'shadows',
-    label: 'Sombras',
+    id: "shadows",
+    label: "Sombras",
     tokens: [
-      { name: '--hp-shadow-sm', label: 'Sombra pequeña', default: '0 1px 2px 0 rgb(0 0 0 / 0.05)', type: 'shadow', hint: 'Pulgar del switch' },
-      { name: '--hp-shadow', label: 'Sombra predeterminada', default: '0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)', type: 'shadow', hint: 'Botones elevados' },
-      { name: '--hp-shadow-md', label: 'Sombra mediana', default: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)', type: 'shadow', hint: 'Tooltips, popovers' },
-      { name: '--hp-shadow-lg', label: 'Sombra grande', default: '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)', type: 'shadow', hint: 'Diálogos, toasts' },
+      {
+        name: "--hp-shadow-sm",
+        label: "Sombra pequeña",
+        default: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+        type: "shadow",
+        hint: "Pulgar del switch",
+      },
+      {
+        name: "--hp-shadow",
+        label: "Sombra predeterminada",
+        default: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
+        type: "shadow",
+        hint: "Botones elevados",
+      },
+      {
+        name: "--hp-shadow-md",
+        label: "Sombra mediana",
+        default: "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+        type: "shadow",
+        hint: "Tooltips, popovers",
+      },
+      {
+        name: "--hp-shadow-lg",
+        label: "Sombra grande",
+        default: "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+        type: "shadow",
+        hint: "Diálogos, toasts",
+      },
     ],
   },
   {
-    id: 'typography',
-    label: 'Tipografía',
+    id: "typography",
+    label: "Tipografía",
     tokens: [
-      { name: '--hp-font-size-xs', label: 'Tamaño XS', default: '0.75rem', type: 'size', hint: 'Descripción de toast, error de campo' },
-      { name: '--hp-font-size-sm', label: 'Tamaño SM', default: '0.875rem', type: 'size', hint: 'Texto de componentes por defecto' },
-      { name: '--hp-font-size-base', label: 'Tamaño base', default: '1rem', type: 'size', hint: 'Heredado del documento' },
-      { name: '--hp-font-size-lg', label: 'Tamaño LG', default: '1.125rem', type: 'size', hint: 'Título de diálogo' },
-      { name: '--hp-font-weight-normal', label: 'Peso normal', default: '400', type: 'number', hint: 'Peso predeterminado' },
-      { name: '--hp-font-weight-medium', label: 'Peso mediano', default: '500', type: 'number', hint: 'Etiquetas, botones' },
-      { name: '--hp-font-weight-semibold', label: 'Peso seminegrita', default: '600', type: 'number', hint: 'Título de diálogo, título de toast' },
+      {
+        name: "--hp-font-size-xs",
+        label: "Tamaño XS",
+        default: "0.75rem",
+        type: "size",
+        hint: "Descripción de toast, error de campo",
+      },
+      {
+        name: "--hp-font-size-sm",
+        label: "Tamaño SM",
+        default: "0.875rem",
+        type: "size",
+        hint: "Texto de componentes por defecto",
+      },
+      {
+        name: "--hp-font-size-base",
+        label: "Tamaño base",
+        default: "1rem",
+        type: "size",
+        hint: "Heredado del documento",
+      },
+      {
+        name: "--hp-font-size-lg",
+        label: "Tamaño LG",
+        default: "1.125rem",
+        type: "size",
+        hint: "Título de diálogo",
+      },
+      {
+        name: "--hp-font-weight-normal",
+        label: "Peso normal",
+        default: "400",
+        type: "number",
+        hint: "Peso predeterminado",
+      },
+      {
+        name: "--hp-font-weight-medium",
+        label: "Peso mediano",
+        default: "500",
+        type: "number",
+        hint: "Etiquetas, botones",
+      },
+      {
+        name: "--hp-font-weight-semibold",
+        label: "Peso seminegrita",
+        default: "600",
+        type: "number",
+        hint: "Título de diálogo, título de toast",
+      },
     ],
   },
   {
-    id: 'spacing',
-    label: 'Espaciado',
+    id: "spacing",
+    label: "Espaciado",
     tokens: [
-      { name: '--hp-space-1', label: 'Espacio 1', default: '0.25rem', type: 'size', hint: 'Separaciones muy ajustadas' },
-      { name: '--hp-space-2', label: 'Espacio 2', default: '0.5rem', type: 'size', hint: 'Padding pequeño' },
-      { name: '--hp-space-3', label: 'Espacio 3', default: '0.75rem', type: 'size', hint: 'Padding mediano' },
-      { name: '--hp-space-4', label: 'Espacio 4', default: '1rem', type: 'size', hint: 'Padding estándar' },
+      {
+        name: "--hp-space-1",
+        label: "Espacio 1",
+        default: "0.25rem",
+        type: "size",
+        hint: "Separaciones muy ajustadas",
+      },
+      {
+        name: "--hp-space-2",
+        label: "Espacio 2",
+        default: "0.5rem",
+        type: "size",
+        hint: "Padding pequeño",
+      },
+      {
+        name: "--hp-space-3",
+        label: "Espacio 3",
+        default: "0.75rem",
+        type: "size",
+        hint: "Padding mediano",
+      },
+      {
+        name: "--hp-space-4",
+        label: "Espacio 4",
+        default: "1rem",
+        type: "size",
+        hint: "Padding estándar",
+      },
     ],
   },
   {
-    id: 'motion',
-    label: 'Movimiento y opacidad',
+    id: "motion",
+    label: "Movimiento y opacidad",
     tokens: [
-      { name: '--hp-transition-fast', label: 'Transición rápida', default: '100ms ease', type: 'text', hint: 'Mostrar/ocultar tooltip' },
-      { name: '--hp-transition', label: 'Transición predeterminada', default: '150ms ease', type: 'text', hint: 'Transiciones interactivas por defecto' },
-      { name: '--hp-transition-slow', label: 'Transición lenta', default: '200ms ease', type: 'text', hint: 'Entrada de diálogos y toasts' },
-      { name: '--hp-opacity-disabled', label: 'Opacidad deshabilitado', default: '0.5', type: 'opacity', hint: 'Elementos deshabilitados' },
+      {
+        name: "--hp-transition-fast",
+        label: "Transición rápida",
+        default: "100ms ease",
+        type: "text",
+        hint: "Mostrar/ocultar tooltip",
+      },
+      {
+        name: "--hp-transition",
+        label: "Transición predeterminada",
+        default: "150ms ease",
+        type: "text",
+        hint: "Transiciones interactivas por defecto",
+      },
+      {
+        name: "--hp-transition-slow",
+        label: "Transición lenta",
+        default: "200ms ease",
+        type: "text",
+        hint: "Entrada de diálogos y toasts",
+      },
+      {
+        name: "--hp-opacity-disabled",
+        label: "Opacidad deshabilitado",
+        default: "0.5",
+        type: "opacity",
+        hint: "Elementos deshabilitados",
+      },
     ],
   },
   {
-    id: 'focus',
-    label: 'Foco y overlay',
+    id: "focus",
+    label: "Foco y overlay",
     tokens: [
-      { name: '--hp-focus-outline-color', label: 'Color de foco', default: '#2563eb', type: 'color', hint: 'Color del anillo de foco' },
-      { name: '--hp-focus-outline-width', label: 'Grosor de foco', default: '2px', type: 'size', hint: 'Grosor del anillo de foco' },
-      { name: '--hp-backdrop-bg', label: 'Backdrop', default: 'rgb(0 0 0 / 0.5)', type: 'text', hint: 'Fondo del backdrop en diálogos' },
+      {
+        name: "--hp-focus-outline-color",
+        label: "Color de foco",
+        default: "#2563eb",
+        type: "color",
+        hint: "Color del anillo de foco",
+      },
+      {
+        name: "--hp-focus-outline-width",
+        label: "Grosor de foco",
+        default: "2px",
+        type: "size",
+        hint: "Grosor del anillo de foco",
+      },
+      {
+        name: "--hp-backdrop-bg",
+        label: "Backdrop",
+        default: "rgb(0 0 0 / 0.5)",
+        type: "text",
+        hint: "Fondo del backdrop en diálogos",
+      },
     ],
   },
-]
+];
 
 // ---------------------------------------------------------------------------
 // ESTADO REACTIVO
 // ---------------------------------------------------------------------------
 
 // Mapa plano de nombre de token -> valor actual, inicializado con los valores por defecto
-const tokenValues = ref<Record<string, string>>({})
+const tokenValues = ref<Record<string, string>>({});
 
 function initTokenValues() {
-  const map: Record<string, string> = {}
+  const map: Record<string, string> = {};
   for (const group of TOKEN_GROUPS) {
     for (const token of group.tokens) {
-      map[token.name] = token.default
+      map[token.name] = token.default;
     }
   }
-  tokenValues.value = map
+  tokenValues.value = map;
 }
 
-initTokenValues()
+initTokenValues();
 
 // Pestaña activa del grupo
-const activeGroup = ref(TOKEN_GROUPS[0].id)
+const activeGroup = ref(TOKEN_GROUPS[0].id);
 
 // Estado del botón de copiar
-const copyState = ref<'idle' | 'copied'>('idle')
+const copyState = ref<"idle" | "copied">("idle");
 
 // Estado interactivo para la vista previa
-const previewDialogOpen = ref(false)
-const previewAlertDialogOpen = ref(false)
+const previewDialogOpen = ref(false);
+const previewAlertDialogOpen = ref(false);
 
 // Tooltip con posicionamiento fixed
-const tooltipVisible = ref(false)
-const tooltipStyle = ref({})
-const tooltipTriggerRef = ref<HTMLElement | null>(null)
-let tooltipTimeout: number | null = null
+const tooltipVisible = ref(false);
+const tooltipStyle = ref({});
+const tooltipTriggerRef = ref<HTMLElement | null>(null);
+let tooltipTimeout: number | null = null;
 
 function showTooltip() {
-  if (tooltipTimeout) clearTimeout(tooltipTimeout)
+  if (tooltipTimeout) clearTimeout(tooltipTimeout);
   tooltipTimeout = window.setTimeout(() => {
-    const el = tooltipTriggerRef.value
-    if (!el) return
-    const rect = el.getBoundingClientRect()
+    const el = tooltipTriggerRef.value;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
     tooltipStyle.value = {
-      position: 'fixed',
+      position: "fixed",
       top: `${rect.top - 36}px`,
       left: `${rect.left + rect.width / 2}px`,
-      transform: 'translateX(-50%)',
+      transform: "translateX(-50%)",
       zIndex: 9999,
-    }
-    tooltipVisible.value = true
-  }, 300)
+    };
+    tooltipVisible.value = true;
+  }, 300);
 }
 
 function hideTooltip() {
-  if (tooltipTimeout) clearTimeout(tooltipTimeout)
-  tooltipVisible.value = false
+  if (tooltipTimeout) clearTimeout(tooltipTimeout);
+  tooltipVisible.value = false;
 }
 
 // ---------------------------------------------------------------------------
 // APLICAR TOKENS A :root EN TIEMPO REAL
 // ---------------------------------------------------------------------------
 
-let styleEl: HTMLStyleElement | null = null
+let styleEl: HTMLStyleElement | null = null;
 
 function applyTokens() {
-  if (typeof document === 'undefined') return
+  if (typeof document === "undefined") return;
 
   if (!styleEl) {
-    styleEl = document.createElement('style')
-    styleEl.id = 'hp-theme-builder-overrides'
-    document.head.appendChild(styleEl)
+    styleEl = document.createElement("style");
+    styleEl.id = "hp-theme-builder-overrides";
+    document.head.appendChild(styleEl);
   }
 
   const declarations = Object.entries(tokenValues.value)
     .map(([name, value]) => `  ${name}: ${value};`)
-    .join('\n')
+    .join("\n");
 
-  styleEl.textContent = `:root {\n${declarations}\n}`
+  styleEl.textContent = `:root {\n${declarations}\n}`;
 }
 
 // Observa todos los cambios de tokens
-watch(tokenValues, applyTokens, { deep: true })
+watch(tokenValues, applyTokens, { deep: true });
 
 onMounted(() => {
-  applyTokens()
-})
+  applyTokens();
+});
 
 // ---------------------------------------------------------------------------
 // CSS GENERADO
@@ -219,65 +477,70 @@ onMounted(() => {
 const generatedCSS = computed(() => {
   const lines = Object.entries(tokenValues.value)
     .filter(([name, value]) => {
-      const group = TOKEN_GROUPS.flatMap(g => g.tokens).find(t => t.name === name)
-      return value !== group?.default
+      const group = TOKEN_GROUPS.flatMap((g) => g.tokens).find((t) => t.name === name);
+      return value !== group?.default;
     })
-    .map(([name, value]) => `  ${name}: ${value};`)
+    .map(([name, value]) => `  ${name}: ${value};`);
 
   if (lines.length === 0) {
-    return `/* Sin cambios desde los valores por defecto — edita tokens para ver las sobreescrituras aquí */\n:root {\n  /* todos los tokens en sus valores predeterminados */\n}`
+    return `/* Sin cambios desde los valores por defecto — edita tokens para ver las sobreescrituras aquí */\n:root {\n  /* todos los tokens en sus valores predeterminados */\n}`;
   }
 
-  return `:root {\n${lines.join('\n')}\n}`
-})
+  return `:root {\n${lines.join("\n")}\n}`;
+});
 
 const fullCSS = computed(() => {
-  const lines = Object.entries(tokenValues.value)
-    .map(([name, value]) => `  ${name}: ${value};`)
-  return `:root {\n${lines.join('\n')}\n}`
-})
+  const lines = Object.entries(tokenValues.value).map(([name, value]) => `  ${name}: ${value};`);
+  return `:root {\n${lines.join("\n")}\n}`;
+});
 
 // ---------------------------------------------------------------------------
 // ACCIONES
 // ---------------------------------------------------------------------------
 
 function resetAll() {
-  initTokenValues()
-  applyTokens()
+  initTokenValues();
+  applyTokens();
 }
 
 function resetGroup(groupId: string) {
-  const group = TOKEN_GROUPS.find(g => g.id === groupId)
-  if (!group) return
+  const group = TOKEN_GROUPS.find((g) => g.id === groupId);
+  if (!group) return;
   for (const token of group.tokens) {
-    tokenValues.value[token.name] = token.default
+    tokenValues.value[token.name] = token.default;
   }
 }
 
 async function copyCSS() {
   try {
-    await navigator.clipboard.writeText(fullCSS.value)
-    copyState.value = 'copied'
-    setTimeout(() => { copyState.value = 'idle' }, 2000)
+    await navigator.clipboard.writeText(fullCSS.value);
+    copyState.value = "copied";
+    setTimeout(() => {
+      copyState.value = "idle";
+    }, 2000);
   } catch {
-    const ta = document.createElement('textarea')
-    ta.value = fullCSS.value
-    document.body.appendChild(ta)
-    ta.select()
-    document.execCommand('copy')
-    document.body.removeChild(ta)
-    copyState.value = 'copied'
-    setTimeout(() => { copyState.value = 'idle' }, 2000)
+    const ta = document.createElement("textarea");
+    ta.value = fullCSS.value;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand("copy");
+    document.body.removeChild(ta);
+    copyState.value = "copied";
+    setTimeout(() => {
+      copyState.value = "idle";
+    }, 2000);
   }
 }
 
 async function copyOverridesCSS() {
   try {
-    await navigator.clipboard.writeText(generatedCSS.value)
-    copyState.value = 'copied'
-    setTimeout(() => { copyState.value = 'idle' }, 2000)
+    await navigator.clipboard.writeText(generatedCSS.value);
+    copyState.value = "copied";
+    setTimeout(() => {
+      copyState.value = "idle";
+    }, 2000);
   } catch {
-    copyState.value = 'idle'
+    copyState.value = "idle";
   }
 }
 
@@ -286,56 +549,54 @@ async function copyOverridesCSS() {
 // ---------------------------------------------------------------------------
 
 function isColor(token: Token): boolean {
-  return token.type === 'color'
+  return token.type === "color";
 }
 
 function isSize(token: Token): boolean {
-  return token.type === 'size' || token.type === 'number' || token.type === 'opacity'
+  return token.type === "size" || token.type === "number" || token.type === "opacity";
 }
 
 function isModified(name: string): boolean {
-  const token = TOKEN_GROUPS.flatMap(g => g.tokens).find(t => t.name === name)
-  return token ? tokenValues.value[name] !== token.default : false
+  const token = TOKEN_GROUPS.flatMap((g) => g.tokens).find((t) => t.name === name);
+  return token ? tokenValues.value[name] !== token.default : false;
 }
 
 function modifiedCount(groupId: string): number {
-  const group = TOKEN_GROUPS.find(g => g.id === groupId)
-  if (!group) return 0
-  return group.tokens.filter(t => isModified(t.name)).length
+  const group = TOKEN_GROUPS.find((g) => g.id === groupId);
+  if (!group) return 0;
+  return group.tokens.filter((t) => isModified(t.name)).length;
 }
 
-const totalModified = computed(() =>
-  TOKEN_GROUPS.reduce((sum, g) => sum + modifiedCount(g.id), 0)
-)
+const totalModified = computed(() => TOKEN_GROUPS.reduce((sum, g) => sum + modifiedCount(g.id), 0));
 </script>
 
 <template>
   <div class="tb-root">
-
     <!-- BARRA DE CABECERA -->
     <div class="tb-header">
       <div class="tb-header-left">
         <h2 class="tb-title">Constructor de Tema</h2>
-        <span v-if="totalModified > 0" class="tb-modified-badge">{{ totalModified }} modificados</span>
+        <span v-if="totalModified > 0" class="tb-modified-badge"
+          >{{ totalModified }} modificados</span
+        >
       </div>
       <div class="tb-header-actions">
-        <button class="tb-btn tb-btn--ghost" @click="resetAll" title="Restablecer todos los tokens a sus valores por defecto">
+        <button
+          class="tb-btn tb-btn--ghost"
+          @click="resetAll"
+          title="Restablecer todos los tokens a sus valores por defecto"
+        >
           Restablecer todo
         </button>
-        <button
-          class="tb-btn tb-btn--primary"
-          @click="copyCSS"
-        >
-          {{ copyState === 'copied' ? '¡Copiado!' : 'Copiar CSS completo' }}
+        <button class="tb-btn tb-btn--primary" @click="copyCSS">
+          {{ copyState === "copied" ? "¡Copiado!" : "Copiar CSS completo" }}
         </button>
       </div>
     </div>
 
     <div class="tb-layout">
-
       <!-- IZQUIERDA: EDITOR -->
       <div class="tb-editor">
-
         <!-- Lista vertical de grupos -->
         <div class="tb-editor-body">
           <nav class="tb-group-nav" role="tablist" aria-label="Grupos de tokens">
@@ -362,143 +623,182 @@ const totalModified = computed(() =>
               class="tb-token-panel"
               role="tabpanel"
             >
-          <div class="tb-panel-header">
-            <span class="tb-panel-title">{{ group.label }}</span>
-            <button
-              v-if="modifiedCount(group.id) > 0"
-              class="tb-btn-tiny"
-              @click="resetGroup(group.id)"
-            >
-              Restablecer grupo
-            </button>
-          </div>
-
-          <div class="tb-token-list">
-            <div
-              v-for="token in group.tokens"
-              :key="token.name"
-              class="tb-token-row"
-              :class="{ 'is-modified': isModified(token.name) }"
-            >
-              <div class="tb-token-meta">
-                <label :for="`token-${token.name}`" class="tb-token-label">
-                  {{ token.label }}
-                  <span v-if="isModified(token.name)" class="tb-modified-dot" title="Modificado desde el valor por defecto" />
-                </label>
-                <span class="tb-token-name">{{ token.name }}</span>
-                <span v-if="token.hint" class="tb-token-hint">{{ token.hint }}</span>
-              </div>
-              <div class="tb-token-input-group">
-                <!-- Selector de color + entrada de texto -->
-                <template v-if="isColor(token)">
-                  <input
-                    :id="`token-${token.name}-picker`"
-                    type="color"
-                    class="tb-color-picker"
-                    :value="tokenValues[token.name]"
-                    @input="(e) => { tokenValues[token.name] = (e.target as HTMLInputElement).value }"
-                    :title="`Selector de color para ${token.name}`"
-                  />
-                  <input
-                    :id="`token-${token.name}`"
-                    type="text"
-                    class="tb-text-input"
-                    :value="tokenValues[token.name]"
-                    @input="(e) => { tokenValues[token.name] = (e.target as HTMLInputElement).value }"
-                    spellcheck="false"
-                  />
-                </template>
-
-                <!-- Entrada de tamaño para valores px/rem -->
-                <template v-else-if="token.type === 'size'">
-                  <input
-                    :id="`token-${token.name}`"
-                    type="text"
-                    class="tb-text-input tb-text-input--wide"
-                    :value="tokenValues[token.name]"
-                    @input="(e) => { tokenValues[token.name] = (e.target as HTMLInputElement).value }"
-                    spellcheck="false"
-                  />
-                </template>
-
-                <!-- Control deslizante de opacidad -->
-                <template v-else-if="token.type === 'opacity'">
-                  <input
-                    :id="`token-${token.name}-range`"
-                    type="range"
-                    class="tb-range"
-                    min="0"
-                    max="1"
-                    step="0.05"
-                    :value="tokenValues[token.name]"
-                    @input="(e) => { tokenValues[token.name] = (e.target as HTMLInputElement).value }"
-                  />
-                  <input
-                    :id="`token-${token.name}`"
-                    type="text"
-                    class="tb-text-input tb-text-input--narrow"
-                    :value="tokenValues[token.name]"
-                    @input="(e) => { tokenValues[token.name] = (e.target as HTMLInputElement).value }"
-                    spellcheck="false"
-                  />
-                </template>
-
-                <!-- Número (pesos tipográficos) -->
-                <template v-else-if="token.type === 'number'">
-                  <input
-                    :id="`token-${token.name}-range`"
-                    type="range"
-                    class="tb-range"
-                    min="100"
-                    max="900"
-                    step="100"
-                    :value="tokenValues[token.name]"
-                    @input="(e) => { tokenValues[token.name] = (e.target as HTMLInputElement).value }"
-                  />
-                  <input
-                    :id="`token-${token.name}`"
-                    type="text"
-                    class="tb-text-input tb-text-input--narrow"
-                    :value="tokenValues[token.name]"
-                    @input="(e) => { tokenValues[token.name] = (e.target as HTMLInputElement).value }"
-                    spellcheck="false"
-                  />
-                </template>
-
-                <!-- Sombra / texto — entrada de texto libre -->
-                <template v-else>
-                  <input
-                    :id="`token-${token.name}`"
-                    type="text"
-                    class="tb-text-input tb-text-input--wide"
-                    :value="tokenValues[token.name]"
-                    @input="(e) => { tokenValues[token.name] = (e.target as HTMLInputElement).value }"
-                    spellcheck="false"
-                  />
-                </template>
-
-                <!-- Restablecer token individual -->
+              <div class="tb-panel-header">
+                <span class="tb-panel-title">{{ group.label }}</span>
                 <button
-                  v-if="isModified(token.name)"
-                  class="tb-reset-token"
-                  :title="`Restablecer ${token.name} al valor por defecto`"
-                  @click="tokenValues[token.name] = token.default"
+                  v-if="modifiedCount(group.id) > 0"
+                  class="tb-btn-tiny"
+                  @click="resetGroup(group.id)"
                 >
-                  ↺
+                  Restablecer grupo
                 </button>
               </div>
+
+              <div class="tb-token-list">
+                <div
+                  v-for="token in group.tokens"
+                  :key="token.name"
+                  class="tb-token-row"
+                  :class="{ 'is-modified': isModified(token.name) }"
+                >
+                  <div class="tb-token-meta">
+                    <label :for="`token-${token.name}`" class="tb-token-label">
+                      {{ token.label }}
+                      <span
+                        v-if="isModified(token.name)"
+                        class="tb-modified-dot"
+                        title="Modificado desde el valor por defecto"
+                      />
+                    </label>
+                    <span class="tb-token-name">{{ token.name }}</span>
+                    <span v-if="token.hint" class="tb-token-hint">{{ token.hint }}</span>
+                  </div>
+                  <div class="tb-token-input-group">
+                    <!-- Selector de color + entrada de texto -->
+                    <template v-if="isColor(token)">
+                      <input
+                        :id="`token-${token.name}-picker`"
+                        type="color"
+                        class="tb-color-picker"
+                        :value="tokenValues[token.name]"
+                        @input="
+                          (e) => {
+                            tokenValues[token.name] = (e.target as HTMLInputElement).value;
+                          }
+                        "
+                        :title="`Selector de color para ${token.name}`"
+                      />
+                      <input
+                        :id="`token-${token.name}`"
+                        type="text"
+                        class="tb-text-input"
+                        :value="tokenValues[token.name]"
+                        @input="
+                          (e) => {
+                            tokenValues[token.name] = (e.target as HTMLInputElement).value;
+                          }
+                        "
+                        spellcheck="false"
+                      />
+                    </template>
+
+                    <!-- Entrada de tamaño para valores px/rem -->
+                    <template v-else-if="token.type === 'size'">
+                      <input
+                        :id="`token-${token.name}`"
+                        type="text"
+                        class="tb-text-input tb-text-input--wide"
+                        :value="tokenValues[token.name]"
+                        @input="
+                          (e) => {
+                            tokenValues[token.name] = (e.target as HTMLInputElement).value;
+                          }
+                        "
+                        spellcheck="false"
+                      />
+                    </template>
+
+                    <!-- Control deslizante de opacidad -->
+                    <template v-else-if="token.type === 'opacity'">
+                      <input
+                        :id="`token-${token.name}-range`"
+                        type="range"
+                        class="tb-range"
+                        min="0"
+                        max="1"
+                        step="0.05"
+                        :value="tokenValues[token.name]"
+                        @input="
+                          (e) => {
+                            tokenValues[token.name] = (e.target as HTMLInputElement).value;
+                          }
+                        "
+                      />
+                      <input
+                        :id="`token-${token.name}`"
+                        type="text"
+                        class="tb-text-input tb-text-input--narrow"
+                        :value="tokenValues[token.name]"
+                        @input="
+                          (e) => {
+                            tokenValues[token.name] = (e.target as HTMLInputElement).value;
+                          }
+                        "
+                        spellcheck="false"
+                      />
+                    </template>
+
+                    <!-- Número (pesos tipográficos) -->
+                    <template v-else-if="token.type === 'number'">
+                      <input
+                        :id="`token-${token.name}-range`"
+                        type="range"
+                        class="tb-range"
+                        min="100"
+                        max="900"
+                        step="100"
+                        :value="tokenValues[token.name]"
+                        @input="
+                          (e) => {
+                            tokenValues[token.name] = (e.target as HTMLInputElement).value;
+                          }
+                        "
+                      />
+                      <input
+                        :id="`token-${token.name}`"
+                        type="text"
+                        class="tb-text-input tb-text-input--narrow"
+                        :value="tokenValues[token.name]"
+                        @input="
+                          (e) => {
+                            tokenValues[token.name] = (e.target as HTMLInputElement).value;
+                          }
+                        "
+                        spellcheck="false"
+                      />
+                    </template>
+
+                    <!-- Sombra / texto — entrada de texto libre -->
+                    <template v-else>
+                      <input
+                        :id="`token-${token.name}`"
+                        type="text"
+                        class="tb-text-input tb-text-input--wide"
+                        :value="tokenValues[token.name]"
+                        @input="
+                          (e) => {
+                            tokenValues[token.name] = (e.target as HTMLInputElement).value;
+                          }
+                        "
+                        spellcheck="false"
+                      />
+                    </template>
+
+                    <!-- Restablecer token individual -->
+                    <button
+                      v-if="isModified(token.name)"
+                      class="tb-reset-token"
+                      :title="`Restablecer ${token.name} al valor por defecto`"
+                      @click="tokenValues[token.name] = token.default"
+                    >
+                      ↺
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
+            <!-- /tb-token-panel -->
           </div>
-            </div><!-- /tb-token-panel -->
-          </div><!-- /tb-token-panels -->
-        </div><!-- /tb-editor-body -->
+          <!-- /tb-token-panels -->
+        </div>
+        <!-- /tb-editor-body -->
 
         <!-- Panel de CSS generado -->
         <div class="tb-generated">
           <div class="tb-generated-header">
             <span class="tb-panel-title">CSS generado (solo sobreescrituras)</span>
             <button class="tb-btn-tiny" @click="copyOverridesCSS">
-              {{ copyState === 'copied' ? '¡Copiado!' : 'Copiar' }}
+              {{ copyState === "copied" ? "¡Copiado!" : "Copiar" }}
             </button>
           </div>
           <pre class="tb-code"><code>{{ generatedCSS }}</code></pre>
@@ -535,7 +835,6 @@ const totalModified = computed(() =>
         </div>
 
         <div class="tb-preview-scroll">
-
           <!-- BOTÓN -->
           <section class="tb-preview-section">
             <h4 class="tb-preview-section-title">Botón</h4>
@@ -632,7 +931,9 @@ const totalModified = computed(() =>
               <p class="tbp-label">Encima de la línea</p>
               <hp-separator class="tbp-separator-h"></hp-separator>
               <p class="tbp-label">Debajo de la línea</p>
-              <div style="display: flex; align-items: center; gap: 12px; height: 20px; margin-top: 8px;">
+              <div
+                style="display: flex; align-items: center; gap: 12px; height: 20px; margin-top: 8px"
+              >
                 <span class="tbp-label">Izquierda</span>
                 <hp-separator orientation="vertical" class="tbp-separator-v"></hp-separator>
                 <span class="tbp-label">Derecha</span>
@@ -685,9 +986,15 @@ const totalModified = computed(() =>
                   <hp-tab value="t2" class="tbp-tab">Configuración</hp-tab>
                   <hp-tab value="t3" class="tbp-tab">Notificaciones</hp-tab>
                 </hp-tab-list>
-                <hp-tab-panel value="t1" class="tbp-tab-panel">Gestiona aquí la información de tu perfil.</hp-tab-panel>
-                <hp-tab-panel value="t2" class="tbp-tab-panel">Configura los ajustes de tu aplicación.</hp-tab-panel>
-                <hp-tab-panel value="t3" class="tbp-tab-panel">Controla cómo recibes tus notificaciones.</hp-tab-panel>
+                <hp-tab-panel value="t1" class="tbp-tab-panel"
+                  >Gestiona aquí la información de tu perfil.</hp-tab-panel
+                >
+                <hp-tab-panel value="t2" class="tbp-tab-panel"
+                  >Configura los ajustes de tu aplicación.</hp-tab-panel
+                >
+                <hp-tab-panel value="t3" class="tbp-tab-panel"
+                  >Controla cómo recibes tus notificaciones.</hp-tab-panel
+                >
               </hp-tabs>
             </div>
           </section>
@@ -702,21 +1009,28 @@ const totalModified = computed(() =>
                     <span>¿Qué es Headless Primitives?</span>
                     <span class="tbp-accordion-icon">▾</span>
                   </hp-accordion-trigger>
-                  <hp-accordion-content class="tbp-accordion-content">Una librería de componentes web headless y accesibles.</hp-accordion-content>
+                  <hp-accordion-content class="tbp-accordion-content"
+                    >Una librería de componentes web headless y accesibles.</hp-accordion-content
+                  >
                 </hp-accordion-item>
                 <hp-accordion-item value="acc2" class="tbp-accordion-item">
                   <hp-accordion-trigger class="tbp-accordion-trigger">
                     <span>¿Por qué usarla?</span>
                     <span class="tbp-accordion-icon">▾</span>
                   </hp-accordion-trigger>
-                  <hp-accordion-content class="tbp-accordion-content">El comportamiento y la accesibilidad están resueltos — tú pones los estilos.</hp-accordion-content>
+                  <hp-accordion-content class="tbp-accordion-content"
+                    >El comportamiento y la accesibilidad están resueltos — tú pones los
+                    estilos.</hp-accordion-content
+                  >
                 </hp-accordion-item>
                 <hp-accordion-item value="acc3" disabled class="tbp-accordion-item">
                   <hp-accordion-trigger class="tbp-accordion-trigger">
                     <span>Elemento deshabilitado</span>
                     <span class="tbp-accordion-icon">▾</span>
                   </hp-accordion-trigger>
-                  <hp-accordion-content class="tbp-accordion-content">No visible.</hp-accordion-content>
+                  <hp-accordion-content class="tbp-accordion-content"
+                    >No visible.</hp-accordion-content
+                  >
                 </hp-accordion-item>
               </hp-accordion>
             </div>
@@ -746,7 +1060,9 @@ const totalModified = computed(() =>
                 <hp-field>
                   <div class="tbp-field-inner">
                     <hp-field-label class="tbp-field-label">Correo electrónico</hp-field-label>
-                    <hp-field-description class="tbp-field-desc">Nunca compartiremos tu correo.</hp-field-description>
+                    <hp-field-description class="tbp-field-desc"
+                      >Nunca compartiremos tu correo.</hp-field-description
+                    >
                     <hp-field-control>
                       <input type="email" class="tbp-input" placeholder="tu@ejemplo.com" />
                     </hp-field-control>
@@ -758,7 +1074,9 @@ const totalModified = computed(() =>
                     <hp-field-control>
                       <input type="text" class="tbp-input tbp-input--error" value="¡ya existe!" />
                     </hp-field-control>
-                    <hp-field-error class="tbp-field-error">Este nombre de usuario ya está en uso.</hp-field-error>
+                    <hp-field-error class="tbp-field-error"
+                      >Este nombre de usuario ya está en uso.</hp-field-error
+                    >
                   </div>
                 </hp-field>
               </div>
@@ -777,14 +1095,17 @@ const totalModified = computed(() =>
                   @focus="showTooltip"
                   @blur="hideTooltip"
                   ref="tooltipTriggerRef"
-                >Pasa el cursor</hp-button>
+                  >Pasa el cursor</hp-button
+                >
                 <Teleport to="body">
                   <div
                     v-if="tooltipVisible"
                     class="tbp-tooltip-floating"
                     role="tooltip"
                     :style="tooltipStyle"
-                  >Contenido del tooltip</div>
+                  >
+                    Contenido del tooltip
+                  </div>
                 </Teleport>
               </div>
             </div>
@@ -793,7 +1114,7 @@ const totalModified = computed(() =>
           <!-- POPOVER -->
           <section class="tb-preview-section">
             <h4 class="tb-preview-section-title">Popover</h4>
-            <div class="tb-preview-demo" style="overflow: visible; min-height: 100px;">
+            <div class="tb-preview-demo" style="overflow: visible; min-height: 100px">
               <hp-popover align="start" class="tbp-popover-host">
                 <hp-popover-trigger>
                   <hp-button class="tbp-btn tbp-btn--secondary">Abrir popover</hp-button>
@@ -802,8 +1123,9 @@ const totalModified = computed(() =>
                   <p class="tbp-popover-text">Contenido del popover. Haz clic fuera para cerrar.</p>
                   <hp-button
                     class="tbp-btn tbp-btn--ghost tbp-btn--sm"
-                    onclick="this.closest('hp-popover').close()"
-                  >Cerrar</hp-button>
+                    onclick="this.closest(&quot;hp-popover&quot;).close();"
+                    >Cerrar</hp-button
+                  >
                 </hp-popover-content>
               </hp-popover>
             </div>
@@ -819,13 +1141,20 @@ const totalModified = computed(() =>
               ></hp-toast-container>
               <hp-button
                 class="tbp-btn tbp-btn--primary"
-                onclick="document.getElementById('tbp-toast-container').addToast('Cambios guardados correctamente', { duration: 3000 })"
+                onclick="document
+                  .getElementById(&quot;tbp-toast-container&quot;)
+                  .addToast(&quot;Cambios guardados correctamente&quot;, { duration: 3000 });"
               >
                 Mostrar toast
               </hp-button>
               <hp-button
                 class="tbp-btn tbp-btn--secondary"
-                onclick="(function(){ var t = document.getElementById('tbp-toast-container').addToast('Ocurrió un error inesperado', { duration: 3000 }); t.style.borderLeftColor = 'var(--hp-text-error)'; })()"
+                onclick="(function () {
+                  var t = document
+                    .getElementById(&quot;tbp-toast-container&quot;)
+                    .addToast(&quot;Ocurrió un error inesperado&quot;, { duration: 3000 });
+                  t.style.borderLeftColor = &quot;var(--hp-text-error)&quot;;
+                })();"
               >
                 Toast de error
               </hp-button>
@@ -840,13 +1169,28 @@ const totalModified = computed(() =>
                 Abrir diálogo
               </button>
               <Teleport to="body">
-                <div v-if="previewDialogOpen" class="tbp-dialog-overlay" @click.self="previewDialogOpen = false">
-                  <div class="tbp-dialog-content" role="dialog" aria-modal="true" aria-labelledby="tbp-dlg-title">
+                <div
+                  v-if="previewDialogOpen"
+                  class="tbp-dialog-overlay"
+                  @click.self="previewDialogOpen = false"
+                >
+                  <div
+                    class="tbp-dialog-content"
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby="tbp-dlg-title"
+                  >
                     <h2 id="tbp-dlg-title" class="tbp-dialog-title">Título del diálogo</h2>
-                    <p class="tbp-dialog-body">Este es el cuerpo del diálogo. Se adapta a los valores de token actuales.</p>
+                    <p class="tbp-dialog-body">
+                      Este es el cuerpo del diálogo. Se adapta a los valores de token actuales.
+                    </p>
                     <div class="tbp-dialog-footer">
-                      <button class="tbp-btn tbp-btn--ghost" @click="previewDialogOpen = false">Cancelar</button>
-                      <button class="tbp-btn tbp-btn--primary" @click="previewDialogOpen = false">Confirmar</button>
+                      <button class="tbp-btn tbp-btn--ghost" @click="previewDialogOpen = false">
+                        Cancelar
+                      </button>
+                      <button class="tbp-btn tbp-btn--primary" @click="previewDialogOpen = false">
+                        Confirmar
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -863,19 +1207,38 @@ const totalModified = computed(() =>
               </button>
               <Teleport to="body">
                 <div v-if="previewAlertDialogOpen" class="tbp-dialog-overlay">
-                  <div class="tbp-dialog-content" role="alertdialog" aria-modal="true" aria-labelledby="tbp-alert-title" aria-describedby="tbp-alert-body">
-                    <h2 id="tbp-alert-title" class="tbp-dialog-title tbp-dialog-title--danger">¿Eliminar elemento?</h2>
-                    <p id="tbp-alert-body" class="tbp-dialog-body">Esta acción no se puede deshacer. El elemento será eliminado permanentemente.</p>
+                  <div
+                    class="tbp-dialog-content"
+                    role="alertdialog"
+                    aria-modal="true"
+                    aria-labelledby="tbp-alert-title"
+                    aria-describedby="tbp-alert-body"
+                  >
+                    <h2 id="tbp-alert-title" class="tbp-dialog-title tbp-dialog-title--danger">
+                      ¿Eliminar elemento?
+                    </h2>
+                    <p id="tbp-alert-body" class="tbp-dialog-body">
+                      Esta acción no se puede deshacer. El elemento será eliminado permanentemente.
+                    </p>
                     <div class="tbp-dialog-footer">
-                      <button class="tbp-btn tbp-btn--ghost" @click="previewAlertDialogOpen = false">Cancelar</button>
-                      <button class="tbp-btn tbp-btn--danger" @click="previewAlertDialogOpen = false">Eliminar</button>
+                      <button
+                        class="tbp-btn tbp-btn--ghost"
+                        @click="previewAlertDialogOpen = false"
+                      >
+                        Cancelar
+                      </button>
+                      <button
+                        class="tbp-btn tbp-btn--danger"
+                        @click="previewAlertDialogOpen = false"
+                      >
+                        Eliminar
+                      </button>
                     </div>
                   </div>
                 </div>
               </Teleport>
             </div>
           </section>
-
         </div>
       </div>
     </div>
@@ -953,7 +1316,9 @@ const totalModified = computed(() =>
   border-radius: 6px;
   cursor: pointer;
   border: 1px solid transparent;
-  transition: opacity 0.15s, transform 0.1s;
+  transition:
+    opacity 0.15s,
+    transform 0.1s;
   line-height: 1.4;
 }
 
@@ -1042,7 +1407,9 @@ const totalModified = computed(() =>
   align-items: center;
   justify-content: space-between;
   gap: 6px;
-  transition: color 0.12s, background 0.12s;
+  transition:
+    color 0.12s,
+    background 0.12s;
   border-left: 2px solid transparent;
   white-space: nowrap;
 }
@@ -1222,7 +1589,9 @@ const totalModified = computed(() =>
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: color 0.12s, border-color 0.12s;
+  transition:
+    color 0.12s,
+    border-color 0.12s;
   flex-shrink: 0;
 }
 
@@ -1330,20 +1699,53 @@ const totalModified = computed(() =>
    =========================================================================== */
 
 /* Display blocks para custom elements */
-hp-checkbox, hp-switch, hp-tabs, hp-tab-list, hp-tab, hp-tab-panel,
-hp-accordion, hp-accordion-item, hp-accordion-trigger, hp-accordion-content,
-hp-toggle-group, hp-toggle, hp-collapsible, hp-collapsible-trigger, hp-collapsible-content,
-hp-radio-group, hp-radio, hp-label, hp-progress, hp-progress-indicator,
-hp-separator, hp-avatar, hp-avatar-image, hp-avatar-fallback,
-hp-tooltip, hp-tooltip-trigger, hp-tooltip-content,
-hp-popover, hp-popover-trigger, hp-popover-content,
-hp-field, hp-field-label, hp-field-description, hp-field-control, hp-field-error,
+hp-checkbox,
+hp-switch,
+hp-tabs,
+hp-tab-list,
+hp-tab,
+hp-tab-panel,
+hp-accordion,
+hp-accordion-item,
+hp-accordion-trigger,
+hp-accordion-content,
+hp-toggle-group,
+hp-toggle,
+hp-collapsible,
+hp-collapsible-trigger,
+hp-collapsible-content,
+hp-radio-group,
+hp-radio,
+hp-label,
+hp-progress,
+hp-progress-indicator,
+hp-separator,
+hp-avatar,
+hp-avatar-image,
+hp-avatar-fallback,
+hp-tooltip,
+hp-tooltip-trigger,
+hp-tooltip-content,
+hp-popover,
+hp-popover-trigger,
+hp-popover-content,
+hp-field,
+hp-field-label,
+hp-field-description,
+hp-field-control,
+hp-field-error,
 hp-button {
   display: block;
 }
 
-hp-button, hp-tab, hp-toggle, hp-accordion-trigger, hp-collapsible-trigger,
-hp-checkbox, hp-switch, hp-radio {
+hp-button,
+hp-tab,
+hp-toggle,
+hp-accordion-trigger,
+hp-collapsible-trigger,
+hp-checkbox,
+hp-switch,
+hp-radio {
   display: inline-flex;
   align-items: center;
 }

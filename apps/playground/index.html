@@ -1,79 +1,86 @@
 <!doctype html>
 <html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Headless Primitives | Playground</title>
+    <!-- Modern premium font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./src/style.css" />
+    <!-- Prism Theme for Code Preview -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+    />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Headless Primitives | Playground</title>
-  <!-- Modern premium font -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono&display=swap"
-    rel="stylesheet" />
-  <link rel="stylesheet" href="./src/style.css" />
-  <!-- Prism Theme for Code Preview -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" />
-</head>
-
-<body class="hp-dashboard">
-  <div id="app" class="dashboard-root">
-    <aside class="sidebar">
-      <div class="sidebar-header">
-        <img src="/logo.png" alt="Logo" class="logo" />
-        <h1>Headless</h1>
-      </div>
-
-      <nav class="sidebar-nav">
-        <span class="nav-label">Componentes</span>
-        <ul id="sidebar-list">
-          <!-- Cargado dinámicamente -->
-          <li><button class="nav-item active" data-comp="accordion">Accordion</button></li>
-          <li><button class="nav-item" data-comp="alert-dialog">Alert Dialog</button></li>
-          <li><button class="nav-item" data-comp="avatar">Avatar</button></li>
-          <li><button class="nav-item" data-comp="button">Button</button></li>
-          <li><button class="nav-item" data-comp="checkbox">Checkbox</button></li>
-          <li><button class="nav-item" data-comp="collapsible">Collapsible</button></li>
-          <li><button class="nav-item" data-comp="dialog">Dialog</button></li>
-          <li><button class="nav-item" data-comp="field">Field</button></li>
-          <li><button class="nav-item" data-comp="label">Label</button></li>
-          <li><button class="nav-item" data-comp="popover">Popover</button></li>
-          <li><button class="nav-item" data-comp="progress">Progress</button></li>
-          <li><button class="nav-item" data-comp="radio-group">Radio Group</button></li>
-          <li><button class="nav-item" data-comp="separator">Separator</button></li>
-          <li><button class="nav-item" data-comp="switch">Switch</button></li>
-          <li><button class="nav-item" data-comp="tabs">Tabs</button></li>
-          <li><button class="nav-item" data-comp="toast">Toast</button></li>
-          <li><button class="nav-item" data-comp="toggle-group">Toggle Group</button></li>
-          <li><button class="nav-item" data-comp="tooltip">Tooltip</button></li>
-        </ul>
-      </nav>
-
-      <footer class="sidebar-footer">
-        <a href="https://github.com/DavidCast27/headless-primitives" target="_blank">GitHub</a>
-        <span class="version">v0.1.0</span>
-      </footer>
-    </aside>
-
-    <main class="main-content">
-      <header class="top-bar">
-        <div id="comp-header">
-          <!-- Título y Chip dinámicos -->
+  <body class="hp-dashboard">
+    <div id="app" class="dashboard-root">
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <img src="/logo.png" alt="Logo" class="logo" />
+          <h1>Headless</h1>
         </div>
-        <div class="styles-toggle-wrapper">
-          <button id="styles-toggle" class="styles-toggle-btn" aria-pressed="false"
-            title="Alternar estilos base (@headless-primitives/styles)">
-            <span class="styles-toggle-indicator"></span>
-            <span class="styles-toggle-label">Estilos base</span>
-          </button>
+
+        <nav class="sidebar-nav">
+          <span class="nav-label">Componentes</span>
+          <ul id="sidebar-list">
+            <!-- Cargado dinámicamente -->
+            <li><button class="nav-item active" data-comp="accordion">Accordion</button></li>
+            <li><button class="nav-item" data-comp="alert-dialog">Alert Dialog</button></li>
+            <li><button class="nav-item" data-comp="avatar">Avatar</button></li>
+            <li><button class="nav-item" data-comp="button">Button</button></li>
+            <li><button class="nav-item" data-comp="checkbox">Checkbox</button></li>
+            <li><button class="nav-item" data-comp="collapsible">Collapsible</button></li>
+            <li><button class="nav-item" data-comp="dialog">Dialog</button></li>
+            <li><button class="nav-item" data-comp="field">Field</button></li>
+            <li><button class="nav-item" data-comp="label">Label</button></li>
+            <li><button class="nav-item" data-comp="popover">Popover</button></li>
+            <li><button class="nav-item" data-comp="progress">Progress</button></li>
+            <li><button class="nav-item" data-comp="radio-group">Radio Group</button></li>
+            <li><button class="nav-item" data-comp="separator">Separator</button></li>
+            <li><button class="nav-item" data-comp="switch">Switch</button></li>
+            <li><button class="nav-item" data-comp="tabs">Tabs</button></li>
+            <li><button class="nav-item" data-comp="toast">Toast</button></li>
+            <li><button class="nav-item" data-comp="toggle-group">Toggle Group</button></li>
+            <li><button class="nav-item" data-comp="tooltip">Tooltip</button></li>
+          </ul>
+        </nav>
+
+        <footer class="sidebar-footer">
+          <a href="https://github.com/DavidCast27/headless-primitives" target="_blank">GitHub</a>
+          <span class="version">v0.1.0</span>
+        </footer>
+      </aside>
+
+      <main class="main-content">
+        <header class="top-bar">
+          <div id="comp-header">
+            <!-- Título y Chip dinámicos -->
+          </div>
+          <div class="styles-toggle-wrapper">
+            <button
+              id="styles-toggle"
+              class="styles-toggle-btn"
+              aria-pressed="false"
+              title="Alternar estilos base (@headless-primitives/styles)"
+            >
+              <span class="styles-toggle-indicator"></span>
+              <span class="styles-toggle-label">Estilos base</span>
+            </button>
+          </div>
+        </header>
+
+        <div id="playground-viewport" class="viewport">
+          <!-- Área de la Demo -->
         </div>
-      </header>
-
-      <div id="playground-viewport" class="viewport">
-        <!-- Área de la Demo -->
-      </div>
-    </main>
-  </div>
-  <script type="module" src="./src/main.ts"></script>
-</body>
-
+      </main>
+    </div>
+    <script type="module" src="./src/main.ts"></script>
+  </body>
 </html>

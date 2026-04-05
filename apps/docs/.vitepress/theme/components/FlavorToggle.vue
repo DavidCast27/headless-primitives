@@ -1,24 +1,24 @@
 <script setup lang="ts">
-import { stylePreference, setStylePreference } from '../state'
+import { stylePreference, setStylePreference } from "../state";
 
 defineProps<{
-  compact?: boolean
-}>()
+  compact?: boolean;
+}>();
 </script>
 
 <template>
   <div class="hp-flavor-toggle" :class="{ 'is-compact': compact }">
-    <button 
+    <button
       class="hp-flavor-btn"
-      :class="{ active: stylePreference === 'css' }" 
+      :class="{ active: stylePreference === 'css' }"
       @click="setStylePreference('css')"
       title="Vanilla CSS"
     >
       CSS
     </button>
-    <button 
+    <button
       class="hp-flavor-btn"
-      :class="{ active: stylePreference === 'tailwind' }" 
+      :class="{ active: stylePreference === 'tailwind' }"
       @click="setStylePreference('tailwind')"
       title="Tailwind CSS"
     >
@@ -59,13 +59,13 @@ defineProps<{
 .hp-flavor-btn.active {
   background: var(--vp-c-bg);
   color: var(--vp-c-brand-1);
-  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 /* Variante para integrar en cabeceras de código */
 .is-compact {
   background: transparent;
-  border-color: rgba(255,255,255,0.1);
+  border-color: rgba(255, 255, 255, 0.1);
 }
 
 .dark .is-compact {

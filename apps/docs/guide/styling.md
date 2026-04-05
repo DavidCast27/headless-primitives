@@ -3,6 +3,7 @@
 Headless Primitives tiene una arquitectura de estilos en **dos capas independientes**. Puedes usar una, ambas, o ninguna.
 
 > Guías detalladas por capa:
+>
 > - [base.css — Structural Layer](./base-css.md) — qué hace exactamente cada regla estructural
 > - [@styles Theming Layer](./styles-theming.md) — referencia completa de todos los tokens CSS Custom Properties
 
