@@ -6,9 +6,25 @@ El componente `hp-switch` provee un control interactivo que permite alternar ent
 
 ## Instalación
 
-```bash
+::: code-group
+
+```bash [pnpm]
 pnpm add @headless-primitives/switch
 ```
+
+```bash [npm]
+npm install @headless-primitives/switch
+```
+
+```bash [yarn]
+yarn add @headless-primitives/switch
+```
+
+```bash [bun]
+bun add @headless-primitives/switch
+```
+
+:::
 
 ## Demostración
 

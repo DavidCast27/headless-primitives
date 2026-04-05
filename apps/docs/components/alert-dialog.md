@@ -12,9 +12,25 @@ Variante especializada de Dialog para situaciones que requieren confirmación o 
 
 AlertDialog utiliza el componente Dialog existente. Asegúrate de tener instalado:
 
-```bash
+::: code-group
+
+```bash [pnpm]
 pnpm add @headless-primitives/dialog
 ```
+
+```bash [npm]
+npm install @headless-primitives/dialog
+```
+
+```bash [yarn]
+yarn add @headless-primitives/dialog
+```
+
+```bash [bun]
+bun add @headless-primitives/dialog
+```
+
+:::
 
 ## Anatomía
 

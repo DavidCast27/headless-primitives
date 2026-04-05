@@ -6,9 +6,25 @@ El componente `hp-field` actúa como un orquestador que coordina automáticament
 
 ## Instalación
 
-```bash
+::: code-group
+
+```bash [pnpm]
 pnpm add @headless-primitives/field
 ```
+
+```bash [npm]
+npm install @headless-primitives/field
+```
+
+```bash [yarn]
+yarn add @headless-primitives/field
+```
+
+```bash [bun]
+bun add @headless-primitives/field
+```
+
+:::
 
 ## Demostración
 

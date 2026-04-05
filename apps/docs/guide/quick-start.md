@@ -6,12 +6,25 @@ Las grandes librerías pre-cocinadas como Material/Chakra secuestran tu libertad
 
 ## Instalación global
 
-Si usas [pnpm](https://pnpm.io/):
+::: code-group
 
-```bash
-# Ejem: Instalando aisladamente el componente de botón que requieres
+```bash [pnpm]
 pnpm add @headless-primitives/button
 ```
+
+```bash [npm]
+npm install @headless-primitives/button
+```
+
+```bash [yarn]
+yarn add @headless-primitives/button
+```
+
+```bash [bun]
+bun add @headless-primitives/button
+```
+
+:::
 
 ## Uso básico
 

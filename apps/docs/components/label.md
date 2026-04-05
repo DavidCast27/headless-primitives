@@ -6,9 +6,25 @@ El componente `hp-label` permite asociar etiquetas de texto con elementos de for
 
 ## Instalación
 
-```bash
+::: code-group
+
+```bash [pnpm]
 pnpm add @headless-primitives/label
 ```
+
+```bash [npm]
+npm install @headless-primitives/label
+```
+
+```bash [yarn]
+yarn add @headless-primitives/label
+```
+
+```bash [bun]
+bun add @headless-primitives/label
+```
+
+:::
 
 ## Demostración
 

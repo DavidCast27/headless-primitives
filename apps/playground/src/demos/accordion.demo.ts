@@ -50,7 +50,7 @@ export const accordionDemo = {
         <span class="trigger-icon">▲</span>
       </hp-accordion-trigger>
       <hp-accordion-content class="accordion-content">
-        <p>Install any primitive with pnpm: <code>pnpm add @headless-primitives/button</code></p>
+        <p>Install any primitive with your package manager (npm/pnpm/Yarn/Bun), e.g.: <code>npm i @headless-primitives/button</code></p>
       </hp-accordion-content>
     </hp-accordion-item>
     

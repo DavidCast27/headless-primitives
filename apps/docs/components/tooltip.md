@@ -10,9 +10,25 @@ Información flotante que aparece al hacer hover o focus en un elemento.
 
 ## Instalación
 
-```bash
+::: code-group
+
+```bash [pnpm]
 pnpm add @headless-primitives/tooltip
 ```
+
+```bash [npm]
+npm install @headless-primitives/tooltip
+```
+
+```bash [yarn]
+yarn add @headless-primitives/tooltip
+```
+
+```bash [bun]
+bun add @headless-primitives/tooltip
+```
+
+:::
 
 ## Demostración
 

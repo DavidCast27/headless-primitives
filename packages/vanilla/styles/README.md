@@ -5,7 +5,17 @@ Estilos base opcionales para los componentes de Headless Primitives, inspirados 
 ## Instalación
 
 ```sh
+# pnpm
 pnpm add @headless-primitives/styles
+
+# npm
+npm install @headless-primitives/styles
+
+# yarn
+yarn add @headless-primitives/styles
+
+# bun
+bun add @headless-primitives/styles
 ```
 
 ## Uso
@@ -57,18 +67,18 @@ Todas las propiedades se definen en `:root` y son sobrescribibles por el Consume
 
 ### Colores de texto
 
-| Propiedad             | Default (light) | Descripción         |
-| --------------------- | --------------- | ------------------- |
-| `--hp-text`           | `#0f172a`       | Texto primario      |
-| `--hp-text-secondary` | `#64748b`       | Texto secundario    |
-| `--hp-text-disabled`  | `#94a3b8`       | Texto deshabilitado |
+| Propiedad             | Default (light) | Descripción                                         |
+| --------------------- | --------------- | --------------------------------------------------- |
+| `--hp-text`           | `#0f172a`       | Texto primario                                      |
+| `--hp-text-secondary` | `#64748b`       | Texto secundario                                    |
+| `--hp-text-disabled`  | `#94a3b8`       | Texto deshabilitado                                 |
 | `--hp-text-error`     | `#dc2626`       | Texto de error (`hp-field-error`) — dark: `#f87171` |
 
 ### Backdrop
 
-| Propiedad            | Default (light)       | Dark default          | Descripción                            |
-| -------------------- | --------------------- | --------------------- | -------------------------------------- |
-| `--hp-backdrop-bg`   | `rgb(0 0 0 / 0.5)`    | `rgb(0 0 0 / 0.65)`   | Color del backdrop de dialogs/overlays |
+| Propiedad          | Default (light)    | Dark default        | Descripción                            |
+| ------------------ | ------------------ | ------------------- | -------------------------------------- |
+| `--hp-backdrop-bg` | `rgb(0 0 0 / 0.5)` | `rgb(0 0 0 / 0.65)` | Color del backdrop de dialogs/overlays |
 
 ### Radio de borde
 

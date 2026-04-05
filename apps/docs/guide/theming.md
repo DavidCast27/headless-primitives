@@ -10,9 +10,25 @@ Todos los tokens de color por defecto cumplen **WCAG 2.1 AA**:
 
 ## Instalación
 
-```bash
+::: code-group
+
+```bash [pnpm]
 pnpm add @headless-primitives/styles
 ```
+
+```bash [npm]
+npm install @headless-primitives/styles
+```
+
+```bash [yarn]
+yarn add @headless-primitives/styles
+```
+
+```bash [bun]
+bun add @headless-primitives/styles
+```
+
+:::
 
 ## Uso
 

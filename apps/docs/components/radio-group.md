@@ -6,9 +6,25 @@ El componente `hp-radio-group` permite al usuario seleccionar una sola opción d
 
 ## Instalación
 
-```bash
+::: code-group
+
+```bash [pnpm]
 pnpm add @headless-primitives/radio-group
 ```
+
+```bash [npm]
+npm install @headless-primitives/radio-group
+```
+
+```bash [yarn]
+yarn add @headless-primitives/radio-group
+```
+
+```bash [bun]
+bun add @headless-primitives/radio-group
+```
+
+:::
 
 ## Demostración
 

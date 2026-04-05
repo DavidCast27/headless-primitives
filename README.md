@@ -14,7 +14,17 @@
 ## Quick Start
 
 ```bash
+# pnpm
 pnpm add @headless-primitives/button
+
+# npm
+npm install @headless-primitives/button
+
+# yarn
+yarn add @headless-primitives/button
+
+# bun
+bun add @headless-primitives/button
 ```
 
 ```html

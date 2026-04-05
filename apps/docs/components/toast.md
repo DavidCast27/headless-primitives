@@ -10,9 +10,25 @@ Notificación no-modal que se muestra temporalmente y desaparece automáticament
 
 ## Instalación
 
-```bash
+::: code-group
+
+```bash [pnpm]
 pnpm add @headless-primitives/toast
 ```
+
+```bash [npm]
+npm install @headless-primitives/toast
+```
+
+```bash [yarn]
+yarn add @headless-primitives/toast
+```
+
+```bash [bun]
+bun add @headless-primitives/toast
+```
+
+:::
 
 ## Demostración
 

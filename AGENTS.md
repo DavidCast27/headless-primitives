@@ -121,7 +121,7 @@ if (!customElements.get("hp-mi-componente")) customElements.define(...);
 
 - **Architecture Decision Records:** Cada decisión de diseño profundo, arquitectura o cambio tecnológico importante **DEBE** documentarse en `docs/adr/` con el formato `[numero-secuencial]-[nombre-decision].md`.
 - **Documentación del Componente:** Cada componente nuevo **DEBE** tener su página en `apps/docs/components/[nombre].md` siguiendo el **Estándar Premium** ([ADR 0008](docs/adr/0008-docs-api-reference-by-custom-element.md)):
-  - **Identidad**: Badge "Nuevo" y guía de instalación.
+  - **Identidad**: Badge "Nuevo" y guía de instalación con bloque multi-gestor (pnpm, npm, Yarn, Bun).
   - **Anatomía**: Snippet único en bloque ` ```html ` con el árbol de etiquetas `hp-*`.
   - **Code Flavors**: `<CodeSnippet>` con `<Flavor only="css">` y `<Flavor only="tailwind">`.
   - **API Reference**: Una subsección `### \`hp-parte\`` por cada custom element.

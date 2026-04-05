@@ -6,9 +6,25 @@ El componente `hp-button` es el elemento básico de interacción. Provee una bas
 
 ## Instalación
 
-```bash
+::: code-group
+
+```bash [pnpm]
 pnpm add @headless-primitives/button
 ```
+
+```bash [npm]
+npm install @headless-primitives/button
+```
+
+```bash [yarn]
+yarn add @headless-primitives/button
+```
+
+```bash [bun]
+bun add @headless-primitives/button
+```
+
+:::
 
 ## Demostración
 

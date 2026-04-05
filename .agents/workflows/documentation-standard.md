@@ -28,19 +28,34 @@ Descripción breve de una o dos oraciones sobre qué hace el primitivo y qué pa
 
 ### Instalación
 
-Incluye el comando `pnpm add` para el paquete específico.
+Incluye bloque multi-gestor (npm/pnpm/Yarn/Bun) usando `code-group`.
 
 ````markdown
 ## Instalación
 
-```bash
+::: code-group
+
+```bash [pnpm]
 pnpm add @headless-primitives/<nombre>
 ```
-````
 
+```bash [npm]
+npm install @headless-primitives/<nombre>
+```
+
+```bash [yarn]
+yarn add @headless-primitives/<nombre>
+```
+
+```bash [bun]
+bun add @headless-primitives/<nombre>
+```
+
+:::
 ````
 
 ### Demo Interactiva
+
 Usa el contenedor `hp-demo-card` para mostrar el componente funcionando. Los estilos deben estar en un bloque `<style>` al final del archivo.
 
 ```markdown
@@ -51,7 +66,7 @@ Usa el contenedor `hp-demo-card` para mostrar el componente funcionando. Los est
     ... estructura ...
   </hp-<nombre>>
 </div>
-````
+```
 
 ---
 

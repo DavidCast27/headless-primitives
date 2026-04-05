@@ -6,9 +6,25 @@ El componente `hp-checkbox` es un control que permite al usuario seleccionar una
 
 ## Instalación
 
-```bash
+::: code-group
+
+```bash [pnpm]
 pnpm add @headless-primitives/checkbox
 ```
+
+```bash [npm]
+npm install @headless-primitives/checkbox
+```
+
+```bash [yarn]
+yarn add @headless-primitives/checkbox
+```
+
+```bash [bun]
+bun add @headless-primitives/checkbox
+```
+
+:::
 
 ## Demostración
 

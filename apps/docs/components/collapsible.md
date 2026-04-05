@@ -6,9 +6,25 @@ El componente `hp-collapsible` es un primitivo que implementa el patrón WAI-ARI
 
 ## Instalación
 
-```bash
+::: code-group
+
+```bash [pnpm]
 pnpm add @headless-primitives/collapsible
 ```
+
+```bash [npm]
+npm install @headless-primitives/collapsible
+```
+
+```bash [yarn]
+yarn add @headless-primitives/collapsible
+```
+
+```bash [bun]
+bun add @headless-primitives/collapsible
+```
+
+:::
 
 ## Demostración
 

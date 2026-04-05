@@ -10,9 +10,25 @@ Contenido flotante que se abre al hacer click, con manejo de foco y teclado.
 
 ## Instalación
 
-```bash
+::: code-group
+
+```bash [pnpm]
 pnpm add @headless-primitives/popover
 ```
+
+```bash [npm]
+npm install @headless-primitives/popover
+```
+
+```bash [yarn]
+yarn add @headless-primitives/popover
+```
+
+```bash [bun]
+bun add @headless-primitives/popover
+```
+
+:::
 
 ## Demostración
 

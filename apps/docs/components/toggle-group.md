@@ -6,9 +6,25 @@ El componente `hp-toggle-group` agrupa un conjunto de botones de dos estados que
 
 ## Instalación
 
-```bash
+::: code-group
+
+```bash [pnpm]
 pnpm add @headless-primitives/toggle-group
 ```
+
+```bash [npm]
+npm install @headless-primitives/toggle-group
+```
+
+```bash [yarn]
+yarn add @headless-primitives/toggle-group
+```
+
+```bash [bun]
+bun add @headless-primitives/toggle-group
+```
+
+:::
 
 ## Demostración
 

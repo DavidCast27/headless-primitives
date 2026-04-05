@@ -6,9 +6,25 @@ El componente `hp-accordion` es un primitivo que implementa el patrón WAI-ARIA 
 
 ## Instalación
 
-```bash
+::: code-group
+
+```bash [pnpm]
 pnpm add @headless-primitives/accordion
 ```
+
+```bash [npm]
+npm install @headless-primitives/accordion
+```
+
+```bash [yarn]
+yarn add @headless-primitives/accordion
+```
+
+```bash [bun]
+bun add @headless-primitives/accordion
+```
+
+:::
 
 ## Demostración
 

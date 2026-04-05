@@ -6,9 +6,25 @@ El componente `hp-progress` informa al usuario sobre el estado de avance de un p
 
 ## Instalación
 
-```bash
+::: code-group
+
+```bash [pnpm]
 pnpm add @headless-primitives/progress
 ```
+
+```bash [npm]
+npm install @headless-primitives/progress
+```
+
+```bash [yarn]
+yarn add @headless-primitives/progress
+```
+
+```bash [bun]
+bun add @headless-primitives/progress
+```
+
+:::
 
 ## Demostración
 

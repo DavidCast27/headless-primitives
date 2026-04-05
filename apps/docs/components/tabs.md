@@ -6,9 +6,25 @@ El componente `hp-tabs` es un primitivo que implementa el patrón WAI-ARIA Tabs,
 
 ## Instalación
 
-```bash
+::: code-group
+
+```bash [pnpm]
 pnpm add @headless-primitives/tabs
 ```
+
+```bash [npm]
+npm install @headless-primitives/tabs
+```
+
+```bash [yarn]
+yarn add @headless-primitives/tabs
+```
+
+```bash [bun]
+bun add @headless-primitives/tabs
+```
+
+:::
 
 ## Demostración
 

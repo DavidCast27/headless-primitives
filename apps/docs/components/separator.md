@@ -6,9 +6,25 @@ El componente `hp-separator` provee una división visual y semántica entre grup
 
 ## Instalación
 
-```bash
+::: code-group
+
+```bash [pnpm]
 pnpm add @headless-primitives/separator
 ```
+
+```bash [npm]
+npm install @headless-primitives/separator
+```
+
+```bash [yarn]
+yarn add @headless-primitives/separator
+```
+
+```bash [bun]
+bun add @headless-primitives/separator
+```
+
+:::
 
 ## Demostración
 

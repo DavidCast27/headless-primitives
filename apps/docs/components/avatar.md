@@ -6,9 +6,25 @@ El componente `hp-avatar` es una representación visual de un usuario o entidad.
 
 ## Instalación
 
-```bash
+::: code-group
+
+```bash [pnpm]
 pnpm add @headless-primitives/avatar
 ```
+
+```bash [npm]
+npm install @headless-primitives/avatar
+```
+
+```bash [yarn]
+yarn add @headless-primitives/avatar
+```
+
+```bash [bun]
+bun add @headless-primitives/avatar
+```
+
+:::
 
 ## Demostración
 
