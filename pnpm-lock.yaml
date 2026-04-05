@@ -65,6 +65,9 @@ importers:
       '@headless-primitives/dialog':
         specifier: workspace:*
         version: link:../../packages/vanilla/dialog
+      '@headless-primitives/drawer':
+        specifier: workspace:*
+        version: link:../../packages/vanilla/drawer
       '@headless-primitives/field':
         specifier: workspace:*
         version: link:../../packages/vanilla/field
@@ -126,6 +129,9 @@ importers:
       '@headless-primitives/dialog':
         specifier: workspace:*
         version: link:../../packages/vanilla/dialog
+      '@headless-primitives/drawer':
+        specifier: workspace:*
+        version: link:../../packages/vanilla/drawer
       '@headless-primitives/field':
         specifier: workspace:*
         version: link:../../packages/vanilla/field
@@ -235,6 +241,25 @@ importers:
         version: 3.3.2
 
   packages/vanilla/dialog:
+    dependencies:
+      '@headless-primitives/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lit:
+        specifier: ^3.3.2
+        version: 3.3.2
+    devDependencies:
+      happy-dom:
+        specifier: ^14.12.3
+        version: 14.12.3
+      vite:
+        specifier: ^5.4.2
+        version: 5.4.21(@types/node@25.5.0)(lightningcss@1.32.0)
+      vitest:
+        specifier: ^2.0.5
+        version: 2.1.9(@types/node@25.5.0)(happy-dom@14.12.3)(jsdom@29.0.1)(lightningcss@1.32.0)
+
+  packages/vanilla/drawer:
     dependencies:
       '@headless-primitives/utils':
         specifier: workspace:*

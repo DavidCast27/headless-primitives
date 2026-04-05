@@ -23,6 +23,8 @@ Todos los eventos de Headless Primitives son **Custom Events nativos del navegad
 | `hp-dialog`         | `hp-close`        | —                                  | El dialog se cierra           |
 | `hp-alert-dialog`   | `hp-open`         | —                                  | Se abre                       |
 | `hp-alert-dialog`   | `hp-close`        | —                                  | Se cierra                     |
+| `hp-drawer`         | `hp-show`         | —                                  | El drawer se abre             |
+| `hp-drawer`         | `hp-hide`         | —                                  | El drawer se cierra           |
 | `hp-popover`        | `hp-open`         | —                                  | El popover se abre            |
 | `hp-popover`        | `hp-close`        | —                                  | El popover se cierra          |
 | `hp-tooltip`        | `hp-open`         | —                                  | El tooltip aparece            |
@@ -205,6 +207,34 @@ const dialog = document.querySelector("hp-dialog");
 
 dialog.addEventListener("hp-open", () => console.log("dialog abierto"));
 dialog.addEventListener("hp-close", () => console.log("dialog cerrado"));
+```
+
+### `hp-drawer`
+
+A diferencia del dialog, el drawer usa `hp-show` / `hp-hide` para evitar colisión con otros overlays que puedan estar activos simultáneamente. También puedes controlarlo mediante su API imperativa:
+
+```js
+const drawer = document.querySelector("hp-drawer");
+
+drawer.addEventListener("hp-show", () => console.log("drawer visible"));
+drawer.addEventListener("hp-hide", () => console.log("drawer oculto"));
+
+// API imperativa
+drawer.show();
+drawer.hide();
+drawer.toggle();
+console.log(drawer.isOpen); // boolean
+```
+
+El evento `hp-hide` también puede dispararse programáticamente desde cualquier hijo, lo que permite botones de cierre personalizados:
+
+```js
+// Cierre desde un botón interno
+closeBtn.addEventListener("click", () => {
+  closeBtn
+    .closest("hp-drawer")
+    .dispatchEvent(new CustomEvent("hp-hide", { bubbles: true, composed: true }));
+});
 ```
 
 ### `hp-popover`

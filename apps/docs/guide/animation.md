@@ -77,6 +77,56 @@ El backdrop hace fade independiente:
 }
 ```
 
+### Overlays: Drawer
+
+El drawer usa `transform` para deslizarse desde un borde del viewport. La dirección del slide es automática según el atributo `data-position` que `hp-drawer` sincroniza en el content.
+
+No usa `@keyframes` propios — la animación es una transición CSS sobre `transform` + `opacity` + `visibility`. Esto permite que el slide respete exactamente la curva `--hp-ease-out` sin necesidad de keyframes por cada posición:
+
+```css
+/* Transición en base.css — transform incluido solo para el drawer */
+[data-hp-drawer-content] {
+  transition:
+    opacity var(--hp-duration) ease,
+    visibility 0s linear var(--hp-duration),
+    transform var(--hp-duration) cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Estado inicial (fuera del viewport) por posición */
+[data-hp-drawer-content] {
+  transform: translateX(-100%);
+} /* left  */
+[data-hp-drawer-content][data-position="right"] {
+  transform: translateX(100%);
+} /* right */
+[data-hp-drawer-content][data-position="top"] {
+  transform: translateY(-100%);
+} /* top   */
+[data-hp-drawer-content][data-position="bottom"] {
+  transform: translateY(100%);
+} /* bottom*/
+
+/* Estado abierto — sin transform */
+[data-hp-drawer-content][data-state="open"] {
+  transform: translate(0, 0);
+}
+```
+
+El backdrop comparte los keyframes `hp-backdrop-in` / `hp-backdrop-out` con el dialog.
+
+Para personalizar la velocidad del slide independientemente del resto de overlays:
+
+```css
+:root {
+  --hp-duration: 250ms; /* afecta todos los overlays */
+}
+
+/* O solo el drawer */
+hp-drawer-content {
+  transition-duration: 350ms;
+}
+```
+
 ### Overlays: Popover
 
 Slide vertical + scale leve. Salida es más rápida que la entrada (patrón estándar):

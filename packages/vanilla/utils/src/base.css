@@ -63,12 +63,70 @@
 }
 
 /* Dialog content — centrado en viewport solo para modales (aria-modal="true")
- * Popovers tienen role="dialog" pero aria-modal="false", por lo que quedan excluidos */
-[data-hp-overlay-content][role="dialog"][aria-modal="true"],
+ * Popovers tienen role="dialog" pero aria-modal="false", por lo que quedan excluidos.
+ * Drawers usan data-hp-drawer-content y gestionan su propio posicionamiento. */
+[data-hp-overlay-content][role="dialog"][aria-modal="true"]:not([data-hp-drawer-content]),
 [data-hp-overlay-content][role="alertdialog"] {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+/* Drawer — override transition to include transform for slide-in animation */
+[data-hp-drawer-content] {
+  transition:
+    opacity var(--hp-duration, 150ms) var(--hp-ease, ease),
+    visibility 0s linear var(--hp-duration, 150ms),
+    transform var(--hp-duration, 150ms) var(--hp-ease-out, cubic-bezier(0.16, 1, 0.3, 1));
+}
+
+[data-hp-drawer-content][data-state="open"] {
+  transition:
+    opacity var(--hp-duration, 150ms) var(--hp-ease, ease),
+    visibility 0s,
+    transform var(--hp-duration, 150ms) var(--hp-ease-out, cubic-bezier(0.16, 1, 0.3, 1));
+}
+
+/* Drawer content — slides in from a viewport edge
+ * Position is driven by data-position attribute set by HeadlessDrawer */
+[data-hp-drawer-content] {
+  top: 0;
+  left: 0;
+  right: auto;
+  bottom: auto;
+  transform: translateX(-100%);
+  width: var(--hp-drawer-width, 320px);
+  height: 100vh;
+}
+
+[data-hp-drawer-content][data-position="right"] {
+  left: auto;
+  right: 0;
+  transform: translateX(100%);
+}
+
+[data-hp-drawer-content][data-position="top"] {
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: auto;
+  transform: translateY(-100%);
+  width: 100vw;
+  height: var(--hp-drawer-height, 320px);
+}
+
+[data-hp-drawer-content][data-position="bottom"] {
+  left: 0;
+  right: 0;
+  top: auto;
+  bottom: 0;
+  transform: translateY(100%);
+  width: 100vw;
+  height: var(--hp-drawer-height, 320px);
+}
+
+[data-hp-drawer-content][data-state="open"] {
+  transform: translate(0, 0);
 }
 
 /* Floating Elements */
@@ -127,6 +185,11 @@ hp-dialog-content,
 hp-dialog-backdrop,
 hp-dialog-title,
 hp-dialog-close,
+hp-drawer,
+hp-drawer-content,
+hp-drawer-backdrop,
+hp-drawer-title,
+hp-drawer-close,
 hp-popover,
 hp-toast-container,
 hp-toast-title,
@@ -215,6 +278,8 @@ hp-collapsible-trigger,
 hp-tab,
 hp-dialog-trigger,
 hp-dialog-close,
+hp-drawer-trigger,
+hp-drawer-close,
 hp-popover-trigger,
 hp-tooltip-trigger,
 hp-toast-close {
@@ -573,6 +638,67 @@ hp-dialog-close {
 hp-dialog-close:hover {
   opacity: 1;
   background-color: color-mix(in srgb, currentColor 10%, transparent);
+}
+
+/* --- Drawer --- */
+hp-drawer-backdrop {
+  background: var(--hp-backdrop-bg, rgb(0 0 0 / 0.4));
+  backdrop-filter: blur(1px);
+}
+
+hp-drawer-content {
+  background: Canvas;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--hp-shadow-lg, 0 8px 32px rgb(0 0 0 / 0.12), 0 2px 8px rgb(0 0 0 / 0.08));
+  /* Borde en el lado de apertura */
+  border-right: 1px solid color-mix(in srgb, currentColor 15%, transparent);
+}
+
+hp-drawer-content[data-position="right"] {
+  border-right: none;
+  border-left: 1px solid color-mix(in srgb, currentColor 15%, transparent);
+}
+
+hp-drawer-content[data-position="top"] {
+  border-right: none;
+  border-bottom: 1px solid color-mix(in srgb, currentColor 15%, transparent);
+}
+
+hp-drawer-content[data-position="bottom"] {
+  border-right: none;
+  border-top: 1px solid color-mix(in srgb, currentColor 15%, transparent);
+}
+
+hp-drawer-title {
+  display: block;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 1.25rem 1.5rem 0;
+  padding-right: 3rem; /* espacio para el botón de cierre */
+  margin: 0 0 0.75rem;
+}
+
+hp-drawer-close {
+  position: absolute;
+  top: 0.875rem;
+  right: 0.875rem;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border-radius: 4px;
+  opacity: 0.6;
+}
+
+hp-drawer-close:hover {
+  opacity: 1;
+  background-color: color-mix(in srgb, currentColor 10%, transparent);
+}
+
+/* hp-drawer-content necesita position relative para que hp-drawer-close se posicione correctamente */
+hp-drawer-content {
+  position: relative;
 }
 
 /* --- Popover --- */
@@ -952,21 +1078,27 @@ hp-toast-container[data-position="bottom-center"] hp-toast {
 /* --- Aplicación de animaciones --- */
 
 /* Backdrop */
-hp-dialog-backdrop[data-state="open"] {
+hp-dialog-backdrop[data-state="open"],
+hp-drawer-backdrop[data-state="open"] {
   animation: hp-backdrop-in var(--hp-duration-slow) var(--hp-ease) both;
 }
 
-hp-dialog-backdrop[data-state="closed"] {
+hp-dialog-backdrop[data-state="closed"],
+hp-drawer-backdrop[data-state="closed"] {
   animation: hp-backdrop-out var(--hp-duration) var(--hp-ease) both;
 }
 
-/* Dialog content — aria-modal="true" excluye popovers (aria-modal="false") */
-[data-hp-overlay-content][role="dialog"][aria-modal="true"][data-state="open"],
+/* Dialog content — aria-modal="true" excluye popovers (aria-modal="false") y drawers */
+[data-hp-overlay-content][role="dialog"][aria-modal="true"]:not(
+    [data-hp-drawer-content]
+  )[data-state="open"],
 [data-hp-overlay-content][role="alertdialog"][data-state="open"] {
   animation: hp-dialog-in var(--hp-duration-slow) var(--hp-ease-out) both;
 }
 
-[data-hp-overlay-content][role="dialog"][aria-modal="true"][data-state="closed"],
+[data-hp-overlay-content][role="dialog"][aria-modal="true"]:not(
+    [data-hp-drawer-content]
+  )[data-state="closed"],
 [data-hp-overlay-content][role="alertdialog"][data-state="closed"] {
   animation: hp-dialog-out var(--hp-duration) var(--hp-ease) both;
 }
@@ -1062,6 +1194,8 @@ hp-toast-container[data-position="bottom-center"] hp-toast {
   [data-hp-backdrop],
   hp-dialog-backdrop,
   hp-dialog-content,
+  hp-drawer-content,
+  hp-drawer-backdrop,
   hp-popover-content,
   hp-toast {
     animation: none !important;
@@ -1089,7 +1223,9 @@ hp-toast-container[data-position="bottom-center"] hp-toast {
   hp-collapsible-trigger,
   hp-tab,
   hp-toast-close,
-  hp-dialog-close {
+  hp-dialog-close,
+  hp-drawer-trigger,
+  hp-drawer-close {
     transition: none !important;
   }
 

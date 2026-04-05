@@ -1,0 +1,52 @@
+{
+  "name": "@headless-primitives/drawer",
+  "version": "0.1.0",
+  "description": "Headless drawer primitive for slide-in panels",
+  "keywords": [
+    "a11y",
+    "accessibility",
+    "drawer",
+    "focus-trap",
+    "headless",
+    "overlay",
+    "panel",
+    "web-components"
+  ],
+  "license": "MIT",
+  "author": "David Castrillón",
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.umd.cjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "vite build && tsc",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@headless-primitives/utils": "workspace:*",
+    "lit": "^3.3.2"
+  },
+  "devDependencies": {
+    "happy-dom": "^14.12.3",
+    "vite": "^5.4.2",
+    "vitest": "^2.0.5"
+  },
+  "peerDependencies": {
+    "lit": "^3.3.2"
+  }
+}
