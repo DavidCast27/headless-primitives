@@ -67,3 +67,15 @@ hp-toast-close:focus-visible {
 }
 
 /* @keyframes definidos en base.css — no se duplican aquí */
+
+/* === Accesibilidad — prefers-reduced-motion === */
+@media (prefers-reduced-motion: reduce) {
+  hp-toast {
+    animation: none;
+    transition: none;
+  }
+
+  hp-toast-close {
+    transition: none;
+  }
+}

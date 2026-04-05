@@ -61,3 +61,12 @@ hp-collapsible-content {
   word-break: break-word;
   box-sizing: border-box;
 }
+
+/* === Accesibilidad — prefers-reduced-motion === */
+@media (prefers-reduced-motion: reduce) {
+  hp-collapsible-trigger,
+  hp-collapsible-trigger .hp-icon,
+  hp-collapsible-trigger [data-hp-icon] {
+    transition: none;
+  }
+}
