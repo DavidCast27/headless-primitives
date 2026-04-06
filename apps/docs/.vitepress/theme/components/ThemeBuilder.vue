@@ -1084,6 +1084,27 @@ const totalModified = computed(() => TOKEN_GROUPS.reduce((sum, g) => sum + modif
             </div>
           </section>
 
+          <!-- SELECT -->
+          <section class="tb-preview-section">
+            <h4 class="tb-preview-section-title">Select</h4>
+            <div class="tb-preview-demo">
+              <hp-select class="tbp-select" name="theme-fruit" placeholder="Selecciona una fruta">
+                <hp-select-trigger class="tbp-select-trigger">
+                  <hp-select-value class="tbp-select-value"></hp-select-value>
+                  <span aria-hidden="true" class="tbp-select-icon">▼</span>
+                </hp-select-trigger>
+                <hp-select-content class="tbp-select-content">
+                  <hp-select-item value="apple" class="tbp-select-item">Manzana</hp-select-item>
+                  <hp-select-item value="banana" class="tbp-select-item">Banana</hp-select-item>
+                  <hp-select-item value="cherry" class="tbp-select-item">Cereza</hp-select-item>
+                  <hp-select-item value="date" disabled class="tbp-select-item"
+                    >Dátil</hp-select-item
+                  >
+                </hp-select-content>
+              </hp-select>
+            </div>
+          </section>
+
           <!-- TOOLTIP -->
           <section class="tb-preview-section">
             <h4 class="tb-preview-section-title">Tooltip</h4>
@@ -2392,6 +2413,106 @@ hp-accordion-content.tbp-accordion-content[data-state="closed"] {
 
 .tbp-input--error {
   border-color: var(--hp-text-error, #dc2626);
+}
+
+/* Select */
+.tbp-select {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  max-width: 280px;
+}
+
+.tbp-select-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: var(--hp-space-2, 0.5rem) var(--hp-space-3, 0.75rem);
+  border: 1px solid var(--hp-border-strong, #64748b);
+  border-radius: var(--hp-radius, 6px);
+  background: var(--hp-surface, #ffffff);
+  color: var(--hp-text, #0f172a);
+  cursor: pointer;
+}
+
+.tbp-select-trigger:hover {
+  border-color: var(--hp-accent, #0369a1);
+}
+
+.tbp-select-trigger[data-state="open"] {
+  border-color: var(--hp-accent, #0369a1);
+}
+
+.tbp-select-trigger[aria-disabled="true"] {
+  opacity: var(--hp-opacity-disabled, 0.5);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.tbp-select-value {
+  flex: 1;
+  min-width: 0;
+  margin-right: 0.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tbp-select-trigger[data-placeholder] .tbp-select-value {
+  color: var(--hp-text-secondary, #64748b);
+}
+
+.tbp-select-icon {
+  font-size: 0.85rem;
+  color: var(--hp-text-secondary, #64748b);
+}
+
+.tbp-select-content {
+  position: absolute;
+  top: calc(100% + 0.25rem);
+  left: 0;
+  z-index: 50;
+  min-width: 100%;
+  max-height: 18rem;
+  border: 1px solid var(--hp-border, #e2e8f0);
+  border-radius: var(--hp-radius, 6px);
+  background: var(--hp-surface, #ffffff);
+  box-shadow: var(--hp-shadow-lg, 0 10px 15px -3px rgb(0 0 0 / 0.1));
+  overflow-y: auto;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.15s ease,
+    visibility 0.15s ease;
+}
+
+.tbp-select-content[data-state="open"] {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.tbp-select-item {
+  padding: var(--hp-space-2, 0.5rem) var(--hp-space-3, 0.75rem);
+  font-size: var(--hp-font-size-sm, 0.875rem);
+  color: var(--hp-text, #0f172a);
+  cursor: pointer;
+}
+
+.tbp-select-item:hover:not([aria-disabled="true"]) {
+  background: var(--hp-bg-muted, #f1f5f9);
+}
+
+.tbp-select-item[aria-selected="true"] {
+  background: var(--hp-accent, #0369a1);
+  color: var(--hp-accent-foreground, #ffffff);
+}
+
+.tbp-select-item[aria-disabled="true"] {
+  opacity: var(--hp-opacity-disabled, 0.5);
+  cursor: not-allowed;
 }
 
 /* Tooltip */

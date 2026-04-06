@@ -1,0 +1,10 @@
+/**
+ * @headless-primitives/styles — hp-select
+ *
+ * El estilado funcional básico de `hp-select` ahora vive en
+ * `@headless-primitives/utils/base.css` para que la versión "sin estilos"
+ * siga funcionando.
+ *
+ * `@headless-primitives/styles/select.css` permanece como placeholder
+ * de paquete y puede extenderse en el futuro con temas adicionales.
+ */
