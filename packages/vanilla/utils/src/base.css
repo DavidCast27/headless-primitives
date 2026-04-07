@@ -1,6 +1,9 @@
 /* Plan de Implementación de Estilos Base (base.css) v2.4 */
 
 :root {
+  /* Permite que Canvas/CanvasText se resuelvan correctamente en dark mode */
+  color-scheme: light dark;
+
   /* Z-indexes (Arquitectura de capas) */
   --hp-z-index-backdrop: 1000;
   --hp-z-index-overlay-content: 1100;
@@ -143,8 +146,11 @@ hp-select-content {
   top: 100%;
   left: 0;
   min-width: 100%;
-  background-color: var(--hp-surface, white);
-  border: 1px solid var(--hp-border, #d1d5db);
+  /* color-scheme garantiza que Canvas/CanvasText se resuelvan igual en dark mode */
+  color-scheme: light dark;
+  background-color: var(--hp-surface, Canvas);
+  color: var(--hp-text, CanvasText);
+  border: 1px solid var(--hp-border, color-mix(in srgb, currentColor 25%, transparent));
   border-radius: var(--hp-radius, 0.5rem);
   box-shadow: var(--hp-shadow-lg, 0 8px 32px rgb(0 0 0 / 0.12), 0 2px 8px rgb(0 0 0 / 0.08));
   opacity: 0;
@@ -179,13 +185,13 @@ hp-select-content::-webkit-scrollbar-track {
 }
 
 hp-select-content::-webkit-scrollbar-thumb {
-  background-color: var(--hp-border-strong);
+  background-color: var(--hp-border-strong, color-mix(in srgb, currentColor 25%, transparent));
   border-radius: 4px;
-  border: 2px solid var(--hp-surface);
+  border: 2px solid var(--hp-surface, Canvas);
 }
 
 hp-select-content::-webkit-scrollbar-thumb:hover {
-  background-color: var(--hp-text-secondary);
+  background-color: var(--hp-text-secondary, color-mix(in srgb, currentColor 40%, transparent));
 }
 
 hp-select-item {
@@ -196,31 +202,31 @@ hp-select-item {
   padding: var(--hp-space-2) var(--hp-space-4);
   font-family: inherit;
   font-size: var(--hp-font-size-sm);
-  color: var(--hp-text);
+  color: var(--hp-text, CanvasText);
   background-color: transparent;
   border: none;
   cursor: pointer;
   user-select: none;
   text-align: left;
   transition:
-    background-color var(--hp-transition),
-    color var(--hp-transition);
+    background-color var(--hp-transition, 150ms),
+    color var(--hp-transition, 150ms);
   box-sizing: border-box;
   min-height: 2rem;
 }
 
 hp-select-item:hover:not([aria-disabled="true"]) {
-  background-color: var(--hp-bg-muted);
+  background-color: var(--hp-bg-muted, color-mix(in srgb, currentColor 8%, transparent));
 }
 
 hp-select-item[aria-selected="true"] {
-  background-color: var(--hp-bg-subtle);
-  color: var(--hp-accent);
-  font-weight: var(--hp-font-weight-medium);
+  background-color: var(--hp-bg-subtle, color-mix(in srgb, currentColor 14%, transparent));
+  color: var(--hp-accent, CanvasText);
+  font-weight: var(--hp-font-weight-medium, 500);
 }
 
 hp-select-item[aria-selected="true"]:hover {
-  background-color: var(--hp-bg-muted);
+  background-color: var(--hp-bg-muted, color-mix(in srgb, currentColor 20%, transparent));
 }
 
 hp-select-item[aria-disabled="true"],
@@ -320,35 +326,37 @@ hp-select-trigger {
   font-size: var(--hp-font-size-sm);
   font-weight: var(--hp-font-weight-normal);
   line-height: 1.5;
-  color: var(--hp-text);
-  background-color: var(--hp-surface);
-  border: 1px solid var(--hp-border-strong);
-  border-radius: var(--hp-radius);
+  color: var(--hp-text, CanvasText);
+  /* color-scheme garantiza que Canvas/CanvasText se resuelvan igual en dark mode */
+  color-scheme: light dark;
+  background-color: var(--hp-surface, Canvas);
+  border: 1px solid var(--hp-border-strong, color-mix(in srgb, currentColor 20%, transparent));
+  border-radius: var(--hp-radius, 0.375rem);
   cursor: pointer;
   user-select: none;
   transition:
-    background-color var(--hp-transition),
-    border-color var(--hp-transition),
-    box-shadow var(--hp-transition);
+    background-color var(--hp-transition, 150ms),
+    border-color var(--hp-transition, 150ms),
+    box-shadow var(--hp-transition, 150ms);
   box-sizing: border-box;
   text-align: left;
   min-height: 2.5rem;
 }
 
 hp-select-trigger:focus-visible {
-  outline: var(--hp-focus-outline-width) solid var(--hp-focus-outline-color);
+  outline: var(--hp-focus-outline-width, 2px) solid var(--hp-focus-outline-color, #2563eb);
   outline-offset: 2px;
 }
 
 hp-select-trigger:hover:not([disabled]):not([aria-disabled="true"]) {
-  background-color: var(--hp-bg-muted);
-  border-color: var(--hp-border);
+  background-color: var(--hp-bg-muted, color-mix(in srgb, currentColor 8%, transparent));
+  border-color: var(--hp-border, color-mix(in srgb, currentColor 30%, transparent));
 }
 
 hp-select-trigger[aria-expanded="true"] {
-  background-color: var(--hp-bg-subtle);
-  border-color: var(--hp-accent);
-  box-shadow: 0 0 0 1px var(--hp-accent);
+  background-color: var(--hp-bg-subtle, color-mix(in srgb, currentColor 14%, transparent));
+  border-color: var(--hp-accent, currentColor);
+  box-shadow: 0 0 0 1px var(--hp-accent, currentColor);
 }
 
 hp-select-trigger[disabled],
@@ -359,7 +367,7 @@ hp-select-trigger[aria-disabled="true"] {
 }
 
 hp-select-trigger[data-placeholder] {
-  color: var(--hp-text-secondary);
+  color: var(--hp-text-secondary, color-mix(in srgb, currentColor 50%, transparent));
 }
 
 hp-select-value {
