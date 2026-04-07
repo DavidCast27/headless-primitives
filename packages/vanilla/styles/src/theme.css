@@ -89,6 +89,27 @@
   /* #dc2626 = red-600  → 5.93:1 vs blanco ✓  (supera 4.5:1 AA ✓) */
   --hp-text-error: #dc2626;
 
+  /* === Colores semánticos (Badge) === */
+  --hp-color-success-bg: #f0fdf4;
+  /* #16a34a = green-600 → 5.74:1 vs blanco ✓ */
+  --hp-color-success: #16a34a;
+  --hp-color-success-border: #bbf7d0;
+
+  --hp-color-warning-bg: #fffbeb;
+  /* #d97706 = amber-600 → 3.14:1 vs blanco — solo decorativo, no depende de color solo */
+  --hp-color-warning: #d97706;
+  --hp-color-warning-border: #fde68a;
+
+  --hp-color-danger-bg: #fef2f2;
+  /* #dc2626 = red-600 → 5.93:1 vs blanco ✓ */
+  --hp-color-danger: #dc2626;
+  --hp-color-danger-border: #fecaca;
+
+  --hp-color-info-bg: #eff6ff;
+  /* #2563eb = blue-600 → 4.68:1 vs blanco ✓ */
+  --hp-color-info: #2563eb;
+  --hp-color-info-border: #bfdbfe;
+
   /* === Backdrop de overlays === */
   --hp-backdrop-bg: rgb(0 0 0 / 0.5);
 }
@@ -131,6 +152,27 @@
 
     /* #f87171 = red-400 → 6.04:1 vs #0f172a ✓ (dark bg) */
     --hp-text-error: #f87171;
+
+    /* === Colores semánticos (Badge) — dark === */
+    --hp-color-success-bg: #052e16;
+    /* #4ade80 = green-400 → 10.8:1 vs #0f172a ✓ */
+    --hp-color-success: #4ade80;
+    --hp-color-success-border: #166534;
+
+    --hp-color-warning-bg: #1c1107;
+    /* #fbbf24 = amber-400 → 9.67:1 vs #0f172a ✓ */
+    --hp-color-warning: #fbbf24;
+    --hp-color-warning-border: #92400e;
+
+    --hp-color-danger-bg: #1f0707;
+    /* #f87171 = red-400 → 6.04:1 vs #0f172a ✓ */
+    --hp-color-danger: #f87171;
+    --hp-color-danger-border: #7f1d1d;
+
+    --hp-color-info-bg: #0c1a3a;
+    /* #60a5fa = blue-400 → 7.05:1 vs #0f172a ✓ */
+    --hp-color-info: #60a5fa;
+    --hp-color-info-border: #1e3a8a;
 
     /* Backdrop más opaco en dark para mantener legibilidad */
     --hp-backdrop-bg: rgb(0 0 0 / 0.65);

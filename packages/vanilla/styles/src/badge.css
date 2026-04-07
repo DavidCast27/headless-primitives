@@ -1,0 +1,115 @@
+/**
+ * @headless-primitives/styles — hp-badge
+ *
+ * Especificidad mínima: selector de elemento único.
+ * Sin !important. Sobrescribible por el Consumer.
+ */
+
+hp-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--hp-radius-full, 9999px);
+  font-family: inherit;
+  font-size: var(--hp-font-size-xs, 0.75rem);
+  font-weight: var(--hp-font-weight-semibold, 600);
+  line-height: 1;
+  white-space: nowrap;
+  user-select: none;
+  box-sizing: border-box;
+  vertical-align: middle;
+  /* default size (md) */
+  padding: var(--hp-space-1, 0.25rem) var(--hp-space-2-5, 0.625rem);
+  /* default variant */
+  background-color: var(--hp-bg-muted, #f1f5f9);
+  color: var(--hp-text-secondary, #64748b);
+  border: 1px solid var(--hp-border, #e2e8f0);
+  transition:
+    background-color var(--hp-transition, 150ms ease),
+    color var(--hp-transition, 150ms ease),
+    border-color var(--hp-transition, 150ms ease);
+}
+
+/* === Sizes === */
+
+hp-badge[data-size="sm"] {
+  font-size: var(--hp-font-size-2xs, 0.6875rem);
+  padding: 0.125rem var(--hp-space-2, 0.5rem);
+}
+
+hp-badge[data-size="lg"] {
+  font-size: var(--hp-font-size-sm, 0.875rem);
+  padding: var(--hp-space-1-5, 0.375rem) var(--hp-space-3, 0.75rem);
+}
+
+/* === Variants === */
+
+hp-badge[data-variant="default"] {
+  background-color: var(--hp-bg-muted, #f1f5f9);
+  color: var(--hp-text-secondary, #64748b);
+  border-color: var(--hp-border, #e2e8f0);
+}
+
+hp-badge[data-variant="success"] {
+  background-color: var(--hp-color-success-bg, #f0fdf4);
+  color: var(--hp-color-success, #16a34a);
+  border-color: var(--hp-color-success-border, #bbf7d0);
+}
+
+hp-badge[data-variant="warning"] {
+  background-color: var(--hp-color-warning-bg, #fffbeb);
+  color: var(--hp-color-warning, #d97706);
+  border-color: var(--hp-color-warning-border, #fde68a);
+}
+
+hp-badge[data-variant="danger"] {
+  background-color: var(--hp-color-danger-bg, #fef2f2);
+  color: var(--hp-color-danger, #dc2626);
+  border-color: var(--hp-color-danger-border, #fecaca);
+}
+
+hp-badge[data-variant="info"] {
+  background-color: var(--hp-color-info-bg, #eff6ff);
+  color: var(--hp-color-info, #2563eb);
+  border-color: var(--hp-color-info-border, #bfdbfe);
+}
+
+/* === Dark mode === */
+@media (prefers-color-scheme: dark) {
+  hp-badge[data-variant="default"] {
+    background-color: var(--hp-bg-muted, #1e293b);
+    color: var(--hp-text-secondary, #94a3b8);
+    border-color: var(--hp-border, #334155);
+  }
+
+  hp-badge[data-variant="success"] {
+    background-color: var(--hp-color-success-bg, #052e16);
+    color: var(--hp-color-success, #4ade80);
+    border-color: var(--hp-color-success-border, #166534);
+  }
+
+  hp-badge[data-variant="warning"] {
+    background-color: var(--hp-color-warning-bg, #1c1107);
+    color: var(--hp-color-warning, #fbbf24);
+    border-color: var(--hp-color-warning-border, #92400e);
+  }
+
+  hp-badge[data-variant="danger"] {
+    background-color: var(--hp-color-danger-bg, #1f0707);
+    color: var(--hp-color-danger, #f87171);
+    border-color: var(--hp-color-danger-border, #7f1d1d);
+  }
+
+  hp-badge[data-variant="info"] {
+    background-color: var(--hp-color-info-bg, #0c1a3a);
+    color: var(--hp-color-info, #60a5fa);
+    border-color: var(--hp-color-info-border, #1e3a8a);
+  }
+}
+
+/* === Accesibilidad — prefers-reduced-motion === */
+@media (prefers-reduced-motion: reduce) {
+  hp-badge {
+    transition: none;
+  }
+}
