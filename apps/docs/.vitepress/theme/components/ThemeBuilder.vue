@@ -356,6 +356,96 @@ const TOKEN_GROUPS: TokenGroup[] = [
     ],
   },
   {
+    id: "semantic",
+    label: "Colores semánticos (Badge)",
+    tokens: [
+      {
+        name: "--hp-color-success-bg",
+        label: "Success · Fondo",
+        default: "#f0fdf4",
+        type: "color",
+        hint: "Fondo de badge success",
+      },
+      {
+        name: "--hp-color-success",
+        label: "Success · Texto",
+        default: "#16a34a",
+        type: "color",
+        hint: "Texto/icono de badge success (WCAG AA)",
+      },
+      {
+        name: "--hp-color-success-border",
+        label: "Success · Borde",
+        default: "#bbf7d0",
+        type: "color",
+        hint: "Borde de badge success",
+      },
+      {
+        name: "--hp-color-warning-bg",
+        label: "Warning · Fondo",
+        default: "#fffbeb",
+        type: "color",
+        hint: "Fondo de badge warning",
+      },
+      {
+        name: "--hp-color-warning",
+        label: "Warning · Texto",
+        default: "#d97706",
+        type: "color",
+        hint: "Texto/icono de badge warning",
+      },
+      {
+        name: "--hp-color-warning-border",
+        label: "Warning · Borde",
+        default: "#fde68a",
+        type: "color",
+        hint: "Borde de badge warning",
+      },
+      {
+        name: "--hp-color-danger-bg",
+        label: "Danger · Fondo",
+        default: "#fef2f2",
+        type: "color",
+        hint: "Fondo de badge danger",
+      },
+      {
+        name: "--hp-color-danger",
+        label: "Danger · Texto",
+        default: "#dc2626",
+        type: "color",
+        hint: "Texto/icono de badge danger (WCAG AA)",
+      },
+      {
+        name: "--hp-color-danger-border",
+        label: "Danger · Borde",
+        default: "#fecaca",
+        type: "color",
+        hint: "Borde de badge danger",
+      },
+      {
+        name: "--hp-color-info-bg",
+        label: "Info · Fondo",
+        default: "#eff6ff",
+        type: "color",
+        hint: "Fondo de badge info",
+      },
+      {
+        name: "--hp-color-info",
+        label: "Info · Texto",
+        default: "#2563eb",
+        type: "color",
+        hint: "Texto/icono de badge info (WCAG AA)",
+      },
+      {
+        name: "--hp-color-info-border",
+        label: "Info · Borde",
+        default: "#bfdbfe",
+        type: "color",
+        hint: "Borde de badge info",
+      },
+    ],
+  },
+  {
     id: "focus",
     label: "Foco y overlay",
     tokens: [
@@ -562,6 +652,10 @@ function isModified(name: string): boolean {
   return token ? tokenValues.value[name] !== token.default : false;
 }
 
+function setActiveGroup(id: string) {
+  activeGroup.value = id;
+}
+
 function modifiedCount(groupId: string): number {
   const group = TOKEN_GROUPS.find((g) => g.id === groupId);
   if (!group) return 0;
@@ -608,7 +702,7 @@ const totalModified = computed(() => TOKEN_GROUPS.reduce((sum, g) => sum + modif
               :class="{ 'is-active': activeGroup === group.id }"
               role="tab"
               :aria-selected="activeGroup === group.id"
-              @click="activeGroup = group.id"
+              @click="setActiveGroup(group.id)"
             >
               {{ group.label }}
               <span v-if="modifiedCount(group.id) > 0" class="tb-dot" />
@@ -844,6 +938,23 @@ const totalModified = computed(() => TOKEN_GROUPS.reduce((sum, g) => sum + modif
               <hp-button class="tbp-btn tbp-btn--secondary">Secundario</hp-button>
               <hp-button class="tbp-btn tbp-btn--ghost">Fantasma</hp-button>
               <hp-button class="tbp-btn tbp-btn--primary" disabled>Deshabilitado</hp-button>
+            </div>
+          </section>
+
+          <!-- BADGE -->
+          <section class="tb-preview-section">
+            <h4 class="tb-preview-section-title">Badge</h4>
+            <div class="tb-preview-demo tb-preview-demo--row" style="flex-wrap: wrap">
+              <hp-badge class="tbp-badge tbp-badge--default" variant="default">Default</hp-badge>
+              <hp-badge class="tbp-badge tbp-badge--success" variant="success">Success</hp-badge>
+              <hp-badge class="tbp-badge tbp-badge--warning" variant="warning">Warning</hp-badge>
+              <hp-badge class="tbp-badge tbp-badge--danger" variant="danger">Danger</hp-badge>
+              <hp-badge class="tbp-badge tbp-badge--info" variant="info">Info</hp-badge>
+            </div>
+            <div class="tb-preview-demo tb-preview-demo--row" style="margin-top: 0.5rem">
+              <hp-badge class="tbp-badge tbp-badge--info" variant="info" size="sm">Small</hp-badge>
+              <hp-badge class="tbp-badge tbp-badge--info" variant="info" size="md">Medium</hp-badge>
+              <hp-badge class="tbp-badge tbp-badge--info" variant="info" size="lg">Large</hp-badge>
             </div>
           </section>
 
@@ -2671,6 +2782,63 @@ hp-accordion-content.tbp-accordion-content[data-state="closed"] {
   display: flex;
   justify-content: flex-end;
   gap: var(--hp-space-2, 0.5rem);
+}
+
+/* Badge */
+.tbp-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--hp-radius-full, 9999px);
+  font-family: inherit;
+  font-size: var(--hp-font-size-xs, 0.75rem);
+  font-weight: var(--hp-font-weight-semibold, 600);
+  line-height: 1;
+  white-space: nowrap;
+  padding: 0.25rem 0.625rem;
+  border: 1px solid transparent;
+  box-sizing: border-box;
+  vertical-align: middle;
+}
+
+.tbp-badge[data-size="sm"] {
+  font-size: 0.6875rem;
+  padding: 0.125rem 0.5rem;
+}
+
+.tbp-badge[data-size="lg"] {
+  font-size: var(--hp-font-size-sm, 0.875rem);
+  padding: 0.375rem 0.75rem;
+}
+
+.tbp-badge--default {
+  background-color: var(--hp-bg-muted, #f1f5f9);
+  color: var(--hp-text-secondary, #64748b);
+  border-color: var(--hp-border, #e2e8f0);
+}
+
+.tbp-badge--success {
+  background-color: var(--hp-color-success-bg, #f0fdf4);
+  color: var(--hp-color-success, #16a34a);
+  border-color: var(--hp-color-success-border, #bbf7d0);
+}
+
+.tbp-badge--warning {
+  background-color: var(--hp-color-warning-bg, #fffbeb);
+  color: var(--hp-color-warning, #d97706);
+  border-color: var(--hp-color-warning-border, #fde68a);
+}
+
+.tbp-badge--danger {
+  background-color: var(--hp-color-danger-bg, #fef2f2);
+  color: var(--hp-color-danger, #dc2626);
+  border-color: var(--hp-color-danger-border, #fecaca);
+}
+
+.tbp-badge--info {
+  background-color: var(--hp-color-info-bg, #eff6ff);
+  color: var(--hp-color-info, #2563eb);
+  border-color: var(--hp-color-info-border, #bfdbfe);
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -53,6 +53,9 @@ importers:
       '@headless-primitives/avatar':
         specifier: workspace:*
         version: link:../../packages/vanilla/avatar
+      '@headless-primitives/badge':
+        specifier: workspace:*
+        version: link:../../packages/vanilla/badge
       '@headless-primitives/button':
         specifier: workspace:*
         version: link:../../packages/vanilla/button
@@ -120,6 +123,9 @@ importers:
       '@headless-primitives/avatar':
         specifier: workspace:*
         version: link:../../packages/vanilla/avatar
+      '@headless-primitives/badge':
+        specifier: workspace:*
+        version: link:../../packages/vanilla/badge
       '@headless-primitives/button':
         specifier: workspace:*
         version: link:../../packages/vanilla/button
@@ -218,6 +224,15 @@ importers:
       vitest:
         specifier: ^2.0.5
         version: 2.1.9(@types/node@25.5.0)(happy-dom@14.12.3)(jsdom@29.0.1)(lightningcss@1.32.0)
+
+  packages/vanilla/badge:
+    dependencies:
+      '@headless-primitives/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lit:
+        specifier: ^3.3.2
+        version: 3.3.2
 
   packages/vanilla/button:
     dependencies:

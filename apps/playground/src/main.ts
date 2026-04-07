@@ -5,6 +5,7 @@ import baseStylesUrl from "./hp-base-styles.css?url";
 // Primitives registration
 import "@headless-primitives/accordion";
 import "@headless-primitives/avatar";
+import "@headless-primitives/badge";
 import "@headless-primitives/button";
 import "@headless-primitives/checkbox";
 import "@headless-primitives/collapsible";
@@ -29,6 +30,7 @@ import { ComponentDemo } from "./types";
 // Import modular demos
 import { accordionDemo } from "./demos/accordion.demo";
 import { alertDialogDemo } from "./demos/alert-dialog.demo";
+import { badgeDemo } from "./demos/badge.demo";
 import { avatarDemo } from "./demos/avatar.demo";
 import { buttonDemo } from "./demos/button.demo";
 import { checkboxDemo } from "./demos/checkbox.demo";
@@ -53,6 +55,7 @@ const ROUTES: Record<string, ComponentDemo> = {
   accordion: accordionDemo,
   "alert-dialog": alertDialogDemo,
   avatar: avatarDemo,
+  badge: badgeDemo,
   button: buttonDemo,
   checkbox: checkboxDemo,
   collapsible: collapsibleDemo,

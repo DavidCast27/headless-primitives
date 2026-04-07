@@ -4,6 +4,7 @@ import type { Theme } from "vitepress";
 // Importamos el componente primitivo general globalmente en todo Vitepress
 import "@headless-primitives/accordion";
 import "@headless-primitives/avatar";
+import "@headless-primitives/badge";
 import "@headless-primitives/button";
 import "@headless-primitives/checkbox";
 import "@headless-primitives/collapsible";

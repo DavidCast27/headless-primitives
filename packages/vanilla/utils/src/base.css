@@ -1090,6 +1090,34 @@ hp-field-control textarea {
   min-height: 80px;
 }
 
+/* --- Badge --- */
+hp-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, currentColor 30%, transparent);
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  user-select: none;
+  box-sizing: border-box;
+  vertical-align: middle;
+  /* default size (md) */
+  padding: 0.25rem 0.625rem;
+}
+
+hp-badge[data-size="sm"] {
+  font-size: 0.6875rem;
+  padding: 0.125rem 0.5rem;
+}
+
+hp-badge[data-size="lg"] {
+  font-size: 0.875rem;
+  padding: 0.375rem 0.875rem;
+}
+
 /* =============================================================
  * ANIMACIONES
  * Mismas animaciones que @headless-primitives/styles.
