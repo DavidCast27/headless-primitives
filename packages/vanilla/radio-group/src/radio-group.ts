@@ -55,7 +55,7 @@ export class HeadlessRadioGroup extends HeadlessElement {
       // Read value from attribute as fallback for timing issues
       const radioValue = radio.value || radio.getAttribute("value") || "";
       const isChecked = radioValue === this.value;
-      radio.setChecked(isChecked);
+      if (typeof radio.setChecked === "function") radio.setChecked(isChecked);
       if (isChecked) hasChecked = true;
     });
     if (!hasChecked && radios.length > 0) radios[0].tabIndex = 0;

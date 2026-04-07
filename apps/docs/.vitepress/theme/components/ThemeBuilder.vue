@@ -711,178 +711,174 @@ const totalModified = computed(() => TOKEN_GROUPS.reduce((sum, g) => sum + modif
 
           <!-- Entradas de tokens para el grupo activo -->
           <div class="tb-token-panels">
-            <div
-              v-for="group in TOKEN_GROUPS"
-              v-show="activeGroup === group.id"
-              :key="group.id"
-              class="tb-token-panel"
-              role="tabpanel"
-            >
-              <div class="tb-panel-header">
-                <span class="tb-panel-title">{{ group.label }}</span>
-                <button
-                  v-if="modifiedCount(group.id) > 0"
-                  class="tb-btn-tiny"
-                  @click="resetGroup(group.id)"
-                >
-                  Restablecer grupo
-                </button>
-              </div>
+            <template v-for="group in TOKEN_GROUPS" :key="group.id">
+              <div v-if="activeGroup === group.id" class="tb-token-panel" role="tabpanel">
+                <div class="tb-panel-header">
+                  <span class="tb-panel-title">{{ group.label }}</span>
+                  <button
+                    v-if="modifiedCount(group.id) > 0"
+                    class="tb-btn-tiny"
+                    @click="resetGroup(group.id)"
+                  >
+                    Restablecer grupo
+                  </button>
+                </div>
 
-              <div class="tb-token-list">
-                <div
-                  v-for="token in group.tokens"
-                  :key="token.name"
-                  class="tb-token-row"
-                  :class="{ 'is-modified': isModified(token.name) }"
-                >
-                  <div class="tb-token-meta">
-                    <label :for="`token-${token.name}`" class="tb-token-label">
-                      {{ token.label }}
-                      <span
+                <div class="tb-token-list">
+                  <div
+                    v-for="token in group.tokens"
+                    :key="token.name"
+                    class="tb-token-row"
+                    :class="{ 'is-modified': isModified(token.name) }"
+                  >
+                    <div class="tb-token-meta">
+                      <label :for="`token-${token.name}`" class="tb-token-label">
+                        {{ token.label }}
+                        <span
+                          v-if="isModified(token.name)"
+                          class="tb-modified-dot"
+                          title="Modificado desde el valor por defecto"
+                        />
+                      </label>
+                      <span class="tb-token-name">{{ token.name }}</span>
+                      <span v-if="token.hint" class="tb-token-hint">{{ token.hint }}</span>
+                    </div>
+                    <div class="tb-token-input-group">
+                      <!-- Selector de color + entrada de texto -->
+                      <template v-if="isColor(token)">
+                        <input
+                          :id="`token-${token.name}-picker`"
+                          type="color"
+                          class="tb-color-picker"
+                          :value="tokenValues[token.name]"
+                          @input="
+                            (e) => {
+                              tokenValues[token.name] = (e.target as HTMLInputElement).value;
+                            }
+                          "
+                          :title="`Selector de color para ${token.name}`"
+                        />
+                        <input
+                          :id="`token-${token.name}`"
+                          type="text"
+                          class="tb-text-input"
+                          :value="tokenValues[token.name]"
+                          @input="
+                            (e) => {
+                              tokenValues[token.name] = (e.target as HTMLInputElement).value;
+                            }
+                          "
+                          spellcheck="false"
+                        />
+                      </template>
+
+                      <!-- Entrada de tamaño para valores px/rem -->
+                      <template v-else-if="token.type === 'size'">
+                        <input
+                          :id="`token-${token.name}`"
+                          type="text"
+                          class="tb-text-input tb-text-input--wide"
+                          :value="tokenValues[token.name]"
+                          @input="
+                            (e) => {
+                              tokenValues[token.name] = (e.target as HTMLInputElement).value;
+                            }
+                          "
+                          spellcheck="false"
+                        />
+                      </template>
+
+                      <!-- Control deslizante de opacidad -->
+                      <template v-else-if="token.type === 'opacity'">
+                        <input
+                          :id="`token-${token.name}-range`"
+                          type="range"
+                          class="tb-range"
+                          min="0"
+                          max="1"
+                          step="0.05"
+                          :value="tokenValues[token.name]"
+                          @input="
+                            (e) => {
+                              tokenValues[token.name] = (e.target as HTMLInputElement).value;
+                            }
+                          "
+                        />
+                        <input
+                          :id="`token-${token.name}`"
+                          type="text"
+                          class="tb-text-input tb-text-input--narrow"
+                          :value="tokenValues[token.name]"
+                          @input="
+                            (e) => {
+                              tokenValues[token.name] = (e.target as HTMLInputElement).value;
+                            }
+                          "
+                          spellcheck="false"
+                        />
+                      </template>
+
+                      <!-- Número (pesos tipográficos) -->
+                      <template v-else-if="token.type === 'number'">
+                        <input
+                          :id="`token-${token.name}-range`"
+                          type="range"
+                          class="tb-range"
+                          min="100"
+                          max="900"
+                          step="100"
+                          :value="tokenValues[token.name]"
+                          @input="
+                            (e) => {
+                              tokenValues[token.name] = (e.target as HTMLInputElement).value;
+                            }
+                          "
+                        />
+                        <input
+                          :id="`token-${token.name}`"
+                          type="text"
+                          class="tb-text-input tb-text-input--narrow"
+                          :value="tokenValues[token.name]"
+                          @input="
+                            (e) => {
+                              tokenValues[token.name] = (e.target as HTMLInputElement).value;
+                            }
+                          "
+                          spellcheck="false"
+                        />
+                      </template>
+
+                      <!-- Sombra / texto — entrada de texto libre -->
+                      <template v-else>
+                        <input
+                          :id="`token-${token.name}`"
+                          type="text"
+                          class="tb-text-input tb-text-input--wide"
+                          :value="tokenValues[token.name]"
+                          @input="
+                            (e) => {
+                              tokenValues[token.name] = (e.target as HTMLInputElement).value;
+                            }
+                          "
+                          spellcheck="false"
+                        />
+                      </template>
+
+                      <!-- Restablecer token individual -->
+                      <button
                         v-if="isModified(token.name)"
-                        class="tb-modified-dot"
-                        title="Modificado desde el valor por defecto"
-                      />
-                    </label>
-                    <span class="tb-token-name">{{ token.name }}</span>
-                    <span v-if="token.hint" class="tb-token-hint">{{ token.hint }}</span>
-                  </div>
-                  <div class="tb-token-input-group">
-                    <!-- Selector de color + entrada de texto -->
-                    <template v-if="isColor(token)">
-                      <input
-                        :id="`token-${token.name}-picker`"
-                        type="color"
-                        class="tb-color-picker"
-                        :value="tokenValues[token.name]"
-                        @input="
-                          (e) => {
-                            tokenValues[token.name] = (e.target as HTMLInputElement).value;
-                          }
-                        "
-                        :title="`Selector de color para ${token.name}`"
-                      />
-                      <input
-                        :id="`token-${token.name}`"
-                        type="text"
-                        class="tb-text-input"
-                        :value="tokenValues[token.name]"
-                        @input="
-                          (e) => {
-                            tokenValues[token.name] = (e.target as HTMLInputElement).value;
-                          }
-                        "
-                        spellcheck="false"
-                      />
-                    </template>
-
-                    <!-- Entrada de tamaño para valores px/rem -->
-                    <template v-else-if="token.type === 'size'">
-                      <input
-                        :id="`token-${token.name}`"
-                        type="text"
-                        class="tb-text-input tb-text-input--wide"
-                        :value="tokenValues[token.name]"
-                        @input="
-                          (e) => {
-                            tokenValues[token.name] = (e.target as HTMLInputElement).value;
-                          }
-                        "
-                        spellcheck="false"
-                      />
-                    </template>
-
-                    <!-- Control deslizante de opacidad -->
-                    <template v-else-if="token.type === 'opacity'">
-                      <input
-                        :id="`token-${token.name}-range`"
-                        type="range"
-                        class="tb-range"
-                        min="0"
-                        max="1"
-                        step="0.05"
-                        :value="tokenValues[token.name]"
-                        @input="
-                          (e) => {
-                            tokenValues[token.name] = (e.target as HTMLInputElement).value;
-                          }
-                        "
-                      />
-                      <input
-                        :id="`token-${token.name}`"
-                        type="text"
-                        class="tb-text-input tb-text-input--narrow"
-                        :value="tokenValues[token.name]"
-                        @input="
-                          (e) => {
-                            tokenValues[token.name] = (e.target as HTMLInputElement).value;
-                          }
-                        "
-                        spellcheck="false"
-                      />
-                    </template>
-
-                    <!-- Número (pesos tipográficos) -->
-                    <template v-else-if="token.type === 'number'">
-                      <input
-                        :id="`token-${token.name}-range`"
-                        type="range"
-                        class="tb-range"
-                        min="100"
-                        max="900"
-                        step="100"
-                        :value="tokenValues[token.name]"
-                        @input="
-                          (e) => {
-                            tokenValues[token.name] = (e.target as HTMLInputElement).value;
-                          }
-                        "
-                      />
-                      <input
-                        :id="`token-${token.name}`"
-                        type="text"
-                        class="tb-text-input tb-text-input--narrow"
-                        :value="tokenValues[token.name]"
-                        @input="
-                          (e) => {
-                            tokenValues[token.name] = (e.target as HTMLInputElement).value;
-                          }
-                        "
-                        spellcheck="false"
-                      />
-                    </template>
-
-                    <!-- Sombra / texto — entrada de texto libre -->
-                    <template v-else>
-                      <input
-                        :id="`token-${token.name}`"
-                        type="text"
-                        class="tb-text-input tb-text-input--wide"
-                        :value="tokenValues[token.name]"
-                        @input="
-                          (e) => {
-                            tokenValues[token.name] = (e.target as HTMLInputElement).value;
-                          }
-                        "
-                        spellcheck="false"
-                      />
-                    </template>
-
-                    <!-- Restablecer token individual -->
-                    <button
-                      v-if="isModified(token.name)"
-                      class="tb-reset-token"
-                      :title="`Restablecer ${token.name} al valor por defecto`"
-                      @click="tokenValues[token.name] = token.default"
-                    >
-                      ↺
-                    </button>
+                        class="tb-reset-token"
+                        :title="`Restablecer ${token.name} al valor por defecto`"
+                        @click="tokenValues[token.name] = token.default"
+                      >
+                        ↺
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <!-- /tb-token-panel -->
+              <!-- /tb-token-panel -->
+            </template>
           </div>
           <!-- /tb-token-panels -->
         </div>
@@ -1558,6 +1554,7 @@ const totalModified = computed(() => TOKEN_GROUPS.reduce((sum, g) => sum + modif
   display: grid;
   grid-template-columns: 160px 1fr;
   min-height: 400px;
+  max-height: 520px;
 }
 
 /* NAV VERTICAL DE GRUPOS */
@@ -1568,6 +1565,7 @@ const totalModified = computed(() => TOKEN_GROUPS.reduce((sum, g) => sum + modif
   background: var(--vp-c-bg-soft);
   padding: 8px 0;
   overflow-y: auto;
+  max-height: 520px;
 }
 
 .tb-group-nav-item {
@@ -1607,7 +1605,7 @@ const totalModified = computed(() => TOKEN_GROUPS.reduce((sum, g) => sum + modif
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-  max-height: 500px;
+  max-height: 520px;
 }
 
 .tb-dot {
@@ -2004,7 +2002,7 @@ hp-radio {
 /* Etiqueta */
 .tbp-label {
   font-size: var(--hp-font-size-sm, 0.875rem);
-  color: var(--hp-text, #0f172a);
+  color: var(--hp-text, var(--vp-c-text-1));
   line-height: 1.4;
 }
 
@@ -2020,14 +2018,14 @@ hp-radio {
   width: 18px;
   height: 18px;
   min-width: 18px;
-  border: 2px solid var(--hp-border-strong, #64748b);
+  border: 2px solid var(--hp-border-strong, var(--vp-c-border));
   border-radius: var(--hp-radius-sm, 4px);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: var(--hp-transition, 150ms ease);
-  background: var(--hp-surface, #ffffff);
+  background: var(--hp-surface, var(--vp-c-bg));
   user-select: none;
 }
 
@@ -2063,14 +2061,14 @@ hp-radio {
   width: 18px;
   height: 18px;
   min-width: 18px;
-  border: 2px solid var(--hp-border-strong, #64748b);
+  border: 2px solid var(--hp-border-strong, var(--vp-c-border));
   border-radius: 50%;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: var(--hp-transition, 150ms ease);
-  background: var(--hp-surface, #ffffff);
+  background: var(--hp-surface, var(--vp-c-bg));
 }
 
 .tbp-radio:hover {
@@ -2099,18 +2097,18 @@ hp-radio {
   width: 40px;
   height: 22px;
   min-width: 40px;
-  background: var(--hp-bg-muted, #f1f5f9);
+  background: var(--hp-bg-muted, var(--vp-c-bg-mute));
   border-radius: var(--hp-radius-full, 9999px);
   cursor: pointer;
   position: relative;
-  border: 1px solid var(--hp-border, #e2e8f0);
+  border: 1px solid var(--hp-border, var(--vp-c-divider));
   transition: var(--hp-transition, 150ms ease);
   user-select: none;
   display: block;
 }
 
 .tbp-switch:hover {
-  border-color: var(--hp-border-strong, #64748b);
+  border-color: var(--hp-border-strong, var(--vp-c-border));
 }
 
 .tbp-switch[data-state="checked"] {
@@ -2125,7 +2123,7 @@ hp-radio {
   left: 2px;
   width: 16px;
   height: 16px;
-  background: var(--hp-surface, #ffffff);
+  background: var(--hp-surface, var(--vp-c-bg));
   border-radius: 50%;
   box-shadow: var(--hp-shadow-sm, 0 1px 2px 0 rgb(0 0 0 / 0.05));
   transition: transform var(--hp-transition, 150ms ease);
@@ -2153,7 +2151,7 @@ hp-radio {
   display: block;
   width: 100%;
   height: 8px;
-  background: var(--hp-bg-muted, #f1f5f9);
+  background: var(--hp-bg-muted, var(--vp-c-bg-mute));
   border-radius: var(--hp-radius-full, 9999px);
   overflow: hidden;
 }
@@ -2172,7 +2170,7 @@ hp-progress-indicator {
   display: block;
   width: 100%;
   height: 1px;
-  background: var(--hp-border, #e2e8f0);
+  background: var(--hp-border, var(--vp-c-divider));
   margin: 8px 0;
 }
 
@@ -2180,7 +2178,7 @@ hp-progress-indicator {
   display: inline-block;
   width: 1px;
   height: 100%;
-  background: var(--hp-border, #e2e8f0);
+  background: var(--hp-border, var(--vp-c-divider));
 }
 
 /* Avatar */
@@ -2188,7 +2186,7 @@ hp-progress-indicator {
   width: 40px;
   height: 40px;
   border-radius: var(--hp-radius-full, 9999px);
-  background: var(--hp-bg-muted, #f1f5f9);
+  background: var(--hp-bg-muted, var(--vp-c-bg-mute));
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -2204,23 +2202,23 @@ hp-progress-indicator {
 .tbp-avatar-fallback {
   font-size: var(--hp-font-size-sm, 0.875rem);
   font-weight: var(--hp-font-weight-semibold, 600);
-  color: var(--hp-text-secondary, #64748b);
+  color: var(--hp-text-secondary, var(--vp-c-text-2));
 }
 
 /* Grupo de alternancia */
 hp-toggle-group.tbp-toggle-group {
   display: inline-flex;
-  border: 1px solid var(--hp-border, #e2e8f0);
+  border: 1px solid var(--hp-border, var(--vp-c-divider));
   border-radius: var(--hp-radius, 6px);
-  background: var(--hp-surface, #ffffff);
+  background: var(--hp-surface, var(--vp-c-bg));
   overflow: hidden;
 }
 
 .tbp-toggle-group {
   display: inline-flex;
-  border: 1px solid var(--hp-border, #e2e8f0);
+  border: 1px solid var(--hp-border, var(--vp-c-divider));
   border-radius: var(--hp-radius, 6px);
-  background: var(--hp-surface, #ffffff);
+  background: var(--hp-surface, var(--vp-c-bg));
   overflow: hidden;
 }
 
@@ -2236,8 +2234,8 @@ hp-toggle.tbp-toggle {
   padding: var(--hp-space-2, 0.5rem) var(--hp-space-3, 0.75rem);
   background: transparent;
   border: none;
-  border-right: 1px solid var(--hp-border, #e2e8f0);
-  color: var(--hp-text-secondary, #64748b);
+  border-right: 1px solid var(--hp-border, var(--vp-c-divider));
+  color: var(--hp-text-secondary, var(--vp-c-text-2));
   cursor: pointer;
   transition: var(--hp-transition, 150ms ease);
   display: inline-flex;
@@ -2249,14 +2247,14 @@ hp-toggle.tbp-toggle {
 }
 
 .tbp-toggle:hover:not([disabled]):not([aria-pressed="true"]):not([data-state="on"]) {
-  background: var(--hp-bg-muted, #f1f5f9);
-  color: var(--hp-text, #0f172a);
+  background: var(--hp-bg-muted, var(--vp-c-bg-mute));
+  color: var(--hp-text, var(--vp-c-text-1));
 }
 
 .tbp-toggle[aria-pressed="true"],
 .tbp-toggle[data-state="on"] {
-  background: var(--hp-bg-muted, #f1f5f9);
-  color: var(--hp-text, #0f172a);
+  background: var(--hp-bg-muted, var(--vp-c-bg-mute));
+  color: var(--hp-text, var(--vp-c-text-1));
 }
 
 .tbp-toggle[disabled] {
@@ -2276,12 +2274,12 @@ hp-tabs.tbp-tabs {
 
 hp-tab-list.tbp-tab-list {
   display: flex;
-  border-bottom: 2px solid var(--hp-border, #e2e8f0);
+  border-bottom: 2px solid var(--hp-border, var(--vp-c-divider));
 }
 
 .tbp-tab-list {
   display: flex;
-  border-bottom: 2px solid var(--hp-border, #e2e8f0);
+  border-bottom: 2px solid var(--hp-border, var(--vp-c-divider));
 }
 
 .tbp-tab {
@@ -2294,15 +2292,15 @@ hp-tab-list.tbp-tab-list {
   border-bottom: 2px solid transparent;
   margin-bottom: -2px;
   cursor: pointer;
-  color: var(--hp-text-secondary, #64748b);
+  color: var(--hp-text-secondary, var(--vp-c-text-2));
   transition: var(--hp-transition, 150ms ease);
   display: inline-flex;
   align-items: center;
 }
 
 .tbp-tab:hover {
-  color: var(--hp-text, #0f172a);
-  background: var(--hp-bg-muted, #f1f5f9);
+  color: var(--hp-text, var(--vp-c-text-1));
+  background: var(--hp-bg-muted, var(--vp-c-bg-mute));
 }
 
 .tbp-tab[data-state="selected"],
@@ -2323,7 +2321,7 @@ hp-tab-panel.tbp-tab-panel {
 .tbp-tab-panel {
   padding: var(--hp-space-4, 1rem) 0;
   font-size: var(--hp-font-size-sm, 0.875rem);
-  color: var(--hp-text, #0f172a);
+  color: var(--hp-text, var(--vp-c-text-1));
 }
 
 hp-tab-panel.tbp-tab-panel[data-state="unselected"] {
@@ -2333,28 +2331,28 @@ hp-tab-panel.tbp-tab-panel[data-state="unselected"] {
 /* Acordeón */
 hp-accordion.tbp-accordion {
   display: block;
-  border: 1px solid var(--hp-border, #e2e8f0);
+  border: 1px solid var(--hp-border, var(--vp-c-divider));
   border-radius: var(--hp-radius-md, 8px);
   overflow: hidden;
-  background: var(--hp-surface, #ffffff);
+  background: var(--hp-surface, var(--vp-c-bg));
   width: 100%;
 }
 
 .tbp-accordion {
-  border: 1px solid var(--hp-border, #e2e8f0);
+  border: 1px solid var(--hp-border, var(--vp-c-divider));
   border-radius: var(--hp-radius-md, 8px);
   overflow: hidden;
-  background: var(--hp-surface, #ffffff);
+  background: var(--hp-surface, var(--vp-c-bg));
   width: 100%;
 }
 
 hp-accordion-item.tbp-accordion-item {
   display: block;
-  border-bottom: 1px solid var(--hp-border, #e2e8f0);
+  border-bottom: 1px solid var(--hp-border, var(--vp-c-divider));
 }
 
 .tbp-accordion-item {
-  border-bottom: 1px solid var(--hp-border, #e2e8f0);
+  border-bottom: 1px solid var(--hp-border, var(--vp-c-divider));
 }
 
 .tbp-accordion-item:last-child {
@@ -2372,7 +2370,7 @@ hp-accordion-trigger.tbp-accordion-trigger {
   font-family: inherit;
   font-size: var(--hp-font-size-sm, 0.875rem);
   font-weight: var(--hp-font-weight-medium, 500);
-  color: var(--hp-text, #0f172a);
+  color: var(--hp-text, var(--vp-c-text-1));
   cursor: pointer;
   text-align: left;
   transition: var(--hp-transition, 150ms ease);
@@ -2389,14 +2387,14 @@ hp-accordion-trigger.tbp-accordion-trigger {
   font-family: inherit;
   font-size: var(--hp-font-size-sm, 0.875rem);
   font-weight: var(--hp-font-weight-medium, 500);
-  color: var(--hp-text, #0f172a);
+  color: var(--hp-text, var(--vp-c-text-1));
   cursor: pointer;
   text-align: left;
   transition: var(--hp-transition, 150ms ease);
 }
 
 .tbp-accordion-trigger:hover:not([disabled]) {
-  background: var(--hp-bg-muted, #f1f5f9);
+  background: var(--hp-bg-muted, var(--vp-c-bg-mute));
 }
 
 .tbp-accordion-trigger[aria-expanded="true"] {
@@ -2422,14 +2420,14 @@ hp-accordion-content.tbp-accordion-content {
   display: block;
   padding: 0 var(--hp-space-4, 1rem) var(--hp-space-3, 0.75rem);
   font-size: var(--hp-font-size-sm, 0.875rem);
-  color: var(--hp-text-secondary, #64748b);
+  color: var(--hp-text-secondary, var(--vp-c-text-2));
 }
 
 .tbp-accordion-content {
   display: block;
   padding: 0 var(--hp-space-4, 1rem) var(--hp-space-3, 0.75rem);
   font-size: var(--hp-font-size-sm, 0.875rem);
-  color: var(--hp-text-secondary, #64748b);
+  color: var(--hp-text-secondary, var(--vp-c-text-2));
 }
 
 hp-accordion-content.tbp-accordion-content[data-state="closed"] {
@@ -2438,7 +2436,7 @@ hp-accordion-content.tbp-accordion-content[data-state="closed"] {
 
 /* Colapsable */
 .tbp-collapsible {
-  border: 1px solid var(--hp-border, #e2e8f0);
+  border: 1px solid var(--hp-border, var(--vp-c-divider));
   border-radius: var(--hp-radius, 6px);
   overflow: hidden;
   width: 100%;
@@ -2455,22 +2453,22 @@ hp-accordion-content.tbp-accordion-content[data-state="closed"] {
   font-family: inherit;
   font-size: var(--hp-font-size-sm, 0.875rem);
   font-weight: var(--hp-font-weight-medium, 500);
-  color: var(--hp-text, #0f172a);
+  color: var(--hp-text, var(--vp-c-text-1));
   cursor: pointer;
   text-align: left;
   transition: var(--hp-transition, 150ms ease);
 }
 
 .tbp-collapsible-trigger:hover {
-  background: var(--hp-bg-muted, #f1f5f9);
+  background: var(--hp-bg-muted, var(--vp-c-bg-mute));
 }
 
 .tbp-collapsible-content {
   display: block;
   padding: var(--hp-space-3, 0.75rem) var(--hp-space-4, 1rem);
   font-size: var(--hp-font-size-sm, 0.875rem);
-  color: var(--hp-text-secondary, #64748b);
-  border-top: 1px solid var(--hp-border, #e2e8f0);
+  color: var(--hp-text-secondary, var(--vp-c-text-2));
+  border-top: 1px solid var(--hp-border, var(--vp-c-divider));
 }
 
 /* Campo de formulario */
@@ -2491,12 +2489,12 @@ hp-accordion-content.tbp-accordion-content[data-state="closed"] {
 .tbp-field-label {
   font-size: var(--hp-font-size-sm, 0.875rem);
   font-weight: var(--hp-font-weight-medium, 500);
-  color: var(--hp-text, #0f172a);
+  color: var(--hp-text, var(--vp-c-text-1));
 }
 
 .tbp-field-desc {
   font-size: var(--hp-font-size-xs, 0.75rem);
-  color: var(--hp-text-secondary, #64748b);
+  color: var(--hp-text-secondary, var(--vp-c-text-2));
 }
 
 .tbp-field-error {
@@ -2508,10 +2506,10 @@ hp-accordion-content.tbp-accordion-content[data-state="closed"] {
   font-family: inherit;
   font-size: var(--hp-font-size-sm, 0.875rem);
   padding: var(--hp-space-2, 0.5rem) var(--hp-space-3, 0.75rem);
-  border: 1px solid var(--hp-border-strong, #64748b);
+  border: 1px solid var(--hp-border-strong, var(--vp-c-border));
   border-radius: var(--hp-radius, 6px);
-  background: var(--hp-surface, #ffffff);
-  color: var(--hp-text, #0f172a);
+  background: var(--hp-surface, var(--vp-c-bg));
+  color: var(--hp-text, var(--vp-c-text-1));
   width: 100%;
   transition: var(--hp-transition, 150ms ease);
 }
@@ -2540,10 +2538,10 @@ hp-accordion-content.tbp-accordion-content[data-state="closed"] {
   justify-content: space-between;
   width: 100%;
   padding: var(--hp-space-2, 0.5rem) var(--hp-space-3, 0.75rem);
-  border: 1px solid var(--hp-border-strong, #64748b);
+  border: 1px solid var(--hp-border-strong, var(--vp-c-border));
   border-radius: var(--hp-radius, 6px);
-  background: var(--hp-surface, #ffffff);
-  color: var(--hp-text, #0f172a);
+  background: var(--hp-surface, var(--vp-c-bg));
+  color: var(--hp-text, var(--vp-c-text-1));
   cursor: pointer;
 }
 
@@ -2571,12 +2569,12 @@ hp-accordion-content.tbp-accordion-content[data-state="closed"] {
 }
 
 .tbp-select-trigger[data-placeholder] .tbp-select-value {
-  color: var(--hp-text-secondary, #64748b);
+  color: var(--hp-text-secondary, var(--vp-c-text-2));
 }
 
 .tbp-select-icon {
   font-size: 0.85rem;
-  color: var(--hp-text-secondary, #64748b);
+  color: var(--hp-text-secondary, var(--vp-c-text-2));
 }
 
 .tbp-select-content {
@@ -2586,9 +2584,9 @@ hp-accordion-content.tbp-accordion-content[data-state="closed"] {
   z-index: 50;
   min-width: 100%;
   max-height: 18rem;
-  border: 1px solid var(--hp-border, #e2e8f0);
+  border: 1px solid var(--hp-border, var(--vp-c-divider));
   border-radius: var(--hp-radius, 6px);
-  background: var(--hp-surface, #ffffff);
+  background: var(--hp-surface, var(--vp-c-bg));
   box-shadow: var(--hp-shadow-lg, 0 10px 15px -3px rgb(0 0 0 / 0.1));
   overflow-y: auto;
   opacity: 0;
@@ -2608,12 +2606,12 @@ hp-accordion-content.tbp-accordion-content[data-state="closed"] {
 .tbp-select-item {
   padding: var(--hp-space-2, 0.5rem) var(--hp-space-3, 0.75rem);
   font-size: var(--hp-font-size-sm, 0.875rem);
-  color: var(--hp-text, #0f172a);
+  color: var(--hp-text, var(--vp-c-text-1));
   cursor: pointer;
 }
 
 .tbp-select-item:hover:not([aria-disabled="true"]) {
-  background: var(--hp-bg-muted, #f1f5f9);
+  background: var(--hp-bg-muted, var(--vp-c-bg-mute));
 }
 
 .tbp-select-item[aria-selected="true"] {
@@ -2633,8 +2631,8 @@ hp-accordion-content.tbp-accordion-content[data-state="closed"] {
 }
 
 .tbp-tooltip-floating {
-  background: var(--hp-text, #0f172a);
-  color: var(--hp-surface, #ffffff);
+  background: var(--hp-text, var(--vp-c-text-1));
+  color: var(--hp-surface, var(--vp-c-bg));
   font-size: var(--hp-font-size-xs, 0.75rem);
   font-family: var(--vp-font-family-base);
   padding: var(--hp-space-1, 0.25rem) var(--hp-space-2, 0.5rem);
