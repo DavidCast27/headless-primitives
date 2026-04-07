@@ -14,6 +14,7 @@ import "@headless-primitives/label";
 import "@headless-primitives/popover";
 import "@headless-primitives/progress";
 import "@headless-primitives/radio-group";
+import "@headless-primitives/select";
 import "@headless-primitives/separator";
 import "@headless-primitives/switch";
 import "@headless-primitives/tabs";

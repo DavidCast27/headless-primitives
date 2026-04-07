@@ -20,5 +20,9 @@ export class HeadlessElement extends LitElement {
   }
 
   // Gestión de IDs única por instancia
-  protected readonly hpId = uid();
+  protected readonly _hpId = uid();
+
+  get hpId(): string {
+    return this._hpId;
+  }
 }

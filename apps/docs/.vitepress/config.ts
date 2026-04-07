@@ -92,6 +92,7 @@ export default defineConfig({
           { text: "Popover", link: "/components/popover" },
           { text: "Progress", link: "/components/progress" },
           { text: "Radio Group", link: "/components/radio-group" },
+          { text: "Select", link: "/components/select" },
           { text: "Separator", link: "/components/separator" },
           { text: "Switch", link: "/components/switch" },
           { text: "Tabs", link: "/components/tabs" },

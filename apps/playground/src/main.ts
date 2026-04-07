@@ -15,6 +15,7 @@ import "@headless-primitives/label";
 import "@headless-primitives/popover";
 import "@headless-primitives/progress";
 import "@headless-primitives/radio-group";
+import "@headless-primitives/select";
 import "@headless-primitives/separator";
 import "@headless-primitives/switch";
 import "@headless-primitives/tabs";
@@ -39,6 +40,7 @@ import { labelDemo } from "./demos/label.demo";
 import { popoverDemo } from "./demos/popover.demo";
 import { progressDemo } from "./demos/progress.demo";
 import { radioGroupDemo } from "./demos/radio-group.demo";
+import { selectDemo } from "./demos/select.demo";
 import { separatorDemo } from "./demos/separator.demo";
 import { switchDemo } from "./demos/switch.demo";
 import { tabsDemo } from "./demos/tabs.demo";
@@ -61,6 +63,7 @@ const ROUTES: Record<string, ComponentDemo> = {
   popover: popoverDemo,
   progress: progressDemo,
   "radio-group": radioGroupDemo,
+  select: selectDemo,
   separator: separatorDemo,
   switch: switchDemo,
   tabs: tabsDemo,
