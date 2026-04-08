@@ -954,6 +954,96 @@ const totalModified = computed(() => TOKEN_GROUPS.reduce((sum, g) => sum + modif
             </div>
           </section>
 
+          <!-- ACORDEÓN -->
+          <section class="tb-preview-section">
+            <h4 class="tb-preview-section-title">Acordeón</h4>
+            <div class="tb-preview-demo">
+              <hp-accordion single-panel class="tbp-accordion">
+                <hp-accordion-item value="acc1" open class="tbp-accordion-item">
+                  <hp-accordion-trigger class="tbp-accordion-trigger">
+                    <span>¿Qué es Headless Primitives?</span>
+                    <span class="tbp-accordion-icon">▾</span>
+                  </hp-accordion-trigger>
+                  <hp-accordion-content class="tbp-accordion-content"
+                    >Una librería de componentes web headless y accesibles.</hp-accordion-content
+                  >
+                </hp-accordion-item>
+                <hp-accordion-item value="acc2" class="tbp-accordion-item">
+                  <hp-accordion-trigger class="tbp-accordion-trigger">
+                    <span>¿Por qué usarla?</span>
+                    <span class="tbp-accordion-icon">▾</span>
+                  </hp-accordion-trigger>
+                  <hp-accordion-content class="tbp-accordion-content"
+                    >El comportamiento y la accesibilidad están resueltos — tú pones los
+                    estilos.</hp-accordion-content
+                  >
+                </hp-accordion-item>
+                <hp-accordion-item value="acc3" disabled class="tbp-accordion-item">
+                  <hp-accordion-trigger class="tbp-accordion-trigger">
+                    <span>Elemento deshabilitado</span>
+                    <span class="tbp-accordion-icon">▾</span>
+                  </hp-accordion-trigger>
+                  <hp-accordion-content class="tbp-accordion-content"
+                    >No visible.</hp-accordion-content
+                  >
+                </hp-accordion-item>
+              </hp-accordion>
+            </div>
+          </section>
+
+          <!-- AVATAR -->
+          <section class="tb-preview-section">
+            <h4 class="tb-preview-section-title">Avatar</h4>
+            <div class="tb-preview-demo tb-preview-demo--row">
+              <hp-avatar class="tbp-avatar">
+                <hp-avatar-image
+                  src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=64&h=64&fit=crop"
+                  alt="Avatar de usuario"
+                ></hp-avatar-image>
+                <hp-avatar-fallback class="tbp-avatar-fallback">JD</hp-avatar-fallback>
+              </hp-avatar>
+              <hp-avatar class="tbp-avatar">
+                <hp-avatar-image src="broken.jpg" alt="Imagen rota"></hp-avatar-image>
+                <hp-avatar-fallback class="tbp-avatar-fallback">ER</hp-avatar-fallback>
+              </hp-avatar>
+              <hp-avatar class="tbp-avatar tbp-avatar--lg">
+                <hp-avatar-image src="broken.jpg" alt="Grande"></hp-avatar-image>
+                <hp-avatar-fallback class="tbp-avatar-fallback">AB</hp-avatar-fallback>
+              </hp-avatar>
+            </div>
+          </section>
+
+          <!-- CAMPO -->
+          <section class="tb-preview-section">
+            <h4 class="tb-preview-section-title">Campo de formulario</h4>
+            <div class="tb-preview-demo">
+              <div class="tbp-field-stack">
+                <hp-field>
+                  <div class="tbp-field-inner">
+                    <hp-field-label class="tbp-field-label">Correo electrónico</hp-field-label>
+                    <hp-field-description class="tbp-field-desc"
+                      >Nunca compartiremos tu correo.</hp-field-description
+                    >
+                    <hp-field-control>
+                      <input type="email" class="tbp-input" placeholder="tu@ejemplo.com" />
+                    </hp-field-control>
+                  </div>
+                </hp-field>
+                <hp-field>
+                  <div class="tbp-field-inner">
+                    <hp-field-label class="tbp-field-label">Nombre de usuario</hp-field-label>
+                    <hp-field-control>
+                      <input type="text" class="tbp-input tbp-input--error" value="¡ya existe!" />
+                    </hp-field-control>
+                    <hp-field-error class="tbp-field-error"
+                      >Este nombre de usuario ya está en uso.</hp-field-error
+                    >
+                  </div>
+                </hp-field>
+              </div>
+            </div>
+          </section>
+
           <!-- CHECKBOX -->
           <section class="tb-preview-section">
             <h4 class="tb-preview-section-title">Casilla de verificación</h4>
@@ -970,6 +1060,128 @@ const totalModified = computed(() => TOKEN_GROUPS.reduce((sum, g) => sum + modif
                 <hp-checkbox id="tbp-chk3" disabled class="tbp-checkbox"></hp-checkbox>
                 <hp-label for="tbp-chk3" class="tbp-label">Deshabilitado</hp-label>
               </div>
+            </div>
+          </section>
+
+          <!-- COLAPSABLE -->
+          <section class="tb-preview-section">
+            <h4 class="tb-preview-section-title">Colapsable</h4>
+            <div class="tb-preview-demo">
+              <hp-collapsible class="tbp-collapsible">
+                <hp-collapsible-trigger class="tbp-collapsible-trigger">
+                  Mostrar detalles
+                  <span class="tbp-accordion-icon">▾</span>
+                </hp-collapsible-trigger>
+                <hp-collapsible-content class="tbp-collapsible-content">
+                  Este contenido está oculto por defecto y se revela al hacer clic.
+                </hp-collapsible-content>
+              </hp-collapsible>
+            </div>
+          </section>
+
+          <!-- COMBOBOX -->
+          <section class="tb-preview-section">
+            <h4 class="tb-preview-section-title">Combobox</h4>
+            <div class="tb-preview-demo">
+              <hp-combobox class="tbp-combobox" placeholder="Selecciona una fruta">
+                <hp-combobox-input class="tbp-combobox-input"></hp-combobox-input>
+                <hp-combobox-content class="tbp-combobox-content">
+                  <hp-combobox-option value="apple" class="tbp-combobox-option"
+                    >🍎 Apple</hp-combobox-option
+                  >
+                  <hp-combobox-option value="banana" class="tbp-combobox-option"
+                    >🍌 Banana</hp-combobox-option
+                  >
+                  <hp-combobox-option value="cherry" class="tbp-combobox-option"
+                    >🍒 Cherry</hp-combobox-option
+                  >
+                  <hp-combobox-option value="date" disabled class="tbp-combobox-option"
+                    >📅 Date (disabled)</hp-combobox-option
+                  >
+                  <hp-combobox-option value="elderberry" class="tbp-combobox-option"
+                    >🫐 Elderberry</hp-combobox-option
+                  >
+                </hp-combobox-content>
+              </hp-combobox>
+            </div>
+          </section>
+
+          <!-- DIÁLOGO -->
+          <section class="tb-preview-section">
+            <h4 class="tb-preview-section-title">Diálogo</h4>
+            <div class="tb-preview-demo">
+              <button class="tbp-btn tbp-btn--primary" @click="previewDialogOpen = true">
+                Abrir diálogo
+              </button>
+              <Teleport to="body">
+                <div
+                  v-if="previewDialogOpen"
+                  class="tbp-dialog-overlay"
+                  @click.self="previewDialogOpen = false"
+                >
+                  <div
+                    class="tbp-dialog-content"
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby="tbp-dlg-title"
+                  >
+                    <h2 id="tbp-dlg-title" class="tbp-dialog-title">Título del diálogo</h2>
+                    <p class="tbp-dialog-body">
+                      Este es el cuerpo del diálogo. Se adapta a los valores de token actuales.
+                    </p>
+                    <div class="tbp-dialog-footer">
+                      <button class="tbp-btn tbp-btn--ghost" @click="previewDialogOpen = false">
+                        Cancelar
+                      </button>
+                      <button class="tbp-btn tbp-btn--primary" @click="previewDialogOpen = false">
+                        Confirmar
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </Teleport>
+            </div>
+          </section>
+
+          <!-- DIÁLOGO DE ALERTA -->
+          <section class="tb-preview-section">
+            <h4 class="tb-preview-section-title">Diálogo de alerta</h4>
+            <div class="tb-preview-demo">
+              <button class="tbp-btn tbp-btn--danger" @click="previewAlertDialogOpen = true">
+                Abrir diálogo de alerta
+              </button>
+              <Teleport to="body">
+                <div v-if="previewAlertDialogOpen" class="tbp-dialog-overlay">
+                  <div
+                    class="tbp-dialog-content"
+                    role="alertdialog"
+                    aria-modal="true"
+                    aria-labelledby="tbp-alert-title"
+                    aria-describedby="tbp-alert-body"
+                  >
+                    <h2 id="tbp-alert-title" class="tbp-dialog-title tbp-dialog-title--danger">
+                      ¿Eliminar elemento?
+                    </h2>
+                    <p id="tbp-alert-body" class="tbp-dialog-body">
+                      Esta acción no se puede deshacer. El elemento será eliminado permanentemente.
+                    </p>
+                    <div class="tbp-dialog-footer">
+                      <button
+                        class="tbp-btn tbp-btn--ghost"
+                        @click="previewAlertDialogOpen = false"
+                      >
+                        Cancelar
+                      </button>
+                      <button
+                        class="tbp-btn tbp-btn--danger"
+                        @click="previewAlertDialogOpen = false"
+                      >
+                        Eliminar
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </Teleport>
             </div>
           </section>
 
@@ -1049,28 +1261,6 @@ const totalModified = computed(() => TOKEN_GROUPS.reduce((sum, g) => sum + modif
             </div>
           </section>
 
-          <!-- AVATAR -->
-          <section class="tb-preview-section">
-            <h4 class="tb-preview-section-title">Avatar</h4>
-            <div class="tb-preview-demo tb-preview-demo--row">
-              <hp-avatar class="tbp-avatar">
-                <hp-avatar-image
-                  src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=64&h=64&fit=crop"
-                  alt="Avatar de usuario"
-                ></hp-avatar-image>
-                <hp-avatar-fallback class="tbp-avatar-fallback">JD</hp-avatar-fallback>
-              </hp-avatar>
-              <hp-avatar class="tbp-avatar">
-                <hp-avatar-image src="broken.jpg" alt="Imagen rota"></hp-avatar-image>
-                <hp-avatar-fallback class="tbp-avatar-fallback">ER</hp-avatar-fallback>
-              </hp-avatar>
-              <hp-avatar class="tbp-avatar tbp-avatar--lg">
-                <hp-avatar-image src="broken.jpg" alt="Grande"></hp-avatar-image>
-                <hp-avatar-fallback class="tbp-avatar-fallback">AB</hp-avatar-fallback>
-              </hp-avatar>
-            </div>
-          </section>
-
           <!-- GRUPO DE ALTERNANCIA -->
           <section class="tb-preview-section">
             <h4 class="tb-preview-section-title">Grupo de alternancia</h4>
@@ -1104,90 +1294,6 @@ const totalModified = computed(() => TOKEN_GROUPS.reduce((sum, g) => sum + modif
                   >Controla cómo recibes tus notificaciones.</hp-tab-panel
                 >
               </hp-tabs>
-            </div>
-          </section>
-
-          <!-- ACORDEÓN -->
-          <section class="tb-preview-section">
-            <h4 class="tb-preview-section-title">Acordeón</h4>
-            <div class="tb-preview-demo">
-              <hp-accordion single-panel class="tbp-accordion">
-                <hp-accordion-item value="acc1" open class="tbp-accordion-item">
-                  <hp-accordion-trigger class="tbp-accordion-trigger">
-                    <span>¿Qué es Headless Primitives?</span>
-                    <span class="tbp-accordion-icon">▾</span>
-                  </hp-accordion-trigger>
-                  <hp-accordion-content class="tbp-accordion-content"
-                    >Una librería de componentes web headless y accesibles.</hp-accordion-content
-                  >
-                </hp-accordion-item>
-                <hp-accordion-item value="acc2" class="tbp-accordion-item">
-                  <hp-accordion-trigger class="tbp-accordion-trigger">
-                    <span>¿Por qué usarla?</span>
-                    <span class="tbp-accordion-icon">▾</span>
-                  </hp-accordion-trigger>
-                  <hp-accordion-content class="tbp-accordion-content"
-                    >El comportamiento y la accesibilidad están resueltos — tú pones los
-                    estilos.</hp-accordion-content
-                  >
-                </hp-accordion-item>
-                <hp-accordion-item value="acc3" disabled class="tbp-accordion-item">
-                  <hp-accordion-trigger class="tbp-accordion-trigger">
-                    <span>Elemento deshabilitado</span>
-                    <span class="tbp-accordion-icon">▾</span>
-                  </hp-accordion-trigger>
-                  <hp-accordion-content class="tbp-accordion-content"
-                    >No visible.</hp-accordion-content
-                  >
-                </hp-accordion-item>
-              </hp-accordion>
-            </div>
-          </section>
-
-          <!-- COLAPSABLE -->
-          <section class="tb-preview-section">
-            <h4 class="tb-preview-section-title">Colapsable</h4>
-            <div class="tb-preview-demo">
-              <hp-collapsible class="tbp-collapsible">
-                <hp-collapsible-trigger class="tbp-collapsible-trigger">
-                  Mostrar detalles
-                  <span class="tbp-accordion-icon">▾</span>
-                </hp-collapsible-trigger>
-                <hp-collapsible-content class="tbp-collapsible-content">
-                  Este contenido está oculto por defecto y se revela al hacer clic.
-                </hp-collapsible-content>
-              </hp-collapsible>
-            </div>
-          </section>
-
-          <!-- CAMPO -->
-          <section class="tb-preview-section">
-            <h4 class="tb-preview-section-title">Campo de formulario</h4>
-            <div class="tb-preview-demo">
-              <div class="tbp-field-stack">
-                <hp-field>
-                  <div class="tbp-field-inner">
-                    <hp-field-label class="tbp-field-label">Correo electrónico</hp-field-label>
-                    <hp-field-description class="tbp-field-desc"
-                      >Nunca compartiremos tu correo.</hp-field-description
-                    >
-                    <hp-field-control>
-                      <input type="email" class="tbp-input" placeholder="tu@ejemplo.com" />
-                    </hp-field-control>
-                  </div>
-                </hp-field>
-                <hp-field>
-                  <div class="tbp-field-inner">
-                    <hp-field-label class="tbp-field-label">Nombre de usuario</hp-field-label>
-                    <hp-field-control>
-                      <input type="text" class="tbp-input tbp-input--error" value="¡ya existe!" />
-                    </hp-field-control>
-                    <hp-field-error class="tbp-field-error"
-                      >Este nombre de usuario ya está en uso.</hp-field-error
-                    >
-                  </div>
-                </hp-field>
-              </div>
             </div>
           </section>
 
@@ -1287,129 +1393,6 @@ const totalModified = computed(() => TOKEN_GROUPS.reduce((sum, g) => sum + modif
               >
                 Toast de error
               </hp-button>
-            </div>
-          </section>
-
-          <!-- DIÁLOGO -->
-          <section class="tb-preview-section">
-            <h4 class="tb-preview-section-title">Diálogo</h4>
-            <div class="tb-preview-demo">
-              <button class="tbp-btn tbp-btn--primary" @click="previewDialogOpen = true">
-                Abrir diálogo
-              </button>
-              <Teleport to="body">
-                <div
-                  v-if="previewDialogOpen"
-                  class="tbp-dialog-overlay"
-                  @click.self="previewDialogOpen = false"
-                >
-                  <div
-                    class="tbp-dialog-content"
-                    role="dialog"
-                    aria-modal="true"
-                    aria-labelledby="tbp-dlg-title"
-                  >
-                    <h2 id="tbp-dlg-title" class="tbp-dialog-title">Título del diálogo</h2>
-                    <p class="tbp-dialog-body">
-                      Este es el cuerpo del diálogo. Se adapta a los valores de token actuales.
-                    </p>
-                    <div class="tbp-dialog-footer">
-                      <button class="tbp-btn tbp-btn--ghost" @click="previewDialogOpen = false">
-                        Cancelar
-                      </button>
-                      <button class="tbp-btn tbp-btn--primary" @click="previewDialogOpen = false">
-                        Confirmar
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </Teleport>
-            </div>
-          </section>
-
-          <!-- DIÁLOGO DE ALERTA -->
-          <section class="tb-preview-section">
-            <h4 class="tb-preview-section-title">Diálogo de alerta</h4>
-            <div class="tb-preview-demo">
-              <button class="tbp-btn tbp-btn--danger" @click="previewAlertDialogOpen = true">
-                Abrir diálogo de alerta
-              </button>
-              <Teleport to="body">
-                <div v-if="previewAlertDialogOpen" class="tbp-dialog-overlay">
-                  <div
-                    class="tbp-dialog-content"
-                    role="alertdialog"
-                    aria-modal="true"
-                    aria-labelledby="tbp-alert-title"
-                    aria-describedby="tbp-alert-body"
-                  >
-                    <h2 id="tbp-alert-title" class="tbp-dialog-title tbp-dialog-title--danger">
-                      ¿Eliminar elemento?
-                    </h2>
-                    <p id="tbp-alert-body" class="tbp-dialog-body">
-                      Esta acción no se puede deshacer. El elemento será eliminado permanentemente.
-                    </p>
-                    <div class="tbp-dialog-footer">
-                      <button
-                        class="tbp-btn tbp-btn--ghost"
-                        @click="previewAlertDialogOpen = false"
-                      >
-                        Cancelar
-                      </button>
-                      <button
-                        class="tbp-btn tbp-btn--danger"
-                        @click="previewAlertDialogOpen = false"
-                      >
-                        Eliminar
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </Teleport>
-            </div>
-          </section>
-          <!-- DRAWER -->
-          <section class="tb-preview-section">
-            <h4 class="tb-preview-section-title">Drawer</h4>
-            <div class="tb-preview-demo">
-              <button class="tbp-btn tbp-btn--primary" @click="previewDrawerOpen = true">
-                Abrir drawer
-              </button>
-              <Teleport to="body">
-                <div
-                  v-if="previewDrawerOpen"
-                  class="tbp-drawer-overlay"
-                  @click.self="previewDrawerOpen = false"
-                >
-                  <div
-                    class="tbp-drawer-panel"
-                    role="dialog"
-                    aria-modal="true"
-                    aria-labelledby="tbp-drawer-title"
-                  >
-                    <div class="tbp-drawer-header">
-                      <h2 id="tbp-drawer-title" class="tbp-drawer-title">Panel lateral</h2>
-                      <button
-                        class="tbp-drawer-close"
-                        aria-label="Cerrar drawer"
-                        @click="previewDrawerOpen = false"
-                      >
-                        &times;
-                      </button>
-                    </div>
-                    <div class="tbp-drawer-body">
-                      <p class="tbp-dialog-body">
-                        Este es el contenido del drawer. Se adapta a los valores de token actuales.
-                      </p>
-                    </div>
-                    <div class="tbp-dialog-footer">
-                      <button class="tbp-btn tbp-btn--ghost" @click="previewDrawerOpen = false">
-                        Cerrar
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </Teleport>
             </div>
           </section>
         </div>
@@ -2620,6 +2603,98 @@ hp-accordion-content.tbp-accordion-content[data-state="closed"] {
 }
 
 .tbp-select-item[aria-disabled="true"] {
+  opacity: var(--hp-opacity-disabled, 0.5);
+  cursor: not-allowed;
+}
+
+/* Combobox */
+.tbp-combobox {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  max-width: 280px;
+}
+
+.tbp-combobox-input {
+  display: block;
+  width: 100%;
+  padding: var(--hp-space-2, 0.5rem) var(--hp-space-3, 0.75rem);
+  font-family: inherit;
+  font-size: var(--hp-font-size-sm, 0.875rem);
+  color: var(--hp-text, #0f172a);
+  background: var(--hp-surface, #ffffff);
+  border: 1px solid var(--hp-border-strong, #64748b);
+  border-radius: var(--hp-radius, 6px);
+  cursor: text;
+}
+
+.tbp-combobox-input:hover:not([disabled]):not([aria-disabled="true"]) {
+  border-color: var(--hp-accent, #0369a1);
+}
+
+.tbp-combobox-input:focus-visible {
+  outline: 2px solid var(--hp-accent, #0369a1);
+  outline-offset: 2px;
+}
+
+.tbp-combobox-input[aria-expanded="true"] {
+  border-color: var(--hp-accent, #0369a1);
+}
+
+.tbp-combobox-input[disabled],
+.tbp-combobox-input[aria-disabled="true"] {
+  opacity: var(--hp-opacity-disabled, 0.5);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.tbp-combobox-input[data-placeholder] {
+  color: var(--hp-text-secondary, #64748b);
+}
+
+.tbp-combobox-content {
+  position: absolute;
+  top: calc(100% + 0.25rem);
+  left: 0;
+  z-index: 50;
+  min-width: 100%;
+  max-height: 18rem;
+  border: 1px solid var(--hp-border, #e2e8f0);
+  border-radius: var(--hp-radius, 6px);
+  background: var(--hp-surface, #ffffff);
+  box-shadow: var(--hp-shadow-lg, 0 10px 15px -3px rgb(0 0 0 / 0.1));
+  overflow-y: auto;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.15s ease,
+    visibility 0.15s ease;
+}
+
+.tbp-combobox-content[data-state="open"] {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.tbp-combobox-option {
+  padding: var(--hp-space-2, 0.5rem) var(--hp-space-3, 0.75rem);
+  font-size: var(--hp-font-size-sm, 0.875rem);
+  color: var(--hp-text, #0f172a);
+  cursor: pointer;
+}
+
+.tbp-combobox-option:hover:not([aria-disabled="true"]) {
+  background: var(--hp-bg-muted, #f1f5f9);
+}
+
+.tbp-combobox-option[aria-selected="true"] {
+  background: var(--hp-accent, #0369a1);
+  color: var(--hp-accent-foreground, #ffffff);
+}
+
+.tbp-combobox-option[aria-disabled="true"] {
   opacity: var(--hp-opacity-disabled, 0.5);
   cursor: not-allowed;
 }

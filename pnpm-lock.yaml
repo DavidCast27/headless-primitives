@@ -65,6 +65,9 @@ importers:
       '@headless-primitives/collapsible':
         specifier: workspace:*
         version: link:../../packages/vanilla/collapsible
+      '@headless-primitives/combobox':
+        specifier: workspace:*
+        version: link:../../packages/vanilla/combobox
       '@headless-primitives/dialog':
         specifier: workspace:*
         version: link:../../packages/vanilla/dialog
@@ -135,6 +138,9 @@ importers:
       '@headless-primitives/collapsible':
         specifier: workspace:*
         version: link:../../packages/vanilla/collapsible
+      '@headless-primitives/combobox':
+        specifier: workspace:*
+        version: link:../../packages/vanilla/combobox
       '@headless-primitives/dialog':
         specifier: workspace:*
         version: link:../../packages/vanilla/dialog
@@ -253,6 +259,15 @@ importers:
         version: 3.3.2
 
   packages/vanilla/collapsible:
+    dependencies:
+      '@headless-primitives/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lit:
+        specifier: ^3.3.2
+        version: 3.3.2
+
+  packages/vanilla/combobox:
     dependencies:
       '@headless-primitives/utils':
         specifier: workspace:*

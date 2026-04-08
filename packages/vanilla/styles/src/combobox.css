@@ -1,0 +1,10 @@
+/**
+ * @headless-primitives/styles — hp-combobox
+ *
+ * El estilado funcional básico de `hp-combobox` ahora vive en
+ * `@headless-primitives/utils/base.css` para que la versión "sin estilos"
+ * siga funcionando.
+ *
+ * `@headless-primitives/styles/combobox.css` permanece como placeholder
+ * de paquete y puede extenderse en el futuro con temas adicionales.
+ */
