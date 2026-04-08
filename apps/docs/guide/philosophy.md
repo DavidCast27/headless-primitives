@@ -17,7 +17,7 @@ Usamos **Custom Elements** nativos. Esto significa que tu código funcionará ho
 
 ### 2. Lit 3 como base
 
-Los componentes usan **Lit 3** (`HeadlessElement`) como base para reactividad declarativa con `@property` y `@customElement`. Lit es una capa mínima sobre Custom Elements nativos (~13kB) que garantiza consistencia y reduce boilerplate. Ver [ADR 0010](../../../docs/adr/0010-headlesselement-lit-migration.md).
+Los componentes usan **Lit 3** (`HeadlessElement`) como base para reactividad declarativa con `@property` y `@customElement`. Lit es una capa mínima sobre Custom Elements nativos (~13kB) que garantiza consistencia y reduce boilerplate. Ver [ADR 0010](../../docs/adr/0010-headlesselement-lit-migration.md).
 
 ### 3. Accesibilidad por Defecto
 

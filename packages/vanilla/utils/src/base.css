@@ -13,9 +13,253 @@
   /* Accesibilidad (Opcional/Customizable) */
   --hp-focus-outline-color: #2563eb;
   --hp-focus-outline-width: 2px;
+
+  /* Spacing fallbacks */
+  --hp-space-1: 0.25rem;
+  --hp-space-2: 0.5rem;
+  --hp-space-3: 0.75rem;
+  --hp-space-4: 1rem;
+
+  /* Typography fallbacks */
+  --hp-font-size-sm: 0.875rem;
+  --hp-font-weight-normal: 400;
+  --hp-font-weight-medium: 500;
+
+  /* Misc fallbacks */
+  --hp-radius: 0.375rem;
+  --hp-opacity-disabled: 0.45;
 }
 
-/* 2. Reglas por Arquetipo */
+/* 2. Reglas Estructurales (Base) */
+
+/* Block display for container elements — custom elements are inline by default */
+hp-tabs,
+hp-tab-list,
+hp-tab-panel,
+hp-accordion,
+hp-accordion-item,
+hp-accordion-content,
+hp-collapsible,
+hp-collapsible-content,
+hp-toggle-group,
+hp-field,
+hp-field-label,
+hp-field-description,
+hp-field-error,
+hp-field-control,
+hp-dialog,
+hp-dialog-content,
+hp-dialog-backdrop,
+hp-dialog-title,
+hp-dialog-close,
+hp-drawer,
+hp-drawer-content,
+hp-drawer-backdrop,
+hp-drawer-title,
+hp-drawer-close,
+hp-popover,
+hp-toast-container,
+hp-toast-title,
+hp-toast-description,
+hp-toast-close,
+hp-select,
+hp-select-trigger,
+hp-select-content,
+hp-select-item,
+hp-select-value,
+hp-combobox,
+hp-combobox-input,
+hp-combobox-content,
+hp-combobox-option {
+  display: block;
+}
+
+/* 3. Apariencia mínima (Fallbacks) */
+
+/* --- Botón / Toggle / Trigger interactivos --- */
+hp-button,
+hp-toggle,
+hp-accordion-trigger,
+hp-collapsible-trigger,
+hp-tab,
+hp-dialog-trigger,
+hp-dialog-close,
+hp-drawer-trigger,
+hp-drawer-close,
+hp-popover-trigger,
+hp-tooltip-trigger,
+hp-select-trigger,
+hp-toast-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.375rem 0.75rem;
+  border: 1px solid currentColor;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  user-select: none;
+  box-sizing: border-box;
+  transition:
+    background-color 0.15s ease,
+    opacity 0.15s ease,
+    border-color 0.15s ease;
+}
+
+hp-button:hover:not([disabled]):not([aria-disabled="true"]),
+hp-popover-trigger:hover,
+hp-dialog-trigger:hover {
+  background-color: color-mix(in srgb, currentColor 8%, transparent);
+}
+
+hp-button:active:not([disabled]):not([aria-disabled="true"]) {
+  background-color: color-mix(in srgb, currentColor 14%, transparent);
+}
+
+hp-button[disabled],
+hp-button[aria-disabled="true"],
+hp-toggle[aria-disabled="true"],
+hp-tab[aria-disabled="true"] {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* --- Switch --- */
+hp-switch {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  width: 42px;
+  height: 24px;
+  border: 1.5px solid currentColor;
+  border-radius: 999px;
+  cursor: pointer;
+  box-sizing: border-box;
+  opacity: 0.5;
+  transition: opacity 0.15s ease;
+}
+
+hp-switch[aria-checked="true"] {
+  opacity: 1;
+}
+
+hp-switch::after {
+  content: "";
+  position: absolute;
+  left: 3px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: currentColor;
+  transition: transform 0.2s ease;
+  box-shadow: var(--hp-shadow-sm, 0 1px 2px rgb(0 0 0 / 0.15));
+}
+
+hp-switch[aria-checked="true"]::after {
+  transform: translateX(18px);
+}
+
+hp-switch[aria-disabled="true"] {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* --- Checkbox --- */
+hp-checkbox {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 17px;
+  height: 17px;
+  border: 1.5px solid currentColor;
+  border-radius: 3px;
+  cursor: pointer;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  opacity: 0.55;
+  transition: opacity 0.15s ease;
+}
+
+hp-checkbox:hover:not([aria-disabled="true"]) {
+  opacity: 0.8;
+}
+
+hp-checkbox[aria-checked="true"],
+hp-checkbox[aria-checked="mixed"] {
+  opacity: 1;
+}
+
+hp-checkbox[aria-checked="true"]::after {
+  content: "";
+  display: block;
+  width: 4px;
+  height: 8px;
+  border: 1.5px solid currentColor;
+  border-top: none;
+  border-left: none;
+  transform: rotate(45deg) translateY(-1px);
+}
+
+hp-checkbox[aria-checked="mixed"]::after {
+  content: "";
+  display: block;
+  width: 8px;
+  height: 1.5px;
+  background: currentColor;
+  border-radius: 1px;
+}
+
+hp-checkbox[aria-disabled="true"] {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* --- Radio --- */
+hp-radio {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 17px;
+  height: 17px;
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+  cursor: pointer;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  opacity: 0.55;
+  transition: opacity 0.15s ease;
+}
+
+hp-radio:hover:not([aria-disabled="true"]) {
+  opacity: 0.8;
+}
+
+hp-radio[aria-checked="true"] {
+  opacity: 1;
+}
+
+hp-radio[aria-checked="true"]::after {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+hp-radio[aria-disabled="true"] {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+hp-radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* 4. Reglas por Arquetipo */
 
 /* A. Paneles (Tabs, Accordion) */
 [data-hp-panel][data-state="closed"],
@@ -270,44 +514,6 @@ hp-select-item:focus-visible {
     visibility 0s;
 }
 
-/* Block display for container elements — custom elements are inline by default */
-hp-tabs,
-hp-tab-list,
-hp-tab-panel,
-hp-accordion,
-hp-accordion-item,
-hp-accordion-content,
-hp-collapsible,
-hp-collapsible-content,
-hp-toggle-group,
-hp-field,
-hp-field-label,
-hp-field-description,
-hp-field-error,
-hp-field-control,
-hp-dialog,
-hp-dialog-content,
-hp-dialog-backdrop,
-hp-dialog-title,
-hp-dialog-close,
-hp-drawer,
-hp-drawer-content,
-hp-drawer-backdrop,
-hp-drawer-title,
-hp-drawer-close,
-hp-popover,
-hp-toast-container,
-hp-toast-title,
-hp-toast-description,
-hp-toast-close,
-hp-select,
-hp-select-trigger,
-hp-select-content,
-hp-select-item,
-hp-select-value {
-  display: block;
-}
-
 /* Select structure */
 hp-select {
   position: relative;
@@ -380,6 +586,185 @@ hp-select-value {
   pointer-events: none;
 }
 
+/* Combobox floating content — position is managed by JS (_computePosition) */
+hp-combobox-content {
+  position: absolute;
+  z-index: var(--hp-z-index-popover);
+  /* color-scheme garantiza que Canvas/CanvasText se resuelvan igual en dark mode */
+  color-scheme: light dark;
+  background-color: var(--hp-surface, Canvas);
+  color: var(--hp-text, CanvasText);
+  border: 1px solid var(--hp-border, color-mix(in srgb, currentColor 25%, transparent));
+  border-radius: var(--hp-radius, 0.5rem);
+  box-shadow: var(--hp-shadow-lg, 0 8px 32px rgb(0 0 0 / 0.12), 0 2px 8px rgb(0 0 0 / 0.08));
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity var(--hp-transition, 150ms) var(--hp-ease, ease),
+    visibility var(--hp-transition, 150ms) var(--hp-ease, ease);
+  max-height: 20rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+hp-combobox-content[data-state="open"] {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+hp-combobox-content[data-state="closed"] {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+hp-combobox-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+hp-combobox-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+hp-combobox-content::-webkit-scrollbar-thumb {
+  background-color: var(--hp-border-strong, color-mix(in srgb, currentColor 25%, transparent));
+  border-radius: 4px;
+  border: 2px solid var(--hp-surface, Canvas);
+}
+
+hp-combobox-content::-webkit-scrollbar-thumb:hover {
+  background-color: var(--hp-text-secondary, color-mix(in srgb, currentColor 40%, transparent));
+}
+
+hp-combobox-option {
+  display: flex;
+  align-items: center;
+  gap: var(--hp-space-2);
+  width: 100%;
+  padding: var(--hp-space-2) var(--hp-space-4);
+  font-family: inherit;
+  font-size: var(--hp-font-size-sm);
+  color: var(--hp-text, CanvasText);
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  user-select: none;
+  text-align: left;
+  transition:
+    background-color var(--hp-transition, 150ms),
+    color var(--hp-transition, 150ms);
+  box-sizing: border-box;
+  min-height: 2rem;
+}
+
+hp-combobox-option:hover:not([aria-disabled="true"]) {
+  background-color: var(--hp-bg-muted, color-mix(in srgb, currentColor 8%, transparent));
+}
+
+hp-combobox-option[data-state="hidden"],
+hp-combobox-option[aria-hidden="true"] {
+  display: none;
+}
+
+hp-combobox-option[aria-selected="true"] {
+  background-color: var(--hp-bg-subtle, color-mix(in srgb, currentColor 14%, transparent));
+  color: var(--hp-accent, CanvasText);
+  font-weight: var(--hp-font-weight-medium, 500);
+}
+
+hp-combobox-option[aria-selected="true"]:hover {
+  background-color: var(--hp-bg-muted, color-mix(in srgb, currentColor 20%, transparent));
+}
+
+hp-combobox-option[aria-disabled="true"],
+hp-combobox-option[disabled] {
+  opacity: var(--hp-opacity-disabled);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+hp-combobox-option:focus-visible {
+  outline: var(--hp-focus-outline-width) solid var(--hp-focus-outline-color);
+  outline-offset: -2px;
+}
+
+/* Combobox structure */
+hp-combobox {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+hp-combobox-input {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--hp-space-2);
+  width: 100%;
+  padding: var(--hp-space-2) var(--hp-space-4);
+  font-family: inherit;
+  font-size: var(--hp-font-size-sm);
+  font-weight: var(--hp-font-weight-normal);
+  line-height: 1.5;
+  color: var(--hp-text, CanvasText);
+  /* color-scheme garantiza que Canvas/CanvasText se resuelvan igual en dark mode */
+  color-scheme: light dark;
+  background-color: var(--hp-surface, Canvas);
+  border: 1px solid var(--hp-border-strong, color-mix(in srgb, currentColor 20%, transparent));
+  border-radius: var(--hp-radius, 0.375rem);
+  cursor: text;
+  transition:
+    background-color var(--hp-transition, 150ms),
+    border-color var(--hp-transition, 150ms),
+    box-shadow var(--hp-transition, 150ms);
+  box-sizing: border-box;
+  text-align: left;
+  min-height: 2.5rem;
+}
+
+hp-combobox-input input {
+  all: unset;
+  display: block;
+  width: 100%;
+  height: 100%;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  background: transparent;
+  outline: none;
+  box-sizing: border-box;
+  cursor: text;
+}
+
+hp-combobox-input:focus-within {
+  outline: var(--hp-focus-outline-width, 2px) solid var(--hp-focus-outline-color, #2563eb);
+  outline-offset: 2px;
+}
+
+hp-combobox-input:hover:not([disabled]):not([aria-disabled="true"]) {
+  background-color: var(--hp-bg-muted, color-mix(in srgb, currentColor 8%, transparent));
+  border-color: var(--hp-border, color-mix(in srgb, currentColor 30%, transparent));
+}
+
+hp-combobox-input[aria-expanded="true"] {
+  background-color: var(--hp-bg-subtle, color-mix(in srgb, currentColor 14%, transparent));
+  border-color: var(--hp-accent, currentColor);
+  box-shadow: 0 0 0 1px var(--hp-accent, currentColor);
+}
+
+hp-combobox-input[disabled],
+hp-combobox-input[aria-disabled="true"] {
+  opacity: var(--hp-opacity-disabled);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+hp-combobox-input[data-placeholder] {
+  color: var(--hp-text-secondary, color-mix(in srgb, currentColor 50%, transparent));
+}
+
 /* Toast container — posicionamiento estructural mínimo por data-position */
 hp-toast-container {
   position: fixed;
@@ -443,651 +828,6 @@ hp-toast {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border-width: 0;
-}
-
-/* =============================================================
- * Apariencia mínima — sin colores hardcoded, sin temas.
- * Solo estructura, forma, sombras y estados interactivos para
- * que cada componente sea reconocible y usable sin CSS adicional.
- * El Consumer o @headless-primitives/styles sobreescribe esto.
- * ============================================================= */
-
-/* --- Botón / Toggle / Trigger interactivos --- */
-hp-button,
-hp-toggle,
-hp-accordion-trigger,
-hp-collapsible-trigger,
-hp-tab,
-hp-dialog-trigger,
-hp-dialog-close,
-hp-drawer-trigger,
-hp-drawer-close,
-hp-popover-trigger,
-hp-tooltip-trigger,
-hp-select-trigger,
-hp-toast-close {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.375rem 0.75rem;
-  border: 1px solid currentColor;
-  border-radius: 4px;
-  cursor: pointer;
-  font-family: inherit;
-  font-size: 0.875rem;
-  line-height: 1.5;
-  user-select: none;
-  box-sizing: border-box;
-  transition:
-    background-color 0.15s ease,
-    opacity 0.15s ease,
-    border-color 0.15s ease;
-}
-
-hp-button:hover:not([disabled]):not([aria-disabled="true"]),
-hp-popover-trigger:hover,
-hp-dialog-trigger:hover {
-  background-color: color-mix(in srgb, currentColor 8%, transparent);
-}
-
-hp-button:active:not([disabled]):not([aria-disabled="true"]) {
-  background-color: color-mix(in srgb, currentColor 14%, transparent);
-}
-
-hp-button[disabled],
-hp-button[aria-disabled="true"],
-hp-toggle[aria-disabled="true"],
-hp-tab[aria-disabled="true"] {
-  opacity: 0.45;
-  cursor: not-allowed;
-}
-
-/* --- Switch --- */
-hp-switch {
-  display: inline-flex;
-  align-items: center;
-  position: relative;
-  width: 42px;
-  height: 24px;
-  border: 1.5px solid currentColor;
-  border-radius: 999px;
-  cursor: pointer;
-  box-sizing: border-box;
-  opacity: 0.5;
-  transition: opacity 0.15s ease;
-}
-
-hp-switch[aria-checked="true"] {
-  opacity: 1;
-}
-
-hp-switch::after {
-  content: "";
-  position: absolute;
-  left: 3px;
-  width: 15px;
-  height: 15px;
-  border-radius: 50%;
-  background: currentColor;
-  transition: transform 0.2s ease;
-  box-shadow: var(--hp-shadow-sm, 0 1px 2px rgb(0 0 0 / 0.15));
-}
-
-hp-switch[aria-checked="true"]::after {
-  transform: translateX(18px);
-}
-
-hp-switch[aria-disabled="true"] {
-  opacity: 0.35;
-  cursor: not-allowed;
-}
-
-/* --- Checkbox --- */
-hp-checkbox {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 17px;
-  height: 17px;
-  border: 1.5px solid currentColor;
-  border-radius: 3px;
-  cursor: pointer;
-  box-sizing: border-box;
-  flex-shrink: 0;
-  opacity: 0.55;
-  transition: opacity 0.15s ease;
-}
-
-hp-checkbox:hover:not([aria-disabled="true"]) {
-  opacity: 0.8;
-}
-
-hp-checkbox[aria-checked="true"],
-hp-checkbox[aria-checked="mixed"] {
-  opacity: 1;
-}
-
-hp-checkbox[aria-checked="true"]::after {
-  content: "";
-  display: block;
-  width: 4px;
-  height: 8px;
-  border: 1.5px solid currentColor;
-  border-top: none;
-  border-left: none;
-  transform: rotate(45deg) translateY(-1px);
-}
-
-hp-checkbox[aria-checked="mixed"]::after {
-  content: "";
-  display: block;
-  width: 8px;
-  height: 1.5px;
-  background: currentColor;
-  border-radius: 1px;
-}
-
-hp-checkbox[aria-disabled="true"] {
-  opacity: 0.35;
-  cursor: not-allowed;
-}
-
-/* --- Radio --- */
-hp-radio {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 17px;
-  height: 17px;
-  border: 1.5px solid currentColor;
-  border-radius: 50%;
-  cursor: pointer;
-  box-sizing: border-box;
-  flex-shrink: 0;
-  opacity: 0.55;
-  transition: opacity 0.15s ease;
-}
-
-hp-radio:hover:not([aria-disabled="true"]) {
-  opacity: 0.8;
-}
-
-hp-radio[aria-checked="true"] {
-  opacity: 1;
-}
-
-hp-radio[aria-checked="true"]::after {
-  content: "";
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: currentColor;
-}
-
-hp-radio[aria-disabled="true"] {
-  opacity: 0.35;
-  cursor: not-allowed;
-}
-
-hp-radio-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-/* --- Toggle Group --- */
-hp-toggle-group {
-  display: inline-flex;
-  border: 1px solid currentColor;
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-hp-toggle {
-  border-radius: 0;
-  border: none;
-  border-right: 1px solid currentColor;
-}
-
-hp-toggle:last-child {
-  border-right: none;
-}
-
-hp-toggle:hover:not([aria-disabled="true"]):not([aria-pressed="true"]) {
-  background-color: color-mix(in srgb, currentColor 8%, transparent);
-}
-
-hp-toggle[aria-pressed="true"] {
-  background-color: color-mix(in srgb, currentColor 12%, transparent);
-  font-weight: 600;
-}
-
-/* --- Tabs --- */
-hp-tab-list {
-  display: flex;
-  border-bottom: 1px solid currentColor;
-  opacity: 0.85;
-}
-
-hp-tab {
-  border: none;
-  border-bottom: 2px solid transparent;
-  border-radius: 0;
-  margin-bottom: -1px;
-  opacity: 0.65;
-}
-
-hp-tab:hover:not([aria-disabled="true"]):not([aria-selected="true"]) {
-  background-color: color-mix(in srgb, currentColor 6%, transparent);
-  opacity: 0.85;
-}
-
-hp-tab[aria-selected="true"] {
-  border-bottom-color: currentColor;
-  font-weight: 600;
-  opacity: 1;
-}
-
-hp-tab-panel {
-  padding: 0.75rem 0;
-}
-
-/* --- Accordion --- */
-hp-accordion {
-  display: block;
-  width: 100%;
-  min-width: 0;
-  border: 1px solid currentColor;
-  border-radius: 6px;
-  overflow: hidden;
-}
-
-hp-accordion-item {
-  border-bottom: 1px solid color-mix(in srgb, currentColor 30%, transparent);
-}
-
-hp-accordion-item:last-child {
-  border-bottom: none;
-}
-
-hp-accordion-trigger {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  text-align: left;
-  border: none;
-  border-radius: 0;
-  padding: 0.625rem 0.875rem;
-  font-weight: 500;
-}
-
-hp-accordion-trigger:hover {
-  background-color: color-mix(in srgb, currentColor 6%, transparent);
-}
-
-hp-accordion-trigger[aria-expanded="true"] {
-  font-weight: 600;
-}
-
-hp-accordion-content {
-  padding: 0.375rem 0.875rem 0.75rem;
-  opacity: 0.8;
-  font-size: 0.875rem;
-  overflow-wrap: break-word;
-  word-break: break-word;
-}
-
-/* --- Collapsible --- */
-hp-collapsible {
-  display: block;
-  width: 100%;
-  min-width: 0;
-}
-
-hp-collapsible-trigger {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  text-align: left;
-  border: 1px solid currentColor;
-  border-radius: 4px;
-  padding: 0.5rem 0.75rem;
-  font-weight: 500;
-  box-sizing: border-box;
-}
-
-hp-collapsible-trigger:hover {
-  background-color: color-mix(in srgb, currentColor 6%, transparent);
-}
-
-hp-collapsible-trigger[aria-expanded="true"] {
-  border-radius: 4px 4px 0 0;
-}
-
-hp-collapsible-content {
-  display: block;
-  width: 100%;
-  min-width: 0;
-  padding: 0.5rem 0.75rem;
-  border: 1px solid currentColor;
-  border-top: none;
-  border-radius: 0 0 4px 4px;
-  opacity: 0.85;
-  font-size: 0.875rem;
-  overflow-wrap: break-word;
-  word-break: break-word;
-  box-sizing: border-box;
-}
-
-/* --- Dialog --- */
-hp-dialog-backdrop {
-  background: var(--hp-backdrop-bg, rgb(0 0 0 / 0.4));
-  backdrop-filter: blur(1px);
-}
-
-hp-dialog-content {
-  padding: 1.5rem;
-  border: 1px solid color-mix(in srgb, currentColor 20%, transparent);
-  border-radius: 8px;
-  background: Canvas;
-  max-width: min(calc(100vw - 2rem), 480px);
-  width: 100%;
-  max-height: calc(100vh - 4rem);
-  overflow-y: auto;
-  box-shadow: var(--hp-shadow-lg, 0 8px 32px rgb(0 0 0 / 0.12), 0 2px 8px rgb(0 0 0 / 0.08));
-}
-
-hp-dialog-title {
-  display: block;
-  font-size: 1rem;
-  font-weight: 600;
-  margin-bottom: 0.75rem;
-  padding-right: 2rem;
-}
-
-hp-dialog-close {
-  position: absolute;
-  top: 0.875rem;
-  right: 0.875rem;
-  width: 26px;
-  height: 26px;
-  padding: 0;
-  border-radius: 4px;
-  opacity: 0.6;
-}
-
-hp-dialog-close:hover {
-  opacity: 1;
-  background-color: color-mix(in srgb, currentColor 10%, transparent);
-}
-
-/* --- Drawer --- */
-hp-drawer-backdrop {
-  background: var(--hp-backdrop-bg, rgb(0 0 0 / 0.4));
-  backdrop-filter: blur(1px);
-}
-
-hp-drawer-content {
-  background: Canvas;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  box-shadow: var(--hp-shadow-lg, 0 8px 32px rgb(0 0 0 / 0.12), 0 2px 8px rgb(0 0 0 / 0.08));
-  /* Borde en el lado de apertura */
-  border-right: 1px solid color-mix(in srgb, currentColor 15%, transparent);
-}
-
-hp-drawer-content[data-position="right"] {
-  border-right: none;
-  border-left: 1px solid color-mix(in srgb, currentColor 15%, transparent);
-}
-
-hp-drawer-content[data-position="top"] {
-  border-right: none;
-  border-bottom: 1px solid color-mix(in srgb, currentColor 15%, transparent);
-}
-
-hp-drawer-content[data-position="bottom"] {
-  border-right: none;
-  border-top: 1px solid color-mix(in srgb, currentColor 15%, transparent);
-}
-
-hp-drawer-title {
-  display: block;
-  font-size: 1rem;
-  font-weight: 600;
-  padding: 1.25rem 1.5rem 0;
-  padding-right: 3rem;
-  /* espacio para el botón de cierre */
-  margin: 0 0 0.75rem;
-}
-
-hp-drawer-close {
-  position: absolute;
-  top: 0.875rem;
-  right: 0.875rem;
-  width: 26px;
-  height: 26px;
-  padding: 0;
-  border-radius: 4px;
-  opacity: 0.6;
-}
-
-hp-drawer-close:hover {
-  opacity: 1;
-  background-color: color-mix(in srgb, currentColor 10%, transparent);
-}
-
-/* hp-drawer-content necesita position relative para que hp-drawer-close se posicione correctamente */
-hp-drawer-content {
-  position: relative;
-}
-
-/* --- Popover --- */
-hp-popover-content {
-  padding: 0.75rem;
-  border: 1px solid color-mix(in srgb, currentColor 25%, transparent);
-  border-radius: 6px;
-  background: Canvas;
-  min-width: 160px;
-  box-shadow: var(--hp-shadow-md, 0 4px 16px rgb(0 0 0 / 0.1), 0 1px 4px rgb(0 0 0 / 0.06));
-}
-
-/* --- Tooltip --- */
-hp-tooltip {
-  position: relative;
-  display: inline-block;
-}
-
-hp-tooltip-content {
-  padding: 0.25rem 0.625rem;
-  border-radius: 4px;
-  background: CanvasText;
-  color: Canvas;
-  font-size: 0.8rem;
-  white-space: nowrap;
-  bottom: calc(100% + 6px);
-  left: 50%;
-  transform: translateX(-50%);
-  box-shadow: var(--hp-shadow-md, 0 2px 8px rgb(0 0 0 / 0.15));
-  border: none;
-}
-
-/* --- Toast --- */
-hp-toast {
-  display: block;
-  padding: 0.75rem 1rem;
-  border: 1px solid color-mix(in srgb, currentColor 20%, transparent);
-  border-radius: 6px;
-  background: Canvas;
-  font-size: 0.875rem;
-  min-width: 220px;
-  box-shadow: var(--hp-shadow-lg, 0 4px 16px rgb(0 0 0 / 0.1), 0 1px 4px rgb(0 0 0 / 0.06));
-}
-
-hp-toast-title {
-  font-weight: 600;
-  margin-bottom: 0.125rem;
-}
-
-hp-toast-description {
-  font-size: 0.8rem;
-  opacity: 0.75;
-}
-
-hp-toast-close {
-  float: right;
-  margin-left: 0.5rem;
-  width: 20px;
-  height: 20px;
-  padding: 0;
-  border-radius: 3px;
-  opacity: 0.5;
-}
-
-hp-toast-close:hover {
-  opacity: 1;
-  background-color: color-mix(in srgb, currentColor 10%, transparent);
-}
-
-/* --- Separator --- */
-hp-separator {
-  display: block;
-  border: none;
-  border-top: 1px solid color-mix(in srgb, currentColor 40%, transparent);
-  margin: 0.5rem 0;
-}
-
-hp-separator[aria-orientation="vertical"] {
-  display: inline-block;
-  border-top: none;
-  border-left: 1px solid color-mix(in srgb, currentColor 40%, transparent);
-  width: 1px;
-  height: 1em;
-  align-self: stretch;
-  margin: 0 0.5rem;
-  vertical-align: middle;
-}
-
-/* --- Progress --- */
-hp-progress {
-  display: block;
-  width: 100%;
-  height: 8px;
-  border-radius: 999px;
-  overflow: hidden;
-  background-color: color-mix(in srgb, currentColor 15%, transparent);
-  color: inherit;
-}
-
-hp-progress-indicator {
-  display: block;
-  height: 100%;
-  background: CanvasText;
-  opacity: 0.6;
-  border-radius: 999px;
-  transition: width 0.25s ease;
-  width: var(--hp-progress-percentage, 0%);
-}
-
-hp-progress-indicator[data-indeterminate] {
-  width: 30% !important;
-  animation: hp-progress-indeterminate 1.5s infinite linear;
-}
-
-@keyframes hp-progress-indeterminate {
-  0% {
-    transform: translateX(-100%);
-  }
-
-  100% {
-    transform: translateX(400%);
-  }
-}
-
-/* --- Label --- */
-hp-label {
-  display: inline-block;
-  font-size: 0.875rem;
-  font-weight: 500;
-}
-
-/* --- Avatar --- */
-hp-avatar {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: 1.5px solid currentColor;
-  overflow: hidden;
-  font-size: 0.8rem;
-  font-weight: 600;
-  opacity: 0.85;
-}
-
-hp-avatar-image {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* --- Field --- */
-hp-field {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-hp-field-label {
-  font-size: 0.875rem;
-  font-weight: 500;
-}
-
-hp-field-description {
-  font-size: 0.8rem;
-  opacity: 0.6;
-}
-
-hp-field-error {
-  font-size: 0.8rem;
-  opacity: 0.85;
-  text-decoration: underline wavy;
-}
-
-hp-field-control input,
-hp-field-control select,
-hp-field-control textarea {
-  display: block;
-  width: 100%;
-  padding: 0.375rem 0.625rem;
-  border: 1px solid color-mix(in srgb, currentColor 45%, transparent);
-  border-radius: 4px;
-  font-family: inherit;
-  font-size: 0.875rem;
-  box-sizing: border-box;
-  background: Canvas;
-  color: CanvasText;
-  transition:
-    border-color 0.15s ease,
-    box-shadow 0.15s ease;
-}
-
-hp-field-control input:focus,
-hp-field-control select:focus,
-hp-field-control textarea:focus {
-  border-color: currentColor;
-  outline: 2px solid color-mix(in srgb, currentColor 25%, transparent);
-  outline-offset: 0;
-}
-
-hp-field-control textarea {
-  resize: vertical;
-  min-height: 80px;
 }
 
 /* --- Badge --- */

@@ -86,6 +86,7 @@ export default defineConfig({
           { text: "Button", link: "/components/button" },
           { text: "Checkbox", link: "/components/checkbox" },
           { text: "Collapsible", link: "/components/collapsible" },
+          { text: "Combobox", link: "/components/combobox" },
           { text: "Dialog", link: "/components/dialog" },
           { text: "Drawer", link: "/components/drawer" },
           { text: "Field", link: "/components/field" },
