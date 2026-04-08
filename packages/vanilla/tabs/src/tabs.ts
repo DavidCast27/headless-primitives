@@ -5,12 +5,15 @@ import { property } from "lit/decorators.js";
 export class Tabs extends HeadlessElement {
   @property({ type: String, reflect: true }) value = "";
 
+  // Store bound reference so we can properly remove it in disconnectedCallback
+  private _boundOnSlotChange = this._onSlotChange.bind(this);
+
   connectedCallback() {
     super.connectedCallback();
     this.setAttribute("data-hp-component", "tabs");
 
-    // React to slotted children changes
-    this.addEventListener("slotchange", this._onSlotChange.bind(this));
+    // React to slotted children changes (Light DOM — fires on mutation observers in some browsers)
+    this.addEventListener("slotchange", this._boundOnSlotChange);
 
     // Initial fallback only if author didn't set attribute
     if (!this.value && !this.hasAttribute("value")) {
@@ -26,16 +29,12 @@ export class Tabs extends HeadlessElement {
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    this.removeEventListener("slotchange", this._onSlotChange.bind(this));
+    this.removeEventListener("slotchange", this._boundOnSlotChange);
   }
 
   protected updated(changed: Map<string, unknown>) {
     if (changed.has("value")) {
       this._syncPanels();
-      const oldValue = changed.get("value");
-      if (oldValue !== undefined) {
-        this.emit("change", { value: this.value });
-      }
     }
   }
 
@@ -44,21 +43,25 @@ export class Tabs extends HeadlessElement {
   }
 
   private _syncPanels() {
-    const triggers = Array.from(this.querySelectorAll<HTMLElement>("hp-tab"));
-    const panels = Array.from(this.querySelectorAll<HTMLElement>("hp-tab-panel"));
+    try {
+      const triggers = Array.from(this.querySelectorAll<HTMLElement>("hp-tab"));
+      const panels = Array.from(this.querySelectorAll<HTMLElement>("hp-tab-panel"));
 
-    triggers.forEach((trigger) => {
-      const isSelected = trigger.getAttribute("value") === this.value;
-      trigger.setAttribute("data-state", isSelected ? "selected" : "unselected");
-      trigger.setAttribute("aria-selected", String(isSelected));
-      trigger.setAttribute("tabindex", isSelected ? "0" : "-1");
-    });
+      triggers.forEach((trigger) => {
+        const isSelected = trigger.getAttribute("value") === this.value;
+        trigger.setAttribute("data-state", isSelected ? "selected" : "unselected");
+        trigger.setAttribute("aria-selected", String(isSelected));
+        trigger.setAttribute("tabindex", isSelected ? "0" : "-1");
+      });
 
-    panels.forEach((panel) => {
-      const isSelected = panel.getAttribute("value") === this.value;
-      panel.setAttribute("data-state", isSelected ? "selected" : "unselected");
-      panel.setAttribute("aria-hidden", String(!isSelected));
-    });
+      panels.forEach((panel) => {
+        const isSelected = panel.getAttribute("value") === this.value;
+        panel.setAttribute("data-state", isSelected ? "selected" : "unselected");
+        panel.setAttribute("aria-hidden", String(!isSelected));
+      });
+    } catch {
+      // Defensive: prevent any DOM timing errors from aborting rendering
+    }
   }
 
   activateByValue(value: string) {
@@ -74,19 +77,25 @@ export class Tabs extends HeadlessElement {
     super.attributeChangedCallback(name, old, next);
     if (name === "value" && old !== next && this.isConnected) {
       this._syncPanels();
-      if (old !== null) this.emit("change", { value: next || "" });
     }
   }
 }
 
 @customElement("hp-tab-list")
 export class TabList extends HeadlessElement {
+  private _boundHandleKeyDown = this._handleKeyDown.bind(this);
+
   connectedCallback() {
     super.connectedCallback();
     this.setAttribute("role", "tablist");
     this.setAttribute("data-hp-component", "tab-list");
     this.setAttribute("data-hp-tabs-list", "");
-    this.addEventListener("keydown", this._handleKeyDown.bind(this));
+    this.addEventListener("keydown", this._boundHandleKeyDown);
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this.removeEventListener("keydown", this._boundHandleKeyDown);
   }
 
   private _handleKeyDown(event: KeyboardEvent) {
@@ -123,7 +132,7 @@ export class TabList extends HeadlessElement {
     if (nextIndex !== currentIndex) {
       const nextTab = tabs[nextIndex];
       const root = this.closest<Tabs>("hp-tabs");
-      if (root && nextTab) {
+      if (root && nextTab && typeof root.activateByValue === "function") {
         root.activateByValue(nextTab.getAttribute("value") || "");
         nextTab.focus();
       }
@@ -136,17 +145,24 @@ export class TabTrigger extends HeadlessElement {
   @property({ type: String, reflect: true }) value = "";
   @property({ type: Boolean, reflect: true }) disabled = false;
 
+  private _boundHandleClick = this._handleClick.bind(this);
+
   connectedCallback() {
     super.connectedCallback();
     this.setAttribute("role", "tab");
     this.setAttribute("data-hp-component", "tab");
     this.setAttribute("data-hp-tabs-trigger", "");
-    this.addEventListener("click", this._handleClick.bind(this));
+    this.addEventListener("click", this._boundHandleClick);
     if (!this.hasAttribute("tabindex")) this.setAttribute("tabindex", "-1");
     this.setAttribute(
       "aria-disabled",
       this.disabled || this.hasAttribute("disabled") ? "true" : "false",
     );
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this.removeEventListener("click", this._boundHandleClick);
   }
 
   protected updated(changed: Map<string, unknown>) {
@@ -165,7 +181,7 @@ export class TabTrigger extends HeadlessElement {
   private _handleClick() {
     if (this.disabled || this.hasAttribute("disabled")) return;
     const root = this.closest<Tabs>("hp-tabs");
-    if (root && this.value) {
+    if (root && this.value && typeof root.activateByValue === "function") {
       root.activateByValue(this.value);
       this.focus();
     }

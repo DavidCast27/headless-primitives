@@ -70,7 +70,7 @@ export class HeadlessToggleGroup extends HeadlessElement {
     const toggles = Array.from(this.querySelectorAll("hp-toggle")) as HeadlessToggle[];
     toggles.forEach((toggle) => {
       const isPressed = this._value.includes(toggle.value);
-      toggle.setPressed(isPressed);
+      if (typeof toggle.setPressed === "function") toggle.setPressed(isPressed);
     });
   }
 

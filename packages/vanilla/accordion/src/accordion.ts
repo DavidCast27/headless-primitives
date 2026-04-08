@@ -25,14 +25,16 @@ export class HeadlessAccordion extends HeadlessElement {
     this._getItems().forEach((item) => {
       if (item !== openedItem && item.open) {
         item.open = false;
-        item.syncState();
+        if (typeof item.syncState === "function") item.syncState();
       }
     });
   };
 
   private _updateItems() {
     this._getItems().forEach((item) => {
-      item.setInheritedDisabled(this.disabled);
+      if (typeof item.setInheritedDisabled === "function") {
+        item.setInheritedDisabled(this.disabled);
+      }
     });
   }
 
