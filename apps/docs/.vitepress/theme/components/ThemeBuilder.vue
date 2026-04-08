@@ -1395,6 +1395,30 @@ const totalModified = computed(() => TOKEN_GROUPS.reduce((sum, g) => sum + modif
               </hp-button>
             </div>
           </section>
+
+          <!-- DROPDOWN MENU -->
+          <section class="tb-preview-section">
+            <h4 class="tb-preview-section-title">Menú desplegable</h4>
+            <div class="tb-preview-demo tb-preview-demo--row">
+              <hp-dropdown-menu class="tbp-dropdown-menu">
+                <hp-dropdown-menu-trigger class="tbp-btn tbp-btn--secondary">
+                  Acciones ▾
+                </hp-dropdown-menu-trigger>
+                <hp-dropdown-menu-content class="tbp-dropdown-menu-content">
+                  <hp-dropdown-menu-label>Editar</hp-dropdown-menu-label>
+                  <hp-dropdown-menu-item value="cut">✂️ Cortar</hp-dropdown-menu-item>
+                  <hp-dropdown-menu-item value="copy">📋 Copiar</hp-dropdown-menu-item>
+                  <hp-dropdown-menu-item value="paste">📌 Pegar</hp-dropdown-menu-item>
+                  <hp-dropdown-menu-separator></hp-dropdown-menu-separator>
+                  <hp-dropdown-menu-label>Zona peligrosa</hp-dropdown-menu-label>
+                  <hp-dropdown-menu-item value="delete">🗑️ Eliminar</hp-dropdown-menu-item>
+                  <hp-dropdown-menu-item value="archive" disabled
+                    >📦 Archivar</hp-dropdown-menu-item
+                  >
+                </hp-dropdown-menu-content>
+              </hp-dropdown-menu>
+            </div>
+          </section>
         </div>
       </div>
     </div>
@@ -2697,6 +2721,69 @@ hp-accordion-content.tbp-accordion-content[data-state="closed"] {
 .tbp-combobox-option[aria-disabled="true"] {
   opacity: var(--hp-opacity-disabled, 0.5);
   cursor: not-allowed;
+}
+
+/* Tooltip */
+/* Dropdown Menu */
+.tbp-dropdown-menu {
+  position: relative;
+  display: inline-block;
+}
+
+.tbp-dropdown-menu-content {
+  position: absolute;
+  top: calc(100% + 0.25rem);
+  left: 0;
+  z-index: 50;
+  min-width: 12rem;
+  border: 1px solid var(--hp-border, #e2e8f0);
+  border-radius: var(--hp-radius, 6px);
+  background: var(--hp-surface, #ffffff);
+  box-shadow: var(--hp-shadow-lg, 0 10px 15px -3px rgb(0 0 0 / 0.1));
+  padding: var(--hp-space-1, 0.25rem) 0;
+  overflow-y: auto;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.15s ease,
+    visibility 0.15s ease;
+}
+
+.tbp-dropdown-menu-content[data-state="open"] {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.tbp-dropdown-menu-content hp-dropdown-menu-item {
+  padding: var(--hp-space-2, 0.5rem) var(--hp-space-3, 0.75rem);
+  font-size: var(--hp-font-size-sm, 0.875rem);
+  color: var(--hp-text, #0f172a);
+  cursor: pointer;
+}
+
+.tbp-dropdown-menu-content hp-dropdown-menu-item:hover:not([aria-disabled="true"]) {
+  background: var(--hp-bg-muted, #f1f5f9);
+}
+
+.tbp-dropdown-menu-content hp-dropdown-menu-item[aria-disabled="true"] {
+  opacity: var(--hp-opacity-disabled, 0.5);
+  cursor: not-allowed;
+}
+
+.tbp-dropdown-menu-content hp-dropdown-menu-separator {
+  height: 1px;
+  margin: var(--hp-space-1, 0.25rem) 0;
+  background: var(--hp-border, #e2e8f0);
+}
+
+.tbp-dropdown-menu-content hp-dropdown-menu-label {
+  padding: var(--hp-space-1, 0.25rem) var(--hp-space-3, 0.75rem);
+  font-size: var(--hp-font-size-xs, 0.75rem);
+  font-weight: var(--hp-font-weight-semibold, 600);
+  color: var(--hp-text-secondary, #64748b);
+  user-select: none;
 }
 
 /* Tooltip */

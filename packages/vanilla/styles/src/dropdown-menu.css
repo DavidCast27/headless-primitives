@@ -1,0 +1,117 @@
+/**
+ * @headless-primitives/styles — hp-dropdown-menu
+ *
+ * Optional theming layer for `hp-dropdown-menu`.
+ * Structural/functional styles live in `@headless-primitives/utils/base.css`.
+ *
+ * Uses `--hp-*` design tokens for full theme customisation.
+ * No `!important`, no position/top/left/transform overrides.
+ */
+
+@layer hp-styles {
+  /* --- Trigger --- */
+  hp-dropdown-menu-trigger {
+    gap: var(--hp-space-2, 0.5rem);
+    font-family: inherit;
+    font-size: var(--hp-font-size-sm, 0.875rem);
+    font-weight: var(--hp-font-weight-normal, 400);
+    line-height: 1.5;
+    color: var(--hp-text, CanvasText);
+    background-color: var(--hp-surface, Canvas);
+    border-color: var(--hp-border-strong, color-mix(in srgb, currentColor 20%, transparent));
+    border-radius: var(--hp-radius, 0.375rem);
+    transition:
+      background-color var(--hp-transition, 150ms),
+      border-color var(--hp-transition, 150ms),
+      box-shadow var(--hp-transition, 150ms);
+  }
+
+  hp-dropdown-menu-trigger:hover:not([disabled]):not([aria-disabled="true"]) {
+    background-color: var(--hp-bg-muted, color-mix(in srgb, currentColor 8%, transparent));
+    border-color: var(--hp-border, color-mix(in srgb, currentColor 30%, transparent));
+  }
+
+  hp-dropdown-menu-trigger:focus-visible {
+    outline: var(--hp-focus-outline-width, 2px) solid var(--hp-focus-outline-color, #2563eb);
+    outline-offset: 2px;
+  }
+
+  hp-dropdown-menu-trigger[aria-expanded="true"] {
+    background-color: var(--hp-bg-subtle, color-mix(in srgb, currentColor 14%, transparent));
+    border-color: var(--hp-accent, currentColor);
+    box-shadow: 0 0 0 1px var(--hp-accent, currentColor);
+  }
+
+  hp-dropdown-menu-trigger[disabled],
+  hp-dropdown-menu-trigger[aria-disabled="true"] {
+    opacity: var(--hp-opacity-disabled, 0.45);
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  /* --- Content panel --- */
+  hp-dropdown-menu-content {
+    background-color: var(--hp-surface, Canvas);
+    color: var(--hp-text, CanvasText);
+    border-color: var(--hp-border, color-mix(in srgb, currentColor 25%, transparent));
+    border-radius: var(--hp-radius, 0.5rem);
+    box-shadow: var(--hp-shadow-lg, 0 8px 32px rgb(0 0 0 / 0.12), 0 2px 8px rgb(0 0 0 / 0.08));
+  }
+
+  /* --- Menu item --- */
+  hp-dropdown-menu-item {
+    color: var(--hp-text, CanvasText);
+    font-size: var(--hp-font-size-sm, 0.875rem);
+    border-radius: var(--hp-radius-sm, 0.25rem);
+    margin-inline: var(--hp-space-1, 0.25rem);
+    padding: var(--hp-space-2, 0.5rem) var(--hp-space-3, 0.75rem);
+    transition:
+      background-color var(--hp-transition, 150ms),
+      color var(--hp-transition, 150ms);
+  }
+
+  hp-dropdown-menu-item:hover:not([disabled]):not([aria-disabled="true"]) {
+    background-color: var(--hp-bg-muted, color-mix(in srgb, currentColor 8%, transparent));
+    color: var(--hp-text, CanvasText);
+  }
+
+  hp-dropdown-menu-item:focus-visible {
+    outline: var(--hp-focus-outline-width, 2px) solid var(--hp-focus-outline-color, #2563eb);
+    outline-offset: -2px;
+  }
+
+  hp-dropdown-menu-item[data-highlighted] {
+    background-color: var(--hp-bg-subtle, color-mix(in srgb, currentColor 14%, transparent));
+    color: var(--hp-accent, CanvasText);
+  }
+
+  hp-dropdown-menu-item[disabled],
+  hp-dropdown-menu-item[aria-disabled="true"] {
+    opacity: var(--hp-opacity-disabled, 0.45);
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  /* --- Separator --- */
+  hp-dropdown-menu-separator {
+    background-color: var(--hp-border, color-mix(in srgb, currentColor 15%, transparent));
+    margin: var(--hp-space-1, 0.25rem) 0;
+  }
+
+  /* --- Label --- */
+  hp-dropdown-menu-label {
+    padding: var(--hp-space-1, 0.25rem) var(--hp-space-3, 0.75rem);
+    font-size: var(--hp-font-size-xs, 0.75rem);
+    font-weight: var(--hp-font-weight-medium, 500);
+    color: var(--hp-text-secondary, color-mix(in srgb, currentColor 60%, transparent));
+  }
+
+  /* --- Reduced motion --- */
+  @media (prefers-reduced-motion: reduce) {
+    hp-dropdown-menu-trigger,
+    hp-dropdown-menu-content,
+    hp-dropdown-menu-item {
+      transition: none;
+    }
+  }
+}
