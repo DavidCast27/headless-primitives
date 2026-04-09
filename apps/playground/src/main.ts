@@ -10,6 +10,7 @@ import "@headless-primitives/button";
 import "@headless-primitives/checkbox";
 import "@headless-primitives/collapsible";
 import "@headless-primitives/combobox";
+import "@headless-primitives/context-menu";
 import "@headless-primitives/dialog";
 import "@headless-primitives/dropdown-menu";
 import "@headless-primitives/drawer";
@@ -39,6 +40,7 @@ import { buttonDemo } from "./demos/button.demo";
 import { checkboxDemo } from "./demos/checkbox.demo";
 import { collapsibleDemo } from "./demos/collapsible.demo";
 import { comboboxDemo } from "./demos/combobox.demo";
+import { contextMenuDemo } from "./demos/context-menu.demo";
 import { dialogDemo } from "./demos/dialog.demo";
 import { dropdownMenuDemo } from "./demos/dropdown-menu.demo";
 import { drawerDemo } from "./demos/drawer.demo";
@@ -66,6 +68,7 @@ const ROUTES: Record<string, ComponentDemo> = {
   checkbox: checkboxDemo,
   collapsible: collapsibleDemo,
   combobox: comboboxDemo,
+  "context-menu": contextMenuDemo,
   dialog: dialogDemo,
   "dropdown-menu": dropdownMenuDemo,
   drawer: drawerDemo,

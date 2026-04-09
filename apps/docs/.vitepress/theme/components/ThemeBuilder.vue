@@ -1457,6 +1457,27 @@ const totalModified = computed(() => TOKEN_GROUPS.reduce((sum, g) => sum + modif
               </hp-dropdown-menu>
             </div>
           </section>
+
+          <section class="tb-preview-section">
+            <h4 class="tb-preview-section-title">Menú contextual</h4>
+            <div class="tb-preview-demo tb-preview-demo--row">
+              <hp-context-menu class="tbp-context-menu">
+                <hp-context-menu-trigger class="tbp-context-menu-trigger">
+                  <div class="tbp-context-menu-area">🖱️ Clic derecho aquí</div>
+                </hp-context-menu-trigger>
+                <hp-context-menu-content class="tbp-context-menu-content">
+                  <hp-context-menu-label>Editar</hp-context-menu-label>
+                  <hp-context-menu-item value="cut">✂️ Cortar</hp-context-menu-item>
+                  <hp-context-menu-item value="copy">📋 Copiar</hp-context-menu-item>
+                  <hp-context-menu-item value="paste">📌 Pegar</hp-context-menu-item>
+                  <hp-context-menu-separator></hp-context-menu-separator>
+                  <hp-context-menu-label>Zona peligrosa</hp-context-menu-label>
+                  <hp-context-menu-item value="delete">🗑️ Eliminar</hp-context-menu-item>
+                  <hp-context-menu-item value="archive" disabled>📦 Archivar</hp-context-menu-item>
+                </hp-context-menu-content>
+              </hp-context-menu>
+            </div>
+          </section>
         </div>
       </div>
     </div>
@@ -2879,6 +2900,96 @@ hp-accordion-content.tbp-accordion-content[data-state="closed"] {
 }
 
 .tbp-dropdown-menu-content hp-dropdown-menu-label {
+  padding: var(--hp-space-1, 0.25rem) var(--hp-space-3, 0.75rem);
+  font-size: var(--hp-font-size-xs, 0.75rem);
+  font-weight: var(--hp-font-weight-semibold, 600);
+  color: var(--hp-text-secondary, #64748b);
+  user-select: none;
+}
+
+/* Context Menu */
+.tbp-context-menu {
+  position: relative;
+  display: block;
+}
+
+.tbp-context-menu-trigger {
+  display: block;
+}
+
+.tbp-context-menu-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem 2rem;
+  border: 2px dashed var(--hp-border, #e2e8f0);
+  border-radius: var(--hp-radius, 0.5rem);
+  cursor: context-menu;
+  user-select: none;
+  font-size: var(--hp-font-size-sm, 0.875rem);
+  color: var(--hp-text-secondary, #64748b);
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.tbp-context-menu-area:hover {
+  border-color: var(--hp-accent, #3b82f6);
+  background: var(--hp-bg-muted, #f1f5f9);
+}
+
+hp-context-menu-trigger[data-state="open"] .tbp-context-menu-area {
+  border-color: var(--hp-accent, #3b82f6);
+  border-style: solid;
+  background: var(--hp-bg-subtle, #e2e8f0);
+}
+
+.tbp-context-menu-content {
+  position: absolute;
+  z-index: 50;
+  min-width: 12rem;
+  background: var(--hp-surface, #fff);
+  border: 1px solid var(--hp-border, #e2e8f0);
+  border-radius: var(--hp-radius, 0.5rem);
+  box-shadow: var(--hp-shadow-lg, 0 8px 32px rgb(0 0 0 / 0.12), 0 2px 8px rgb(0 0 0 / 0.08));
+  padding: var(--hp-space-1, 0.25rem) 0;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.15s ease,
+    visibility 0.15s ease;
+}
+
+.tbp-context-menu-content[data-state="open"] {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.tbp-context-menu-content hp-context-menu-item {
+  padding: var(--hp-space-2, 0.5rem) var(--hp-space-3, 0.75rem);
+  font-size: var(--hp-font-size-sm, 0.875rem);
+  color: var(--hp-text, #0f172a);
+  cursor: pointer;
+}
+
+.tbp-context-menu-content hp-context-menu-item:hover:not([aria-disabled="true"]) {
+  background: var(--hp-bg-muted, #f1f5f9);
+}
+
+.tbp-context-menu-content hp-context-menu-item[aria-disabled="true"] {
+  opacity: var(--hp-opacity-disabled, 0.5);
+  cursor: not-allowed;
+}
+
+.tbp-context-menu-content hp-context-menu-separator {
+  height: 1px;
+  margin: var(--hp-space-1, 0.25rem) 0;
+  background: var(--hp-border, #e2e8f0);
+}
+
+.tbp-context-menu-content hp-context-menu-label {
   padding: var(--hp-space-1, 0.25rem) var(--hp-space-3, 0.75rem);
   font-size: var(--hp-font-size-xs, 0.75rem);
   font-weight: var(--hp-font-weight-semibold, 600);

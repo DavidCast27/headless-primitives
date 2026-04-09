@@ -87,6 +87,7 @@ export default defineConfig({
           { text: "Checkbox", link: "/components/checkbox" },
           { text: "Collapsible", link: "/components/collapsible" },
           { text: "Combobox", link: "/components/combobox" },
+          { text: "Context Menu", link: "/components/context-menu" },
           { text: "Dialog", link: "/components/dialog" },
           { text: "Drawer", link: "/components/drawer" },
           { text: "Dropdown Menu", link: "/components/dropdown-menu" },

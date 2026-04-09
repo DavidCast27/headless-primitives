@@ -9,6 +9,7 @@ import "@headless-primitives/button";
 import "@headless-primitives/checkbox";
 import "@headless-primitives/collapsible";
 import "@headless-primitives/combobox";
+import "@headless-primitives/context-menu";
 import "@headless-primitives/dialog";
 import "@headless-primitives/drawer";
 import "@headless-primitives/dropdown-menu";
