@@ -1,0 +1,238 @@
+/**
+ * Demo styles for hp-pin-input component
+ * These are example styles — consumers should create their own
+ */
+
+/* ── Reset the global .demo-area input rule that breaks pin slots ── */
+hp-pin-input input[data-hp-pin-slot] {
+  width: 3rem !important;
+  padding: 0 !important;
+}
+
+/* ── Base slot styles ── */
+.pin-demo-root hp-pin-input {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.pin-demo-root hp-pin-input input[data-hp-pin-slot] {
+  width: 3rem !important;
+  height: 3rem !important;
+  text-align: center;
+  font-family: var(--font-mono, monospace);
+  font-size: 1.25rem;
+  font-weight: 700;
+  border: 2px solid var(--border-color, #27272a);
+  border-radius: 10px;
+  background: var(--card-bg, #18181b);
+  color: var(--text-primary, #f8fafc);
+  box-sizing: border-box !important;
+  outline: none;
+  padding: 0 !important;
+  caret-color: var(--hp-accent, #10b981);
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    background 0.15s ease;
+}
+
+.pin-demo-root hp-pin-input input[data-hp-pin-slot]::placeholder {
+  color: rgba(255, 255, 255, 0.18);
+  font-size: 1.1rem;
+}
+
+.pin-demo-root hp-pin-input input[data-hp-pin-slot]:hover:not(:disabled) {
+  border-color: #52525b;
+}
+
+.pin-demo-root hp-pin-input input[data-hp-pin-slot]:focus {
+  border-color: var(--hp-accent, #10b981);
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+  background: rgba(16, 185, 129, 0.04);
+}
+
+/* Complete state */
+.pin-demo-root hp-pin-input[data-state="complete"] input[data-hp-pin-slot] {
+  border-color: var(--hp-accent, #10b981);
+}
+
+/* Error state */
+.pin-demo-root hp-pin-input[data-pin-error="true"] input[data-hp-pin-slot] {
+  border-color: #f87171;
+  box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.2);
+  animation: pin-shake 0.35s ease;
+}
+
+/* Disabled */
+.pin-demo-root hp-pin-input[aria-disabled="true"] input[data-hp-pin-slot] {
+  opacity: 0.38;
+  cursor: not-allowed;
+}
+
+/* Masked (OTP password-style) */
+.pin-demo-root hp-pin-input.pin-masked input[data-hp-pin-slot] {
+  letter-spacing: 0.1em;
+}
+
+/* ── Separator dot between groups ── */
+.pin-separator {
+  color: var(--text-secondary, #94a3b8);
+  font-size: 1.5rem;
+  font-weight: 300;
+  line-height: 1;
+  user-select: none;
+}
+
+/* ── Shake animation for error ── */
+@keyframes pin-shake {
+  0% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-6px);
+  }
+  40% {
+    transform: translateX(6px);
+  }
+  60% {
+    transform: translateX(-4px);
+  }
+  80% {
+    transform: translateX(4px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* ── Status badges ── */
+.pin-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 0.3rem 0.75rem;
+  border-radius: 9999px;
+  opacity: 0;
+  transform: translateY(4px);
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.pin-status.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.pin-status--success {
+  background: rgba(16, 185, 129, 0.12);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.25);
+}
+
+.pin-status--error {
+  background: rgba(248, 113, 113, 0.12);
+  color: #f87171;
+  border: 1px solid rgba(248, 113, 113, 0.25);
+}
+
+.pin-status--info {
+  background: rgba(96, 165, 250, 0.12);
+  color: #93c5fd;
+  border: 1px solid rgba(96, 165, 250, 0.25);
+}
+
+/* ── Demo layout helpers ── */
+.pin-demo-root {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  width: 100%;
+}
+
+.pin-demo-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.pin-demo-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-secondary, #94a3b8);
+}
+
+.pin-demo-description {
+  font-size: 0.8rem;
+  color: var(--text-secondary, #94a3b8);
+  margin-top: 0.25rem;
+}
+
+.pin-demo-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.pin-demo-value {
+  font-size: 0.8rem;
+  color: var(--text-secondary, #94a3b8);
+}
+
+.pin-demo-value code {
+  font-family: var(--font-mono, monospace);
+  color: var(--text-primary, #f8fafc);
+  background: rgba(255, 255, 255, 0.06);
+  padding: 0.1em 0.4em;
+  border-radius: 4px;
+}
+
+/* ── Verify button ── */
+.pin-verify-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1.25rem;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #fff;
+  background: var(--hp-accent, #10b981);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    opacity 0.15s ease;
+}
+
+.pin-verify-btn:hover:not(:disabled) {
+  background: var(--hp-accent-hover, #059669);
+}
+
+.pin-verify-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* ── Reset link ── */
+.pin-reset-btn {
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: 0.8rem;
+  color: var(--text-secondary, #94a3b8);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  padding: 0;
+}
+
+.pin-reset-btn:hover {
+  color: var(--text-primary, #f8fafc);
+}

@@ -1396,6 +1396,44 @@ const totalModified = computed(() => TOKEN_GROUPS.reduce((sum, g) => sum + modif
             </div>
           </section>
 
+          <!-- PIN INPUT -->
+          <section class="tb-preview-section">
+            <h4 class="tb-preview-section-title">Pin Input</h4>
+            <div
+              class="tb-preview-demo"
+              style="gap: 1.25rem; flex-direction: column; align-items: flex-start"
+            >
+              <div>
+                <span class="tb-preview-sublabel">Numérico — 4 dígitos</span>
+                <hp-pin-input
+                  class="tbp-pin"
+                  length="4"
+                  type="numeric"
+                  placeholder="·"
+                ></hp-pin-input>
+              </div>
+              <div>
+                <span class="tb-preview-sublabel">OTP — 6 dígitos (completa para ver estado)</span>
+                <hp-pin-input
+                  class="tbp-pin"
+                  length="6"
+                  type="numeric"
+                  placeholder="·"
+                ></hp-pin-input>
+              </div>
+              <div>
+                <span class="tb-preview-sublabel">Deshabilitado</span>
+                <hp-pin-input
+                  class="tbp-pin"
+                  length="4"
+                  type="numeric"
+                  disabled
+                  placeholder="·"
+                ></hp-pin-input>
+              </div>
+            </div>
+          </section>
+
           <!-- DROPDOWN MENU -->
           <section class="tb-preview-section">
             <h4 class="tb-preview-section-title">Menú desplegable</h4>
@@ -1861,6 +1899,16 @@ const totalModified = computed(() => TOKEN_GROUPS.reduce((sum, g) => sum + modif
   margin: 0 0 10px 0;
   padding: 0;
   border: none;
+}
+
+.tb-preview-sublabel {
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--vp-c-text-3);
+  margin-bottom: 6px;
 }
 
 .tb-preview-demo {
@@ -2719,6 +2767,58 @@ hp-accordion-content.tbp-accordion-content[data-state="closed"] {
 }
 
 .tbp-combobox-option[aria-disabled="true"] {
+  opacity: var(--hp-opacity-disabled, 0.5);
+  cursor: not-allowed;
+}
+
+/* Pin Input */
+.tbp-pin {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--hp-space-2, 0.5rem);
+}
+
+.tbp-pin input[data-hp-pin-slot] {
+  width: 2.75rem;
+  height: 2.75rem;
+  text-align: center;
+  font-family: var(--vp-font-family-mono, monospace);
+  font-size: 1.25rem;
+  font-weight: 700;
+  border: 2px solid var(--hp-border-strong, #cbd5e1);
+  border-radius: var(--hp-radius, 6px);
+  background: var(--hp-surface, #ffffff);
+  color: var(--hp-text, #0f172a);
+  box-sizing: border-box;
+  outline: none;
+  padding: 0;
+  caret-color: var(--hp-accent, #0369a1);
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.tbp-pin input[data-hp-pin-slot]::placeholder {
+  color: var(--hp-text-secondary, #64748b);
+  font-size: 1rem;
+}
+
+.tbp-pin input[data-hp-pin-slot]:hover:not(:disabled) {
+  border-color: var(--hp-accent, #0369a1);
+}
+
+.tbp-pin input[data-hp-pin-slot]:focus {
+  outline: none;
+  border-color: var(--hp-accent, #0369a1);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--hp-accent, #0369a1) 20%, transparent);
+}
+
+.tbp-pin[data-state="complete"] input[data-hp-pin-slot] {
+  border-color: var(--hp-color-success, #16a34a);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--hp-color-success, #16a34a) 20%, transparent);
+}
+
+.tbp-pin[aria-disabled="true"] input[data-hp-pin-slot] {
   opacity: var(--hp-opacity-disabled, 0.5);
   cursor: not-allowed;
 }

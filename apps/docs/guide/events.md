@@ -29,6 +29,10 @@ Todos los eventos de Headless Primitives son **Custom Events nativos del navegad
 | `hp-popover`        | `hp-close`        | —                                  | El popover se cierra          |
 | `hp-tooltip`        | `hp-open`         | —                                  | El tooltip aparece            |
 | `hp-tooltip`        | `hp-close`        | —                                  | El tooltip desaparece         |
+| `hp-pin-input`      | `hp-change`       | `{ value: string }`                | Cambia cualquier dígito       |
+| `hp-pin-input`      | `hp-complete`     | `{ value: string }`                | Todos los campos completados  |
+| `hp-slider`         | `hp-input`        | `{ value: number }`                | Mientras se arrastra          |
+| `hp-slider`         | `hp-change`       | `{ value: number }`                | Al soltar o usar teclado      |
 
 ---
 
@@ -263,6 +267,57 @@ const tooltip = document.querySelector("hp-tooltip");
 
 tooltip.addEventListener("hp-open", () => console.log("tooltip visible"));
 tooltip.addEventListener("hp-close", () => console.log("tooltip oculto"));
+```
+
+### `hp-pin-input`
+
+Emite `hp-change` en cada pulsación de tecla y `hp-complete` cuando todos los campos tienen valor:
+
+```js
+const pin = document.querySelector("hp-pin-input");
+
+pin.addEventListener("hp-change", (e) => {
+  console.log("Valor parcial:", e.detail.value); // string — ej. "12"
+});
+
+pin.addEventListener("hp-complete", (e) => {
+  console.log("PIN completo:", e.detail.value); // string — ej. "1234"
+  // verificar OTP, desbloquear formulario, etc.
+});
+```
+
+El valor es siempre un `string` con la concatenación de los campos rellenados. Los campos vacíos no se incluyen:
+
+```js
+// Pin de 4 dígitos con solo 2 campos rellenos → "12"
+// Pin de 4 dígitos completo → "1234"
+pin.addEventListener("hp-change", (e) => {
+  submitBtn.disabled = e.detail.value.length < pin.length;
+});
+```
+
+### `hp-slider`
+
+Emite dos eventos distintos: `hp-input` se dispara continuamente mientras se arrastra (ideal para actualizaciones en tiempo real), y `hp-change` una sola vez al soltar o al usar el teclado (ideal para persistir el valor):
+
+```js
+const slider = document.querySelector("hp-slider");
+
+slider.addEventListener("hp-input", (e) => {
+  console.log("Moviendo:", e.detail.value); // número
+});
+
+slider.addEventListener("hp-change", (e) => {
+  console.log("Valor final:", e.detail.value); // número
+});
+```
+
+Cuando se usa el atributo `show-value`, el valor visible se actualiza automáticamente sin necesidad de JS. Los eventos son útiles para sincronizar con estado externo:
+
+```js
+slider.addEventListener("hp-change", (e) => {
+  appState.volume = e.detail.value;
+});
 ```
 
 ---
