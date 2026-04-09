@@ -24,6 +24,7 @@ import "@headless-primitives/tabs";
 import "@headless-primitives/toast";
 import "@headless-primitives/tooltip";
 import "@headless-primitives/toggle-group";
+import "@headless-primitives/slider";
 import "@headless-primitives/pin-input";
 // Base functional CSS for headless components
 import "@headless-primitives/utils/base.css";

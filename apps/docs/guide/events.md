@@ -315,6 +315,7 @@ slider.addEventListener("hp-change", (e) => {
 Cuando se usa el atributo `show-value`, el valor visible se actualiza automáticamente sin necesidad de JS. Los eventos son útiles para sincronizar con estado externo:
 
 ```js
+// Sincronizar con una variable de estado
 slider.addEventListener("hp-change", (e) => {
   appState.volume = e.detail.value;
 });
