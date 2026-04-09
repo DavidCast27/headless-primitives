@@ -864,6 +864,48 @@ hp-badge[data-size="lg"] {
   padding: 0.375rem 0.875rem;
 }
 
+/* --- Pin Input --- */
+hp-pin-input {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--hp-pin-input-gap, 0.5rem);
+}
+
+hp-pin-input input {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--hp-pin-input-slot-size, 2.75rem);
+  height: var(--hp-pin-input-slot-size, 2.75rem);
+  text-align: center;
+  font-family: inherit;
+  font-size: var(--hp-pin-input-font-size, 1.25rem);
+  font-weight: var(--hp-font-weight-medium, 500);
+  border: 1px solid currentColor;
+  border-radius: var(--hp-pin-input-radius, 0.375rem);
+  background: transparent;
+  box-sizing: border-box;
+  outline: none;
+  padding: 0;
+  caret-color: currentColor;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+hp-pin-input input:focus-visible,
+hp-pin-input input:focus {
+  outline: var(--hp-focus-outline-width, 2px) solid var(--hp-focus-outline-color, #2563eb);
+  outline-offset: 2px;
+}
+
+hp-pin-input[aria-disabled="true"] input,
+hp-pin-input input:disabled {
+  opacity: var(--hp-opacity-disabled, 0.45);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
 /* --- Dropdown Menu --- */
 hp-dropdown-menu {
   position: relative;

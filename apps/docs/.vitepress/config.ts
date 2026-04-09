@@ -102,6 +102,7 @@ export default defineConfig({
           { text: "Toast", link: "/components/toast" },
           { text: "Toggle Group", link: "/components/toggle-group" },
           { text: "Tooltip", link: "/components/tooltip" },
+          { text: "Pin Input", link: "/components/pin-input" },
         ],
       },
     ],

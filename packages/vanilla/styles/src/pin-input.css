@@ -1,0 +1,108 @@
+/**
+ * @headless-primitives/styles — hp-pin-input
+ *
+ * Especificidad mínima: selector de elemento único.
+ * Sin !important. Sobrescribible por el Consumer.
+ */
+
+hp-pin-input {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--hp-pin-input-gap, 0.5rem);
+}
+
+hp-pin-input input {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--hp-pin-input-slot-size, 2.75rem);
+  height: var(--hp-pin-input-slot-size, 2.75rem);
+  text-align: center;
+  font-family: inherit;
+  font-size: var(--hp-pin-input-font-size, 1.25rem);
+  font-weight: var(--hp-font-weight-medium, 500);
+  line-height: 1;
+  padding: 0;
+  border: 1px solid var(--hp-border-strong, #cbd5e1);
+  border-radius: var(--hp-pin-input-radius, var(--hp-radius, 0.375rem));
+  background-color: var(--hp-surface, #ffffff);
+  color: var(--hp-text, #0f172a);
+  box-sizing: border-box;
+  outline: none;
+  caret-color: var(--hp-accent, #2563eb);
+  transition:
+    border-color var(--hp-transition, 150ms ease),
+    box-shadow var(--hp-transition, 150ms ease),
+    background-color var(--hp-transition, 150ms ease);
+}
+
+hp-pin-input input::placeholder {
+  color: var(--hp-text-muted, #94a3b8);
+  font-size: 0.875em;
+}
+
+hp-pin-input input:hover:not(:disabled):not([disabled]) {
+  border-color: var(--hp-border, #94a3b8);
+}
+
+hp-pin-input input:focus,
+hp-pin-input input:focus-visible {
+  border-color: var(--hp-accent, #2563eb);
+  box-shadow: 0 0 0 var(--hp-focus-outline-width, 2px)
+    color-mix(in srgb, var(--hp-accent, #2563eb) 25%, transparent);
+  outline: none;
+}
+
+/* Complete state — all slots filled */
+hp-pin-input[data-state="complete"] input {
+  border-color: var(--hp-color-success, #16a34a);
+}
+
+/* Disabled state */
+hp-pin-input[aria-disabled="true"] input,
+hp-pin-input input:disabled {
+  opacity: var(--hp-opacity-disabled, 0.45);
+  background-color: var(--hp-bg-muted, #f1f5f9);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* === Dark mode === */
+@media (prefers-color-scheme: dark) {
+  hp-pin-input input {
+    background-color: var(--hp-surface, #0f172a);
+    color: var(--hp-text, #f1f5f9);
+    border-color: var(--hp-border-strong, #475569);
+  }
+
+  hp-pin-input input::placeholder {
+    color: var(--hp-text-muted, #64748b);
+  }
+
+  hp-pin-input input:hover:not(:disabled):not([disabled]) {
+    border-color: var(--hp-border, #64748b);
+  }
+
+  hp-pin-input input:focus,
+  hp-pin-input input:focus-visible {
+    border-color: var(--hp-accent, #3b82f6);
+    box-shadow: 0 0 0 var(--hp-focus-outline-width, 2px)
+      color-mix(in srgb, var(--hp-accent, #3b82f6) 30%, transparent);
+  }
+
+  hp-pin-input[data-state="complete"] input {
+    border-color: var(--hp-color-success, #4ade80);
+  }
+
+  hp-pin-input[aria-disabled="true"] input,
+  hp-pin-input input:disabled {
+    background-color: var(--hp-bg-muted, #1e293b);
+  }
+}
+
+/* === Accesibilidad — prefers-reduced-motion === */
+@media (prefers-reduced-motion: reduce) {
+  hp-pin-input input {
+    transition: none;
+  }
+}

@@ -83,6 +83,9 @@ importers:
       '@headless-primitives/label':
         specifier: workspace:*
         version: link:../../packages/vanilla/label
+      '@headless-primitives/pin-input':
+        specifier: workspace:*
+        version: link:../../packages/vanilla/pin-input
       '@headless-primitives/popover':
         specifier: workspace:*
         version: link:../../packages/vanilla/popover
@@ -159,6 +162,9 @@ importers:
       '@headless-primitives/label':
         specifier: workspace:*
         version: link:../../packages/vanilla/label
+      '@headless-primitives/pin-input':
+        specifier: workspace:*
+        version: link:../../packages/vanilla/pin-input
       '@headless-primitives/popover':
         specifier: workspace:*
         version: link:../../packages/vanilla/popover
@@ -379,6 +385,15 @@ importers:
       vitest:
         specifier: ^2.0.5
         version: 2.1.9(@types/node@25.5.0)(happy-dom@14.12.3)(jsdom@29.0.1)(lightningcss@1.32.0)
+
+  packages/vanilla/pin-input:
+    dependencies:
+      '@headless-primitives/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lit:
+        specifier: ^3.3.2
+        version: 3.3.2
 
   packages/vanilla/popover:
     dependencies:
