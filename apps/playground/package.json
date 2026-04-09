@@ -18,6 +18,7 @@
     "@headless-primitives/combobox": "workspace:*",
     "@headless-primitives/dialog": "workspace:*",
     "@headless-primitives/drawer": "workspace:*",
+    "@headless-primitives/dropdown-menu": "workspace:*",
     "@headless-primitives/field": "workspace:*",
     "@headless-primitives/label": "workspace:*",
     "@headless-primitives/popover": "workspace:*",

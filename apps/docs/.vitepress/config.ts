@@ -89,6 +89,7 @@ export default defineConfig({
           { text: "Combobox", link: "/components/combobox" },
           { text: "Dialog", link: "/components/dialog" },
           { text: "Drawer", link: "/components/drawer" },
+          { text: "Dropdown Menu", link: "/components/dropdown-menu" },
           { text: "Field", link: "/components/field" },
           { text: "Label", link: "/components/label" },
           { text: "Popover", link: "/components/popover" },

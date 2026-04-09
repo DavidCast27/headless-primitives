@@ -11,6 +11,7 @@ import "@headless-primitives/checkbox";
 import "@headless-primitives/collapsible";
 import "@headless-primitives/combobox";
 import "@headless-primitives/dialog";
+import "@headless-primitives/dropdown-menu";
 import "@headless-primitives/drawer";
 import "@headless-primitives/field";
 import "@headless-primitives/label";
@@ -38,6 +39,7 @@ import { checkboxDemo } from "./demos/checkbox.demo";
 import { collapsibleDemo } from "./demos/collapsible.demo";
 import { comboboxDemo } from "./demos/combobox.demo";
 import { dialogDemo } from "./demos/dialog.demo";
+import { dropdownMenuDemo } from "./demos/dropdown-menu.demo";
 import { drawerDemo } from "./demos/drawer.demo";
 import { fieldDemo } from "./demos/field.demo";
 import { labelDemo } from "./demos/label.demo";
@@ -63,6 +65,7 @@ const ROUTES: Record<string, ComponentDemo> = {
   collapsible: collapsibleDemo,
   combobox: comboboxDemo,
   dialog: dialogDemo,
+  "dropdown-menu": dropdownMenuDemo,
   drawer: drawerDemo,
   field: fieldDemo,
   label: labelDemo,
