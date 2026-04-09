@@ -15,6 +15,7 @@
     "@headless-primitives/checkbox": "workspace:*",
     "@headless-primitives/collapsible": "workspace:*",
     "@headless-primitives/combobox": "workspace:*",
+    "@headless-primitives/context-menu": "workspace:*",
     "@headless-primitives/dialog": "workspace:*",
     "@headless-primitives/drawer": "workspace:*",
     "@headless-primitives/dropdown-menu": "workspace:*",

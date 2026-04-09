@@ -25,6 +25,7 @@
     "./select.css": "./src/select.css",
     "./combobox.css": "./src/combobox.css",
     "./dropdown-menu.css": "./src/dropdown-menu.css",
+    "./context-menu.css": "./src/context-menu.css",
     "./atoms.css": "./src/atoms.css",
     "./field.css": "./src/field.css",
     "./verify-aria.js": "./src/verify-aria.js"
