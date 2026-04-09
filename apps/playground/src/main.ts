@@ -25,6 +25,7 @@ import "@headless-primitives/tabs";
 import "@headless-primitives/toast";
 import "@headless-primitives/toggle-group";
 import "@headless-primitives/tooltip";
+import "@headless-primitives/slider";
 import "@headless-primitives/pin-input";
 
 import { Shell } from "./components/Shell";
@@ -54,6 +55,7 @@ import { tabsDemo } from "./demos/tabs.demo";
 import { toastDemo } from "./demos/toast.demo";
 import { toggleGroupDemo } from "./demos/toggle-group.demo";
 import { tooltipDemo } from "./demos/tooltip.demo";
+import { sliderDemo } from "./demos/slider.demo";
 import { pinInputDemo } from "./demos/pin-input.demo";
 
 // --- Route Registry ---
@@ -81,6 +83,7 @@ const ROUTES: Record<string, ComponentDemo> = {
   toast: toastDemo,
   "toggle-group": toggleGroupDemo,
   tooltip: tooltipDemo,
+  slider: sliderDemo,
   "pin-input": pinInputDemo,
 };
 

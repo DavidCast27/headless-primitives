@@ -446,6 +446,26 @@ const TOKEN_GROUPS: TokenGroup[] = [
     ],
   },
   {
+    id: "slider",
+    label: "Slider",
+    tokens: [
+      {
+        name: "--hp-slider-track-height",
+        label: "Altura del track",
+        default: "6px",
+        type: "size",
+        hint: "Grosor de la pista del slider",
+      },
+      {
+        name: "--hp-slider-thumb-size",
+        label: "Tamaño del thumb",
+        default: "18px",
+        type: "size",
+        hint: "Diámetro del control deslizante",
+      },
+    ],
+  },
+  {
     id: "focus",
     label: "Foco y overlay",
     tokens: [
@@ -1396,6 +1416,53 @@ const totalModified = computed(() => TOKEN_GROUPS.reduce((sum, g) => sum + modif
             </div>
           </section>
 
+          <!-- SLIDER -->
+          <section class="tb-preview-section">
+            <h4 class="tb-preview-section-title">Slider</h4>
+            <div class="tb-preview-demo" style="gap: 1.25rem; flex-direction: column">
+              <hp-slider
+                class="tbp-slider"
+                value="60"
+                min="0"
+                max="100"
+                label="Volumen"
+                show-value
+                value-suffix="%"
+              ></hp-slider>
+              <hp-slider
+                class="tbp-slider"
+                value="50"
+                min="0"
+                max="100"
+                step="25"
+                label="Paso de 25"
+                show-value
+              ></hp-slider>
+              <div style="display: flex; gap: 1.5rem; align-items: flex-start">
+                <hp-slider
+                  class="tbp-slider-vert"
+                  value="60"
+                  min="0"
+                  max="100"
+                  orientation="vertical"
+                  label="Vol"
+                  show-value
+                  value-suffix="%"
+                ></hp-slider>
+                <hp-slider
+                  class="tbp-slider"
+                  value="40"
+                  min="0"
+                  max="100"
+                  label="Deshabilitado"
+                  show-value
+                  value-suffix="%"
+                  disabled
+                ></hp-slider>
+              </div>
+            </div>
+          </section>
+
           <!-- PIN INPUT -->
           <section class="tb-preview-section">
             <h4 class="tb-preview-section-title">Pin Input</h4>
@@ -1435,6 +1502,7 @@ const totalModified = computed(() => TOKEN_GROUPS.reduce((sum, g) => sum + modif
           </section>
 
           <!-- DROPDOWN MENU -->
+
           <section class="tb-preview-section">
             <h4 class="tb-preview-section-title">Menú desplegable</h4>
             <div class="tb-preview-demo tb-preview-demo--row">
@@ -3099,6 +3167,151 @@ hp-accordion-content.tbp-accordion-content[data-state="closed"] {
   background-color: var(--hp-color-info-bg, #eff6ff);
   color: var(--hp-color-info, #2563eb);
   border-color: var(--hp-color-info-border, #bfdbfe);
+}
+
+/* Slider */
+.tbp-slider {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  width: 100%;
+  touch-action: none;
+  user-select: none;
+  cursor: default;
+}
+
+.tbp-slider-vert {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 0.375rem;
+  width: fit-content;
+  touch-action: none;
+  user-select: none;
+  cursor: default;
+}
+
+.tbp-slider [data-hp-slider-header],
+.tbp-slider-vert [data-hp-slider-header] {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.tbp-slider [data-hp-slider-label],
+.tbp-slider-vert [data-hp-slider-label] {
+  color: var(--hp-text, #0f172a);
+}
+
+.tbp-slider [data-hp-slider-output],
+.tbp-slider-vert [data-hp-slider-output] {
+  color: var(--hp-text-muted, #64748b);
+  font-variant-numeric: tabular-nums;
+}
+
+.tbp-slider [data-hp-slider-rail] {
+  position: relative;
+  height: var(--hp-slider-thumb-size, 18px);
+  width: 100%;
+}
+
+.tbp-slider-vert [data-hp-slider-rail] {
+  position: relative;
+  width: var(--hp-slider-thumb-size, 18px);
+  height: 100px;
+}
+
+.tbp-slider [data-hp-slider-track],
+.tbp-slider-vert [data-hp-slider-track] {
+  position: absolute;
+  background-color: var(--hp-bg-muted, #f1f5f9);
+  border: 1px solid var(--hp-border, #e2e8f0);
+  border-radius: var(--hp-radius-full, 9999px);
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.tbp-slider [data-hp-slider-track] {
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: var(--hp-slider-track-height, 6px);
+  overflow: hidden;
+}
+
+.tbp-slider-vert [data-hp-slider-track] {
+  left: 50%;
+  right: auto;
+  top: 0;
+  bottom: 0;
+  width: var(--hp-slider-track-height, 6px);
+  height: auto;
+  transform: translateX(-50%);
+  overflow: visible;
+}
+
+.tbp-slider [data-hp-slider-range],
+.tbp-slider-vert [data-hp-slider-range] {
+  position: absolute;
+  background-color: var(--hp-accent, #0369a1);
+  border-radius: inherit;
+}
+
+.tbp-slider [data-hp-slider-range] {
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: var(--hp-slider-percentage, 0%);
+}
+
+.tbp-slider-vert [data-hp-slider-range] {
+  left: 0;
+  right: 0;
+  top: auto;
+  bottom: 0;
+  width: auto;
+  height: var(--hp-slider-percentage, 0%);
+}
+
+.tbp-slider [data-hp-slider-thumb],
+.tbp-slider-vert [data-hp-slider-thumb] {
+  position: absolute;
+  width: var(--hp-slider-thumb-size, 18px);
+  height: var(--hp-slider-thumb-size, 18px);
+  border-radius: 50%;
+  background-color: var(--hp-accent, #0369a1);
+  border: 2px solid var(--hp-surface, #ffffff);
+  box-shadow: var(--hp-shadow, 0 1px 3px 0 rgb(0 0 0 / 0.1));
+  cursor: grab;
+  z-index: 1;
+  box-sizing: border-box;
+}
+
+.tbp-slider [data-hp-slider-thumb] {
+  top: 50%;
+  left: var(--hp-slider-percentage, 0%);
+  transform: translate(-50%, -50%);
+}
+
+.tbp-slider-vert [data-hp-slider-thumb] {
+  top: auto;
+  left: 50%;
+  bottom: var(--hp-slider-percentage, 0%);
+  transform: translate(-50%, 50%);
+}
+
+.tbp-slider[data-disabled] [data-hp-slider-track],
+.tbp-slider[data-disabled] [data-hp-slider-thumb] {
+  opacity: var(--hp-opacity-disabled, 0.5);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.tbp-slider[data-disabled] [data-hp-slider-range] {
+  background-color: var(--hp-text-disabled, #94a3b8);
 }
 
 @media (prefers-reduced-motion: reduce) {

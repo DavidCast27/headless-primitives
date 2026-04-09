@@ -1,0 +1,200 @@
+/**
+ * Demo styles for hp-slider component
+ * These are example styles — consumers should create their own
+ */
+
+/* ── Demo layout ── */
+.slider-demo-root {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  width: 100%;
+}
+
+.slider-demo-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.slider-demo-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-secondary, #94a3b8);
+}
+
+.slider-demo-row {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.slider-demo-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: var(--text-secondary, #94a3b8);
+}
+
+.slider-demo-meta code {
+  font-family: var(--font-mono, monospace);
+  color: var(--text-primary, #f8fafc);
+  background: rgba(255, 255, 255, 0.06);
+  padding: 0.1em 0.4em;
+  border-radius: 4px;
+}
+
+/* ── Slider root ── */
+.slider-demo-root hp-slider {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  touch-action: none;
+  user-select: none;
+  cursor: default;
+}
+
+/* ── Header (label + output) ── */
+.slider-demo-root [data-hp-slider-header] {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.slider-demo-root [data-hp-slider-label] {
+  font-size: 0.825rem;
+  font-weight: 500;
+  color: var(--text-primary, #f8fafc);
+}
+
+.slider-demo-root [data-hp-slider-output] {
+  font-size: 0.825rem;
+  font-weight: 500;
+  color: var(--hp-accent, #10b981);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Rail ── */
+.slider-demo-root [data-hp-slider-rail] {
+  position: relative;
+  height: 24px;
+  width: 100%;
+}
+
+/* ── Track ── */
+.slider-demo-root [data-hp-slider-track] {
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 9999px;
+}
+
+/* ── Range ── */
+.slider-demo-root [data-hp-slider-range] {
+  background: linear-gradient(
+    90deg,
+    var(--hp-accent, #10b981),
+    color-mix(in srgb, var(--hp-accent, #10b981) 70%, #60efff)
+  );
+  transition: width 80ms ease;
+}
+
+/* ── Thumb ── */
+.slider-demo-root [data-hp-slider-thumb] {
+  width: 18px;
+  height: 18px;
+  background: var(--hp-accent, #10b981);
+  border: 2.5px solid var(--card-bg, #18181b);
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.35);
+  transition:
+    background 0.15s,
+    box-shadow 0.15s,
+    transform 180ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    left 80ms ease;
+}
+
+.slider-demo-root [data-hp-slider-thumb]:hover {
+  background: color-mix(in srgb, var(--hp-accent, #10b981) 85%, white);
+  box-shadow: 0 3px 12px rgba(16, 185, 129, 0.5);
+  transform: translate(-50%, -50%) scale(1.15);
+}
+
+.slider-demo-root [data-hp-slider-thumb]:focus-visible {
+  box-shadow:
+    0 0 0 2px var(--card-bg, #18181b),
+    0 0 0 4px var(--hp-accent, #10b981);
+}
+
+.slider-demo-root [data-hp-slider-thumb]:active {
+  cursor: grabbing;
+  transform: translate(-50%, -50%) scale(0.9);
+  transition:
+    background 0.15s,
+    box-shadow 0.15s,
+    transform 100ms cubic-bezier(0.25, 0, 0.5, 1),
+    left 80ms ease;
+}
+
+/* ── Disabled ── */
+.slider-demo-root hp-slider[data-disabled] {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* ── Marks ── */
+.slider-marks {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 0.7rem;
+  color: var(--text-secondary, #64748b);
+  margin-top: 0.25rem;
+}
+
+/* ── Vertical sliders ── */
+.slider-vertical {
+  flex-direction: row !important;
+  align-items: flex-start !important;
+  width: fit-content !important;
+  flex-shrink: 0;
+}
+
+.slider-vertical [data-hp-slider-rail] {
+  width: 24px !important;
+  height: 150px !important;
+}
+
+.slider-demo-root .slider-vertical [data-hp-slider-range] {
+  background: linear-gradient(
+    0deg,
+    var(--hp-accent, #10b981),
+    color-mix(in srgb, var(--hp-accent, #10b981) 70%, #60efff)
+  );
+  transition: height 80ms ease;
+}
+
+.slider-demo-root .slider-vertical [data-hp-slider-thumb] {
+  transition:
+    background 0.15s,
+    box-shadow 0.15s,
+    transform 180ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    bottom 80ms ease;
+}
+
+.slider-demo-root .slider-vertical [data-hp-slider-thumb]:hover {
+  transform: translate(-50%, 50%) scale(1.15);
+}
+
+.slider-demo-root .slider-vertical [data-hp-slider-thumb]:active {
+  transform: translate(-50%, 50%) scale(0.9);
+  transition:
+    background 0.15s,
+    box-shadow 0.15s,
+    transform 100ms cubic-bezier(0.25, 0, 0.5, 1),
+    bottom 80ms ease;
+}
