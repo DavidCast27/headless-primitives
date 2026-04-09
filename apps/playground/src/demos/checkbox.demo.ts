@@ -43,8 +43,8 @@ export const checkboxDemo: ComponentDemo = {
   init: () => {
     const checkboxes = document.querySelectorAll("hp-checkbox");
     checkboxes.forEach((cb) => {
-      cb.addEventListener("hp-change", (e: any) => {
-        console.log(`Checkbox ${cb.id} changed to:`, e.detail.checked);
+      cb.addEventListener("hp-change", (_e: any) => {
+        // Handle change
       });
     });
   },

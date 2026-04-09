@@ -133,7 +133,11 @@ export class HeadlessPopover extends HeadlessElement {
   };
 
   private _toggle = () => {
-    this._isOpen ? this._close() : this._open();
+    if (this._isOpen) {
+      this._close();
+    } else {
+      this._open();
+    }
   };
 
   private _open() {

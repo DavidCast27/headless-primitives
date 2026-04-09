@@ -61,8 +61,8 @@ export const radioGroupDemo: ComponentDemo = {
   init: () => {
     const groups = document.querySelectorAll("hp-radio-group");
     groups.forEach((group) => {
-      group.addEventListener("hp-change", (e: any) => {
-        console.log(`Radio Group ${group.id} changed to:`, e.detail.value);
+      group.addEventListener("hp-change", (_e: any) => {
+        // Handle change
       });
     });
   },

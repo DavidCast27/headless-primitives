@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach } from "vitest";
 import "./index"; // triggers @customElement decorator registration
-import type { Tabs, TabList, TabTrigger, TabPanel } from "./tabs";
+import type { Tabs } from "./tabs";
 
 async function waitForUpdate(element?: HTMLElement) {
   if (element && "updateComplete" in element) {

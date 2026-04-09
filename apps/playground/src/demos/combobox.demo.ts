@@ -63,13 +63,13 @@ export const comboboxDemo: ComponentDemo = {
     const combobox = document.querySelector("hp-combobox#fruit-combobox");
 
     // Listen for changes
-    combobox?.addEventListener("hp-change", (event) => {
-      console.log("Selected:", (event as any).detail.value, (event as any).detail.label);
+    combobox?.addEventListener("hp-change", (_event) => {
+      // Handle change
     });
 
     // Listen for highlights
-    combobox?.addEventListener("hp-highlight", (event) => {
-      console.log("Highlighted:", (event as any).detail.value, (event as any).detail.label);
+    combobox?.addEventListener("hp-highlight", (_event) => {
+      // Handle highlight
     });
   },
 };

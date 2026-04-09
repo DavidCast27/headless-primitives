@@ -105,6 +105,7 @@ export function verifyAriaContract(element, componentName) {
 
   const contract = ARIA_CONTRACTS[componentName];
   if (!contract) {
+    // eslint-disable-next-line no-console
     console.warn(
       `[hp-aria] No se encontró contrato ARIA para "${componentName}". ` +
         `Componentes disponibles: ${Object.keys(ARIA_CONTRACTS).join(", ")}`,
@@ -119,6 +120,7 @@ export function verifyAriaContract(element, componentName) {
     const value = element.getAttribute(attr);
 
     if (spec.required && value === null) {
+      // eslint-disable-next-line no-console
       console.warn(
         `[hp-aria] <${componentName}>: atributo requerido "${attr}" está ausente. ` +
           `Valores esperados: ${spec.values ? spec.values.join(" | ") : "cualquier string"}`,
@@ -128,6 +130,7 @@ export function verifyAriaContract(element, componentName) {
     }
 
     if (value !== null && spec.values && !spec.values.includes(value)) {
+      // eslint-disable-next-line no-console
       console.warn(
         `[hp-aria] <${componentName}>: atributo "${attr}" tiene valor inválido "${value}". ` +
           `Valores esperados: ${spec.values.join(" | ")}`,
@@ -154,6 +157,7 @@ export function warnIfContextAttrConflict(element, componentName, attr) {
 
   if (CONTEXT_ATTRS.includes(attr)) {
     if (element.hasAttribute(attr)) {
+      // eslint-disable-next-line no-console
       console.warn(
         `[hp-aria] <${componentName}>: El atributo "${attr}" es de contexto (ARIA_Context_Attribute) ` +
           `y está siendo gestionado internamente. El valor definido por el Consumer puede ser sobreescrito.`,
@@ -167,6 +171,7 @@ export function warnIfContextAttrConflict(element, componentName, attr) {
   if (contract && contract[attr]?.type === "state" && element.hasAttribute(attr)) {
     // Ya tiene el atributo — advertir que será gestionado internamente
     const existingValue = element.getAttribute(attr);
+    // eslint-disable-next-line no-console
     console.warn(
       `[hp-aria] <${componentName}>: El atributo de estado "${attr}" (valor actual: "${existingValue}") ` +
         `es gestionado internamente por el componente y puede ser sobreescrito. ` +

@@ -40,7 +40,6 @@ export const avatarDemo: ComponentDemo = {
       const currentSrc = imgDynamic.getAttribute("src") || "";
       const baseUrl = currentSrc.split("?")[0];
       imgDynamic.setAttribute("src", `${baseUrl}?t=${Date.now()}`);
-      console.log("Avatar image reloading...");
     });
   },
 };

@@ -21,15 +21,15 @@ export class HeadlessLabel extends HeadlessElement {
     // Read initial 'for' attribute
     const forAttr = this.getAttribute("for");
     if (forAttr) this._htmlFor = forAttr;
-    this.addEventListener("click", this._handleClick.bind(this));
-    this.addEventListener("mousedown", this._handleMouseDown.bind(this));
+    this.addEventListener("click", this._handleClick);
+    this.addEventListener("mousedown", this._handleMouseDown);
     requestAnimationFrame(() => this._updateAriaLink());
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    this.removeEventListener("click", this._handleClick.bind(this));
-    this.removeEventListener("mousedown", this._handleMouseDown.bind(this));
+    this.removeEventListener("click", this._handleClick);
+    this.removeEventListener("mousedown", this._handleMouseDown);
   }
 
   protected updated(changed: Map<string, unknown>) {
@@ -44,17 +44,17 @@ export class HeadlessLabel extends HeadlessElement {
     }
   }
 
-  private _handleClick(event: MouseEvent) {
+  private _handleClick = (event: MouseEvent) => {
     if (!this.htmlFor) return;
     const target = document.getElementById(this.htmlFor);
     if (!target) return;
     target.focus();
     if (target !== event.target) target.click();
-  }
+  };
 
-  private _handleMouseDown(event: MouseEvent) {
+  private _handleMouseDown = (event: MouseEvent) => {
     if (event.detail > 1) event.preventDefault();
-  }
+  };
 
   private _updateAriaLink() {
     if (!this.htmlFor) return;
