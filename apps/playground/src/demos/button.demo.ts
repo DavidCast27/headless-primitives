@@ -16,8 +16,8 @@ export const buttonDemo: ComponentDemo = {
   `,
   init: () => {
     const btnToggle = document.getElementById("btn-toggle");
-    btnToggle?.addEventListener("hp-change", (e: any) => {
-      console.log("Button Toggle:", e.detail.pressed);
+    btnToggle?.addEventListener("hp-change", (_e: any) => {
+      // Handle change
     });
   },
 };

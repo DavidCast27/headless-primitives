@@ -1,4 +1,4 @@
-import { ref, watchEffect } from "vue";
+import { ref } from "vue";
 
 export type StylePreference = "css" | "tailwind";
 
