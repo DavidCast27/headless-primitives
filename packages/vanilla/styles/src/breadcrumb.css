@@ -1,0 +1,65 @@
+hp-breadcrumb {
+  --hp-breadcrumb-gap: var(--hp-space-2, 0.5rem);
+  --hp-breadcrumb-text: var(--hp-text-secondary, #64748b);
+  --hp-breadcrumb-active: var(--hp-text, #0f172a);
+  --hp-breadcrumb-link-hover: var(--hp-text, #0f172a);
+  --hp-breadcrumb-separator: var(--hp-text-muted, #94a3b8);
+}
+
+hp-breadcrumb-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--hp-breadcrumb-gap);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  word-break: break-all;
+}
+
+hp-breadcrumb-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--hp-breadcrumb-gap);
+}
+
+hp-breadcrumb-link {
+  color: var(--hp-breadcrumb-text);
+  text-decoration: none;
+  transition: color 0.2s ease;
+  font-size: var(--hp-font-size-sm, 0.875rem);
+  line-height: 1.25rem;
+  cursor: pointer;
+}
+
+hp-breadcrumb-link:hover {
+  color: var(--hp-breadcrumb-link-hover);
+}
+
+hp-breadcrumb-page {
+  color: var(--hp-breadcrumb-active);
+  font-weight: var(--hp-font-weight-medium, 500);
+  font-size: var(--hp-font-size-sm, 0.875rem);
+  line-height: 1.25rem;
+}
+
+hp-breadcrumb-separator {
+  color: var(--hp-breadcrumb-separator);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+hp-breadcrumb-separator svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+hp-breadcrumb-ellipsis {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  color: var(--hp-breadcrumb-separator);
+}

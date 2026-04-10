@@ -10,6 +10,7 @@
   "exports": {
     "./index.css": "./src/index.css",
     "./theme.css": "./src/theme.css",
+    "./breadcrumb.css": "./src/breadcrumb.css",
     "./button.css": "./src/button.css",
     "./switch.css": "./src/switch.css",
     "./checkbox.css": "./src/checkbox.css",

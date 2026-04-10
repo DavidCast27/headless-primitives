@@ -5,6 +5,7 @@ import type { Theme } from "vitepress";
 import "@headless-primitives/accordion";
 import "@headless-primitives/avatar";
 import "@headless-primitives/badge";
+import "@headless-primitives/breadcrumb";
 import "@headless-primitives/button";
 import "@headless-primitives/checkbox";
 import "@headless-primitives/collapsible";

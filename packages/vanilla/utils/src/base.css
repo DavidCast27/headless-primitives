@@ -81,7 +81,14 @@ hp-context-menu-trigger,
 hp-context-menu-content,
 hp-context-menu-item,
 hp-context-menu-separator,
-hp-context-menu-label {
+hp-context-menu-label,
+hp-breadcrumb,
+hp-breadcrumb-list,
+hp-breadcrumb-item,
+hp-breadcrumb-link,
+hp-breadcrumb-page,
+hp-breadcrumb-separator,
+hp-breadcrumb-ellipsis {
   display: block;
 }
 

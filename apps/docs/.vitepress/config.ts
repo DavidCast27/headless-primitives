@@ -83,6 +83,7 @@ export default defineConfig({
           { text: "Alert Dialog", link: "/components/alert-dialog" },
           { text: "Avatar", link: "/components/avatar" },
           { text: "Badge", link: "/components/badge" },
+          { text: "Breadcrumb", link: "/components/breadcrumb" },
           { text: "Button", link: "/components/button" },
           { text: "Checkbox", link: "/components/checkbox" },
           { text: "Collapsible", link: "/components/collapsible" },
