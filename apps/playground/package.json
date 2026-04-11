@@ -30,6 +30,7 @@
     "@headless-primitives/select": "workspace:*",
     "@headless-primitives/separator": "workspace:*",
     "@headless-primitives/slider": "workspace:*",
+    "@headless-primitives/stepper": "workspace:*",
     "@headless-primitives/styles": "workspace:*",
     "@headless-primitives/switch": "workspace:*",
     "@headless-primitives/tabs": "workspace:*",

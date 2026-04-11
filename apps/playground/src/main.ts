@@ -29,6 +29,7 @@ import "@headless-primitives/toggle-group";
 import "@headless-primitives/tooltip";
 import "@headless-primitives/slider";
 import "@headless-primitives/pin-input";
+import "@headless-primitives/stepper";
 
 import { Shell } from "./components/Shell";
 import { ComponentDemo } from "./types";
@@ -61,6 +62,7 @@ import { toggleGroupDemo } from "./demos/toggle-group.demo";
 import { tooltipDemo } from "./demos/tooltip.demo";
 import { sliderDemo } from "./demos/slider.demo";
 import { pinInputDemo } from "./demos/pin-input.demo";
+import { stepperDemo } from "./demos/stepper.demo";
 
 // --- Route Registry ---
 const ROUTES: Record<string, ComponentDemo> = {
@@ -91,6 +93,7 @@ const ROUTES: Record<string, ComponentDemo> = {
   tooltip: tooltipDemo,
   slider: sliderDemo,
   "pin-input": pinInputDemo,
+  stepper: stepperDemo,
 };
 
 function renderRoute(compId: string) {

@@ -27,6 +27,11 @@
     "./combobox.css": "./src/combobox.css",
     "./dropdown-menu.css": "./src/dropdown-menu.css",
     "./context-menu.css": "./src/context-menu.css",
+    "./drawer.css": "./src/drawer.css",
+    "./badge.css": "./src/badge.css",
+    "./pin-input.css": "./src/pin-input.css",
+    "./slider.css": "./src/slider.css",
+    "./stepper.css": "./src/stepper.css",
     "./atoms.css": "./src/atoms.css",
     "./field.css": "./src/field.css",
     "./verify-aria.js": "./src/verify-aria.js"

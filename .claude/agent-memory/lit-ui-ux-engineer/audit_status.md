@@ -128,6 +128,21 @@ type: project
 - `packages/vanilla/styles/src/popover.css` — fully token-based (after fix)
 - `packages/vanilla/styles/src/atoms.css` — fully token-based
 
+### Enhanced: 2026-04-10
+
+**packages/vanilla/styles/src/stepper.css**
+
+- [FIXED] Hardcoded `color: #ffffff` in active/completed `::before` states and dark-mode block replaced with `var(--hp-accent-foreground)`
+- [FIXED] Hardcoded `font-size: 0.75rem` on `::before` replaced with `var(--hp-font-size-xs)`
+- [FIXED] Hardcoded `border-radius: 4px` on focus-visible replaced with `var(--hp-radius-sm)`
+- [ADDED] `scale` transition on `::before` pseudo-element: active state pulses to `1.1`, pending hover nudges to `1.05`, completed stays at `1`; uses separate `--hp-stepper-indicator-pop` timing token
+- [ADDED] Connector line `transition: background` for fill effect on both horizontal and vertical connectors; uses `--hp-stepper-connector-transition` token
+- [ADDED] `@starting-style` panel fade-in: `[data-hp-stepper-panel][data-state="active"]` transitions from `opacity: 0` to `1`; uses `--hp-stepper-panel-transition` token
+- [ADDED] Navigation button `:active` state with `translate: 0 1px` (press-down) complementing hover's `translate: 0 -1px` (lift)
+- [ADDED] `opacity` and `translate` to nav button `transition` list
+- [ADDED] Four overridable component-level timing tokens: `--hp-stepper-transition`, `--hp-stepper-indicator-pop`, `--hp-stepper-connector-transition`, `--hp-stepper-panel-transition`
+- [UPDATED] `prefers-reduced-motion` block: resets all new `scale` values to `1`, disables panel `transition`, and overrides `@starting-style` so panel appears immediately at `opacity: 1`
+
 ### Known acceptable patterns
 
 - `apps/playground/src/demos/*.css` may use `var(--hp-*, hardcoded-fallback)` syntax — this is correct

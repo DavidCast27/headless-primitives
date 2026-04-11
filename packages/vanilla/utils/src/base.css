@@ -82,6 +82,10 @@ hp-context-menu-content,
 hp-context-menu-item,
 hp-context-menu-separator,
 hp-context-menu-label,
+hp-stepper,
+hp-stepper-list,
+hp-stepper-panel,
+hp-stepper-finish,
 hp-breadcrumb,
 hp-breadcrumb-list,
 hp-breadcrumb-item,
@@ -276,6 +280,123 @@ hp-radio-group {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+}
+
+/* --- Stepper --- */
+hp-stepper {
+  /* Size of the step indicator circle — override in theme */
+  --_hp-stepper-circle: var(--hp-stepper-indicator-size, 28px);
+}
+
+hp-stepper-list {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0;
+  position: relative;
+}
+
+hp-stepper-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  flex: 1;
+  min-width: 0;
+}
+
+/* Horizontal connector line */
+hp-stepper:not([data-orientation="vertical"]) hp-stepper-item:not(:last-child)::after {
+  content: "";
+  flex: 1;
+  height: 2px;
+  background: currentColor;
+  opacity: 0.2;
+  min-width: 0.75rem;
+  order: 99;
+  border-radius: 1px;
+}
+
+hp-stepper:not([data-orientation="vertical"]) hp-stepper-item[data-state="completed"]::after {
+  opacity: 0.6;
+}
+
+/* Vertical layout */
+hp-stepper[data-orientation="vertical"] hp-stepper-list {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+hp-stepper[data-orientation="vertical"] hp-stepper-item {
+  flex: none;
+  width: 100%;
+  align-items: flex-start;
+  padding-bottom: var(--hp-stepper-step-gap, 1.5rem);
+}
+
+hp-stepper[data-orientation="vertical"] hp-stepper-item:last-child {
+  padding-bottom: 0;
+}
+
+/* Vertical connector line — runs down from circle to next item */
+hp-stepper[data-orientation="vertical"] hp-stepper-item:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: calc(var(--_hp-stepper-circle) / 2 - 1px);
+  top: var(--_hp-stepper-circle);
+  bottom: 0;
+  width: 2px;
+  height: auto;
+  background: currentColor;
+  opacity: 0.2;
+  border-radius: 1px;
+}
+
+hp-stepper[data-orientation="vertical"] hp-stepper-item[data-state="completed"]::after {
+  opacity: 0.6;
+}
+
+hp-stepper-item[aria-disabled="true"] {
+  opacity: var(--hp-opacity-disabled);
+  cursor: not-allowed;
+}
+
+hp-stepper-prev,
+hp-stepper-next,
+hp-stepper-finish {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.375rem 0.75rem;
+  border: 1px solid currentColor;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  user-select: none;
+  box-sizing: border-box;
+  transition:
+    background-color 0.15s ease,
+    opacity 0.15s ease;
+}
+
+hp-stepper-prev[disabled],
+hp-stepper-prev[aria-disabled="true"],
+hp-stepper-next[disabled],
+hp-stepper-next[aria-disabled="true"],
+hp-stepper-finish[disabled],
+hp-stepper-finish[aria-disabled="true"] {
+  opacity: var(--hp-opacity-disabled);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Stepper panels: hidden by default */
+[data-hp-stepper-panel][data-state="hidden"] {
+  display: none;
 }
 
 /* 4. Reglas por Arquetipo */

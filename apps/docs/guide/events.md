@@ -33,6 +33,8 @@ Todos los eventos de Headless Primitives son **Custom Events nativos del navegad
 | `hp-pin-input`      | `hp-complete`     | `{ value: string }`                | Todos los campos completados  |
 | `hp-slider`         | `hp-input`        | `{ value: number }`                | Mientras se arrastra          |
 | `hp-slider`         | `hp-change`       | `{ value: number }`                | Al soltar o usar teclado      |
+| `hp-stepper`        | `hp-change`       | `{ value: number, prev: number }`  | Cambia el paso activo         |
+| `hp-stepper`        | `hp-complete`     | `{ steps: number }`                | El wizard se completa         |
 
 ---
 
@@ -319,6 +321,33 @@ Cuando se usa el atributo `show-value`, el valor visible se actualiza automátic
 slider.addEventListener("hp-change", (e) => {
   appState.volume = e.detail.value;
 });
+```
+
+### `hp-stepper`
+
+Emite `hp-change` en cada avance o retroceso, y `hp-complete` cuando el usuario pulsa `hp-stepper-finish` (o se llama `complete()` programáticamente):
+
+```js
+const stepper = document.querySelector("hp-stepper");
+
+stepper.addEventListener("hp-change", (e) => {
+  console.log("Paso actual:", e.detail.value); // number — índice 0-based
+  console.log("Paso anterior:", e.detail.prev); // number
+});
+
+stepper.addEventListener("hp-complete", (e) => {
+  console.log("Wizard completado. Total de pasos:", e.detail.steps);
+  // enviar formulario, redirigir, mostrar pantalla de éxito…
+});
+```
+
+Puedes también controlar la navegación programáticamente:
+
+```js
+stepper.next(); // avanza un paso
+stepper.prev(); // retrocede un paso
+stepper.goTo(2); // salta al paso con índice 2
+stepper.complete(); // completa el wizard (dispara hp-complete)
 ```
 
 ---
