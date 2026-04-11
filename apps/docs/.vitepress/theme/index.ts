@@ -34,6 +34,7 @@ import "@headless-primitives/pin-input";
 import "@headless-primitives/tree";
 import "@headless-primitives/stepper";
 import "@headless-primitives/scroll-area";
+import "@headless-primitives/toolbar";
 // Base functional CSS for headless components
 import "@headless-primitives/utils/base.css";
 import "./docs-demos.css";

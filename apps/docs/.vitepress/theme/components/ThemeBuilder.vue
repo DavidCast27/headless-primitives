@@ -1120,6 +1120,22 @@ const totalModified = computed(() => TOKEN_GROUPS.reduce((sum, g) => sum + modif
             </div>
           </section>
 
+          <!-- TOOLBAR -->
+          <section class="tb-preview-section">
+            <h4 class="tb-preview-section-title">Toolbar</h4>
+            <div class="tb-preview-demo">
+              <hp-toolbar class="tbp-toolbar" label="Acciones de texto">
+                <button class="tbp-toolbar-btn">Negrita</button>
+                <button class="tbp-toolbar-btn">Cursiva</button>
+                <button class="tbp-toolbar-btn">Subrayado</button>
+                <hr class="tbp-toolbar-sep" />
+                <button class="tbp-toolbar-btn">Izquierda</button>
+                <button class="tbp-toolbar-btn">Centro</button>
+                <button class="tbp-toolbar-btn">Derecha</button>
+              </hp-toolbar>
+            </div>
+          </section>
+
           <!-- CAMPO -->
           <section class="tb-preview-section">
             <h4 class="tb-preview-section-title">Campo de formulario</h4>
@@ -3959,5 +3975,43 @@ hp-navigation-menu-indicator.tbp-nav-indicator {
   transition:
     left var(--hp-transition, 150ms),
     width var(--hp-transition, 150ms);
+}
+
+hp-toolbar.tbp-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  background: var(--hp-surface-raised, var(--vp-c-bg-elv));
+  border: 1px solid var(--hp-border, var(--vp-c-divider));
+  border-radius: var(--hp-radius, 6px);
+}
+
+.tbp-toolbar-btn {
+  padding: 4px 10px;
+  border: none;
+  border-radius: calc(var(--hp-radius, 6px) - 2px);
+  background: transparent;
+  color: var(--hp-fg, var(--vp-c-text-1));
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.tbp-toolbar-btn:hover {
+  background: var(--hp-bg-muted, var(--vp-c-bg-mute));
+}
+
+.tbp-toolbar-btn:focus-visible {
+  outline: 2px solid var(--hp-accent, #0369a1);
+  outline-offset: 1px;
+}
+
+.tbp-toolbar-sep {
+  width: 1px;
+  height: 20px;
+  border: none;
+  background: var(--hp-border, var(--vp-c-divider));
+  margin: 0 4px;
+  flex-shrink: 0;
 }
 </style>

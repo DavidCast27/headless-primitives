@@ -1,0 +1,192 @@
+/**
+ * @headless-primitives/styles — hp-toolbar
+ *
+ * Container for a set of controls (buttons, toggles, separators, inputs).
+ * Follows the WAI-ARIA toolbar pattern with roving tabindex navigation.
+ * Especificidad mínima: selector de elemento único o elemento + atributo.
+ * Sin !important. Sobrescribible por el Consumer.
+ *
+ * base.css owns: display, flex-direction, align-items, gap, flex-wrap.
+ * This file owns: all visual tokens (colors, typography, spacing, radius).
+ */
+
+/* ─── Component tokens — overridable by the Consumer ─────────────────────── */
+hp-toolbar {
+  --hp-toolbar-gap: var(--hp-space-1);
+  --hp-toolbar-padding: var(--hp-space-1);
+  --hp-toolbar-bg: var(--hp-surface);
+  --hp-toolbar-border-color: var(--hp-border);
+  --hp-toolbar-radius: var(--hp-radius-md);
+  --hp-toolbar-item-radius: var(--hp-radius-sm);
+  --hp-toolbar-item-height: 2rem;
+  --hp-toolbar-item-padding: 0 var(--hp-space-3);
+  --hp-toolbar-separator-color: var(--hp-border);
+}
+
+/* ─── Toolbar container ───────────────────────────────────────────────────── */
+/* Layout (flex, direction, align) is in base.css — only visual props here */
+hp-toolbar {
+  gap: var(--hp-toolbar-gap);
+  padding: var(--hp-toolbar-padding);
+  background-color: var(--hp-toolbar-bg);
+  border: 1px solid var(--hp-toolbar-border-color);
+  border-radius: var(--hp-toolbar-radius);
+  box-sizing: border-box;
+}
+
+/* ─── Group inside toolbar — transparent to flex layout ──────────────────── */
+hp-toolbar [role="group"] {
+  display: contents;
+}
+
+/* ─── Toolbar item base — buttons, links, role="button" ──────────────────── */
+hp-toolbar button,
+hp-toolbar a[href],
+hp-toolbar [role="button"],
+hp-toolbar [role="checkbox"],
+hp-toolbar [role="radio"] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--hp-toolbar-item-height);
+  padding: var(--hp-toolbar-item-padding);
+  font-family: inherit;
+  font-size: var(--hp-font-size-sm);
+  font-weight: var(--hp-font-weight-medium);
+  color: var(--hp-text-secondary);
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--hp-toolbar-item-radius);
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  text-decoration: none;
+  box-sizing: border-box;
+  transition:
+    background-color var(--hp-transition),
+    border-color var(--hp-transition),
+    color var(--hp-transition);
+}
+
+/* ─── Hover ───────────────────────────────────────────────────────────────── */
+hp-toolbar button:hover:not([disabled]):not([aria-disabled="true"]):not([aria-pressed="true"]),
+hp-toolbar a[href]:hover:not([aria-disabled="true"]):not([aria-pressed="true"]),
+hp-toolbar [role="button"]:hover:not([aria-disabled="true"]):not([aria-pressed="true"]),
+hp-toolbar [role="checkbox"]:hover:not([aria-disabled="true"]):not([aria-pressed="true"]),
+hp-toolbar [role="radio"]:hover:not([aria-disabled="true"]):not([aria-pressed="true"]) {
+  background-color: var(--hp-bg-muted);
+  color: var(--hp-text);
+}
+
+/* ─── Pressed / toggled state ────────────────────────────────────────────── */
+hp-toolbar button[aria-pressed="true"],
+hp-toolbar a[href][aria-pressed="true"],
+hp-toolbar [role="button"][aria-pressed="true"],
+hp-toolbar [role="checkbox"][aria-pressed="true"],
+hp-toolbar [role="radio"][aria-pressed="true"] {
+  background-color: var(--hp-bg-muted);
+  border-color: var(--hp-border);
+  color: var(--hp-text);
+}
+
+/* ─── Accent pressed variant — data-variant="accent" [aria-pressed="true"] ─ */
+hp-toolbar button[data-variant="accent"][aria-pressed="true"],
+hp-toolbar [role="button"][data-variant="accent"][aria-pressed="true"],
+hp-toolbar [role="checkbox"][data-variant="accent"][aria-pressed="true"],
+hp-toolbar [role="radio"][data-variant="accent"][aria-pressed="true"] {
+  background-color: color-mix(in srgb, var(--hp-accent) 10%, transparent);
+  border-color: var(--hp-accent);
+  color: var(--hp-accent);
+}
+
+/* ─── Disabled state ─────────────────────────────────────────────────────── */
+hp-toolbar button[disabled],
+hp-toolbar button[aria-disabled="true"],
+hp-toolbar a[href][aria-disabled="true"],
+hp-toolbar [role="button"][aria-disabled="true"],
+hp-toolbar [role="checkbox"][aria-disabled="true"],
+hp-toolbar [role="radio"][aria-disabled="true"] {
+  opacity: var(--hp-opacity-disabled);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ─── Focus-visible ring ─────────────────────────────────────────────────── */
+hp-toolbar button:focus-visible,
+hp-toolbar a[href]:focus-visible,
+hp-toolbar [role="button"]:focus-visible,
+hp-toolbar [role="checkbox"]:focus-visible,
+hp-toolbar [role="radio"]:focus-visible,
+hp-toolbar input:focus-visible {
+  outline: var(--hp-focus-outline-width) solid var(--hp-focus-outline-color);
+  outline-offset: 1px;
+}
+
+/* ─── Input items (search, text) ─────────────────────────────────────────── */
+hp-toolbar input[type="search"],
+hp-toolbar input[type="text"] {
+  display: inline-flex;
+  height: var(--hp-toolbar-item-height);
+  padding: var(--hp-toolbar-item-padding);
+  font-family: inherit;
+  font-size: var(--hp-font-size-sm);
+  color: var(--hp-text);
+  background-color: transparent;
+  border: 1px solid var(--hp-border);
+  border-radius: var(--hp-toolbar-item-radius);
+  box-sizing: border-box;
+  transition: border-color var(--hp-transition);
+}
+
+hp-toolbar input[type="search"]:focus,
+hp-toolbar input[type="text"]:focus {
+  border-color: var(--hp-accent);
+  outline: none;
+  box-shadow: 0 0 0 var(--hp-focus-outline-width)
+    color-mix(in srgb, var(--hp-accent) 30%, transparent);
+}
+
+hp-toolbar input[type="search"][disabled],
+hp-toolbar input[type="text"][disabled] {
+  opacity: var(--hp-opacity-disabled);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ─── Separator ──────────────────────────────────────────────────────────── */
+hp-toolbar [role="separator"],
+hp-toolbar hr {
+  flex-shrink: 0;
+  border: none;
+  background-color: var(--hp-toolbar-separator-color);
+}
+
+/* Horizontal separator (default — inside horizontal toolbar) */
+hp-toolbar [role="separator"]:not([aria-orientation="horizontal"]),
+hp-toolbar hr {
+  width: 1px;
+  height: 1.25rem;
+  align-self: center;
+  margin: 0 var(--hp-space-1);
+}
+
+/* Horizontal separator when toolbar is vertical */
+hp-toolbar[aria-orientation="vertical"] [role="separator"],
+hp-toolbar [role="separator"][aria-orientation="horizontal"] {
+  width: 100%;
+  height: 1px;
+  margin: var(--hp-space-1) 0;
+}
+
+/* ─── Accessibility — prefers-reduced-motion ─────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  hp-toolbar button,
+  hp-toolbar a[href],
+  hp-toolbar [role="button"],
+  hp-toolbar [role="checkbox"],
+  hp-toolbar [role="radio"],
+  hp-toolbar input[type="search"],
+  hp-toolbar input[type="text"] {
+    transition: none;
+  }
+}
