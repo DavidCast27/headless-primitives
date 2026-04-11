@@ -35,6 +35,7 @@
     "@headless-primitives/toast": "workspace:*",
     "@headless-primitives/toggle-group": "workspace:*",
     "@headless-primitives/tooltip": "workspace:*",
+    "@headless-primitives/tree": "workspace:*",
     "@headless-primitives/utils": "workspace:*"
   },
   "devDependencies": {

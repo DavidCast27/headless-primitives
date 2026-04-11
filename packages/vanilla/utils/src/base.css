@@ -82,6 +82,9 @@ hp-context-menu-content,
 hp-context-menu-item,
 hp-context-menu-separator,
 hp-context-menu-label,
+hp-tree,
+hp-tree-item,
+hp-tree-group,
 hp-stepper,
 hp-stepper-list,
 hp-stepper-panel,
@@ -1528,6 +1531,64 @@ hp-toast-container[data-position="bottom-center"] {
     opacity: 1;
     transform: translateX(0);
   }
+}
+
+/* --- Tree View --- */
+
+/* Root tree container */
+hp-tree {
+  display: block;
+  outline: none;
+}
+
+/* Tree item — indentation via padding-left on nested groups */
+hp-tree-item {
+  display: block;
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+  padding: 0.25rem 0.5rem;
+  padding-left: calc(var(--hp-tree-depth, 0) * var(--hp-tree-indent, 1.25rem) + 0.5rem);
+  font-size: var(--hp-font-size-sm, 0.875rem);
+  line-height: 1.5;
+  border-radius: var(--hp-radius, 0.25rem);
+  box-sizing: border-box;
+  transition: background-color 0.1s ease;
+}
+
+hp-tree-item:hover:not([aria-disabled="true"]):not([disabled]) {
+  background-color: color-mix(in srgb, currentColor 6%, transparent);
+}
+
+hp-tree-item:focus-visible {
+  outline: var(--hp-focus-outline-width, 2px) solid var(--hp-focus-outline-color, #2563eb);
+  outline-offset: -2px;
+}
+
+hp-tree-item[aria-selected="true"] {
+  background-color: color-mix(in srgb, currentColor 12%, transparent);
+  font-weight: var(--hp-font-weight-medium, 500);
+}
+
+hp-tree-item[aria-disabled="true"],
+hp-tree-item[disabled] {
+  opacity: var(--hp-opacity-disabled, 0.45);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Group — hidden when parent item is collapsed */
+hp-tree-group {
+  display: block;
+}
+
+hp-tree-item[data-state="closed"] > hp-tree-group,
+hp-tree-item[data-state="leaf"] > hp-tree-group {
+  display: none;
+}
+
+hp-tree-item[data-state="open"] > hp-tree-group {
+  display: block;
 }
 
 @keyframes hp-toast-out {

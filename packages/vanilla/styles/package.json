@@ -34,6 +34,7 @@
     "./stepper.css": "./src/stepper.css",
     "./atoms.css": "./src/atoms.css",
     "./field.css": "./src/field.css",
+    "./tree.css": "./src/tree.css",
     "./verify-aria.js": "./src/verify-aria.js"
   },
   "publishConfig": {

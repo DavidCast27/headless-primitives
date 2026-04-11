@@ -28,6 +28,7 @@ import "@headless-primitives/tooltip";
 import "@headless-primitives/toggle-group";
 import "@headless-primitives/slider";
 import "@headless-primitives/pin-input";
+import "@headless-primitives/tree";
 import "@headless-primitives/stepper";
 // Base functional CSS for headless components
 import "@headless-primitives/utils/base.css";

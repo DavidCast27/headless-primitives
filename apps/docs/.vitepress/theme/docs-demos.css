@@ -62,3 +62,26 @@
   outline: none;
   border-color: var(--hp-status-blue);
 }
+
+/* ── Tree View base styles ─────────────────────────────────────────────── */
+hp-tree,
+hp-tree-item,
+hp-tree-group {
+  display: block;
+}
+
+/* Groups are hidden by default; only shown when parent item is open.
+   This must live here (not in the page <style>) so it applies before
+   the custom element upgrades, preventing the flash-of-expanded-tree. */
+hp-tree-group {
+  display: none;
+}
+
+hp-tree-item[data-state="open"] > hp-tree-group {
+  display: block;
+}
+
+/* Items with the `expanded` HTML attribute start open before JS runs */
+hp-tree-item[expanded] > hp-tree-group {
+  display: block;
+}
