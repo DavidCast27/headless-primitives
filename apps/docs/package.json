@@ -22,6 +22,7 @@
     "@headless-primitives/dropdown-menu": "workspace:*",
     "@headless-primitives/field": "workspace:*",
     "@headless-primitives/label": "workspace:*",
+    "@headless-primitives/navigation-menu": "workspace:*",
     "@headless-primitives/pin-input": "workspace:*",
     "@headless-primitives/popover": "workspace:*",
     "@headless-primitives/progress": "workspace:*",

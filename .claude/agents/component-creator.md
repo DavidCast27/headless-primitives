@@ -307,3 +307,35 @@ When asked to create a component:
 5. Ask if VitePress docs are needed.
 6. After creating files, remind the user to run build + test to validate.
 7. Do not add features, fallbacks, or abstractions beyond what was explicitly requested.
+
+---
+
+## 📄 MANDATORY: Update llms.txt and steering files after every component
+
+After creating or significantly modifying a component, **always** update these files:
+
+### 1. `llms.txt` (root of repo)
+
+Add the new package to the monorepo structure list under `packages/vanilla/`:
+
+```
+  <name>/           # @headless-primitives/<name>
+```
+
+### 2. `.kiro/steering/component-patterns.md`
+
+If the new component introduces a new pattern (composite structure, new event shape, new data attribute, new VitePress compatibility trick), add it to the relevant section.
+
+### 3. `.kiro/steering/css-tokens.md`
+
+If the component introduces new `--hp-*` tokens (especially semantic color tokens like success/warning/danger), add them to the token reference.
+
+### 4. `.kiro/steering/accessibility.md`
+
+If the component introduces a new keyboard interaction pattern or ARIA role not yet documented, add it to the relevant table.
+
+### 5. `.kiro/steering/docs-standards.md`
+
+If the component's docs page introduces a new pattern for demos or code examples, document it.
+
+**Rule**: `llms.txt` must always reflect the current list of packages. Steering files must reflect current patterns. Both are living documents.

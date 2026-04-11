@@ -206,6 +206,30 @@ After every CSS modification:
 
 ---
 
+## 📄 MANDATORY: Update llms.txt and steering files after every CSS change
+
+After modifying CSS architecture, tokens, or component styles, **always** update:
+
+### 1. `llms.txt` (root of repo)
+
+If you added or changed `--hp-*` tokens, update the token list in the "Tokens CSS" section.
+
+### 2. `.kiro/steering/css-tokens.md`
+
+Add any new `--hp-*` tokens with their values and purpose. Remove or update stale entries.
+
+### 3. `.kiro/steering/css-audit-rules.md`
+
+If you discovered a new class of CSS bug or established a new fix pattern, document it.
+
+### 4. `.kiro/steering/project-architecture.md`
+
+If the layer boundary rules changed (e.g., a new type of property moved from `@styles` to `base.css`), update the decision rule.
+
+**Rule**: `llms.txt` and steering files are living documents. Every audit or architectural change must be reflected in them.
+
+---
+
 ## ✅ Self-Verification Checklist
 
 Before considering any task complete:

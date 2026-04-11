@@ -35,6 +35,7 @@
     "./atoms.css": "./src/atoms.css",
     "./field.css": "./src/field.css",
     "./tree.css": "./src/tree.css",
+    "./navigation-menu.css": "./src/navigation-menu.css",
     "./verify-aria.js": "./src/verify-aria.js"
   },
   "publishConfig": {

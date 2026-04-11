@@ -11,4 +11,6 @@ coverage
 *.log
 
 #kiro
-.kiro
+.kiro/*
+!.kiro/steering
+!.kiro/steering/**

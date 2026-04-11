@@ -74,6 +74,7 @@ export default defineConfig({
               { text: "Constructor de Tema", link: "/guide/theme-builder" },
             ],
           },
+          { text: "LLMs & AI Context", link: "/guide/llms" },
         ],
       },
       {
@@ -94,6 +95,7 @@ export default defineConfig({
           { text: "Dropdown Menu", link: "/components/dropdown-menu" },
           { text: "Field", link: "/components/field" },
           { text: "Label", link: "/components/label" },
+          { text: "Navigation Menu", link: "/components/navigation-menu" },
           { text: "Pin Input", link: "/components/pin-input" },
           { text: "Popover", link: "/components/popover" },
           { text: "Progress", link: "/components/progress" },
