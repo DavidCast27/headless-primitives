@@ -88,3 +88,14 @@ Si un componente tiene variantes semánticas, los tokens deben **definirse en `t
 ```
 
 También añadir el grupo de tokens en `TOKEN_GROUPS` de `ThemeBuilder.vue`.
+
+## Tokens de componente específicos
+
+Algunos componentes exponen tokens para personalización sin necesidad de sobreescribir selectores:
+
+```css
+/* Scroll Area */
+--hp-scroll-area-scrollbar-size: 8px /* ancho del scrollbar vertical / alto del horizontal */;
+```
+
+Estos tokens se usan directamente en `packages/vanilla/styles/src/<componente>.css` y el consumidor puede sobreescribirlos en su propio CSS.

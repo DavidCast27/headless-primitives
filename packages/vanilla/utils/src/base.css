@@ -105,7 +105,13 @@ hp-navigation-menu,
 hp-navigation-menu-list,
 hp-navigation-menu-item,
 hp-navigation-menu-content,
-hp-navigation-menu-indicator {
+hp-navigation-menu-indicator,
+hp-scroll-area,
+hp-scroll-area-viewport,
+hp-scroll-area-content,
+hp-scroll-area-scrollbar,
+hp-scroll-area-thumb,
+hp-scroll-area-corner {
   display: block;
 }
 

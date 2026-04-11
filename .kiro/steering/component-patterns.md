@@ -117,3 +117,16 @@ import type { Headless<Name> } from "./<name>"; // import solo de tipo
 4. Registrar en `ROUTES` de `apps/playground/src/main.ts`
 5. Añadir botón en `apps/playground/index.html`
 6. Registrar también en `apps/docs/package.json`
+
+## CSS Custom Properties expuestas por componente (patrón viewport)
+
+Algunos componentes calculan valores dinámicos y los exponen como CSS custom properties en el elemento para que el consumidor pueda usarlos en estilos (ej: efectos de fade). Se establecen con `this.style.setProperty(...)` en el elemento correspondiente.
+
+Ejemplo en `hp-scroll-area-viewport`:
+
+```typescript
+this.style.setProperty("--scroll-area-overflow-y-start", `${this.scrollTop}px`);
+this.style.setProperty("--scroll-area-overflow-y-end", `${overflowYEnd}px`);
+```
+
+Estas variables **no heredan por defecto** (para rendimiento). El consumidor debe declararlas como `inherit` en los hijos que las necesiten.
