@@ -95,6 +95,7 @@ export default defineConfig({
           { text: "Drawer", link: "/components/drawer" },
           { text: "Dropdown Menu", link: "/components/dropdown-menu" },
           { text: "Field", link: "/components/field" },
+          { text: "Fieldset", link: "/components/fieldset" },
           { text: "Label", link: "/components/label" },
           { text: "Navigation Menu", link: "/components/navigation-menu" },
           { text: "Pin Input", link: "/components/pin-input" },

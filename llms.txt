@@ -27,6 +27,7 @@ packages/vanilla/
   drawer/         # @headless-primitives/drawer
   dropdown-menu/  # @headless-primitives/dropdown-menu
   field/          # @headless-primitives/field
+  fieldset/       # @headless-primitives/fieldset
   label/          # @headless-primitives/label
   navigation-menu/ # @headless-primitives/navigation-menu
   pin-input/      # @headless-primitives/pin-input

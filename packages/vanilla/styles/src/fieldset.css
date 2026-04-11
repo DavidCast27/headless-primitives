@@ -1,0 +1,41 @@
+/**
+ * @headless-primitives/styles — hp-fieldset
+ *
+ * Contenedor de grupo de controles de formulario con leyenda accesible.
+ * Especificidad mínima: selector de elemento único.
+ * Sin !important. Sobrescribible por el Consumer.
+ */
+
+/* Tokens de componente — sobrescribibles por el Consumer */
+hp-fieldset {
+  --hp-fieldset-gap: var(--hp-space-3, 0.75rem);
+  --hp-fieldset-legend-font-size: var(--hp-font-size-sm, 0.875rem);
+  --hp-fieldset-legend-font-weight: var(--hp-font-weight-medium, 500);
+  --hp-fieldset-legend-color: var(--hp-text, CanvasText);
+  --hp-fieldset-disabled-opacity: var(--hp-opacity-disabled, 0.45);
+  --hp-fieldset-disabled-cursor: not-allowed;
+}
+
+/* Contenedor del grupo — columna con separación entre partes */
+hp-fieldset {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hp-fieldset-gap);
+}
+
+/* Estado deshabilitado — opacidad y cursor */
+hp-fieldset[data-state="disabled"],
+hp-fieldset[aria-disabled="true"] {
+  opacity: var(--hp-fieldset-disabled-opacity);
+  cursor: var(--hp-fieldset-disabled-cursor);
+  pointer-events: none;
+}
+
+/* Leyenda — etiqueta descriptiva del grupo */
+hp-fieldset-legend {
+  display: block;
+  font-size: var(--hp-fieldset-legend-font-size);
+  font-weight: var(--hp-fieldset-legend-font-weight);
+  color: var(--hp-fieldset-legend-color);
+  line-height: 1.5;
+}

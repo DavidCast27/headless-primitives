@@ -18,6 +18,7 @@ import "@headless-primitives/dialog";
 import "@headless-primitives/dropdown-menu";
 import "@headless-primitives/drawer";
 import "@headless-primitives/field";
+import "@headless-primitives/fieldset";
 import "@headless-primitives/label";
 import "@headless-primitives/popover";
 import "@headless-primitives/progress";
@@ -53,6 +54,7 @@ import { dialogDemo } from "./demos/dialog.demo";
 import { dropdownMenuDemo } from "./demos/dropdown-menu.demo";
 import { drawerDemo } from "./demos/drawer.demo";
 import { fieldDemo } from "./demos/field.demo";
+import { fieldsetDemo } from "./demos/fieldset.demo";
 import { labelDemo } from "./demos/label.demo";
 import { popoverDemo } from "./demos/popover.demo";
 import { progressDemo } from "./demos/progress.demo";
@@ -87,6 +89,7 @@ const ROUTES: Record<string, ComponentDemo> = {
   "dropdown-menu": dropdownMenuDemo,
   drawer: drawerDemo,
   field: fieldDemo,
+  fieldset: fieldsetDemo,
   label: labelDemo,
   popover: popoverDemo,
   progress: progressDemo,
