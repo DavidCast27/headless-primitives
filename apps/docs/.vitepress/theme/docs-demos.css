@@ -4,8 +4,6 @@
   --hp-demo-bg: var(--vp-custom-block-bg);
   --hp-demo-border: var(--vp-c-divider);
   --hp-demo-radius: 12px;
-  --hp-status-green: #10b981;
-  --hp-status-blue: #3b82f6;
 }
 
 /* Contenedor universal para demos en MD */
@@ -24,27 +22,6 @@
   overflow: visible;
 }
 
-/* Badge de estatus premium */
-.hp-badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 2px 10px;
-  border-radius: 9999px;
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  background: rgba(16, 185, 129, 0.1);
-  color: var(--hp-status-green);
-  border: 1px solid rgba(16, 185, 129, 0.2);
-}
-
-.hp-badge.new {
-  background: rgba(59, 130, 246, 0.1);
-  color: var(--hp-status-blue);
-  border-color: rgba(59, 130, 246, 0.2);
-}
-
 /* Estilos base para elementos dentro de demos para que no se vean crudos */
 .hp-demo-card input,
 .hp-demo-card select,
@@ -60,7 +37,7 @@
 
 .hp-demo-card input:focus {
   outline: none;
-  border-color: var(--hp-status-blue);
+  border-color: #3b82f6;
 }
 
 /* ── Tree View base styles ─────────────────────────────────────────────── */

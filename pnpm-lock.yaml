@@ -62,6 +62,9 @@ importers:
       '@headless-primitives/button':
         specifier: workspace:*
         version: link:../../packages/vanilla/button
+      '@headless-primitives/carousel':
+        specifier: workspace:*
+        version: link:../../packages/vanilla/carousel
       '@headless-primitives/checkbox':
         specifier: workspace:*
         version: link:../../packages/vanilla/checkbox
@@ -159,6 +162,9 @@ importers:
       '@headless-primitives/button':
         specifier: workspace:*
         version: link:../../packages/vanilla/button
+      '@headless-primitives/carousel':
+        specifier: workspace:*
+        version: link:../../packages/vanilla/carousel
       '@headless-primitives/checkbox':
         specifier: workspace:*
         version: link:../../packages/vanilla/checkbox
@@ -298,6 +304,15 @@ importers:
         version: 3.3.2
 
   packages/vanilla/button:
+    dependencies:
+      '@headless-primitives/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lit:
+        specifier: ^3.3.2
+        version: 3.3.2
+
+  packages/vanilla/carousel:
     dependencies:
       '@headless-primitives/utils':
         specifier: workspace:*
