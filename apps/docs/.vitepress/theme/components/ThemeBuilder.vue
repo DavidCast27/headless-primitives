@@ -1033,6 +1033,28 @@ const totalModified = computed(() => TOKEN_GROUPS.reduce((sum, g) => sum + modif
             </div>
           </section>
 
+          <!-- BREADCRUMB -->
+          <section class="tb-preview-section">
+            <h4 class="tb-preview-section-title">Breadcrumb</h4>
+            <div class="tb-preview-demo">
+              <hp-breadcrumb>
+                <hp-breadcrumb-list>
+                  <hp-breadcrumb-item>
+                    <hp-breadcrumb-link href="#">Inicio</hp-breadcrumb-link>
+                    <hp-breadcrumb-separator>/</hp-breadcrumb-separator>
+                  </hp-breadcrumb-item>
+                  <hp-breadcrumb-item>
+                    <hp-breadcrumb-link href="#">Componentes</hp-breadcrumb-link>
+                    <hp-breadcrumb-separator>/</hp-breadcrumb-separator>
+                  </hp-breadcrumb-item>
+                  <hp-breadcrumb-item>
+                    <hp-breadcrumb-page>Breadcrumb</hp-breadcrumb-page>
+                  </hp-breadcrumb-item>
+                </hp-breadcrumb-list>
+              </hp-breadcrumb>
+            </div>
+          </section>
+
           <!-- CAMPO -->
           <section class="tb-preview-section">
             <h4 class="tb-preview-section-title">Campo de formulario</h4>

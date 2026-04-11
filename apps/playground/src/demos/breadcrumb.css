@@ -1,0 +1,10 @@
+.demo-breadcrumb-container {
+  padding: 2rem;
+  background-color: var(--hp-bg, #ffffff);
+  border-radius: var(--hp-radius-md, 8px);
+  border: 1px solid var(--hp-border, #e2e8f0);
+}
+
+/* We can add more specific demo styles here if needed, 
+   but the premium styles from @headless-primitives/styles 
+   will handle most of the look if enabled. */

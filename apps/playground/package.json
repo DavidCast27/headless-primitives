@@ -12,6 +12,7 @@
     "@headless-primitives/accordion": "workspace:*",
     "@headless-primitives/avatar": "workspace:*",
     "@headless-primitives/badge": "workspace:*",
+    "@headless-primitives/breadcrumb": "workspace:*",
     "@headless-primitives/button": "workspace:*",
     "@headless-primitives/checkbox": "workspace:*",
     "@headless-primitives/collapsible": "workspace:*",
