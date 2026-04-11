@@ -112,6 +112,7 @@ export default defineConfig({
           { text: "Tooltip", link: "/components/tooltip" },
           { text: "Tree View", link: "/components/tree" },
           { text: "Slider", link: "/components/slider" },
+          { text: "Scroll Area", link: "/components/scroll-area" },
         ],
       },
     ],

@@ -64,6 +64,7 @@ packages/vanilla/
   separator/      # @headless-primitives/separator
   slider/         # @headless-primitives/slider
   stepper/        # @headless-primitives/stepper
+  scroll-area/    # @headless-primitives/scroll-area
   switch/         # @headless-primitives/switch
   tabs/           # @headless-primitives/tabs
   toast/          # @headless-primitives/toast

@@ -137,11 +137,11 @@ Tienen la interacción de teclado más compleja (typeahead, nested menus, etc.).
 Componentes que no todos los proyectos necesitan pero añaden mucho valor.
 
 | #   | Componente      | Patrón WAI-ARIA                                                    | Complejidad   |
-| :-- | :-------------- | :----------------------------------------------------------------- | :------------ |
+| :-- | :-------------- | :----------------------------------------------------------------- | :------------ | -------- |
 | 23  | **Slider**      | [Slider](https://www.w3.org/WAI/ARIA/apg/patterns/slider/)         | 🟡 Media      |
 | 24  | **Toolbar**     | [Toolbar](https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/)       | 🟡 Media      |
 | 25  | **Breadcrumb**  | [Breadcrumb](https://www.w3.org/WAI/ARIA/apg/patterns/breadcrumb/) | 🟢 Baja       |
-| 26  | **Scroll Area** | — (custom scrollbar)                                               | 🔴 Alta       |
+| 26  | **Scroll Area** | — (custom scrollbar)                                               | 🔴 Alta       | ✅ Hecho |
 | 27  | **Tree View**   | [Tree View](https://www.w3.org/WAI/ARIA/apg/patterns/treeview/)    | 🔴🔴 Muy Alta |
 | 28  | **Carousel**    | [Carousel](https://www.w3.org/WAI/ARIA/apg/patterns/carousel/)     | 🔴 Alta       |
 

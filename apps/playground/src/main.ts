@@ -34,6 +34,7 @@ import "@headless-primitives/slider";
 import "@headless-primitives/pin-input";
 import "@headless-primitives/tree";
 import "@headless-primitives/stepper";
+import "@headless-primitives/scroll-area";
 
 import { Shell } from "./components/Shell";
 import { ComponentDemo } from "./types";
@@ -71,6 +72,7 @@ import { pinInputDemo } from "./demos/pin-input.demo";
 import { treeDemo } from "./demos/tree.demo";
 import { stepperDemo } from "./demos/stepper.demo";
 import { navigationMenuDemo } from "./demos/navigation-menu.demo";
+import { scrollAreaDemo } from "./demos/scroll-area.demo";
 
 // --- Route Registry ---
 const ROUTES: Record<string, ComponentDemo> = {
@@ -106,6 +108,7 @@ const ROUTES: Record<string, ComponentDemo> = {
   tree: treeDemo,
   stepper: stepperDemo,
   "navigation-menu": navigationMenuDemo,
+  "scroll-area": scrollAreaDemo,
 };
 
 function renderRoute(compId: string) {

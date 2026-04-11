@@ -1,0 +1,99 @@
+.demo-section {
+  margin-bottom: 2rem;
+  padding: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  background: var(--card-bg);
+}
+
+.demo-section h2 {
+  margin: 0 0 1rem 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  border: none;
+  padding: 0;
+}
+
+/* Vertical scroll box */
+.scroll-box {
+  width: 100%;
+  max-width: 400px;
+  height: 200px;
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  background: var(--panel-bg);
+}
+
+.scroll-box hp-scroll-area-content p {
+  margin: 0;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-color);
+  white-space: nowrap;
+}
+
+.scroll-box hp-scroll-area-content p:last-child {
+  border-bottom: none;
+}
+
+/* Horizontal scroll box */
+.scroll-box-h {
+  width: 100%;
+  max-width: 400px;
+  height: 60px;
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  background: var(--panel-bg);
+}
+
+.h-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0;
+  white-space: nowrap;
+  width: max-content;
+}
+
+.h-content span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1.5rem;
+  height: 60px;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  border-right: 1px solid var(--border-color);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.h-content span:last-child {
+  border-right: none;
+}
+
+/* Both scrollbars box */
+.both-content {
+  width: 700px;
+}
+
+.both-content p {
+  margin: 0;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-color);
+  white-space: nowrap;
+}
+
+.both-content p:last-child {
+  border-bottom: none;
+}
+
+/* Custom scrollbar token overrides for demo */
+.scroll-box,
+.scroll-box-h {
+  --hp-scroll-area-scrollbar-size: 6px;
+}
