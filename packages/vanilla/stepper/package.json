@@ -1,0 +1,37 @@
+{
+  "name": "@headless-primitives/stepper",
+  "version": "0.1.0",
+  "description": "Headless stepper / step-wizard primitive",
+  "files": [
+    "dist",
+    "src/styles.css"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./styles.css": "./src/styles.css"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "vite build && tsc",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@headless-primitives/utils": "workspace:*",
+    "lit": "^3.3.2"
+  },
+  "peerDependencies": {
+    "lit": "^3.3.2"
+  }
+}

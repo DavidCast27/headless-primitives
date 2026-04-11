@@ -523,6 +523,7 @@ const copyState = ref<"idle" | "copied">("idle");
 const previewDialogOpen = ref(false);
 const previewAlertDialogOpen = ref(false);
 const previewDrawerOpen = ref(false);
+const previewStepperValue = ref(0);
 
 // Tooltip con posicionamiento fixed
 const tooltipVisible = ref(false);
@@ -1568,6 +1569,51 @@ const totalModified = computed(() => TOKEN_GROUPS.reduce((sum, g) => sum + modif
               </hp-context-menu>
             </div>
           </section>
+
+          <!-- STEPPER -->
+          <section class="tb-preview-section">
+            <h4 class="tb-preview-section-title">Stepper</h4>
+            <div class="tb-preview-demo" style="gap: 1rem">
+              <Teleport to="body"><!-- Stepper no necesita overlay --></Teleport>
+              <hp-stepper
+                class="tbp-stepper"
+                :value="previewStepperValue"
+                @hp-change="
+                  (e) => {
+                    previewStepperValue = e.detail.value;
+                  }
+                "
+              >
+                <hp-stepper-list class="tbp-stepper-list">
+                  <hp-stepper-item value="0" class="tbp-stepper-item">
+                    <span class="tbp-stepper-indicator">1</span>
+                    <span class="tbp-stepper-label">Cuenta</span>
+                  </hp-stepper-item>
+                  <hp-stepper-item value="1" class="tbp-stepper-item">
+                    <span class="tbp-stepper-indicator">2</span>
+                    <span class="tbp-stepper-label">Perfil</span>
+                  </hp-stepper-item>
+                  <hp-stepper-item value="2" class="tbp-stepper-item">
+                    <span class="tbp-stepper-indicator">3</span>
+                    <span class="tbp-stepper-label">Confirmar</span>
+                  </hp-stepper-item>
+                </hp-stepper-list>
+                <hp-stepper-panel value="0" class="tbp-stepper-panel">
+                  <p class="tbp-stepper-panel-text">Paso 1 — Configura tu cuenta.</p>
+                </hp-stepper-panel>
+                <hp-stepper-panel value="1" class="tbp-stepper-panel">
+                  <p class="tbp-stepper-panel-text">Paso 2 — Completa tu perfil.</p>
+                </hp-stepper-panel>
+                <hp-stepper-panel value="2" class="tbp-stepper-panel">
+                  <p class="tbp-stepper-panel-text">Paso 3 — Revisa y confirma.</p>
+                </hp-stepper-panel>
+                <div class="tbp-stepper-actions">
+                  <hp-stepper-prev class="tbp-btn tbp-btn--ghost">Anterior</hp-stepper-prev>
+                  <hp-stepper-next class="tbp-btn tbp-btn--primary">Siguiente</hp-stepper-next>
+                </div>
+              </hp-stepper>
+            </div>
+          </section>
         </div>
       </div>
     </div>
@@ -2075,7 +2121,13 @@ hp-field-label,
 hp-field-description,
 hp-field-control,
 hp-field-error,
-hp-button {
+hp-button,
+hp-stepper,
+hp-stepper-list,
+hp-stepper-item,
+hp-stepper-panel,
+hp-stepper-prev,
+hp-stepper-next {
   display: block;
 }
 
@@ -2995,6 +3047,174 @@ hp-accordion-content.tbp-accordion-content[data-state="closed"] {
   font-weight: var(--hp-font-weight-semibold, 600);
   color: var(--hp-text-secondary, #64748b);
   user-select: none;
+}
+
+/* Stepper */
+hp-stepper.tbp-stepper {
+  display: block;
+  width: 100%;
+}
+
+.tbp-stepper {
+  width: 100%;
+}
+
+hp-stepper-list.tbp-stepper-list {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+}
+
+.tbp-stepper-list {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  width: 100%;
+  margin-bottom: var(--hp-space-4, 1rem);
+}
+
+hp-stepper-item.tbp-stepper-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  position: relative;
+  gap: var(--hp-space-1, 0.25rem);
+  cursor: pointer;
+}
+
+.tbp-stepper-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  position: relative;
+  gap: var(--hp-space-1, 0.25rem);
+  cursor: pointer;
+}
+
+.tbp-stepper-item:not(:first-child)::before {
+  content: "";
+  position: absolute;
+  top: 14px;
+  right: 50%;
+  left: -50%;
+  height: 2px;
+  background: var(--hp-border, #e2e8f0);
+  z-index: 0;
+}
+
+.tbp-stepper-item[data-state="completed"]::before,
+.tbp-stepper-item[data-state="active"]::before {
+  background: var(--hp-accent, #0369a1);
+}
+
+.tbp-stepper-indicator {
+  position: relative;
+  z-index: 1;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--hp-radius-full, 9999px);
+  border: 2px solid var(--hp-border-strong, #64748b);
+  background: var(--hp-surface, #ffffff);
+  color: var(--hp-text-secondary, #64748b);
+  font-size: var(--hp-font-size-xs, 0.75rem);
+  font-weight: var(--hp-font-weight-semibold, 600);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background var(--hp-transition, 150ms ease),
+    border-color var(--hp-transition, 150ms ease),
+    color var(--hp-transition, 150ms ease);
+}
+
+.tbp-stepper-item[data-state="active"] .tbp-stepper-indicator {
+  border-color: var(--hp-accent, #0369a1);
+  background: var(--hp-accent, #0369a1);
+  color: var(--hp-accent-foreground, #ffffff);
+}
+
+.tbp-stepper-item[data-state="completed"] .tbp-stepper-indicator {
+  border-color: var(--hp-accent, #0369a1);
+  background: var(--hp-accent, #0369a1);
+  color: var(--hp-accent-foreground, #ffffff);
+}
+
+.tbp-stepper-item[data-state="completed"] .tbp-stepper-indicator::after {
+  content: "✓";
+  font-size: 12px;
+  color: var(--hp-accent-foreground, #ffffff);
+}
+
+.tbp-stepper-item[data-state="completed"] .tbp-stepper-indicator span {
+  display: none;
+}
+
+.tbp-stepper-label {
+  font-size: var(--hp-font-size-xs, 0.75rem);
+  font-weight: var(--hp-font-weight-medium, 500);
+  color: var(--hp-text-secondary, #64748b);
+  text-align: center;
+}
+
+.tbp-stepper-item[data-state="active"] .tbp-stepper-label {
+  color: var(--hp-accent, #0369a1);
+  font-weight: var(--hp-font-weight-semibold, 600);
+}
+
+.tbp-stepper-item[data-state="completed"] .tbp-stepper-label {
+  color: var(--hp-text, #0f172a);
+}
+
+.tbp-stepper-item[aria-disabled="true"] {
+  opacity: var(--hp-opacity-disabled, 0.5);
+  cursor: not-allowed;
+}
+
+hp-stepper-panel.tbp-stepper-panel {
+  display: block;
+}
+
+.tbp-stepper-panel {
+  padding: var(--hp-space-3, 0.75rem) var(--hp-space-4, 1rem);
+  border: 1px solid var(--hp-border, #e2e8f0);
+  border-radius: var(--hp-radius-md, 8px);
+  background: var(--hp-surface, #ffffff);
+  margin-bottom: var(--hp-space-3, 0.75rem);
+}
+
+hp-stepper-panel.tbp-stepper-panel[data-state="hidden"] {
+  display: none;
+}
+
+.tbp-stepper-panel[data-state="hidden"] {
+  display: none;
+}
+
+.tbp-stepper-panel-text {
+  margin: 0;
+  font-size: var(--hp-font-size-sm, 0.875rem);
+  color: var(--hp-text-secondary, #64748b);
+}
+
+.tbp-stepper-actions {
+  display: flex;
+  gap: var(--hp-space-2, 0.5rem);
+  justify-content: flex-end;
+}
+
+hp-stepper-prev,
+hp-stepper-next {
+  display: inline-flex;
+  align-items: center;
+}
+
+hp-stepper-prev[disabled],
+hp-stepper-next[disabled] {
+  opacity: var(--hp-opacity-disabled, 0.5);
+  cursor: not-allowed;
+  pointer-events: none;
 }
 
 /* Context Menu */

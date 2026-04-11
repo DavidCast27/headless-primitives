@@ -99,6 +99,7 @@ export default defineConfig({
           { text: "Radio Group", link: "/components/radio-group" },
           { text: "Select", link: "/components/select" },
           { text: "Separator", link: "/components/separator" },
+          { text: "Stepper", link: "/components/stepper" },
           { text: "Switch", link: "/components/switch" },
           { text: "Tabs", link: "/components/tabs" },
           { text: "Toast", link: "/components/toast" },

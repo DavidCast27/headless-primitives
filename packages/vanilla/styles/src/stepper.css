@@ -1,0 +1,318 @@
+/**
+ * @headless-primitives/styles — hp-stepper
+ *
+ * Full theming for the step-wizard primitive.
+ * Relies on base.css for structural layout, connector lines, and panel visibility.
+ *
+ * Overridable timing tokens:
+ *   --hp-stepper-transition         (default: var(--hp-transition-slow))
+ *   --hp-stepper-indicator-pop      (default: var(--hp-transition-slow))
+ *   --hp-stepper-connector-transition (default: var(--hp-transition-slow))
+ *   --hp-stepper-panel-transition   (default: var(--hp-transition-slow))
+ */
+
+/* Root container */
+hp-stepper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hp-space-4);
+}
+
+/* Step list */
+hp-stepper-list {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0;
+  width: 100%;
+}
+
+/* Individual step item */
+hp-stepper-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--hp-space-2);
+  font-size: var(--hp-font-size-sm);
+  font-weight: var(--hp-font-weight-medium);
+  color: var(--hp-text-secondary);
+  padding: var(--hp-space-2) 0;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  transition: color var(--hp-stepper-transition, var(--hp-transition-slow));
+  flex: 1;
+  min-width: 0;
+}
+
+/* Step circle indicator — uses ::before pseudo */
+hp-stepper-item::before {
+  content: attr(data-index);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid var(--hp-border);
+  background: var(--hp-surface);
+  color: var(--hp-text-secondary);
+  font-size: var(--hp-font-size-xs);
+  font-weight: var(--hp-font-weight-medium);
+  flex-shrink: 0;
+  transition:
+    background var(--hp-stepper-transition, var(--hp-transition-slow)),
+    border-color var(--hp-stepper-transition, var(--hp-transition-slow)),
+    color var(--hp-stepper-transition, var(--hp-transition-slow)),
+    scale var(--hp-stepper-indicator-pop, var(--hp-transition-slow)) ease-out;
+  /* data-index is 0-based; add 1 via CSS counter instead */
+  /* Overridden in each state below */
+  counter-increment: hp-step;
+}
+
+/* Use CSS counters so the circle shows 1, 2, 3 … */
+hp-stepper-list {
+  counter-reset: hp-step;
+}
+
+hp-stepper-item::before {
+  content: counter(hp-step);
+}
+
+/* Active step */
+hp-stepper-item[data-state="active"] {
+  color: var(--hp-accent);
+}
+
+hp-stepper-item[data-state="active"]::before {
+  background: var(--hp-accent);
+  border-color: var(--hp-accent);
+  color: var(--hp-accent-foreground);
+  scale: 1.1;
+}
+
+/* Completed step — checkmark with pop scale */
+hp-stepper-item[data-state="completed"] {
+  color: var(--hp-text);
+}
+
+hp-stepper-item[data-state="completed"]::before {
+  content: "✓";
+  background: var(--hp-accent);
+  border-color: var(--hp-accent);
+  color: var(--hp-accent-foreground);
+  scale: 1;
+}
+
+/* Pending step */
+hp-stepper-item[data-state="pending"] {
+  color: var(--hp-text-secondary);
+}
+
+hp-stepper-item[data-state="pending"]::before {
+  scale: 1;
+}
+
+/* Hover — only enabled, non-active items */
+hp-stepper-item[data-state="pending"]:hover:not([aria-disabled="true"]),
+hp-stepper-item[data-state="completed"]:hover:not([aria-disabled="true"]) {
+  color: var(--hp-text);
+}
+
+hp-stepper-item[data-state="pending"]:hover:not([aria-disabled="true"])::before {
+  border-color: var(--hp-accent);
+  scale: 1.05;
+}
+
+/* Focus visible */
+hp-stepper-item:focus-visible {
+  outline: var(--hp-focus-outline-width) solid var(--hp-focus-outline-color);
+  outline-offset: 2px;
+  border-radius: var(--hp-radius-sm);
+}
+
+/* Disabled */
+hp-stepper-item[aria-disabled="true"] {
+  opacity: var(--hp-opacity-disabled);
+  cursor: not-allowed;
+}
+
+/* Connector line override (theme colors + fill transition) */
+hp-stepper-item:not(:last-child)::after {
+  background: var(--hp-border);
+  opacity: 1;
+  transition: background var(--hp-stepper-connector-transition, var(--hp-transition-slow));
+}
+
+hp-stepper-item[data-state="completed"]:not(:last-child)::after {
+  background: var(--hp-accent);
+  opacity: 0.4;
+}
+
+/* Panel */
+hp-stepper-panel {
+  display: block;
+  padding: var(--hp-space-4);
+  color: var(--hp-text);
+  font-size: var(--hp-font-size-sm);
+  background: var(--hp-surface);
+  border: 1px solid var(--hp-border);
+  border-radius: var(--hp-radius);
+}
+
+/* Panel fade-in when becoming active — @starting-style provides the "from" state */
+[data-hp-stepper-panel][data-state="active"] {
+  opacity: 1;
+  transition: opacity var(--hp-stepper-panel-transition, var(--hp-transition-slow));
+}
+
+@starting-style {
+  [data-hp-stepper-panel][data-state="active"] {
+    opacity: 0;
+  }
+}
+
+/* Navigation buttons */
+hp-stepper-prev,
+hp-stepper-next,
+hp-stepper-finish {
+  padding: var(--hp-space-2) var(--hp-space-4);
+  background: var(--hp-surface);
+  border: 1px solid var(--hp-border);
+  border-radius: var(--hp-radius);
+  color: var(--hp-text);
+  font-size: var(--hp-font-size-sm);
+  font-weight: var(--hp-font-weight-medium);
+  cursor: pointer;
+  transition:
+    background var(--hp-transition),
+    border-color var(--hp-transition),
+    opacity var(--hp-transition),
+    translate var(--hp-transition);
+}
+
+hp-stepper-prev:hover:not([disabled]):not([aria-disabled="true"]),
+hp-stepper-next:hover:not([disabled]):not([aria-disabled="true"]),
+hp-stepper-finish:hover:not([disabled]):not([aria-disabled="true"]) {
+  background: var(--hp-bg-muted);
+  border-color: var(--hp-accent);
+  translate: 0 -1px;
+}
+
+hp-stepper-prev:active:not([disabled]):not([aria-disabled="true"]),
+hp-stepper-next:active:not([disabled]):not([aria-disabled="true"]),
+hp-stepper-finish:active:not([disabled]):not([aria-disabled="true"]) {
+  background: var(--hp-bg-muted);
+  border-color: var(--hp-accent);
+  translate: 0 1px;
+}
+
+hp-stepper-prev:focus-visible,
+hp-stepper-next:focus-visible,
+hp-stepper-finish:focus-visible {
+  outline: var(--hp-focus-outline-width) solid var(--hp-focus-outline-color);
+  outline-offset: 2px;
+}
+
+hp-stepper-prev[disabled],
+hp-stepper-prev[aria-disabled="true"],
+hp-stepper-next[disabled],
+hp-stepper-next[aria-disabled="true"],
+hp-stepper-finish[disabled],
+hp-stepper-finish[aria-disabled="true"] {
+  opacity: var(--hp-opacity-disabled);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Finish button — accent fill to distinguish it as the final action */
+hp-stepper-finish {
+  background: var(--hp-accent);
+  border-color: var(--hp-accent);
+  color: var(--hp-accent-foreground);
+}
+
+hp-stepper-finish:hover:not([disabled]):not([aria-disabled="true"]) {
+  background: var(--hp-accent);
+  filter: brightness(1.1);
+}
+
+/* Stepper completed state — subtle feedback on the root */
+hp-stepper[data-state="completed"] hp-stepper-list {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* Navigation button row helper */
+[data-hp-stepper-actions] {
+  display: flex;
+  gap: var(--hp-space-2);
+  align-items: center;
+}
+
+/* === Orientation: vertical === */
+hp-stepper[data-orientation="vertical"] {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: var(--hp-space-6);
+}
+
+hp-stepper[data-orientation="vertical"] hp-stepper-list {
+  flex-direction: column;
+  width: auto;
+  min-width: 9rem;
+  flex-shrink: 0;
+}
+
+hp-stepper[data-orientation="vertical"] hp-stepper-item {
+  flex: none;
+  width: 100%;
+  white-space: normal;
+}
+
+/* Vertical connector — theme color overrides + fill transition */
+hp-stepper[data-orientation="vertical"] hp-stepper-item:not(:last-child)::after {
+  background: var(--hp-border);
+  opacity: 1;
+  transition: background var(--hp-stepper-connector-transition, var(--hp-transition-slow));
+}
+
+hp-stepper[data-orientation="vertical"]
+  hp-stepper-item[data-state="completed"]:not(:last-child)::after {
+  background: var(--hp-accent);
+  opacity: 0.4;
+}
+
+hp-stepper[data-orientation="vertical"] hp-stepper-panel {
+  flex: 1;
+  min-width: 0;
+}
+
+hp-stepper[data-orientation="vertical"] [data-hp-stepper-actions] {
+  width: 100%;
+}
+
+/* === Reduced motion === */
+@media (prefers-reduced-motion: reduce) {
+  hp-stepper-item,
+  hp-stepper-item::before,
+  hp-stepper-item::after,
+  hp-stepper-prev,
+  hp-stepper-next {
+    transition: none;
+  }
+
+  hp-stepper-item[data-state="active"]::before,
+  hp-stepper-item[data-state="pending"]:hover:not([aria-disabled="true"])::before {
+    scale: 1;
+  }
+
+  [data-hp-stepper-panel][data-state="active"] {
+    transition: none;
+  }
+
+  @starting-style {
+    [data-hp-stepper-panel][data-state="active"] {
+      opacity: 1;
+    }
+  }
+}

@@ -110,6 +110,9 @@ importers:
       '@headless-primitives/slider':
         specifier: workspace:*
         version: link:../../packages/vanilla/slider
+      '@headless-primitives/stepper':
+        specifier: workspace:*
+        version: link:../../packages/vanilla/stepper
       '@headless-primitives/switch':
         specifier: workspace:*
         version: link:../../packages/vanilla/switch
@@ -198,6 +201,9 @@ importers:
       '@headless-primitives/slider':
         specifier: workspace:*
         version: link:../../packages/vanilla/slider
+      '@headless-primitives/stepper':
+        specifier: workspace:*
+        version: link:../../packages/vanilla/stepper
       '@headless-primitives/styles':
         specifier: workspace:*
         version: link:../../packages/vanilla/styles
@@ -533,6 +539,15 @@ importers:
         version: 2.1.9(@types/node@25.5.0)(happy-dom@14.12.3)(jsdom@29.0.1)(lightningcss@1.32.0)
 
   packages/vanilla/slider:
+    dependencies:
+      '@headless-primitives/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lit:
+        specifier: ^3.3.2
+        version: 3.3.2
+
+  packages/vanilla/stepper:
     dependencies:
       '@headless-primitives/utils':
         specifier: workspace:*
