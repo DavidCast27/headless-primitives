@@ -1093,6 +1093,33 @@ const totalModified = computed(() => TOKEN_GROUPS.reduce((sum, g) => sum + modif
             </div>
           </section>
 
+          <!-- CAROUSEL -->
+          <section class="tb-preview-section">
+            <h4 class="tb-preview-section-title">Carousel</h4>
+            <div class="tb-preview-demo">
+              <hp-carousel label="Feature slides" loop style="max-width: 400px; margin: 0 auto">
+                <hp-carousel-content slot="content">
+                  <hp-carousel-item active style="background: var(--hp-accent); color: white"
+                    >Slide 1</hp-carousel-item
+                  >
+                  <hp-carousel-item style="background: var(--hp-bg-muted)"
+                    >Slide 2</hp-carousel-item
+                  >
+                  <hp-carousel-item style="background: var(--hp-surface-raised)"
+                    >Slide 3</hp-carousel-item
+                  >
+                </hp-carousel-content>
+                <hp-carousel-previous>&lt;</hp-carousel-previous>
+                <hp-carousel-next>&gt;</hp-carousel-next>
+                <div style="display: flex; justify-content: center; gap: 8px; margin-top: 12px">
+                  <hp-carousel-dot index="0" active></hp-carousel-dot>
+                  <hp-carousel-dot index="1"></hp-carousel-dot>
+                  <hp-carousel-dot index="2"></hp-carousel-dot>
+                </div>
+              </hp-carousel>
+            </div>
+          </section>
+
           <!-- CAMPO -->
           <section class="tb-preview-section">
             <h4 class="tb-preview-section-title">Campo de formulario</h4>

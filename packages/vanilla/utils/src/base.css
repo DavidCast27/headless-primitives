@@ -96,6 +96,9 @@ hp-breadcrumb-link,
 hp-breadcrumb-page,
 hp-breadcrumb-separator,
 hp-breadcrumb-ellipsis,
+hp-carousel,
+hp-carousel-content,
+hp-carousel-item,
 hp-navigation-menu,
 hp-navigation-menu-list,
 hp-navigation-menu-item,
@@ -121,7 +124,10 @@ hp-tooltip-trigger,
 hp-select-trigger,
 hp-toast-close,
 hp-dropdown-menu-trigger,
-hp-navigation-menu-trigger {
+hp-navigation-menu-trigger,
+hp-carousel-previous,
+hp-carousel-next,
+hp-carousel-dot {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -140,14 +146,37 @@ hp-navigation-menu-trigger {
     border-color 0.15s ease;
 }
 
+hp-carousel-dot {
+  width: 12px;
+  height: 12px;
+  padding: 0;
+  border-radius: 50%;
+}
+
 hp-button:hover:not([disabled]):not([aria-disabled="true"]),
 hp-popover-trigger:hover,
-hp-dialog-trigger:hover {
+hp-dialog-trigger:hover,
+hp-carousel-previous:hover,
+hp-carousel-next:hover {
   background-color: color-mix(in srgb, currentColor 8%, transparent);
 }
 
-hp-button:active:not([disabled]):not([aria-disabled="true"]) {
+hp-button:active:not([disabled]):not([aria-disabled="true"]),
+hp-carousel-previous:active,
+hp-carousel-next:active {
   background-color: color-mix(in srgb, currentColor 14%, transparent);
+}
+
+hp-carousel-item[data-state="active"] {
+  display: flex;
+}
+
+hp-carousel-item[data-state="inactive"] {
+  display: none;
+}
+
+hp-carousel-dot[data-state="active"] {
+  background-color: currentColor;
 }
 
 hp-button[disabled],
@@ -1850,4 +1879,75 @@ hp-toast-container[data-position="bottom-center"] hp-toast {
   hp-switch::after {
     transition: none !important;
   }
+}
+
+/* --- Carousel --- */
+hp-carousel,
+hp-carousel-content,
+hp-carousel-item,
+hp-carousel-previous,
+hp-carousel-next,
+hp-carousel-dot {
+  display: block;
+}
+
+/* Structural layout — minimum needed for the carousel to function without consumer CSS */
+hp-carousel {
+  position: relative;
+}
+
+hp-carousel-content {
+  overflow: hidden;
+}
+
+/* Hide inactive slides — the core visibility rule */
+hp-carousel-item[data-state="inactive"] {
+  display: none;
+}
+
+/* Previous / Next buttons — positioned over the slide area */
+hp-carousel-previous,
+hp-carousel-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  user-select: none;
+  z-index: 1;
+}
+
+hp-carousel-previous {
+  left: 0;
+}
+
+hp-carousel-next {
+  right: 0;
+}
+
+/* Dot — interactive indicator */
+hp-carousel-dot {
+  cursor: pointer;
+  user-select: none;
+}
+
+/* --- Documentation Utils --- */
+/* Badge utility for component status (e.g., "Nuevo") used in docs */
+.hp-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 10px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.hp-badge.new {
+  background: rgba(59, 130, 246, 0.1);
+  color: #3b82f6;
+  border-color: rgba(59, 130, 246, 0.2);
 }

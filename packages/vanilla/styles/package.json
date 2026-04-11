@@ -32,6 +32,7 @@
     "./pin-input.css": "./src/pin-input.css",
     "./slider.css": "./src/slider.css",
     "./stepper.css": "./src/stepper.css",
+    "./carousel.css": "./src/carousel.css",
     "./atoms.css": "./src/atoms.css",
     "./field.css": "./src/field.css",
     "./tree.css": "./src/tree.css",

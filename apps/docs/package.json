@@ -13,6 +13,7 @@
     "@headless-primitives/badge": "workspace:*",
     "@headless-primitives/breadcrumb": "workspace:*",
     "@headless-primitives/button": "workspace:*",
+    "@headless-primitives/carousel": "workspace:*",
     "@headless-primitives/checkbox": "workspace:*",
     "@headless-primitives/collapsible": "workspace:*",
     "@headless-primitives/combobox": "workspace:*",
