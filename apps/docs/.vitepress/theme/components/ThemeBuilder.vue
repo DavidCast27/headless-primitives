@@ -1570,6 +1570,35 @@ const totalModified = computed(() => TOKEN_GROUPS.reduce((sum, g) => sum + modif
             </div>
           </section>
 
+          <!-- TREE VIEW -->
+          <section class="tb-preview-section">
+            <h4 class="tb-preview-section-title">Tree View</h4>
+            <div class="tb-preview-demo">
+              <hp-tree class="tbp-tree">
+                <hp-tree-item class="tbp-tree-item" value="tb-src">
+                  src
+                  <hp-tree-group class="tbp-tree-group">
+                    <hp-tree-item class="tbp-tree-item" value="tb-components">
+                      components
+                      <hp-tree-group class="tbp-tree-group">
+                        <hp-tree-item class="tbp-tree-item" value="tb-button"
+                          >Button.ts</hp-tree-item
+                        >
+                        <hp-tree-item class="tbp-tree-item" value="tb-dialog"
+                          >Dialog.ts</hp-tree-item
+                        >
+                      </hp-tree-group>
+                    </hp-tree-item>
+                    <hp-tree-item class="tbp-tree-item" value="tb-main">main.ts</hp-tree-item>
+                  </hp-tree-group>
+                </hp-tree-item>
+                <hp-tree-item class="tbp-tree-item" value="tb-pkg">package.json</hp-tree-item>
+                <hp-tree-item class="tbp-tree-item" value="tb-ts" disabled
+                  >tsconfig.json</hp-tree-item
+                >
+              </hp-tree>
+            </div>
+          </section>
           <!-- STEPPER -->
           <section class="tb-preview-section">
             <h4 class="tb-preview-section-title">Stepper</h4>
@@ -2984,6 +3013,89 @@ hp-accordion-content.tbp-accordion-content[data-state="closed"] {
 .tbp-pin[aria-disabled="true"] input[data-hp-pin-slot] {
   opacity: var(--hp-opacity-disabled, 0.5);
   cursor: not-allowed;
+}
+
+/* Tree View */
+hp-tree.tbp-tree,
+hp-tree-item.tbp-tree-item,
+hp-tree-group.tbp-tree-group {
+  display: block;
+}
+
+hp-tree-group.tbp-tree-group {
+  display: none;
+}
+
+hp-tree-item.tbp-tree-item[data-state="open"] > hp-tree-group.tbp-tree-group,
+hp-tree-item.tbp-tree-item[expanded] > hp-tree-group.tbp-tree-group {
+  display: block;
+}
+
+.tbp-tree {
+  border: 1px solid var(--hp-border, #e2e8f0);
+  border-radius: var(--hp-radius, 6px);
+  padding: var(--hp-space-1, 0.25rem);
+  background: var(--hp-surface, #ffffff);
+  width: 220px;
+}
+
+.tbp-tree-item {
+  padding: 0.3rem var(--hp-space-2, 0.5rem);
+  font-size: var(--hp-font-size-sm, 0.875rem);
+  color: var(--hp-text, #0f172a);
+  border-radius: var(--hp-radius-sm, 4px);
+  cursor: pointer;
+  user-select: none;
+  transition: background var(--hp-transition, 150ms ease);
+}
+
+.tbp-tree-item:hover:not([aria-disabled="true"]) {
+  background: var(--hp-bg-muted, #f1f5f9);
+}
+
+.tbp-tree-item:focus-visible {
+  outline: var(--hp-focus-outline-width, 2px) solid var(--hp-focus-outline-color, #2563eb);
+  outline-offset: -2px;
+}
+
+.tbp-tree-item[aria-selected="true"] {
+  background: var(--hp-bg-subtle, #f8fafc);
+  color: var(--hp-accent, #0369a1);
+  font-weight: var(--hp-font-weight-medium, 500);
+}
+
+.tbp-tree-item[aria-disabled="true"] {
+  opacity: var(--hp-opacity-disabled, 0.5);
+  cursor: not-allowed;
+}
+
+.tbp-tree-item[aria-expanded]::before {
+  content: "▶";
+  display: inline-block;
+  margin-right: 0.375rem;
+  font-size: 0.55rem;
+  transition: transform var(--hp-transition, 150ms ease);
+  color: var(--hp-text-secondary, #64748b);
+  vertical-align: middle;
+}
+
+.tbp-tree-item[aria-expanded="true"]::before {
+  transform: rotate(90deg);
+}
+
+.tbp-tree-item[data-state="leaf"]::before {
+  content: "•";
+  display: inline-block;
+  margin-right: 0.375rem;
+  font-size: 0.65rem;
+  color: var(--hp-text-secondary, #64748b);
+  vertical-align: middle;
+}
+
+.tbp-tree-group {
+  padding-left: var(--hp-space-3, 0.75rem);
+  border-left: 1px solid var(--hp-border, #e2e8f0);
+  margin-left: var(--hp-space-2, 0.5rem);
 }
 
 /* Tooltip */
