@@ -7,6 +7,7 @@ import "@headless-primitives/avatar";
 import "@headless-primitives/badge";
 import "@headless-primitives/breadcrumb";
 import "@headless-primitives/button";
+import "@headless-primitives/navigation-menu";
 import "@headless-primitives/checkbox";
 import "@headless-primitives/collapsible";
 import "@headless-primitives/combobox";
@@ -39,6 +40,8 @@ import FlavorToggle from "./components/FlavorToggle.vue";
 import Flavor from "./components/Flavor.vue";
 import CodeSnippet from "./components/CodeSnippet.vue";
 import ThemeBuilder from "./components/ThemeBuilder.vue";
+import NavigationMenuDemo from "./components/NavigationMenuDemo.vue";
+import LlmsTxtViewer from "./components/LlmsTxtViewer.vue";
 
 export default {
   extends: DefaultTheme,
@@ -48,5 +51,7 @@ export default {
     app.component("Flavor", Flavor);
     app.component("CodeSnippet", CodeSnippet);
     app.component("ThemeBuilder", ThemeBuilder);
+    app.component("NavigationMenuDemo", NavigationMenuDemo);
+    app.component("LlmsTxtViewer", LlmsTxtViewer);
   },
 } satisfies Theme;

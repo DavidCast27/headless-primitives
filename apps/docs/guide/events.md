@@ -4,40 +4,42 @@ Todos los eventos de Headless Primitives son **Custom Events nativos del navegad
 
 ## Referencia rápida
 
-| Componente          | Evento            | Detalle                                                                              | Disparado cuando              |
-| :------------------ | :---------------- | :----------------------------------------------------------------------------------- | :---------------------------- |
-| `hp-button`         | `hp-change`       | `{ pressed: boolean }`                                                               | Cambia `aria-pressed`         |
-| `hp-checkbox`       | `hp-change`       | `{ checked: boolean \| "mixed" }`                                                    | Cambia el estado checked      |
-| `hp-switch`         | `hp-change`       | `{ checked: boolean }`                                                               | Cambia el estado on/off       |
-| `hp-radio-group`    | `hp-change`       | `{ value: string }`                                                                  | Cambia la opción seleccionada |
-| `hp-toggle-group`   | `hp-change`       | `{ value: string[] }`                                                                | Cambia la selección del grupo |
-| `hp-toggle`         | `hp-toggle-press` | `{ value: string }`                                                                  | El usuario activa un toggle   |
-| `hp-tabs`           | `hp-change`       | `{ value: string }`                                                                  | Cambia la pestaña activa      |
-| `hp-accordion`      | `hp-change`       | `{ open: boolean, value: string }`                                                   | Cambia cualquier panel        |
-| `hp-accordion-item` | `hp-open`         | `{ value: string }`                                                                  | Un panel se expande           |
-| `hp-accordion-item` | `hp-close`        | `{ value: string }`                                                                  | Un panel se colapsa           |
-| `hp-collapsible`    | `hp-change`       | `{ open: boolean }`                                                                  | Cambia el estado              |
-| `hp-collapsible`    | `hp-open`         | `{ value: boolean }`                                                                 | Se abre                       |
-| `hp-collapsible`    | `hp-close`        | `{ value: boolean }`                                                                 | Se cierra                     |
-| `hp-dialog`         | `hp-open`         | —                                                                                    | El dialog se abre             |
-| `hp-dialog`         | `hp-close`        | —                                                                                    | El dialog se cierra           |
-| `hp-alert-dialog`   | `hp-open`         | —                                                                                    | Se abre                       |
-| `hp-alert-dialog`   | `hp-close`        | —                                                                                    | Se cierra                     |
-| `hp-drawer`         | `hp-show`         | —                                                                                    | El drawer se abre             |
-| `hp-drawer`         | `hp-hide`         | —                                                                                    | El drawer se cierra           |
-| `hp-popover`        | `hp-open`         | —                                                                                    | El popover se abre            |
-| `hp-popover`        | `hp-close`        | —                                                                                    | El popover se cierra          |
-| `hp-tooltip`        | `hp-open`         | —                                                                                    | El tooltip aparece            |
-| `hp-tooltip`        | `hp-close`        | —                                                                                    | El tooltip desaparece         |
-| `hp-pin-input`      | `hp-change`       | `{ value: string }`                                                                  | Cambia cualquier dígito       |
-| `hp-pin-input`      | `hp-complete`     | `{ value: string }`                                                                  | Todos los campos completados  |
-| `hp-slider`         | `hp-input`        | `{ value: number }`                                                                  | Mientras se arrastra          |
-| `hp-slider`         | `hp-change`       | `{ value: number }`                                                                  | Al soltar o usar teclado      |
-| `hp-tree`           | `hp-select`       | `{ value: string, item: HTMLElement }` / `{ value, item, selectedValues: string[] }` | Se selecciona un ítem         |
-| `hp-tree-item`      | `hp-expand`       | `{ value: string, item: HTMLElement }`                                               | Un nodo se expande            |
-| `hp-tree-item`      | `hp-collapse`     | `{ value: string, item: HTMLElement }`                                               | Un nodo se colapsa            |
-| `hp-stepper`        | `hp-change`       | `{ value: number, prev: number }`                                                    | Cambia el paso activo         |
-| `hp-stepper`        | `hp-complete`     | `{ steps: number }`                                                                  | El wizard se completa         |
+| Componente           | Evento            | Detalle                                                                              | Disparado cuando              |
+| :------------------- | :---------------- | :----------------------------------------------------------------------------------- | :---------------------------- |
+| `hp-button`          | `hp-change`       | `{ pressed: boolean }`                                                               | Cambia `aria-pressed`         |
+| `hp-checkbox`        | `hp-change`       | `{ checked: boolean \| "mixed" }`                                                    | Cambia el estado checked      |
+| `hp-switch`          | `hp-change`       | `{ checked: boolean }`                                                               | Cambia el estado on/off       |
+| `hp-radio-group`     | `hp-change`       | `{ value: string }`                                                                  | Cambia la opción seleccionada |
+| `hp-toggle-group`    | `hp-change`       | `{ value: string[] }`                                                                | Cambia la selección del grupo |
+| `hp-toggle`          | `hp-toggle-press` | `{ value: string }`                                                                  | El usuario activa un toggle   |
+| `hp-tabs`            | `hp-change`       | `{ value: string }`                                                                  | Cambia la pestaña activa      |
+| `hp-accordion`       | `hp-change`       | `{ open: boolean, value: string }`                                                   | Cambia cualquier panel        |
+| `hp-accordion-item`  | `hp-open`         | `{ value: string }`                                                                  | Un panel se expande           |
+| `hp-accordion-item`  | `hp-close`        | `{ value: string }`                                                                  | Un panel se colapsa           |
+| `hp-collapsible`     | `hp-change`       | `{ open: boolean }`                                                                  | Cambia el estado              |
+| `hp-collapsible`     | `hp-open`         | `{ value: boolean }`                                                                 | Se abre                       |
+| `hp-collapsible`     | `hp-close`        | `{ value: boolean }`                                                                 | Se cierra                     |
+| `hp-dialog`          | `hp-open`         | —                                                                                    | El dialog se abre             |
+| `hp-dialog`          | `hp-close`        | —                                                                                    | El dialog se cierra           |
+| `hp-alert-dialog`    | `hp-open`         | —                                                                                    | Se abre                       |
+| `hp-alert-dialog`    | `hp-close`        | —                                                                                    | Se cierra                     |
+| `hp-drawer`          | `hp-show`         | —                                                                                    | El drawer se abre             |
+| `hp-drawer`          | `hp-hide`         | —                                                                                    | El drawer se cierra           |
+| `hp-popover`         | `hp-open`         | —                                                                                    | El popover se abre            |
+| `hp-popover`         | `hp-close`        | —                                                                                    | El popover se cierra          |
+| `hp-tooltip`         | `hp-open`         | —                                                                                    | El tooltip aparece            |
+| `hp-tooltip`         | `hp-close`        | —                                                                                    | El tooltip desaparece         |
+| `hp-pin-input`       | `hp-change`       | `{ value: string }`                                                                  | Cambia cualquier dígito       |
+| `hp-pin-input`       | `hp-complete`     | `{ value: string }`                                                                  | Todos los campos completados  |
+| `hp-slider`          | `hp-input`        | `{ value: number }`                                                                  | Mientras se arrastra          |
+| `hp-slider`          | `hp-change`       | `{ value: number }`                                                                  | Al soltar o usar teclado      |
+| `hp-tree`            | `hp-select`       | `{ value: string, item: HTMLElement }` / `{ value, item, selectedValues: string[] }` | Se selecciona un ítem         |
+| `hp-tree-item`       | `hp-expand`       | `{ value: string, item: HTMLElement }`                                               | Un nodo se expande            |
+| `hp-tree-item`       | `hp-collapse`     | `{ value: string, item: HTMLElement }`                                               | Un nodo se colapsa            |
+| `hp-stepper`         | `hp-change`       | `{ value: number, prev: number }`                                                    | Cambia el paso activo         |
+| `hp-stepper`         | `hp-complete`     | `{ steps: number }`                                                                  | El wizard se completa         |
+| `hp-navigation-menu` | `hp-open`         | `{ value: string }`                                                                  | Un panel flyout se abre       |
+| `hp-navigation-menu` | `hp-close`        | `{ value: string }`                                                                  | Un panel flyout se cierra     |
 
 ---
 
@@ -386,6 +388,61 @@ stepper.next(); // avanza un paso
 stepper.prev(); // retrocede un paso
 stepper.goTo(2); // salta al paso con índice 2
 stepper.complete(); // completa el wizard (dispara hp-complete)
+```
+
+### `hp-navigation-menu`
+
+Emite `hp-open` cuando un panel flyout se abre y `hp-close` cuando se cierra. Ambos incluyen el `value` del ítem que cambió — el mismo string que se pasa al atributo `value` del `hp-navigation-menu-item`.
+
+```js
+const nav = document.querySelector("hp-navigation-menu");
+
+nav.addEventListener("hp-open", (e) => {
+  console.log("Panel abierto:", e.detail.value); // ej. "productos"
+});
+
+nav.addEventListener("hp-close", (e) => {
+  console.log("Panel cerrado:", e.detail.value); // ej. "productos"
+});
+```
+
+Cuando el usuario pasa de un panel a otro directamente, se disparan ambos eventos en secuencia: primero `hp-close` del panel anterior y luego `hp-open` del nuevo:
+
+```js
+nav.addEventListener("hp-close", (e) => {
+  console.log("Cerrado:", e.detail.value); // "productos"
+});
+nav.addEventListener("hp-open", (e) => {
+  console.log("Abierto:", e.detail.value); // "soluciones"
+});
+```
+
+La API imperativa permite controlar el menú desde código:
+
+```js
+const nav = document.querySelector("hp-navigation-menu");
+
+nav.open("productos"); // abre el panel con value="productos"
+nav.close(); // cierra el panel activo
+nav.toggle("recursos"); // alterna: abre si estaba cerrado, cierra si estaba abierto
+
+console.log(nav.value); // string — value del panel abierto, "" si ninguno
+```
+
+Úsalo para sincronizar el estado del menú con la URL o con un store:
+
+```js
+// Abrir el panel correcto al cargar la página
+const section = new URLSearchParams(location.search).get("section");
+if (section) nav.open(section);
+
+// Guardar el panel activo en la URL
+nav.addEventListener("hp-open", (e) => {
+  history.replaceState(null, "", `?section=${e.detail.value}`);
+});
+nav.addEventListener("hp-close", () => {
+  history.replaceState(null, "", location.pathname);
+});
 ```
 
 ---

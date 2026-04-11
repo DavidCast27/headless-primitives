@@ -8,6 +8,7 @@ import "@headless-primitives/avatar";
 import "@headless-primitives/badge";
 import "@headless-primitives/breadcrumb";
 import "@headless-primitives/button";
+import "@headless-primitives/navigation-menu";
 import "@headless-primitives/checkbox";
 import "@headless-primitives/collapsible";
 import "@headless-primitives/combobox";
@@ -65,6 +66,7 @@ import { sliderDemo } from "./demos/slider.demo";
 import { pinInputDemo } from "./demos/pin-input.demo";
 import { treeDemo } from "./demos/tree.demo";
 import { stepperDemo } from "./demos/stepper.demo";
+import { navigationMenuDemo } from "./demos/navigation-menu.demo";
 
 // --- Route Registry ---
 const ROUTES: Record<string, ComponentDemo> = {
@@ -97,6 +99,7 @@ const ROUTES: Record<string, ComponentDemo> = {
   "pin-input": pinInputDemo,
   tree: treeDemo,
   stepper: stepperDemo,
+  "navigation-menu": navigationMenuDemo,
 };
 
 function renderRoute(compId: string) {

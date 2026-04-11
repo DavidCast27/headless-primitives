@@ -1056,6 +1056,43 @@ const totalModified = computed(() => TOKEN_GROUPS.reduce((sum, g) => sum + modif
             </div>
           </section>
 
+          <!-- NAVIGATION MENU -->
+          <section class="tb-preview-section">
+            <h4 class="tb-preview-section-title">Navigation Menu</h4>
+            <div class="tb-preview-demo" style="overflow: visible; min-height: 160px">
+              <hp-navigation-menu class="tbp-nav-menu" aria-label="Preview navigation">
+                <hp-navigation-menu-list class="tbp-nav-list">
+                  <hp-navigation-menu-item value="tbp-products" class="tbp-nav-item">
+                    <hp-navigation-menu-trigger class="tbp-nav-trigger"
+                      >Productos ▾</hp-navigation-menu-trigger
+                    >
+                    <hp-navigation-menu-content class="tbp-nav-content">
+                      <div class="tbp-nav-panel-item">Componentes</div>
+                      <div class="tbp-nav-panel-item">Theming</div>
+                    </hp-navigation-menu-content>
+                  </hp-navigation-menu-item>
+                  <hp-navigation-menu-item value="tbp-docs" class="tbp-nav-item">
+                    <hp-navigation-menu-trigger class="tbp-nav-trigger"
+                      >Docs ▾</hp-navigation-menu-trigger
+                    >
+                    <hp-navigation-menu-content class="tbp-nav-content">
+                      <div class="tbp-nav-panel-item">Guía rápida</div>
+                      <div class="tbp-nav-panel-item">API Reference</div>
+                    </hp-navigation-menu-content>
+                  </hp-navigation-menu-item>
+                  <hp-navigation-menu-item class="tbp-nav-item">
+                    <hp-navigation-menu-link class="tbp-nav-link" active
+                      >Blog</hp-navigation-menu-link
+                    >
+                  </hp-navigation-menu-item>
+                </hp-navigation-menu-list>
+                <hp-navigation-menu-indicator
+                  class="tbp-nav-indicator"
+                ></hp-navigation-menu-indicator>
+              </hp-navigation-menu>
+            </div>
+          </section>
+
           <!-- CAMPO -->
           <section class="tb-preview-section">
             <h4 class="tb-preview-section-title">Campo de formulario</h4>
@@ -3790,8 +3827,110 @@ hp-context-menu-trigger[data-state="open"] .tbp-context-menu-area {
   .tbp-collapsible-trigger,
   .tbp-accordion-icon,
   .tbp-input,
-  .tb-btn {
+  .tb-btn,
+  .tbp-nav-trigger,
+  .tbp-nav-indicator {
     transition: none;
   }
+}
+
+/* --- Navigation Menu (tbp) --- */
+hp-navigation-menu.tbp-nav-menu {
+  position: relative;
+}
+
+.tbp-nav-list {
+  display: flex !important;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--hp-space-1, 0.25rem);
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.tbp-nav-item {
+  position: relative;
+}
+
+hp-navigation-menu-trigger.tbp-nav-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: var(--hp-space-2, 0.5rem) var(--hp-space-3, 0.75rem);
+  font-family: inherit;
+  font-size: var(--hp-font-size-sm, 0.875rem);
+  font-weight: var(--hp-font-weight-medium, 500);
+  color: var(--hp-text, var(--vp-c-text-1));
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--hp-radius, 6px);
+  cursor: pointer;
+  transition: background-color var(--hp-transition, 150ms);
+}
+
+hp-navigation-menu-trigger.tbp-nav-trigger:hover {
+  background-color: var(--hp-bg-muted, var(--vp-c-bg-mute));
+}
+
+hp-navigation-menu-trigger.tbp-nav-trigger[aria-expanded="true"] {
+  background-color: color-mix(in srgb, var(--hp-accent, #0369a1) 12%, transparent);
+  color: var(--hp-accent, #0369a1);
+}
+
+hp-navigation-menu-content.tbp-nav-content {
+  background-color: var(--hp-surface, Canvas);
+  border: 1px solid var(--hp-border, var(--vp-c-divider));
+  border-radius: var(--hp-radius-md, 8px);
+  box-shadow: var(--hp-shadow-lg, 0 8px 24px rgb(0 0 0 / 0.1));
+  padding: var(--hp-space-2, 0.5rem);
+  min-width: 160px;
+}
+
+.tbp-nav-panel-item {
+  padding: var(--hp-space-2, 0.5rem) var(--hp-space-3, 0.75rem);
+  font-size: var(--hp-font-size-sm, 0.875rem);
+  color: var(--hp-text, var(--vp-c-text-1));
+  border-radius: var(--hp-radius, 6px);
+  cursor: pointer;
+  transition: background-color var(--hp-transition, 150ms);
+}
+
+.tbp-nav-panel-item:hover {
+  background-color: var(--hp-bg-muted, var(--vp-c-bg-mute));
+}
+
+hp-navigation-menu-link.tbp-nav-link {
+  display: inline-flex;
+  padding: var(--hp-space-2, 0.5rem) var(--hp-space-3, 0.75rem);
+  font-size: var(--hp-font-size-sm, 0.875rem);
+  font-weight: var(--hp-font-weight-medium, 500);
+  color: var(--hp-text, var(--vp-c-text-1));
+  border-radius: var(--hp-radius, 6px);
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color var(--hp-transition, 150ms);
+}
+
+hp-navigation-menu-link.tbp-nav-link:hover {
+  background-color: var(--hp-bg-muted, var(--vp-c-bg-mute));
+}
+
+hp-navigation-menu-link.tbp-nav-link[data-active] {
+  color: var(--hp-accent, #0369a1);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+hp-navigation-menu-indicator.tbp-nav-indicator {
+  position: absolute;
+  bottom: 0;
+  height: 2px;
+  background: var(--hp-accent, #0369a1);
+  border-radius: 1px;
+  pointer-events: none;
+  transition:
+    left var(--hp-transition, 150ms),
+    width var(--hp-transition, 150ms);
 }
 </style>
