@@ -39,6 +39,7 @@ packages/vanilla/
   slider/         # @headless-primitives/slider
   stepper/        # @headless-primitives/stepper
   scroll-area/    # @headless-primitives/scroll-area
+  toolbar/        # @headless-primitives/toolbar
   switch/         # @headless-primitives/switch
   tabs/           # @headless-primitives/tabs
   toast/          # @headless-primitives/toast

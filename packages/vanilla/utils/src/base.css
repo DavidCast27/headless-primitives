@@ -111,7 +111,8 @@ hp-scroll-area-viewport,
 hp-scroll-area-content,
 hp-scroll-area-scrollbar,
 hp-scroll-area-thumb,
-hp-scroll-area-corner {
+hp-scroll-area-corner,
+hp-toolbar {
   display: block;
 }
 
@@ -443,6 +444,20 @@ hp-stepper-finish[aria-disabled="true"] {
 /* Stepper panels: hidden by default */
 [data-hp-stepper-panel][data-state="hidden"] {
   display: none;
+}
+
+/* --- Toolbar --- */
+hp-toolbar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.25rem;
+  flex-wrap: wrap;
+}
+
+hp-toolbar[aria-orientation="vertical"] {
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 /* 4. Reglas por Arquetipo */
