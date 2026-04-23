@@ -1,6 +1,6 @@
 {
   "name": "@headless-primitives/combobox",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Headless primitive para combobox accesible",
   "files": [
     "dist"

@@ -1,6 +1,6 @@
 {
   "name": "@headless-primitives/tree",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Headless tree view primitive",
   "files": [
     "dist"
