@@ -1,6 +1,6 @@
 {
   "name": "@headless-primitives/toast",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Headless toast/alert primitive for accessible notifications",
   "keywords": [
     "a11y",

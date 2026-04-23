@@ -1,6 +1,6 @@
 {
   "name": "@headless-primitives/context-menu",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Headless context menu primitive (right-click triggered action menu)",
   "keywords": [
     "context-menu",

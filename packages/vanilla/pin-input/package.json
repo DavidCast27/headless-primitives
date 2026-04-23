@@ -1,6 +1,6 @@
 {
   "name": "@headless-primitives/pin-input",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Headless primitive para entrada de PIN/OTP con slots individuales por carácter",
   "files": [
     "dist"

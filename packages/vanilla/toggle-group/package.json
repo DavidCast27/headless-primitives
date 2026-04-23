@@ -1,6 +1,6 @@
 {
   "name": "@headless-primitives/toggle-group",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Headless toggle-group primitive",
   "files": [
     "dist"

@@ -1,6 +1,6 @@
 {
   "name": "@headless-primitives/button",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Headless primitive para botones o toggles abstractos",
   "files": [
     "dist"

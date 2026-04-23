@@ -1,6 +1,6 @@
 {
   "name": "@headless-primitives/slider",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Headless primitive de slider accesible con teclado, arrastrar y soltar, y soporte para orientación vertical.",
   "files": [
     "dist"

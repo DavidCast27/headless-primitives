@@ -1,6 +1,6 @@
 {
   "name": "@headless-primitives/field",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Headless field primitive for form coordination",
   "keywords": [
     "a11y",
