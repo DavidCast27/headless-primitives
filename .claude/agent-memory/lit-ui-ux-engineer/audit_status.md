@@ -143,6 +143,23 @@ type: project
 - [ADDED] Four overridable component-level timing tokens: `--hp-stepper-transition`, `--hp-stepper-indicator-pop`, `--hp-stepper-connector-transition`, `--hp-stepper-panel-transition`
 - [UPDATED] `prefers-reduced-motion` block: resets all new `scale` values to `1`, disables panel `transition`, and overrides `@starting-style` so panel appears immediately at `opacity: 1`
 
+### Full rewrite: 2026-04-11
+
+**packages/vanilla/styles/src/toolbar.css**
+
+- [FIXED] Removed duplicate layout rules (`display`, `flex-direction`, `align-items`, `gap`) already owned by `base.css`
+- [FIXED] Removed no-op dark mode block (was reassigning same token values — dark mode is automatic via `theme.css`)
+- [FIXED] Hardcoded fallback hex `#2563eb` in `focus-visible` removed — now only references `--hp-focus-outline-color`
+- [ADDED] Full component token block: `--hp-toolbar-gap`, `--hp-toolbar-padding`, `--hp-toolbar-bg`, `--hp-toolbar-border-color`, `--hp-toolbar-radius`, `--hp-toolbar-item-radius`, `--hp-toolbar-item-height`, `--hp-toolbar-item-padding`, `--hp-toolbar-separator-color`
+- [ADDED] Item base styles for `button`, `a[href]`, `[role="button"]`, `[role="checkbox"]`, `[role="radio"]`: height 2rem, transparent border, `--hp-text-secondary`, transition on bg/border/color
+- [ADDED] Hover state: `--hp-bg-muted` bg + `--hp-text` color (excludes disabled and already-pressed)
+- [ADDED] Pressed state `[aria-pressed="true"]`: `--hp-bg-muted` bg + `--hp-border` border + `--hp-text` color
+- [ADDED] Accent pressed variant `[data-variant="accent"][aria-pressed="true"]`: 10% accent bg via `color-mix`, accent border, accent text
+- [ADDED] Disabled state: `--hp-opacity-disabled`, `cursor: not-allowed`, `pointer-events: none`
+- [ADDED] Input styles (`input[type="search"]`, `input[type="text"]`): height, border, radius, font; focus: accent border + ring via `color-mix`
+- [ADDED] `[role="group"] { display: contents }` — groups transparent to toolbar flex layout
+- [ADDED] `prefers-reduced-motion` block covering all item types and inputs
+
 ### Known acceptable patterns
 
 - `apps/playground/src/demos/*.css` may use `var(--hp-*, hardcoded-fallback)` syntax — this is correct

@@ -55,6 +55,23 @@ role="navigation" en raíz, role="menubar" en lista, role="none" en items,
 aria-orientation="horizontal", aria-haspopup, aria-expanded, aria-controls
 ```
 
+### Scrollbar (Scroll Area)
+
+```
+role="scrollbar", aria-orientation="vertical|horizontal",
+aria-controls (referencia al viewport), aria-valuemin="0",
+aria-valuenow (posición actual en px), aria-valuemax (máximo scroll en px)
+tabindex="0" — el scrollbar es focusable para navegación por teclado
+hp-scroll-area-corner: aria-hidden="true" (elemento decorativo)
+```
+
+Teclado requerido para `hp-scroll-area-scrollbar`:
+
+- `ArrowDown/Up` — scroll vertical en pasos de 40px
+- `ArrowLeft/Right` — scroll horizontal en pasos de 40px
+- `PageDown/Up` — scroll por altura/anchura del viewport
+- `Home/End` — ir al inicio/fin del contenido
+
 ### Checkbox
 
 ```

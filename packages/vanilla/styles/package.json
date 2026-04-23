@@ -38,6 +38,8 @@
     "./fieldset.css": "./src/fieldset.css",
     "./tree.css": "./src/tree.css",
     "./navigation-menu.css": "./src/navigation-menu.css",
+    "./scroll-area.css": "./src/scroll-area.css",
+    "./toolbar.css": "./src/toolbar.css",
     "./verify-aria.js": "./src/verify-aria.js"
   },
   "publishConfig": {

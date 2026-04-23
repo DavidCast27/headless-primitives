@@ -30,6 +30,7 @@
     "@headless-primitives/popover": "workspace:*",
     "@headless-primitives/progress": "workspace:*",
     "@headless-primitives/radio-group": "workspace:*",
+    "@headless-primitives/scroll-area": "workspace:*",
     "@headless-primitives/select": "workspace:*",
     "@headless-primitives/separator": "workspace:*",
     "@headless-primitives/slider": "workspace:*",
@@ -39,6 +40,7 @@
     "@headless-primitives/tabs": "workspace:*",
     "@headless-primitives/toast": "workspace:*",
     "@headless-primitives/toggle-group": "workspace:*",
+    "@headless-primitives/toolbar": "workspace:*",
     "@headless-primitives/tooltip": "workspace:*",
     "@headless-primitives/tree": "workspace:*",
     "@headless-primitives/utils": "workspace:*"

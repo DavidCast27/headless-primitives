@@ -110,6 +110,9 @@ importers:
       '@headless-primitives/radio-group':
         specifier: workspace:*
         version: link:../../packages/vanilla/radio-group
+      '@headless-primitives/scroll-area':
+        specifier: workspace:*
+        version: link:../../packages/vanilla/scroll-area
       '@headless-primitives/select':
         specifier: workspace:*
         version: link:../../packages/vanilla/select
@@ -134,6 +137,9 @@ importers:
       '@headless-primitives/toggle-group':
         specifier: workspace:*
         version: link:../../packages/vanilla/toggle-group
+      '@headless-primitives/toolbar':
+        specifier: workspace:*
+        version: link:../../packages/vanilla/toolbar
       '@headless-primitives/tooltip':
         specifier: workspace:*
         version: link:../../packages/vanilla/tooltip
@@ -213,6 +219,9 @@ importers:
       '@headless-primitives/radio-group':
         specifier: workspace:*
         version: link:../../packages/vanilla/radio-group
+      '@headless-primitives/scroll-area':
+        specifier: workspace:*
+        version: link:../../packages/vanilla/scroll-area
       '@headless-primitives/select':
         specifier: workspace:*
         version: link:../../packages/vanilla/select
@@ -240,6 +249,9 @@ importers:
       '@headless-primitives/toggle-group':
         specifier: workspace:*
         version: link:../../packages/vanilla/toggle-group
+      '@headless-primitives/toolbar':
+        specifier: workspace:*
+        version: link:../../packages/vanilla/toolbar
       '@headless-primitives/tooltip':
         specifier: workspace:*
         version: link:../../packages/vanilla/tooltip
@@ -565,6 +577,15 @@ importers:
         specifier: ^3.3.2
         version: 3.3.2
 
+  packages/vanilla/scroll-area:
+    dependencies:
+      '@headless-primitives/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lit:
+        specifier: ^3.3.2
+        version: 3.3.2
+
   packages/vanilla/select:
     dependencies:
       '@headless-primitives/utils':
@@ -664,6 +685,15 @@ importers:
         version: 2.1.9(@types/node@25.5.0)(happy-dom@14.12.3)(jsdom@29.0.1)(lightningcss@1.32.0)
 
   packages/vanilla/toggle-group:
+    dependencies:
+      '@headless-primitives/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lit:
+        specifier: ^3.3.2
+        version: 3.3.2
+
+  packages/vanilla/toolbar:
     dependencies:
       '@headless-primitives/utils':
         specifier: workspace:*

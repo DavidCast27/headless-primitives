@@ -38,6 +38,8 @@ packages/vanilla/
   separator/      # @headless-primitives/separator
   slider/         # @headless-primitives/slider
   stepper/        # @headless-primitives/stepper
+  scroll-area/    # @headless-primitives/scroll-area
+  toolbar/        # @headless-primitives/toolbar
   switch/         # @headless-primitives/switch
   tabs/           # @headless-primitives/tabs
   toast/          # @headless-primitives/toast
@@ -107,6 +109,9 @@ apps/
 /* Misc */
 --hp-opacity-disabled: 0.5
 --hp-focus-outline-color: #2563eb, --hp-focus-outline-width: 2px
+
+/* Scroll Area */
+--hp-scroll-area-scrollbar-size: 8px   /* ancho/alto del track del scrollbar */
 ```
 
 ## Patrón de componente
@@ -155,6 +160,8 @@ export class HeadlessMiComponente extends HeadlessElement {
 - `[data-hp-backdrop][data-state]` — backdrop de dialog
 - `[data-hp-tooltip-content][data-state]` — tooltip
 - `[data-hp-component="<nombre>"]` — identificador de componente
+- `[data-hp-scroll-area-scrollbar][data-state]` — scrollbar visible/hidden
+- `[data-hp-scroll-area-scrollbar][data-dragging]` — presente mientras se arrastra el thumb
 
 ## Estructura de archivos por componente
 
