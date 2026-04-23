@@ -53,7 +53,7 @@ export class HpCarousel extends HeadlessElement {
     this._activeIndex = val;
     this._updateItems();
     this._sync();
-    this.emit("carousel-change", { activeIndex: val });
+    this.emit("change", { activeIndex: val });
   }
 
   connectedCallback() {
@@ -258,6 +258,12 @@ export class HpCarouselDot extends HeadlessElement {
     this.setAttribute("aria-label", `Go to slide ${this.index + 1}`);
     this.addEventListener("click", () => {
       (this.closest("hp-carousel") as HpCarousel)?.goTo(this.index);
+    });
+    this.addEventListener("keydown", (e: KeyboardEvent) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        (this.closest("hp-carousel") as HpCarousel)?.goTo(this.index);
+      }
     });
   }
 

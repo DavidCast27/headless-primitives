@@ -1,36 +1,10 @@
-# Separator
+# Separator <span class="hp-badge">Nuevo</span>
 
-<span class="hp-badge">Nuevo</span>
-
-El componente `hp-separator` provee una división visual y semántica entre grupos de contenido, siguiendo el patrón de accesibilidad `role="separator"`.
-
-## Instalación
-
-::: code-group
-
-```bash [pnpm]
-pnpm add @headless-primitives/separator
-```
-
-```bash [npm]
-npm install @headless-primitives/separator
-```
-
-```bash [yarn]
-yarn add @headless-primitives/separator
-```
-
-```bash [bun]
-bun add @headless-primitives/separator
-```
-
-:::
+El componente `hp-separator` provee una división visual y semántica entre grupos de contenido, siguiendo el patrón `role="separator"` con `aria-orientation` gestionada automáticamente.
 
 ## Demostración
 
 ### Sin estilos (solo base.css)
-
-Así se ve `hp-separator` usando únicamente `@headless-primitives/utils/base.css`.
 
 <div class="hp-demo-card">
   <p>Sección A</p>
@@ -56,21 +30,6 @@ Así se ve `hp-separator` usando únicamente `@headless-primitives/utils/base.cs
     </div>
   </div>
 </div>
-
-<style>
-.demo-separator-h {
-  display: block;
-  height: 1px;
-  width: 100%;
-  background: var(--vp-c-divider);
-}
-.demo-separator-v {
-  display: inline-block;
-  width: 1px;
-  height: 100%;
-  background: var(--vp-c-divider);
-}
-</style>
 
 <CodeSnippet>
 
@@ -133,37 +92,77 @@ Así se ve `hp-separator` usando únicamente `@headless-primitives/utils/base.cs
 
 </CodeSnippet>
 
+## Instalación
+
+::: code-group
+
+```bash [pnpm]
+pnpm add @headless-primitives/separator
+```
+
+```bash [npm]
+npm install @headless-primitives/separator
+```
+
+```bash [yarn]
+yarn add @headless-primitives/separator
+```
+
+```bash [bun]
+bun add @headless-primitives/separator
+```
+
+:::
+
+## Features
+
+- ♿️ `role="separator"` y `aria-orientation` gestionados automáticamente.
+- 📐 Orientación configurable: `horizontal` (default) o `vertical`.
+- 🎨 Sin estilos visuales (Headless).
+
 ## Anatomía
 
-Un único elemento: orientación horizontal por defecto y `aria-orientation` acorde al atributo `orientation`.
-
 ```html
-<hp-separator />
+<hp-separator></hp-separator>
 ```
 
 ## API Reference
 
 ### `hp-separator`
 
-#### Atributos
+#### Atributos / Propiedades
 
-| Atributo      | Tipo                           | Por defecto    | Descripción                                                                          |
-| :------------ | :----------------------------- | :------------- | :----------------------------------------------------------------------------------- |
-| `orientation` | `"horizontal"` \| `"vertical"` | `"horizontal"` | Orientación del separador; cualquier otro valor se trata como horizontal. Observado. |
-| `role`        | `string`                       | `"separator"`  | Si no se indica, se asigna `separator`.                                              |
+| Atributo / Propiedad | Tipo                           | Por Defecto    | Descripción                |
+| -------------------- | ------------------------------ | -------------- | -------------------------- |
+| `orientation`        | `"horizontal"` \| `"vertical"` | `"horizontal"` | Orientación del separador. |
 
-#### Propiedades
+#### Métodos
 
-| Propiedad     | Tipo                           | Descripción                                           |
-| :------------ | :----------------------------- | :---------------------------------------------------- |
-| `orientation` | `"horizontal"` \| `"vertical"` | Getter/setter alineado con el atributo `orientation`. |
+| Método                  | Descripción                              |
+| ----------------------- | ---------------------------------------- |
+| `setOrientation(value)` | Cambia la orientación programáticamente. |
 
-#### ARIA (gestionado por el primitivo)
+#### Atributos ARIA gestionados automáticamente
 
-| Atributo           | Descripción                                        |
-| :----------------- | :------------------------------------------------- |
-| `aria-orientation` | `"horizontal"` u `"vertical"` según `orientation`. |
+- `role="separator"` — Asignado si no se especifica.
+- `aria-orientation` — Sincronizado con `orientation`.
 
 ## Accesibilidad
 
-`hp-separator` usa el rol **separator** y **aria-orientation** según el eje. Para separadores puramente decorativos, la guía WAI-ARIA suele recomendar no exponerlos como separador semántico; en ese caso el autor puede sobreescribir `role` en el markup o usar otro elemento, porque este primitivo **no** incluye un atributo `decorative` automático.
+- `role="separator"` y `aria-orientation` sincronizados automáticamente.
+- Para separadores puramente decorativos, sobreescribe `role="presentation"`.
+
+<style>
+.demo-separator-h {
+  display: block;
+  height: 1px;
+  width: 100%;
+  background: var(--vp-c-divider);
+}
+.demo-separator-v {
+  display: inline-block;
+  width: 1px;
+  height: 100%;
+  background: var(--vp-c-divider);
+}
+</style>

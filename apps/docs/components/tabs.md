@@ -1,93 +1,8 @@
-# Tabs
+# Tabs <span class="hp-badge">Nuevo</span>
 
-<span class="hp-badge">Nuevo</span>
-
-El componente `hp-tabs` es un primitivo que implementa el patrón WAI-ARIA Tabs, permitiendo organizar contenido en pestañas accesibles con navegación por teclado completa.
-
-## Instalación
-
-::: code-group
-
-```bash [pnpm]
-pnpm add @headless-primitives/tabs
-```
-
-```bash [npm]
-npm install @headless-primitives/tabs
-```
-
-```bash [yarn]
-yarn add @headless-primitives/tabs
-```
-
-```bash [bun]
-bun add @headless-primitives/tabs
-```
-
-:::
+El componente `hp-tabs` implementa el patrón [WAI-ARIA Tabs](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/), permitiendo organizar contenido en pestañas accesibles con navegación por teclado completa y gestión automática de `aria-selected`.
 
 ## Demostración
-
-<div class="hp-demo-card">
-  <hp-tabs value="profile" class="demo-tabs">
-    <hp-tab-list class="demo-tab-list">
-      <hp-tab value="profile" class="demo-tab">Perfil</hp-tab>
-      <hp-tab value="settings" class="demo-tab">Ajustes</hp-tab>
-      <hp-tab value="notifications" class="demo-tab">Notificaciones</hp-tab>
-    </hp-tab-list>
-    <hp-tab-panel value="profile" class="demo-panel"><p>Gestiona tu información de perfil y datos personales.</p></hp-tab-panel>
-    <hp-tab-panel value="settings" class="demo-panel"><p>Configura las preferencias de tu aplicación.</p></hp-tab-panel>
-    <hp-tab-panel value="notifications" class="demo-panel"><p>Controla cómo y cuándo recibes notificaciones.</p></hp-tab-panel>
-  </hp-tabs>
-</div>
-
-<style>
-.demo-tabs {
-  width: 100%;
-  max-width: 500px;
-}
-.demo-tab-list {
-  display: flex;
-  border-bottom: 2px solid var(--vp-c-divider);
-  margin-bottom: 0;
-}
-.demo-tab {
-  padding: 10px 20px;
-  background: none;
-  border: none;
-  border-bottom: 2px solid transparent;
-  margin-bottom: -2px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--vp-c-text-2);
-  transition: color 0.2s;
-}
-.demo-tab:hover {
-  color: var(--vp-c-text-1);
-}
-.demo-tab[aria-selected="true"] {
-  color: var(--vp-c-brand-1);
-  border-bottom-color: var(--vp-c-brand-1);
-}
-.demo-tab:focus-visible {
-  outline: 2px solid var(--vp-c-brand-1);
-  outline-offset: -2px;
-  border-radius: 4px;
-}
-.demo-panel {
-  padding: 16px;
-  background: var(--vp-c-bg-soft);
-  border: 1px solid var(--vp-c-divider);
-  border-top: none;
-  border-radius: 0 0 8px 8px;
-}
-.demo-panel p {
-  margin: 0;
-  color: var(--vp-c-text-2);
-  line-height: 1.6;
-}
-</style>
 
 ### Sin estilos (solo base.css)
 
@@ -103,6 +18,21 @@ Así se ven las tabs usando únicamente `@headless-primitives/utils/base.css`. L
     <hp-tab-panel value="a"><p>Contenido del panel A.</p></hp-tab-panel>
     <hp-tab-panel value="b"><p>Contenido del panel B.</p></hp-tab-panel>
     <hp-tab-panel value="c"><p>Contenido del panel C.</p></hp-tab-panel>
+  </hp-tabs>
+</div>
+
+### Con estilos personalizados
+
+<div class="hp-demo-card">
+  <hp-tabs value="profile" class="demo-tabs">
+    <hp-tab-list class="demo-tab-list">
+      <hp-tab value="profile" class="demo-tab">Perfil</hp-tab>
+      <hp-tab value="settings" class="demo-tab">Ajustes</hp-tab>
+      <hp-tab value="notifications" class="demo-tab">Notificaciones</hp-tab>
+    </hp-tab-list>
+    <hp-tab-panel value="profile" class="demo-panel"><p>Gestiona tu información de perfil y datos personales.</p></hp-tab-panel>
+    <hp-tab-panel value="settings" class="demo-panel"><p>Configura las preferencias de tu aplicación.</p></hp-tab-panel>
+    <hp-tab-panel value="notifications" class="demo-panel"><p>Controla cómo y cuándo recibes notificaciones.</p></hp-tab-panel>
   </hp-tabs>
 </div>
 
@@ -223,16 +153,44 @@ Así se ven las tabs usando únicamente `@headless-primitives/utils/base.css`. L
 
 </CodeSnippet>
 
+## Instalación
+
+::: code-group
+
+```bash [pnpm]
+pnpm add @headless-primitives/tabs
+```
+
+```bash [npm]
+npm install @headless-primitives/tabs
+```
+
+```bash [yarn]
+yarn add @headless-primitives/tabs
+```
+
+```bash [bun]
+bun add @headless-primitives/tabs
+```
+
+:::
+
+## Features
+
+- ⌨️ Navegación completa por teclado (flechas, Home, End).
+- ♿️ Roles `tablist`, `tab` y `tabpanel` gestionados automáticamente.
+- 🎨 Sin estilos visuales (Headless) — tú decides el diseño.
+- ⚡️ Activación por valor (`value`) para control declarativo y programático.
+- 🚫 Soporte para pestañas deshabilitadas individualmente.
+
 ## Anatomía
 
 ```html
-<hp-tabs value="tab1">
+<hp-tabs>
   <hp-tab-list>
-    <hp-tab value="tab1">Tab 1</hp-tab>
-    <hp-tab value="tab2">Tab 2</hp-tab>
+    <hp-tab></hp-tab>
   </hp-tab-list>
-  <hp-tab-panel value="tab1">Contenido 1</hp-tab-panel>
-  <hp-tab-panel value="tab2">Contenido 2</hp-tab-panel>
+  <hp-tab-panel></hp-tab-panel>
 </hp-tabs>
 ```
 
@@ -242,121 +200,158 @@ Así se ven las tabs usando únicamente `@headless-primitives/utils/base.css`. L
 
 Elemento raíz que coordina el estado entre tabs y panels.
 
-#### Atributos
+#### Atributos / Propiedades
 
-| Atributo | Tipo     | Por defecto | Descripción                                                            |
-| :------- | :------- | :---------- | :--------------------------------------------------------------------- |
-| `value`  | _string_ | —           | Valor de la pestaña activa. Si no se especifica, se activa la primera. |
-
-#### Propiedades
-
-| Propiedad              | Tipo             | Descripción                          |
-| :--------------------- | :--------------- | :----------------------------------- |
-| `value`                | `string \| null` | Valor de la pestaña activa.          |
-| `activateByValue(val)` | `void`           | Activa la pestaña con el valor dado. |
+| Atributo / Propiedad | Tipo     | Por Defecto     | Descripción                                                            |
+| -------------------- | -------- | --------------- | ---------------------------------------------------------------------- |
+| `value`              | `string` | primera pestaña | Valor de la pestaña activa. Si no se especifica, se activa la primera. |
 
 #### Eventos
 
 | Evento      | Detalle             | Descripción                                 |
-| :---------- | :------------------ | :------------------------------------------ |
+| ----------- | ------------------- | ------------------------------------------- |
 | `hp-change` | `{ value: string }` | Se dispara cuando cambia la pestaña activa. |
+
+#### Métodos
+
+| Método                   | Descripción                                            |
+| ------------------------ | ------------------------------------------------------ |
+| `activateByValue(value)` | Activa la pestaña con el valor dado programáticamente. |
 
 ### `hp-tab-list`
 
 Contenedor de los triggers. Gestiona la navegación por teclado.
 
-#### Atributos ARIA gestionados
+#### Atributos ARIA gestionados automáticamente
 
-- `role="tablist"` — asignado automáticamente.
+- `role="tablist"` — Asignado automáticamente.
 
 ### `hp-tab`
 
 Trigger individual de una pestaña.
 
-#### Atributos
+#### Atributos / Propiedades
 
-| Atributo   | Tipo                  | Por defecto | Descripción                        |
-| :--------- | :-------------------- | :---------- | :--------------------------------- |
-| `value`    | _string_              | —           | Identificador único de la pestaña. |
-| `disabled` | _boolean (presencia)_ | ausente     | Deshabilita la pestaña.            |
+| Atributo / Propiedad | Tipo      | Por Defecto | Descripción                        |
+| -------------------- | --------- | ----------- | ---------------------------------- |
+| `value`              | `string`  | —           | Identificador único de la pestaña. |
+| `disabled`           | `boolean` | `false`     | Deshabilita la pestaña.            |
 
-#### Atributos ARIA gestionados
+#### Atributos ARIA gestionados automáticamente
 
-- `role="tab"`
-- `aria-selected` — `true` / `false`
-- `aria-disabled` — `true` / `false`
-- `tabindex` — `0` (activa) / `-1` (inactiva)
+- `role="tab"` — Asignado automáticamente.
+- `aria-selected` — `"true"` / `"false"` según estado activo.
+- `aria-disabled` — Sincronizado con `disabled`.
+- `tabindex` — `"0"` (activa) / `"-1"` (inactiva).
+- `data-state` — `"selected"` / `"unselected"`.
 
 ### `hp-tab-panel`
 
 Panel de contenido asociado a una pestaña por `value`.
 
-#### Atributos
+#### Atributos / Propiedades
 
-| Atributo | Tipo     | Por defecto | Descripción                                          |
-| :------- | :------- | :---------- | :--------------------------------------------------- |
-| `value`  | _string_ | —           | Debe coincidir con el `value` del `hp-tab` asociado. |
+| Atributo / Propiedad | Tipo     | Por Defecto | Descripción                                          |
+| -------------------- | -------- | ----------- | ---------------------------------------------------- |
+| `value`              | `string` | —           | Debe coincidir con el `value` del `hp-tab` asociado. |
 
-#### Atributos ARIA y de estado
+#### Atributos ARIA gestionados automáticamente
 
-- `role="tabpanel"`
-- `tabindex="0"`
-- `data-state` — `selected` / `unselected` (para estilos)
+- `role="tabpanel"` — Asignado automáticamente.
+- `tabindex="0"` — Siempre focusable.
+- `data-state` — `"selected"` / `"unselected"` (para estilizado CSS).
+- `aria-hidden` — `"true"` cuando no está seleccionado.
+- `data-hp-panel` — Presente siempre (usado por `base.css`).
 
 ## Accesibilidad
 
-`hp-tabs` implementa el patrón **WAI-ARIA Tabs**:
+Adhiere al [patrón WAI-ARIA APG para Tabs](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/).
 
-- **Navegación por teclado**: flechas direccionales, `Home`, `End`
-- **Gestión de foco**: `tabindex` dinámico en tabs activos/inactivos
-- **Relaciones ARIA**: `role` correcto en cada elemento
-- **Estados deshabilitados**: `aria-disabled` en tabs con `disabled`
+### Navegación por teclado
 
-## Navegación por Teclado
+| Tecla                      | Acción                                            |
+| -------------------------- | ------------------------------------------------- |
+| `ArrowLeft` / `ArrowUp`    | Pestaña anterior (con wrap circular).             |
+| `ArrowRight` / `ArrowDown` | Pestaña siguiente (con wrap circular).            |
+| `Home`                     | Primera pestaña.                                  |
+| `End`                      | Última pestaña.                                   |
+| `Tab`                      | Sale del tablist al siguiente elemento enfocable. |
 
-| Tecla                      | Acción                       |
-| :------------------------- | :--------------------------- |
-| `ArrowLeft` / `ArrowUp`    | Pestaña anterior (con wrap)  |
-| `ArrowRight` / `ArrowDown` | Pestaña siguiente (con wrap) |
-| `Home`                     | Primera pestaña              |
-| `End`                      | Última pestaña               |
-| `Tab`                      | Siguiente elemento enfocable |
+## Ejemplos
 
-## Estados y Selectores
+### Control Programático
 
-Referencia completa de atributos `data-hp-*`, estados canónicos y roles ARIA para usar con `base.css` o estilos propios.
+```javascript
+const tabs = document.querySelector("hp-tabs");
 
-| Parte          | `data-hp-*`                                         | `data-state`              | Rol ARIA   | Atributos ARIA                               |
-| :------------- | :-------------------------------------------------- | :------------------------ | :--------- | :------------------------------------------- |
-| `hp-tabs`      | `data-hp-component="tabs"`                          | —                         | —          | —                                            |
-| `hp-tab-list`  | `data-hp-component="tab-list"`, `data-hp-tabs-list` | —                         | `tablist`  | —                                            |
-| `hp-tab`       | `data-hp-component="tab"`, `data-hp-tabs-trigger`   | `selected` / `unselected` | `tab`      | `aria-selected`, `aria-disabled`, `tabindex` |
-| `hp-tab-panel` | `data-hp-component="tab-panel"`, `data-hp-panel`    | `selected` / `unselected` | `tabpanel` | `aria-hidden`, `tabindex="0"`                |
+// Activar una pestaña
+tabs.activateByValue("settings");
 
-### Selectores CSS útiles
-
-```css
-/* Panel activo */
-hp-tab-panel[data-state="selected"] {
-}
-
-/* Panel oculto — ya incluido en base.css */
-[data-hp-panel][data-state="unselected"] {
-  display: none;
-}
-
-/* Tab activo */
-hp-tab[data-state="selected"] {
-}
-hp-tab[aria-selected="true"] {
-}
-
-/* Tab deshabilitado */
-hp-tab[disabled],
-hp-tab[aria-disabled="true"] {
-}
-
-/* Focus ring — ya incluido en base.css */
-[data-hp-component]:focus-visible {
-}
+// Escuchar cambios
+tabs.addEventListener("hp-change", (e) => {
+  console.log("Pestaña activa:", e.detail.value);
+});
 ```
+
+### Pestaña Deshabilitada
+
+```html
+<hp-tabs value="tab1">
+  <hp-tab-list>
+    <hp-tab value="tab1">Activa</hp-tab>
+    <hp-tab value="tab2" disabled>Deshabilitada</hp-tab>
+    <hp-tab value="tab3">Otra</hp-tab>
+  </hp-tab-list>
+  <hp-tab-panel value="tab1"><p>Panel 1</p></hp-tab-panel>
+  <hp-tab-panel value="tab2"><p>Panel 2</p></hp-tab-panel>
+  <hp-tab-panel value="tab3"><p>Panel 3</p></hp-tab-panel>
+</hp-tabs>
+```
+
+<style>
+.demo-tabs {
+  width: 100%;
+  max-width: 500px;
+}
+.demo-tab-list {
+  display: flex;
+  border-bottom: 2px solid var(--vp-c-divider);
+  margin-bottom: 0;
+}
+.demo-tab {
+  padding: 10px 20px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--vp-c-text-2);
+  transition: color 0.2s;
+}
+.demo-tab:hover {
+  color: var(--vp-c-text-1);
+}
+.demo-tab[aria-selected="true"] {
+  color: var(--vp-c-brand-1);
+  border-bottom-color: var(--vp-c-brand-1);
+}
+.demo-tab:focus-visible {
+  outline: 2px solid var(--vp-c-brand-1);
+  outline-offset: -2px;
+  border-radius: 4px;
+}
+.demo-panel {
+  padding: 16px;
+  background: var(--vp-c-bg-soft);
+  border: 1px solid var(--vp-c-divider);
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+}
+.demo-panel p {
+  margin: 0;
+  color: var(--vp-c-text-2);
+  line-height: 1.6;
+}
+</style>

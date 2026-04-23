@@ -1,36 +1,10 @@
-# Field
+# Field <span class="hp-badge">Nuevo</span>
 
-<span class="hp-badge">Nuevo</span>
-
-El componente `hp-field` actúa como un orquestador que coordina automáticamente la accesibilidad entre etiquetas, descripciones, mensajes de error y controles de formulario.
-
-## Instalación
-
-::: code-group
-
-```bash [pnpm]
-pnpm add @headless-primitives/field
-```
-
-```bash [npm]
-npm install @headless-primitives/field
-```
-
-```bash [yarn]
-yarn add @headless-primitives/field
-```
-
-```bash [bun]
-bun add @headless-primitives/field
-```
-
-:::
+El componente `hp-field` orquesta automáticamente la accesibilidad entre etiquetas, descripciones, mensajes de error y controles de formulario. Genera IDs únicos y vincula `aria-labelledby`, `aria-describedby` y `for` sin intervención manual.
 
 ## Demostración
 
 ### Sin estilos (solo base.css)
-
-Así se ve `hp-field` usando únicamente `@headless-primitives/utils/base.css`. La vinculación automática de `aria-labelledby`, `aria-describedby` y `for` funciona completamente.
 
 <div class="hp-demo-card">
   <hp-field>
@@ -76,7 +50,6 @@ Así se ve `hp-field` usando únicamente `@headless-primitives/utils/base.css`. 
 ```
 
 ```css [style.css]
-/* hp-field no impone layout, usa flexbox o stack en contenedores */
 .field-container {
   display: flex;
   flex-direction: column;
@@ -106,14 +79,14 @@ hp-field-error {
 ```html [index.html]
 <hp-field class="flex flex-col gap-1">
   <hp-field-label class="font-bold">Email</hp-field-label>
-  <hp-field-description class="text-xs text-gray-500"> No enviamos spam. </hp-field-description>
+  <hp-field-description class="text-xs text-gray-500">No enviamos spam.</hp-field-description>
   <hp-field-control>
     <input
       type="email"
       class="border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
     />
   </hp-field-control>
-  <hp-field-error class="text-sm text-red-500"> Email inválido. </hp-field-error>
+  <hp-field-error class="text-sm text-red-500">Email inválido.</hp-field-error>
 </hp-field>
 ```
 
@@ -123,85 +96,94 @@ hp-field-error {
 
 </CodeSnippet>
 
-## Anatomía
+## Instalación
 
-Ensambla las piezas en este orden; el `hp-field` raíz genera el contexto de IDs y el control recibe `id` y `aria-describedby` automáticamente.
+::: code-group
+
+```bash [pnpm]
+pnpm add @headless-primitives/field
+```
+
+```bash [npm]
+npm install @headless-primitives/field
+```
+
+```bash [yarn]
+yarn add @headless-primitives/field
+```
+
+```bash [bun]
+bun add @headless-primitives/field
+```
+
+:::
+
+## Features
+
+- ♿️ `aria-labelledby`, `aria-describedby` y `for` gestionados automáticamente.
+- 🔗 Contexto por proximidad — los sub-componentes coordinan IDs con el `hp-field` ancestro.
+- 🎨 Sin estilos visuales (Headless).
+- 📋 Soporte para label, description, error y control.
+
+## Anatomía
 
 ```html
 <hp-field>
-  <hp-field-label>...</hp-field-label>
-  <hp-field-description>...</hp-field-description>
+  <hp-field-label></hp-field-label>
+  <hp-field-description></hp-field-description>
   <hp-field-control>
     <input type="text" />
   </hp-field-control>
-  <hp-field-error>...</hp-field-error>
+  <hp-field-error></hp-field-error>
 </hp-field>
 ```
-
-## ¿Cómo funciona?
-
-`hp-field` utiliza una estrategia de **contexto por proximidad**. Los sub-componentes buscan al ancestro `hp-field` más cercano y coordinan sus IDs automáticamente:
-
-1.  **ID del Control**: Se genera un ID único y se aplica al elemento interactivo dentro de `hp-field-control`.
-2.  **Label**: El `hp-field-label` apunta automáticamente al ID del control mediante el atributo `for`.
-3.  **Descripciones**: El control recibe un atributo `aria-describedby` que incluye los IDs de la descripción y el mensaje de error.
 
 ## API Reference
 
 ### `hp-field`
 
-Agrupa las partes del campo y expone un `baseId` estable para generar IDs hijos.
+Contenedor raíz que genera un `baseId` estable para coordinar IDs.
 
-#### Atributos
+#### Propiedades de solo lectura
 
-| Atributo | Tipo     | Por defecto | Descripción                                                    |
-| :------- | :------- | :---------- | :------------------------------------------------------------- |
-| `role`   | `string` | `"group"`   | Si no está definido en `connectedCallback`, se asigna `group`. |
+| Propiedad | Tipo     | Descripción                                                    |
+| --------- | -------- | -------------------------------------------------------------- |
+| `baseId`  | `string` | Prefijo único para IDs de label, control, descripción y error. |
 
-#### Propiedades (solo lectura)
+#### Atributos ARIA gestionados automáticamente
 
-| Propiedad | Tipo     | Descripción                                                          |
-| :-------- | :------- | :------------------------------------------------------------------- |
-| `baseId`  | `string` | Prefijo único usado para IDs de label, control, descripción y error. |
+- `role="group"` — Asignado si no se especifica.
 
 ### `hp-field-label`
 
-#### Atributos
+Label accesible para el control.
 
-| Atributo | Tipo     | Por defecto | Descripción                               |
-| :------- | :------- | :---------- | :---------------------------------------- |
-| `for`    | `string` | auto        | Si falta, se asigna a `{baseId}-control`. |
-| `id`     | `string` | auto        | Si falta, se asigna a `{baseId}-label`.   |
+#### Atributos gestionados automáticamente
+
+- `for` — Apunta a `{baseId}-control` si no se especifica.
+- `id` — Se asigna `{baseId}-label` si no se especifica.
 
 ### `hp-field-description`
 
-#### Atributos
+Descripción del campo.
 
-| Atributo | Tipo     | Por defecto | Descripción                                                                                |
-| :------- | :------- | :---------- | :----------------------------------------------------------------------------------------- |
-| `id`     | `string` | auto        | Si falta, se asigna a `{baseId}-description` (incluido en `aria-describedby` del control). |
+#### Atributos gestionados automáticamente
+
+- `id` — Se asigna `{baseId}-description`. Incluido en `aria-describedby` del control.
 
 ### `hp-field-error`
 
-#### Atributos
+Mensaje de error del campo.
 
-| Atributo | Tipo     | Por defecto | Descripción                                                                          |
-| :------- | :------- | :---------- | :----------------------------------------------------------------------------------- |
-| `id`     | `string` | auto        | Si falta, se asigna a `{baseId}-error` (incluido en `aria-describedby` del control). |
-| `role`   | `string` | `"alert"`   | Si no está definido, se asigna `alert`.                                              |
+#### Atributos ARIA gestionados automáticamente
+
+- `role="alert"` — Asignado si no se especifica.
+- `id` — Se asigna `{baseId}-error`. Incluido en `aria-describedby` del control.
 
 ### `hp-field-control`
 
-Envoltorio del control real (`input`, `select`, etc.). Inyecta `id`, `aria-labelledby` y `aria-describedby` en el elemento encontrado.
-
-#### Atributos
-
-Ninguno observado por el primitivo.
-
-#### Comportamiento
-
-Busca el **primer** elemento que coincida con el selector interno (`input`, `select`, `textarea`, y ciertos roles: `checkbox`, `switch`, `combobox`, `progressbar`) y le asigna `id`, `aria-labelledby` (desde `hp-field-label`) y `aria-describedby` (descripción y error). Un `MutationObserver` en el control reaplica la vinculación cuando cambian los hijos.
+Wrapper del control real. Inyecta `id`, `aria-labelledby` y `aria-describedby` automáticamente.
 
 ## Accesibilidad
 
-`hp-field` garantiza que todos los elementos de soporte de un formulario estén correctamente vinculados semánticamente sin intervención manual del desarrollador, cumpliendo con los estándares de **WAI-ARIA Labels and Descriptions**.
+`hp-field` garantiza vinculación semántica automática entre label, description, error y control, cumpliendo los estándares WAI-ARIA para Labels and Descriptions.

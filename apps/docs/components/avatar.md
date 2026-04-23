@@ -1,30 +1,6 @@
-# Avatar
+# Avatar <span class="hp-badge">Nuevo</span>
 
-<span class="hp-badge">Nuevo</span>
-
-El componente `hp-avatar` es una representación visual de un usuario o entidad. Gestiona automáticamente la carga de imágenes, errores de red y estados de carga mediante fallbacks inteligentes.
-
-## Instalación
-
-::: code-group
-
-```bash [pnpm]
-pnpm add @headless-primitives/avatar
-```
-
-```bash [npm]
-npm install @headless-primitives/avatar
-```
-
-```bash [yarn]
-yarn add @headless-primitives/avatar
-```
-
-```bash [bun]
-bun add @headless-primitives/avatar
-```
-
-:::
+El componente `hp-avatar` gestiona la representación visual de un usuario o entidad. Maneja automáticamente la carga de imágenes, errores de red y estados de carga mediante fallbacks inteligentes.
 
 ## Demostración
 
@@ -64,6 +40,164 @@ Así se ve `hp-avatar` usando únicamente `@headless-primitives/utils/base.css`.
   </div>
 </div>
 
+<CodeSnippet>
+
+<Flavor only="css">
+
+::: code-group
+
+```html [index.html]
+<hp-avatar delay="600" class="my-avatar">
+  <hp-avatar-image src="user.jpg" alt="Avatar"></hp-avatar-image>
+  <hp-avatar-fallback class="my-fallback">JD</hp-avatar-fallback>
+</hp-avatar>
+```
+
+```css [style.css]
+.my-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.my-avatar hp-avatar-image {
+  display: none;
+}
+
+.my-avatar[data-state="loaded"] hp-avatar-image {
+  display: block;
+}
+
+.my-avatar[data-state="loaded"] .my-fallback {
+  display: none;
+}
+```
+
+:::
+
+</Flavor>
+
+<Flavor only="tailwind">
+
+::: code-group
+
+```html [index.html]
+<hp-avatar delay="600" class="w-12 h-12 rounded-full overflow-hidden group">
+  <hp-avatar-image
+    src="user.jpg"
+    alt="Avatar"
+    class="hidden group-data-[state=loaded]:block w-full h-full object-cover"
+  ></hp-avatar-image>
+  <hp-avatar-fallback
+    class="flex items-center justify-center w-full h-full bg-gray-100 group-data-[state=loaded]:hidden"
+  >
+    JD
+  </hp-avatar-fallback>
+</hp-avatar>
+```
+
+:::
+
+</Flavor>
+
+</CodeSnippet>
+
+## Instalación
+
+::: code-group
+
+```bash [pnpm]
+pnpm add @headless-primitives/avatar
+```
+
+```bash [npm]
+npm install @headless-primitives/avatar
+```
+
+```bash [yarn]
+yarn add @headless-primitives/avatar
+```
+
+```bash [bun]
+bun add @headless-primitives/avatar
+```
+
+:::
+
+## Features
+
+- 🖼️ Gestión automática de estados de carga (`loading`, `loaded`, `error`).
+- ♿️ `role="img"` gestionado automáticamente.
+- 🎨 Sin estilos visuales (Headless).
+- ⏱️ Delay configurable antes de mostrar el fallback (evita parpadeos).
+- 🔄 Fallback automático cuando la imagen falla.
+
+## Anatomía
+
+```html
+<hp-avatar>
+  <hp-avatar-image src="..." alt=""></hp-avatar-image>
+  <hp-avatar-fallback>AB</hp-avatar-fallback>
+</hp-avatar>
+```
+
+## API Reference
+
+### `hp-avatar`
+
+Contenedor raíz que coordina imagen y fallback.
+
+#### Atributos / Propiedades
+
+| Atributo / Propiedad | Tipo     | Por Defecto | Descripción                                                   |
+| -------------------- | -------- | ----------- | ------------------------------------------------------------- |
+| `delay`              | `number` | `0`         | Retraso en ms antes de mostrar el fallback (evita parpadeos). |
+
+#### Eventos
+
+| Evento            | Detalle                                       | Descripción                                |
+| ----------------- | --------------------------------------------- | ------------------------------------------ |
+| `hp-state-change` | `{ state: "loading" \| "loaded" \| "error" }` | Se emite cuando cambia el estado de carga. |
+
+#### Métodos
+
+| Método                   | Descripción                                                |
+| ------------------------ | ---------------------------------------------------------- |
+| `setImageStatus(status)` | Actualiza manualmente el estado (`"loaded"` \| `"error"`). |
+
+#### Atributos ARIA gestionados automáticamente
+
+- `role="img"` — Asignado si no se especifica.
+- `data-state` — `"loading"` | `"loaded"` | `"error"`.
+
+#### Variables CSS
+
+| Variable                       | Descripción                                                        |
+| ------------------------------ | ------------------------------------------------------------------ |
+| `--hp-avatar-fallback-opacity` | Opacidad del fallback (`0`–`1`). Se ajusta según `delay` y estado. |
+
+### `hp-avatar-image`
+
+Inserta un `<img>` interno y notifica al `hp-avatar` padre.
+
+#### Atributos / Propiedades
+
+| Atributo / Propiedad | Tipo     | Por Defecto | Descripción        |
+| -------------------- | -------- | ----------- | ------------------ |
+| `src`                | `string` | `""`        | URL de la imagen.  |
+| `alt`                | `string` | `""`        | Texto alternativo. |
+
+### `hp-avatar-fallback`
+
+Contenido visible durante la carga o si la imagen falla.
+
+## Accesibilidad
+
+- **Semántica**: `role="img"` en el contenedor raíz.
+- **Fallback**: Siempre hay una representación visual válida.
+- **Texto Alternativo**: Se traspasa al atributo `alt` de la imagen interna.
+
 <style>
 .demo-avatar {
   display: inline-flex;
@@ -97,137 +231,3 @@ Así se ve `hp-avatar` usando únicamente `@headless-primitives/utils/base.css`.
   display: none;
 }
 </style>
-
-<CodeSnippet>
-
-<Flavor only="css">
-
-::: code-group
-
-```html [index.html]
-<hp-avatar delay="600" class="my-avatar">
-  <hp-avatar-image src="user.jpg" alt="Avatar" />
-  <hp-avatar-fallback class="my-fallback"> JD </hp-avatar-fallback>
-</hp-avatar>
-```
-
-```css [style.css]
-.my-avatar {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  overflow: hidden;
-}
-
-/* Ocultar imagen hasta que cargue */
-.my-avatar hp-avatar-image {
-  display: none;
-}
-
-.my-avatar[data-state="loaded"] hp-avatar-image {
-  display: block;
-}
-
-/* Ocultar fallback cuando cargue la imagen */
-.my-avatar[data-state="loaded"] .my-fallback {
-  display: none;
-}
-```
-
-:::
-
-</Flavor>
-
-<Flavor only="tailwind">
-
-::: code-group
-
-```html [index.html]
-<hp-avatar delay="600" class="w-12 h-12 rounded-full overflow-hidden group">
-  <hp-avatar-image
-    src="user.jpg"
-    alt="Avatar"
-    class="hidden group-data-[state=loaded]:block w-full h-full object-cover"
-  />
-  <hp-avatar-fallback
-    class="flex items-center justify-center w-full h-full bg-gray-100 group-data-[state=loaded]:hidden"
-  >
-    JD
-  </hp-avatar-fallback>
-</hp-avatar>
-```
-
-:::
-
-</Flavor>
-
-</CodeSnippet>
-
-## Anatomía
-
-El raíz orquesta los estados y aporta `role="img"`. La imagen y el fallback son sub-etiquetas dentro del mismo árbol.
-
-```html
-<hp-avatar>
-  <!-- Imagen que se intenta cargar -->
-  <hp-avatar-image src="..." alt=""></hp-avatar-image>
-  <!-- Visible en carga o error (según delay / estado) -->
-  <hp-avatar-fallback>AB</hp-avatar-fallback>
-</hp-avatar>
-```
-
-## API Reference
-
-### `hp-avatar`
-
-Contenedor raíz: aplica `role="img"`, coordina imagen y fallback, refleja el estado de carga y controla la opacidad del fallback vía CSS.
-
-#### Atributos
-
-| Atributo | Tipo     | Por defecto | Descripción                                                                                                              |
-| :------- | :------- | :---------- | :----------------------------------------------------------------------------------------------------------------------- |
-| `delay`  | `number` | `0`         | Retraso en ms antes de mostrar el fallback (evita parpadeos). Usa la variable `--hp-avatar-fallback-opacity` en el host. |
-| `role`   | `string` | `"img"`     | Si no se define, se asigna `img`.                                                                                        |
-
-#### Estados (`data-*`)
-
-| Atributo     | Valores                            | Descripción                                                                                   |
-| :----------- | :--------------------------------- | :-------------------------------------------------------------------------------------------- |
-| `data-state` | `"loading" \| "loaded" \| "error"` | Estado actual de la carga de la imagen (lo actualiza el raíz al notificar `hp-avatar-image`). |
-
-#### Variables CSS (en el host)
-
-| Variable                       | Descripción                                                                   |
-| :----------------------------- | :---------------------------------------------------------------------------- |
-| `--hp-avatar-fallback-opacity` | Opacidad del fallback (`0`–`1`); el raíz la ajusta según `delay` y el estado. |
-
-#### Eventos
-
-| Evento            | Detalle                                       | Descripción                                            |
-| :---------------- | :-------------------------------------------- | :----------------------------------------------------- |
-| `hp-state-change` | `{ state: "loading" \| "loaded" \| "error" }` | Se emite cuando cambia `data-state` (`bubbles: true`). |
-
-### `hp-avatar-image`
-
-Inserta un `<img>` interno y notifica al ancestro `hp-avatar` cuando la carga termina o falla.
-
-#### Atributos
-
-| Atributo | Tipo     | Por defecto | Descripción                                                      |
-| :------- | :------- | :---------- | :--------------------------------------------------------------- |
-| `src`    | `string` | `""`        | URL de la imagen; observado y sincronizado con el `img` interno. |
-| `alt`    | `string` | `""`        | Texto alternativo del `img` interno.                             |
-
-### `hp-avatar-fallback`
-
-Contenido mostrado mientras carga o si la imagen falla; suele enlazarse visualmente a `--hp-avatar-fallback-opacity`.
-
-#### Atributos
-
-Ninguno observado por el primitivo. El contenido es el light DOM del elemento (texto o hijos).
-
-## Accesibilidad
-
-- **Semántica**: El componente raíz actúa como una imagen consolidada (`role="img"`).
-- **Fallback**: Asegura que siempre haya una representación visual válida del usuario.
-- **Texto Alternativo**: Traspasa la importancia semántica al atributo `alt` de la imagen interna.

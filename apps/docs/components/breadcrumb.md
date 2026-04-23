@@ -1,30 +1,6 @@
-# Breadcrumb
+# Breadcrumb <span class="hp-badge">Nuevo</span>
 
-<span class="hp-badge">Nuevo</span>
-
-El componente `hp-breadcrumb` es un primitivo que implementa el patrón WAI-ARIA Breadcrumb, ayudando a los usuarios a seguir su ubicación dentro de un sitio web. Proporciona una estructura accesible con navegación por teclado y soporte para separadores y elipsis.
-
-## Instalación
-
-::: code-group
-
-```bash [pnpm]
-pnpm add @headless-primitives/breadcrumb
-```
-
-```bash [npm]
-npm install @headless-primitives/breadcrumb
-```
-
-```bash [yarn]
-yarn add @headless-primitives/breadcrumb
-```
-
-```bash [bun]
-bun add @headless-primitives/breadcrumb
-```
-
-:::
+El componente `hp-breadcrumb` implementa el patrón [WAI-ARIA Breadcrumb](https://www.w3.org/WAI/ARIA/apg/patterns/breadcrumb/), proporcionando una estructura de navegación accesible con soporte para separadores, elipsis y página actual.
 
 ## Demostración
 
@@ -71,47 +47,6 @@ bun add @headless-primitives/breadcrumb
     </hp-breadcrumb-list>
   </hp-breadcrumb>
 </div>
-
-<style>
-.demo-breadcrumb {
-  font-family: var(--vp-font-family-base);
-}
-.demo-list {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-.demo-item {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-.demo-link {
-  color: var(--vp-c-brand-1);
-  text-decoration: none;
-  font-size: 14px;
-}
-.demo-link:hover {
-  text-decoration: underline;
-}
-.demo-page {
-  color: var(--vp-c-text-2);
-  font-weight: 500;
-  font-size: 14px;
-}
-.demo-separator {
-  color: var(--vp-c-divider);
-  font-size: 14px;
-}
-.demo-ellipsis {
-  color: var(--vp-c-text-3);
-  font-size: 14px;
-}
-</style>
 
 <CodeSnippet>
 
@@ -180,15 +115,42 @@ bun add @headless-primitives/breadcrumb
 
 </CodeSnippet>
 
-## Anatomía
+## Instalación
 
-El componente Breadcrumb sigue una estructura anidada para establecer la navegación:
+::: code-group
+
+```bash [pnpm]
+pnpm add @headless-primitives/breadcrumb
+```
+
+```bash [npm]
+npm install @headless-primitives/breadcrumb
+```
+
+```bash [yarn]
+yarn add @headless-primitives/breadcrumb
+```
+
+```bash [bun]
+bun add @headless-primitives/breadcrumb
+```
+
+:::
+
+## Features
+
+- ♿️ `role="navigation"`, `aria-label` y `aria-current="page"` gestionados automáticamente.
+- ⌨️ Navegación por teclado con `Enter` y `Space` en los links.
+- 🎨 Sin estilos visuales (Headless).
+- 📐 Soporte para separadores decorativos y elipsis colapsables.
+
+## Anatomía
 
 ```html
 <hp-breadcrumb>
   <hp-breadcrumb-list>
     <hp-breadcrumb-item>
-      <hp-breadcrumb-link href="/">Inicio</hp-breadcrumb-link>
+      <hp-breadcrumb-link href="/"></hp-breadcrumb-link>
       <hp-breadcrumb-separator>/</hp-breadcrumb-separator>
     </hp-breadcrumb-item>
     <hp-breadcrumb-item>
@@ -196,7 +158,7 @@ El componente Breadcrumb sigue una estructura anidada para establecer la navegac
       <hp-breadcrumb-separator>/</hp-breadcrumb-separator>
     </hp-breadcrumb-item>
     <hp-breadcrumb-item>
-      <hp-breadcrumb-page>Actual</hp-breadcrumb-page>
+      <hp-breadcrumb-page></hp-breadcrumb-page>
     </hp-breadcrumb-item>
   </hp-breadcrumb-list>
 </hp-breadcrumb>
@@ -206,62 +168,124 @@ El componente Breadcrumb sigue una estructura anidada para establecer la navegac
 
 ### `hp-breadcrumb`
 
-Contenedor principal que actúa como un elemento de navegación.
+Contenedor principal con semántica de navegación.
 
-#### Atributos
+#### Atributos / Propiedades
 
-| Atributo     | Tipo     | Por defecto  | Descripción                              |
-| :----------- | :------- | :----------- | :--------------------------------------- |
-| `aria-label` | _string_ | "Breadcrumb" | Etiqueta de accesibilidad para el `nav`. |
+| Atributo / Propiedad   | Tipo     | Por Defecto    | Descripción                              |
+| ---------------------- | -------- | -------------- | ---------------------------------------- |
+| `aria-label` / `label` | `string` | `"Breadcrumb"` | Etiqueta de accesibilidad para el `nav`. |
 
-#### Propiedades
+#### Atributos ARIA gestionados automáticamente
 
-| Propiedad | Tipo     | Descripción                               |
-| :-------- | :------- | :---------------------------------------- |
-| `label`   | `string` | Obtiene o establece el `aria-label` (nav) |
+- `role="navigation"` — Asignado si no se especifica.
+- `aria-label` — Sincronizado con la propiedad `label`.
+
+### `hp-breadcrumb-list`
+
+Contenedor de lista para los items.
+
+### `hp-breadcrumb-item`
+
+Wrapper de cada item del breadcrumb.
 
 ### `hp-breadcrumb-link`
 
-Enlace de navegación dentro del breadcrumb.
+Enlace de navegación.
 
-#### Atributos
+#### Atributos / Propiedades
 
-| Atributo | Tipo     | Descripción                    |
-| :------- | :------- | :----------------------------- |
-| `href`   | _string_ | URL a la que apunta el enlace. |
+| Atributo / Propiedad | Tipo     | Por Defecto | Descripción     |
+| -------------------- | -------- | ----------- | --------------- |
+| `href`               | `string` | `""`        | URL del enlace. |
+
+#### Eventos
+
+| Evento     | Detalle            | Descripción                         |
+| ---------- | ------------------ | ----------------------------------- |
+| `hp-click` | `{ href: string }` | Se emite al hacer click en el link. |
+
+#### Atributos ARIA gestionados automáticamente
+
+- `role="link"` — Asignado si no se especifica.
+- `tabindex="0"` — Habilitado cuando tiene `href`.
 
 ### `hp-breadcrumb-page`
 
-Representa la página actual en el breadcrumb.
+Página actual en el breadcrumb.
 
-#### Atributos ARIA gestionados
+#### Atributos ARIA gestionados automáticamente
 
-- `role="link"` - Asignado automáticamente
-- `aria-current="page"` - Indica que es el elemento actual
+- `role="link"` — Asignado si no se especifica.
+- `aria-current="page"` — Siempre presente.
 
 ### `hp-breadcrumb-separator`
 
-Elemento decorativo entre items.
+Separador decorativo entre items.
 
-#### Atributos ARIA gestionados
+#### Atributos ARIA gestionados automáticamente
 
-- `aria-hidden="true"` - Oculto para screen readers
-- `role="presentation"` - Semánticamente decorativo
+- `aria-hidden="true"` — Oculto para screen readers.
+- `role="presentation"` — Semánticamente decorativo.
 
 ### `hp-breadcrumb-ellipsis`
 
-Representa un estado colapsado.
+Indicador de estado colapsado.
 
-#### Atributos ARIA gestionados
+#### Atributos ARIA gestionados automáticamente
 
-- `aria-hidden="true"`
-- `role="presentation"`
+- `aria-hidden="true"` — Oculto para screen readers.
+- `role="presentation"` — Semánticamente decorativo.
 
 ## Accesibilidad
 
-`hp-breadcrumb` implementa el patrón **WAI-ARIA Breadcrumb**:
+Adhiere al [patrón WAI-ARIA APG para Breadcrumb](https://www.w3.org/WAI/ARIA/apg/patterns/breadcrumb/).
 
-- **Navegación**: Utiliza `role="navigation"` y `aria-label` para identificar el área.
-- **Página Actual**: Identifica el último elemento con `aria-current="page"`.
-- **Separadores**: Oculta los separadores visuales mediante `aria-hidden="true"`.
-- **Keyboard**: Soporta navegación por teclado estándar para enlaces.
+### Navegación por teclado
+
+| Tecla   | Acción                         |
+| ------- | ------------------------------ |
+| `Enter` | Activa el link bajo foco.      |
+| `Space` | Activa el link bajo foco.      |
+| `Tab`   | Navega entre links focusables. |
+
+<style>
+.demo-breadcrumb {
+  font-family: var(--vp-font-family-base);
+}
+.demo-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.demo-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.demo-link {
+  color: var(--vp-c-brand-1);
+  text-decoration: none;
+  font-size: 14px;
+}
+.demo-link:hover {
+  text-decoration: underline;
+}
+.demo-page {
+  color: var(--vp-c-text-2);
+  font-weight: 500;
+  font-size: 14px;
+}
+.demo-separator {
+  color: var(--vp-c-divider);
+  font-size: 14px;
+}
+.demo-ellipsis {
+  color: var(--vp-c-text-3);
+  font-size: 14px;
+}
+</style>

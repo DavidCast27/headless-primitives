@@ -6,6 +6,15 @@
   --hp-demo-radius: 12px;
 }
 
+/* Badge inline en headings */
+.hp-badge {
+  float: right;
+  font-size: 0.4em;
+  padding: 0.01rem 0.6em;
+  background: var(--vp-c-brand-soft);
+  color: var(--vp-c-brand-1);
+}
+
 /* Contenedor universal para demos en MD */
 .hp-demo-card {
   margin: 2rem 0;

@@ -1,54 +1,6 @@
----
-badge: Nuevo
----
+# Alert Dialog <span class="hp-badge">Nuevo</span>
 
-# Alert Dialog
-
-<span class="hp-badge">Nuevo</span>
-
-Variante especializada de Dialog para situaciones que requieren confirmación o alerta urgente del usuario. Usa `role="alertdialog"` para máxima accesibilidad.
-
-## Instalación
-
-AlertDialog utiliza el componente Dialog existente. Asegúrate de tener instalado:
-
-::: code-group
-
-```bash [pnpm]
-pnpm add @headless-primitives/dialog
-```
-
-```bash [npm]
-npm install @headless-primitives/dialog
-```
-
-```bash [yarn]
-yarn add @headless-primitives/dialog
-```
-
-```bash [bun]
-bun add @headless-primitives/dialog
-```
-
-:::
-
-## Anatomía
-
-```html
-<hp-dialog data-alert="true" aria-labelledby="alert-title" aria-describedby="alert-body">
-  <hp-dialog-backdrop></hp-dialog-backdrop>
-
-  <hp-dialog-content role="alertdialog" aria-modal="true">
-    <h2 id="alert-title">Confirmar acción</h2>
-    <p id="alert-body">¿Deseas continuar? Esta acción es irreversible.</p>
-
-    <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
-      <button id="cancel">Cancelar</button>
-      <button id="confirm">Confirmar</button>
-    </div>
-  </hp-dialog-content>
-</hp-dialog>
-```
+Variante especializada de Dialog para situaciones que requieren confirmación o alerta urgente del usuario. Usa `role="alertdialog"` y bloquea tanto `Escape` como click en backdrop para forzar una acción explícita. Implementa el patrón [WAI-ARIA Alert Dialog](https://www.w3.org/WAI/ARIA/apg/patterns/alertdialog/).
 
 ## Demostración
 
@@ -79,56 +31,12 @@ Así se ve `hp-dialog` con `data-alert` usando únicamente `@headless-primitives
       <p id="demo-alert-body">¿Estás seguro de que deseas eliminar este elemento? Esta acción no se puede deshacer.</p>
       <div style="display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 1.5rem;">
         <button class="demo-btn secondary" onclick="document.getElementById('demo-alert-dialog').close()">Cancelar</button>
-        <button class="demo-btn danger" onclick="alert('Elemento eliminado'); document.getElementById('demo-alert-dialog').close()">Eliminar</button>
+        <button class="demo-btn danger" onclick="document.getElementById('demo-alert-dialog').close()">Eliminar</button>
       </div>
     </hp-dialog-content>
   </hp-dialog>
   <button class="demo-btn primary" onclick="document.getElementById('demo-alert-dialog').open()">Mostrar Alert Dialog</button>
 </div>
-
-<style>
-/* hp-* display:block via base.css [data-hp-component] */
-.demo-btn {
-  font-family: inherit;
-  font-size: 0.9rem;
-  font-weight: 500;
-  padding: 8px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s;
-  border: 1px solid transparent;
-}
-.demo-btn.primary { background: var(--vp-c-brand-1); color: white; }
-.demo-btn.secondary { background: transparent; border-color: var(--vp-c-divider); color: var(--vp-c-text-1); }
-.demo-btn.danger { background: #dc2626; color: white; }
-.demo-btn:hover { opacity: 0.9; transform: translateY(-1px); }
-.demo-alert-backdrop {
-  position: fixed;
-  top: 0; left: 0; width: 100%; height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(4px);
-}
-.demo-alert-content {
-  background: var(--vp-c-bg);
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 12px;
-  padding: 2rem;
-  max-width: 400px;
-  width: 90%;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-}
-.demo-alert-content h2 {
-  margin: 0 0 0.5rem 0;
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: var(--vp-c-text-1);
-}
-.demo-alert-content p {
-  margin: 0;
-  color: var(--vp-c-text-2);
-  line-height: 1.5;
-}
-</style>
 
 <CodeSnippet>
 <Flavor only="css">
@@ -146,7 +54,6 @@ Así se ve `hp-dialog` con `data-alert` usando únicamente `@headless-primitives
   <hp-dialog-content class="dialog-content" role="alertdialog" aria-modal="true">
     <h2 id="alert-title">Confirmar eliminación</h2>
     <p id="alert-body">¿Estás seguro? Esta acción no se puede deshacer.</p>
-
     <div style="display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 1.5rem;">
       <button id="cancel-alert">Cancelar</button>
       <button id="confirm-alert" class="danger">Eliminar</button>
@@ -161,7 +68,7 @@ Así se ve `hp-dialog` con `data-alert` usando únicamente `@headless-primitives
   document.getElementById("open-alert").addEventListener("click", () => dialog.open());
   document.getElementById("cancel-alert").addEventListener("click", () => dialog.close());
   document.getElementById("confirm-alert").addEventListener("click", () => {
-    alert("¡Confirmado!");
+    console.log("Confirmado");
     dialog.close();
   });
 </script>
@@ -203,7 +110,9 @@ Así se ve `hp-dialog` con `data-alert` usando únicamente `@headless-primitives
 
 <Flavor only="tailwind">
 
-```html
+::: code-group
+
+```html [index.html]
 <hp-dialog
   id="alert-dialog"
   data-alert="true"
@@ -211,7 +120,6 @@ Así se ve `hp-dialog` con `data-alert` usando únicamente `@headless-primitives
   aria-describedby="alert-body"
 >
   <hp-dialog-backdrop class="fixed inset-0 bg-black/50 backdrop-blur-sm"></hp-dialog-backdrop>
-
   <hp-dialog-content
     role="alertdialog"
     aria-modal="true"
@@ -219,7 +127,6 @@ Así se ve `hp-dialog` con `data-alert` usando únicamente `@headless-primitives
   >
     <h2 id="alert-title" class="text-lg font-semibold mb-2">Confirmar eliminación</h2>
     <p id="alert-body" class="text-gray-600 mb-6">Esta acción no se puede deshacer.</p>
-
     <div class="flex justify-end gap-2">
       <button
         id="cancel-alert"
@@ -237,83 +144,106 @@ Así se ve `hp-dialog` con `data-alert` usando únicamente `@headless-primitives
 <button id="open-alert" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
   Open Alert
 </button>
-
-<script>
-  const dialog = document.getElementById("alert-dialog");
-  const openBtn = document.getElementById("open-alert");
-  const cancelBtn = document.getElementById("cancel-alert");
-  const confirmBtn = document.getElementById("confirm-alert");
-
-  openBtn.addEventListener("click", () => dialog.open());
-  cancelBtn.addEventListener("click", () => dialog.close());
-  confirmBtn.addEventListener("click", () => {
-    alert("¡Confirmado!");
-    dialog.close();
-  });
-</script>
 ```
+
+:::
 
 </Flavor>
 </CodeSnippet>
 
+## Instalación
+
+AlertDialog reutiliza `hp-dialog`. Asegúrate de tener instalado:
+
+::: code-group
+
+```bash [pnpm]
+pnpm add @headless-primitives/dialog
+```
+
+```bash [npm]
+npm install @headless-primitives/dialog
+```
+
+```bash [yarn]
+yarn add @headless-primitives/dialog
+```
+
+```bash [bun]
+bun add @headless-primitives/dialog
+```
+
+:::
+
+## Features
+
+- ♿️ `role="alertdialog"` con `aria-modal`, `aria-labelledby` y `aria-describedby`.
+- 🔒 ESC **NO** cierra el dialog — requiere acción explícita del usuario.
+- 🖱️ Click en backdrop **NO** cierra el dialog.
+- ⌨️ Focus trap automático dentro del dialog.
+- 🎨 Sin estilos visuales (Headless) — reutiliza `hp-dialog` con `data-alert`.
+
+## Anatomía
+
+```html
+<hp-dialog data-alert>
+  <hp-dialog-backdrop></hp-dialog-backdrop>
+  <hp-dialog-content>
+    <!-- Título y descripción con aria-labelledby / aria-describedby -->
+    <!-- Botones de acción (sin hp-dialog-close para forzar decisión) -->
+  </hp-dialog-content>
+</hp-dialog>
+```
+
 ## API Reference
 
-AlertDialog reutiliza la API de [`hp-dialog`](./dialog.md) con diferencias semánticas en ARIA:
+Alert Dialog reutiliza la API completa de [`hp-dialog`](./dialog.md) con las siguientes diferencias semánticas:
 
-### Key Attributes
+### `hp-dialog` (con `data-alert`)
 
-| Attribute          | Value         | Purpose                               |
-| :----------------- | :------------ | :------------------------------------ |
-| `role`             | `alertdialog` | Señala al screen reader que es alerta |
-| `aria-modal`       | `true`        | Indica comportamiento modal           |
-| `aria-labelledby`  | ID del título | Vincula el título para accesibilidad  |
-| `aria-describedby` | ID del body   | Vincula la descripción                |
+#### Atributos / Propiedades
 
-### Methods (inherited from Dialog)
+| Atributo / Propiedad | Tipo      | Por Defecto | Descripción                                                 |
+| -------------------- | --------- | ----------- | ----------------------------------------------------------- |
+| `data-alert`         | `boolean` | `false`     | Activa modo alertdialog: ESC no cierra, backdrop no cierra. |
 
-| Method     | Description            |
-| :--------- | :--------------------- |
-| `.open()`  | Abre el alert dialog   |
-| `.close()` | Cierra el alert dialog |
+#### Métodos
 
-### Events (inherited from Dialog)
+| Método    | Descripción             |
+| --------- | ----------------------- |
+| `open()`  | Abre el alert dialog.   |
+| `close()` | Cierra el alert dialog. |
 
-| Event      | Description              |
-| :--------- | :----------------------- |
-| `hp-open`  | Se dispara cuando abre   |
-| `hp-close` | Se dispara cuando cierra |
+#### Eventos
 
-## Behavior
+| Evento     | Detalle | Descripción                          |
+| ---------- | ------- | ------------------------------------ |
+| `hp-open`  | —       | Se emite cuando el dialog se abre.   |
+| `hp-close` | —       | Se emite cuando el dialog se cierra. |
 
-- **Modal**: Bloquea interacción con el resto de la página
-- **Focus Trap**: El foco se atrapa dentro del diálogo
-- **Escape Key**: Presionar ESC **no** cierra el alert dialog (requiere acción explícita)
-- **Backdrop**: Click en el backdrop **no** cierra el alert dialog
-- **No Scroll**: Deshabilita el scroll de la página mientras está abierto
+#### Atributos ARIA clave
 
-## Accessibility
+- `role="alertdialog"` — En el `hp-dialog-content`.
+- `aria-modal="true"` — Siempre presente.
+- `aria-labelledby` — Debe apuntar al ID del título.
+- `aria-describedby` — Debe apuntar al ID de la descripción.
 
-- ✅ `role="alertdialog"` para alertas urgentes
-- ✅ `aria-labelledby` vincula el título
-- ✅ `aria-describedby` vincula la descripción
-- ✅ Focus trap implementado
-- ✅ ESC key para cerrar (con manejo de foco)
-- ✅ ARIA Live region optional para que screen readers anuncien cambios
+## Accesibilidad
 
-## ARIA Patterns
+Adhiere al [patrón WAI-ARIA APG para Alert Dialog](https://www.w3.org/WAI/ARIA/apg/patterns/alertdialog/).
 
-AlertDialog sigue el patrón `alertdialog` de WAI-ARIA:
-https://www.w3.org/WAI/ARIA/apg/patterns/alertdialog/
+### Navegación por teclado
 
-Las diferencias clave vs. Dialog estándar:
+| Tecla             | Acción                                                            |
+| ----------------- | ----------------------------------------------------------------- |
+| `Escape`          | **NO** cierra el alert dialog (requiere acción explícita).        |
+| `Tab`             | Navega entre elementos focusables dentro del dialog (focus trap). |
+| `Shift + Tab`     | Navega en reversa dentro del focus trap.                          |
+| `Enter` / `Space` | Activa los botones de acción.                                     |
 
-- AlertDialog es más urgente (role="alertdialog" vs role="dialog")
-- Generalmente NO se puede dismissar con ESC (solo en ciertos casos)
-- El backdrop usualmente no cierra el diálogo
+## Ejemplos
 
-## Examples
-
-### Delete Confirmation
+### Confirmación de Eliminación
 
 ```html
 <button id="delete-btn">Delete Item</button>
@@ -330,7 +260,6 @@ Las diferencias clave vs. Dialog estándar:
 
 <script>
   const dialog = document.getElementById("delete-dialog");
-
   document.getElementById("delete-btn").addEventListener("click", () => dialog.open());
   document.getElementById("do-delete").addEventListener("click", () => {
     console.log("Item deleted");
@@ -340,27 +269,45 @@ Las diferencias clave vs. Dialog estándar:
 </script>
 ```
 
-### Warning Alert
-
-```html
-<hp-dialog id="warning-dialog" data-alert="true">
-  <hp-dialog-backdrop></hp-dialog-backdrop>
-  <hp-dialog-content
-    role="alertdialog"
-    aria-labelledby="warning-title"
-    aria-describedby="warning-body"
-  >
-    <h2 id="warning-title">Unsaved Changes</h2>
-    <p id="warning-body">You have unsaved changes. Leave anyway?</p>
-    <button>Discard Changes</button>
-    <button>Keep Editing</button>
-  </hp-dialog-content>
-</hp-dialog>
-```
-
-## Notes
-
-- AlertDialog NO debe ser usado para simples confirmaciones. Para eso usa [`Popover`](./popover.md)
-- AlertDialog es para situaciones donde la acción es **irreversible** o **crítica**
-- Si el usuario puede simplicemente ignorar la alerta, usa un [`Toast`](./toast.md) en su lugar
-- Respeta `prefers-reduced-motion` opcionalmente mediante CSS keyframes
+<style>
+.demo-btn {
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1px solid transparent;
+}
+.demo-btn.primary { background: var(--vp-c-brand-1); color: white; }
+.demo-btn.secondary { background: transparent; border-color: var(--vp-c-divider); color: var(--vp-c-text-1); }
+.demo-btn.danger { background: #dc2626; color: white; }
+.demo-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+.demo-alert-backdrop {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+}
+.demo-alert-content {
+  background: var(--vp-c-bg);
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 12px;
+  padding: 2rem;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+.demo-alert-content h2 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--vp-c-text-1);
+}
+.demo-alert-content p {
+  margin: 0;
+  color: var(--vp-c-text-2);
+  line-height: 1.5;
+}
+</style>

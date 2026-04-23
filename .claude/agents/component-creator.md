@@ -207,15 +207,8 @@ For multi-part components (accordion, dialog, tabs):
 
 ## DOCUMENTATION (`apps/docs/components/<name>.md`)
 
-Structure:
-
-1. Title + Badge (e.g., `Nuevo`)
-2. Installation (pnpm / npm / yarn / bun code blocks)
-3. Interactive demo (VitePress component)
-4. Anatomy (DOM structure code snippet)
-5. API per element (properties, events, ARIA attributes)
-6. Code examples: Vanilla CSS + Tailwind CSS flavors
-7. Styling section: how to use `data-state` and CSS variables from `@styles`
+⚠️ **MUST FOLLOW ADR 0012** ⚠️
+When creating the documentation page for the component, you MUST strictly read and follow the blueprint in `docs/adr/0012-premium-documentation-template-v2.md`. This is the single source of truth for the "Premium Documentation Template v2". It contains foolproof markdown snippets, exact table structures, and strict rules against hallucinating React/Vue props in HTML code blocks.
 
 ### ⚠️ Demo styling in VitePress docs
 
