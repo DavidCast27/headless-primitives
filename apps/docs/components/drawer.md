@@ -1,143 +1,8 @@
----
-badge: Nuevo
----
+# Drawer <span class="hp-badge">Nuevo</span>
 
-# Drawer
-
-<span class="hp-badge">Nuevo</span>
-
-Panel deslizante desde cualquier borde del viewport, con backdrop, focus trap y scroll lock.
-
-## Instalación
-
-::: code-group
-
-```bash [pnpm]
-pnpm add @headless-primitives/drawer
-```
-
-```bash [npm]
-npm install @headless-primitives/drawer
-```
-
-```bash [yarn]
-yarn add @headless-primitives/drawer
-```
-
-```bash [bun]
-bun add @headless-primitives/drawer
-```
-
-:::
+El componente `hp-drawer` implementa un panel deslizante desde cualquier borde del viewport, con backdrop, focus trap y scroll lock. Sigue el patrón [WAI-ARIA Dialog (Modal)](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/).
 
 ## Demostración
-
-<div class="hp-demo-card" style="display:flex;gap:0.75rem;flex-wrap:wrap;padding:2rem;">
-  <hp-drawer>
-    <hp-drawer-trigger>
-      <button class="drw-btn">Left Drawer</button>
-    </hp-drawer-trigger>
-    <hp-drawer-backdrop class="drw-backdrop"></hp-drawer-backdrop>
-    <hp-drawer-content class="drw-content" data-position="left">
-      <div class="drw-header">
-        <h2 class="drw-title">Navegación</h2>
-        <hp-drawer-close><button class="drw-close" aria-label="Cerrar">&times;</button></hp-drawer-close>
-      </div>
-      <div class="drw-body"><p>Panel deslizante desde la izquierda. Usa Escape o haz click fuera para cerrar.</p></div>
-    </hp-drawer-content>
-  </hp-drawer>
-
-  <hp-drawer position="right">
-    <hp-drawer-trigger>
-      <button class="drw-btn">Right Drawer</button>
-    </hp-drawer-trigger>
-    <hp-drawer-backdrop class="drw-backdrop"></hp-drawer-backdrop>
-    <hp-drawer-content class="drw-content" data-position="right">
-      <div class="drw-header">
-        <h2 class="drw-title">Ajustes</h2>
-        <hp-drawer-close><button class="drw-close" aria-label="Cerrar">&times;</button></hp-drawer-close>
-      </div>
-      <div class="drw-body"><p>Panel deslizante desde la derecha.</p></div>
-    </hp-drawer-content>
-  </hp-drawer>
-
-  <hp-drawer position="bottom">
-    <hp-drawer-trigger>
-      <button class="drw-btn">Bottom Drawer</button>
-    </hp-drawer-trigger>
-    <hp-drawer-backdrop class="drw-backdrop"></hp-drawer-backdrop>
-    <hp-drawer-content class="drw-content" data-position="bottom">
-      <div class="drw-header">
-        <h2 class="drw-title">Acciones</h2>
-        <hp-drawer-close><button class="drw-close" aria-label="Cerrar">&times;</button></hp-drawer-close>
-      </div>
-      <div class="drw-body"><p>Panel deslizante desde abajo.</p></div>
-    </hp-drawer-content>
-  </hp-drawer>
-</div>
-
-<style>
-.drw-btn {
-  font-family: inherit;
-  font-size: 0.875rem;
-  font-weight: 500;
-  padding: 8px 18px;
-  border-radius: 8px;
-  cursor: pointer;
-  background: var(--vp-c-brand-1);
-  color: #fff;
-  border: none;
-  transition: opacity 0.15s;
-}
-.drw-btn:hover { opacity: 0.85; }
-.drw-backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.45);
-  backdrop-filter: blur(4px);
-  z-index: 999;
-}
-.drw-content {
-  background: var(--vp-c-bg);
-  border: 1px solid var(--vp-c-divider);
-  box-shadow: 0 24px 48px -12px rgba(0,0,0,0.25);
-  z-index: 1000;
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-}
-.drw-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1.25rem 1.5rem;
-  border-bottom: 1px solid var(--vp-c-divider);
-}
-.drw-title {
-  margin: 0;
-  font-size: 1.125rem;
-  font-weight: 600;
-  color: var(--vp-c-text-1);
-}
-.drw-body {
-  padding: 1.25rem 1.5rem;
-  color: var(--vp-c-text-2);
-  font-size: 0.9rem;
-  line-height: 1.6;
-}
-.drw-body p { margin: 0; }
-.drw-close {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 1.25rem;
-  color: var(--vp-c-text-2);
-  padding: 4px 8px;
-  border-radius: 6px;
-  line-height: 1;
-}
-.drw-close:hover { background: var(--vp-c-default-soft); }
-</style>
 
 ### Sin estilos (solo base.css)
 
@@ -153,6 +18,37 @@ Así se ve `hp-drawer` usando únicamente `@headless-primitives/utils/base.css`.
       <p style="padding: 0 1.5rem 1rem; margin: 0; font-size: 0.875rem; opacity: 0.7;">
         Solo <code>base.css</code>. Focus trap, scroll lock y Escape funcionan sin CSS adicional.
       </p>
+    </hp-drawer-content>
+  </hp-drawer>
+</div>
+
+### Con estilos personalizados
+
+<div class="hp-demo-card" style="display:flex;gap:0.75rem;flex-wrap:wrap;padding:2rem;">
+  <hp-drawer>
+    <hp-drawer-trigger>
+      <button class="drw-btn">Left Drawer</button>
+    </hp-drawer-trigger>
+    <hp-drawer-backdrop class="drw-backdrop"></hp-drawer-backdrop>
+    <hp-drawer-content class="drw-content" data-position="left">
+      <div class="drw-header">
+        <h2 class="drw-title">Navegación</h2>
+        <hp-drawer-close><button class="drw-close" aria-label="Cerrar">&times;</button></hp-drawer-close>
+      </div>
+      <div class="drw-body"><p>Panel deslizante desde la izquierda. Usa Escape o haz click fuera para cerrar.</p></div>
+    </hp-drawer-content>
+  </hp-drawer>
+  <hp-drawer position="right">
+    <hp-drawer-trigger>
+      <button class="drw-btn">Right Drawer</button>
+    </hp-drawer-trigger>
+    <hp-drawer-backdrop class="drw-backdrop"></hp-drawer-backdrop>
+    <hp-drawer-content class="drw-content" data-position="right">
+      <div class="drw-header">
+        <h2 class="drw-title">Ajustes</h2>
+        <hp-drawer-close><button class="drw-close" aria-label="Cerrar">&times;</button></hp-drawer-close>
+      </div>
+      <div class="drw-body"><p>Panel deslizante desde la derecha.</p></div>
     </hp-drawer-content>
   </hp-drawer>
 </div>
@@ -255,68 +151,205 @@ Así se ve `hp-drawer` usando únicamente `@headless-primitives/utils/base.css`.
 
 </CodeSnippet>
 
+## Instalación
+
+::: code-group
+
+```bash [pnpm]
+pnpm add @headless-primitives/drawer
+```
+
+```bash [npm]
+npm install @headless-primitives/drawer
+```
+
+```bash [yarn]
+yarn add @headless-primitives/drawer
+```
+
+```bash [bun]
+bun add @headless-primitives/drawer
+```
+
+:::
+
+## Features
+
+- ⌨️ `Escape` cierra el drawer.
+- ♿️ Focus trap, `role="dialog"`, `aria-modal` y `aria-expanded` gestionados automáticamente.
+- 🎨 Sin estilos visuales (Headless) — posicionamiento via `data-position`.
+- 📐 Posición configurable: `left`, `right`, `top`, `bottom`.
+- 🔒 Scroll lock del body mientras el drawer está abierto.
+
+## Anatomía
+
+```html
+<hp-drawer>
+  <hp-drawer-trigger></hp-drawer-trigger>
+  <hp-drawer-backdrop></hp-drawer-backdrop>
+  <hp-drawer-content>
+    <hp-drawer-title></hp-drawer-title>
+    <hp-drawer-close></hp-drawer-close>
+  </hp-drawer-content>
+</hp-drawer>
+```
+
 ## API Reference
 
 ### `hp-drawer`
 
 Contenedor principal que coordina trigger, backdrop y content.
 
-**Atributos:**
+#### Atributos / Propiedades
 
-| Atributo   | Tipo                                     | Default  | Descripción                         |
-| ---------- | ---------------------------------------- | -------- | ----------------------------------- |
-| `position` | `"left" \| "right" \| "top" \| "bottom"` | `"left"` | Borde desde el que desliza el panel |
+| Atributo / Propiedad | Tipo                                           | Por Defecto | Descripción                          |
+| -------------------- | ---------------------------------------------- | ----------- | ------------------------------------ |
+| `position`           | `"left"` \| `"right"` \| `"top"` \| `"bottom"` | `"left"`    | Borde desde el que desliza el panel. |
 
-**Métodos:**
+#### Eventos
 
-- `show()`: Abre el drawer
-- `hide()`: Cierra el drawer
-- `toggle()`: Alterna el estado abierto/cerrado
-- `isOpen`: Getter booleano del estado actual
+| Evento    | Detalle | Descripción                          |
+| --------- | ------- | ------------------------------------ |
+| `hp-show` | —       | Se emite cuando el drawer se abre.   |
+| `hp-hide` | —       | Se emite cuando el drawer se cierra. |
 
-**Eventos:**
+#### Métodos
 
-- `hp-show`: Se emite cuando el drawer se abre
-- `hp-hide`: Se emite cuando el drawer se cierra
+| Método     | Descripción                        |
+| ---------- | ---------------------------------- |
+| `show()`   | Abre el drawer.                    |
+| `hide()`   | Cierra el drawer.                  |
+| `toggle()` | Alterna el estado.                 |
+| `isOpen`   | Getter booleano del estado actual. |
 
 ### `hp-drawer-trigger`
 
-El elemento que abre el drawer al hacer click.
+Elemento que abre el drawer al hacer click.
 
-**Atributos:**
+#### Atributos / Propiedades
 
-- `disabled`: Deshabilita el trigger
-- `aria-expanded`: "true" cuando abierto, "false" cuando cerrado
-- `aria-controls`: ID del content cuando abierto
+| Atributo / Propiedad | Tipo      | Por Defecto | Descripción             |
+| -------------------- | --------- | ----------- | ----------------------- |
+| `disabled`           | `boolean` | `false`     | Deshabilita el trigger. |
+
+#### Atributos ARIA gestionados automáticamente
+
+- `role="button"` — Asignado si no se especifica.
+- `tabindex="0"` — Habilitado cuando no está deshabilitado.
+- `aria-expanded` — `"true"` cuando abierto, `"false"` cuando cerrado.
+- `aria-controls` — ID del content cuando abierto.
+- `aria-disabled` — Sincronizado con `disabled`.
 
 ### `hp-drawer-content`
 
-El panel deslizante con focus trap.
+Panel deslizante con focus trap.
 
-**Atributos gestionados:**
+#### Atributos ARIA gestionados automáticamente
 
-- `role`: `"dialog"`
-- `aria-modal`: `"true"`
-- `aria-hidden`: `"true"` cuando cerrado, ausente cuando abierto
-- `data-state`: `"closed"` / `"open"`
-- `data-position`: Sincronizado desde el `position` del padre
-- `data-hp-overlay-content`: Presente siempre (usado por `base.css` para `position: fixed` y `z-index`)
-
-**Comportamiento:**
-
-- Focus trap activado cuando abierto
-- Escape cierra el drawer
-- Scroll lock del body
+- `role="dialog"` — Siempre presente.
+- `aria-modal="true"` — Siempre presente.
+- `aria-hidden` — `"true"` cuando cerrado, ausente cuando abierto.
+- `data-state` — `"open"` | `"closed"`.
+- `data-position` — Sincronizado desde el `position` del padre.
+- `data-hp-overlay-content` — Presente siempre.
+- `data-hp-drawer-content` — Presente siempre.
+- `id` — Generado automáticamente si no proporcionado.
 
 ### `hp-drawer-backdrop`
 
-El overlay que bloquea interacción con el contenido subyacente.
+Overlay que bloquea interacción y cierra el drawer al hacer click.
 
-**Comportamiento:**
+#### Atributos ARIA gestionados automáticamente
 
-- Click cierra el drawer
-- `data-state`: `"closed"` / `"open"` (gestionado por el padre)
+- `data-hp-backdrop` — Presente siempre.
+- `data-hp-drawer-backdrop` — Presente siempre.
+- `data-state` — `"open"` | `"closed"`.
+
+### `hp-drawer-title`
+
+Título semántico del drawer.
 
 ### `hp-drawer-close`
 
-Elemento que cierra el drawer al hacer click o al pulsar Enter / Espacio.
+Botón de cierre que emite `hp-hide` al activarse.
+
+#### Atributos ARIA gestionados automáticamente
+
+- `role="button"` — Asignado si no se especifica.
+- `tabindex="0"` — Siempre focusable.
+
+## Accesibilidad
+
+Adhiere al [patrón WAI-ARIA APG para Dialog (Modal)](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/).
+
+### Navegación por teclado
+
+| Tecla             | Acción                                                            |
+| ----------------- | ----------------------------------------------------------------- |
+| `Escape`          | Cierra el drawer.                                                 |
+| `Tab`             | Navega entre elementos focusables dentro del drawer (focus trap). |
+| `Shift + Tab`     | Navega en reversa dentro del focus trap.                          |
+| `Enter` / `Space` | Activa el trigger o el botón de cierre.                           |
+
+<style>
+.drw-btn {
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 8px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  background: var(--vp-c-brand-1);
+  color: #fff;
+  border: none;
+  transition: opacity 0.15s;
+}
+.drw-btn:hover { opacity: 0.85; }
+.drw-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  backdrop-filter: blur(4px);
+  z-index: 999;
+}
+.drw-content {
+  background: var(--vp-c-bg);
+  border: 1px solid var(--vp-c-divider);
+  box-shadow: 0 24px 48px -12px rgba(0,0,0,0.25);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+.drw-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--vp-c-divider);
+}
+.drw-title {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--vp-c-text-1);
+}
+.drw-body {
+  padding: 1.25rem 1.5rem;
+  color: var(--vp-c-text-2);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+.drw-body p { margin: 0; }
+.drw-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.25rem;
+  color: var(--vp-c-text-2);
+  padding: 4px 8px;
+  border-radius: 6px;
+  line-height: 1;
+}
+.drw-close:hover { background: var(--vp-c-default-soft); }
+</style>

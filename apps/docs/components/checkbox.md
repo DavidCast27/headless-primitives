@@ -1,30 +1,6 @@
-# Checkbox
+# Checkbox <span class="hp-badge">Nuevo</span>
 
-<span class="hp-badge">Nuevo</span>
-
-El componente `hp-checkbox` es un control que permite al usuario seleccionar una o más opciones de un conjunto, o alternar entre dos estados. Soporta un estado "indeterminado" o mixto.
-
-## Instalación
-
-::: code-group
-
-```bash [pnpm]
-pnpm add @headless-primitives/checkbox
-```
-
-```bash [npm]
-npm install @headless-primitives/checkbox
-```
-
-```bash [yarn]
-yarn add @headless-primitives/checkbox
-```
-
-```bash [bun]
-bun add @headless-primitives/checkbox
-```
-
-:::
+El componente `hp-checkbox` implementa el patrón [WAI-ARIA Checkbox](https://www.w3.org/WAI/ARIA/apg/patterns/checkbox/), permitiendo al usuario seleccionar una o más opciones de un conjunto. Soporta un estado indeterminado (`mixed`).
 
 ## Demostración
 
@@ -53,32 +29,6 @@ Así se ve `hp-checkbox` usando únicamente `@headless-primitives/utils/base.css
     </div>
   </div>
 </div>
-
-<style>
-.demo-checkbox {
-  width: 20px;
-  height: 20px;
-  border: 2px solid var(--vp-c-divider);
-  border-radius: 4px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s;
-  background: transparent;
-}
-
-.demo-checkbox[aria-checked="true"],
-.demo-checkbox[aria-checked="mixed"] {
-  background: var(--vp-c-brand-1);
-  border-color: var(--vp-c-brand-1);
-}
-
-.demo-checkbox:focus-visible {
-  outline: 2px solid var(--vp-c-brand-1);
-  outline-offset: 2px;
-}
-</style>
 
 <CodeSnippet>
 
@@ -144,7 +94,6 @@ Así se ve `hp-checkbox` usando únicamente `@headless-primitives/utils/base.css
     id="terms"
     class="h-5 w-5 rounded border-2 border-gray-300 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 aria-checked:bg-blue-600 aria-checked:border-blue-600 flex items-center justify-center"
   >
-    <!-- El checkmark se puede añadir mediante pseudo-clases en CSS o como hijo -->
   </hp-checkbox>
   <hp-label for="terms" class="text-sm font-medium">Acepto los términos</hp-label>
 </div>
@@ -156,54 +105,131 @@ Así se ve `hp-checkbox` usando únicamente `@headless-primitives/utils/base.css
 
 </CodeSnippet>
 
+## Instalación
+
+::: code-group
+
+```bash [pnpm]
+pnpm add @headless-primitives/checkbox
+```
+
+```bash [npm]
+npm install @headless-primitives/checkbox
+```
+
+```bash [yarn]
+yarn add @headless-primitives/checkbox
+```
+
+```bash [bun]
+bun add @headless-primitives/checkbox
+```
+
+:::
+
+## Features
+
+- ⌨️ Activación por teclado con `Space`.
+- ♿️ `role="checkbox"` y `aria-checked` gestionados automáticamente (incluye estado `mixed`).
+- 🎨 Sin estilos visuales (Headless).
+- ✅ Soporte para estados `checked`, `unchecked` y `mixed` (indeterminado).
+- 📋 Atributo `required` con `aria-required` automático.
+
 ## Anatomía
 
-El estado `checked` y la interacción (ratón y teclado) viven en el elemento raíz.
-
 ```html
-<hp-checkbox> ... </hp-checkbox>
+<hp-checkbox></hp-checkbox>
 ```
 
 ## API Reference
 
 ### `hp-checkbox`
 
-Rol `checkbox`, `aria-checked` sincronizado con `checked`, foco por teclado y activación con `Espacio`.
+Control con `role="checkbox"`, soporte para estados `true`, `false` y `mixed`, activable con `Space`.
 
-#### Atributos
+#### Atributos / Propiedades
 
-| Atributo   | Tipo                  | Por defecto  | Descripción                                                         |
-| :--------- | :-------------------- | :----------- | :------------------------------------------------------------------ |
-| `checked`  | `boolean \| "mixed"`  | ausente      | Estado del checkbox. Puede ser `mixed` para estados indeterminados. |
-| `disabled` | _boolean (presencia)_ | ausente      | Quita `tabindex`, añade `aria-disabled`. Observado.                 |
-| `required` | _boolean (presencia)_ | ausente      | Añade `aria-required="true"` cuando está presente. Observado.       |
-| `role`     | `string`              | `"checkbox"` | Si no se indica, se asigna `checkbox`.                              |
-| `tabindex` | `string`              | `"0"`        | Con `disabled`, se elimina.                                         |
-
-#### Propiedades
-
-| Propiedad  | Tipo                 | Descripción                                            |
-| :--------- | :------------------- | :----------------------------------------------------- |
-| `checked`  | `boolean \| "mixed"` | Getter/setter sincronizado con el atributo `checked`.  |
-| `disabled` | `boolean`            | Getter/setter sincronizado con el atributo `disabled`. |
+| Atributo / Propiedad | Tipo                 | Por Defecto | Descripción                                                  |
+| -------------------- | -------------------- | ----------- | ------------------------------------------------------------ |
+| `checked`            | `boolean \| "mixed"` | `false`     | Estado del checkbox. Puede ser `"mixed"` para indeterminado. |
+| `disabled`           | `boolean`            | `false`     | Quita `tabindex`, añade `aria-disabled`.                     |
+| `required`           | `boolean`            | `false`     | Añade `aria-required="true"`.                                |
 
 #### Métodos
 
 | Método     | Descripción                                                  |
-| :--------- | :----------------------------------------------------------- |
+| ---------- | ------------------------------------------------------------ |
 | `toggle()` | Alterna `checked` si no está `disabled` y emite `hp-change`. |
 
 #### Eventos
 
-| Evento      | Detalle                           | Descripción                                           |
-| :---------- | :-------------------------------- | :---------------------------------------------------- |
-| `hp-change` | `{ checked: boolean \| "mixed" }` | Tras `toggle()` por clic o teclado (`bubbles: true`). |
+| Evento      | Detalle                           | Descripción                                                  |
+| ----------- | --------------------------------- | ------------------------------------------------------------ |
+| `hp-change` | `{ checked: boolean \| "mixed" }` | Se emite cuando el estado cambia por interacción de usuario. |
+
+#### Atributos ARIA gestionados automáticamente
+
+- `role="checkbox"` — Asignado si no se especifica.
+- `aria-checked` — Sincronizado con `checked` (`"true"`, `"false"`, `"mixed"`).
+- `aria-disabled` — Sincronizado con `disabled`.
+- `aria-required` — Sincronizado con `required`.
+- `tabindex="0"` — Habilitado cuando no está deshabilitado.
+- `data-state` — `"checked"` | `"unchecked"` | `"mixed"`.
 
 ## Accesibilidad
 
-`hp-checkbox` implementa el patrón **WAI-ARIA Checkbox**:
+Adhiere al [patrón WAI-ARIA APG para Checkbox](https://www.w3.org/WAI/ARIA/apg/patterns/checkbox/).
 
-- Maneja automáticamente el rol `checkbox`.
-- Sincroniza `aria-checked` basándose en el estado interno (`true`, `false`, `mixed`).
-- Soporta la tecla `Espacio` para alternar el valor.
-- Manejo de foco consistente.
+### Navegación por teclado
+
+| Tecla   | Acción                          |
+| ------- | ------------------------------- |
+| `Space` | Alterna el estado del checkbox. |
+
+## Ejemplos
+
+### Estado Mixto (Indeterminado)
+
+```html
+<hp-checkbox checked="mixed">Seleccionar todos</hp-checkbox>
+```
+
+### Control Programático
+
+```javascript
+const checkbox = document.querySelector("hp-checkbox");
+
+// Cambiar estado
+checkbox.checked = true;
+
+// Escuchar cambios
+checkbox.addEventListener("hp-change", (e) => {
+  console.log("Checked:", e.detail.checked);
+});
+```
+
+<style>
+.demo-checkbox {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--vp-c-divider);
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  background: transparent;
+}
+
+.demo-checkbox[aria-checked="true"],
+.demo-checkbox[aria-checked="mixed"] {
+  background: var(--vp-c-brand-1);
+  border-color: var(--vp-c-brand-1);
+}
+
+.demo-checkbox:focus-visible {
+  outline: 2px solid var(--vp-c-brand-1);
+  outline-offset: 2px;
+}
+</style>

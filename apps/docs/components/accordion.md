@@ -1,30 +1,6 @@
-# Accordion
+# Accordion <span class="hp-badge">Nuevo</span>
 
-<span class="hp-badge">Nuevo</span>
-
-El componente `hp-accordion` es un primitivo que implementa el patrón WAI-ARIA Accordion, permitiendo crear interfaces de acordeón accesibles con múltiples paneles expandibles. Proporciona navegación por teclado completa, estados de deshabilitado y soporte para modo de panel único.
-
-## Instalación
-
-::: code-group
-
-```bash [pnpm]
-pnpm add @headless-primitives/accordion
-```
-
-```bash [npm]
-npm install @headless-primitives/accordion
-```
-
-```bash [yarn]
-yarn add @headless-primitives/accordion
-```
-
-```bash [bun]
-bun add @headless-primitives/accordion
-```
-
-:::
+El componente `hp-accordion` implementa el patrón [WAI-ARIA Accordion](https://www.w3.org/WAI/ARIA/apg/patterns/accordion/), permitiendo crear interfaces de acordeón accesibles con múltiples paneles expandibles, navegación por teclado completa y soporte para modo de panel único.
 
 ## Demostración
 
@@ -69,72 +45,6 @@ Así se ve `hp-accordion` usando únicamente `@headless-primitives/utils/base.cs
     </hp-accordion-item>
   </hp-accordion>
 </div>
-
-<style>
-hp-accordion,
-hp-accordion-item,
-hp-accordion-trigger,
-hp-accordion-content {
-  display: block;
-}
-hp-accordion-content[hidden] {
-  display: none;
-}
-.demo-accordion {
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 8px;
-  overflow: hidden;
-  background: var(--vp-c-bg-soft);
-  max-width: 500px;
-}
-hp-accordion-item {
-  border-bottom: 1px solid var(--vp-c-divider);
-}
-hp-accordion-item:last-child {
-  border-bottom: none;
-}
-.demo-trigger {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  padding: 16px;
-  background: var(--vp-c-bg-soft);
-  border: none;
-  cursor: pointer;
-  font-size: 15px;
-  font-weight: 500;
-  color: var(--vp-c-text-1);
-}
-.demo-trigger:hover {
-  background: var(--vp-c-bg-mute);
-}
-.demo-trigger:focus {
-  outline: 2px solid var(--vp-c-brand-1);
-  outline-offset: -2px;
-}
-.demo-trigger[aria-expanded="true"] .demo-icon {
-  transform: rotate(180deg);
-}
-.demo-content {
-  padding: 16px;
-  background: var(--vp-c-bg);
-  border-top: 1px solid var(--vp-c-divider);
-}
-.demo-content[hidden] {
-  display: none;
-}
-.demo-content p {
-  margin: 0;
-  color: var(--vp-c-text-2);
-  line-height: 1.6;
-}
-.demo-icon {
-  font-size: 12px;
-  transition: transform 0.2s;
-  color: var(--vp-c-text-2);
-}
-</style>
 
 <CodeSnippet>
 
@@ -294,19 +204,43 @@ hp-accordion-trigger[aria-expanded="true"] .transition-transform {
 
 </CodeSnippet>
 
-## Anatomía
+## Instalación
 
-El componente Accordion sigue una estructura anidada que establece las relaciones ARIA correctas:
+::: code-group
+
+```bash [pnpm]
+pnpm add @headless-primitives/accordion
+```
+
+```bash [npm]
+npm install @headless-primitives/accordion
+```
+
+```bash [yarn]
+yarn add @headless-primitives/accordion
+```
+
+```bash [bun]
+bun add @headless-primitives/accordion
+```
+
+:::
+
+## Features
+
+- ⌨️ Navegación completa por teclado (flechas, Home, End).
+- ♿️ Relaciones ARIA gestionadas automáticamente (`aria-expanded`, `aria-controls`, `aria-labelledby`).
+- 🎨 Sin estilos visuales (Headless) — tú decides el diseño.
+- ⚡️ Modo `single-panel` para acordeones tipo exclusivo.
+- 🔒 Estado `disabled` propagable desde el root a todos los ítems.
+
+## Anatomía
 
 ```html
 <hp-accordion>
-  <hp-accordion-item value="item-1">
-    <hp-accordion-trigger> Título del Panel </hp-accordion-trigger>
-    <hp-accordion-content> Contenido del panel... </hp-accordion-content>
-  </hp-accordion-item>
-  <hp-accordion-item value="item-2">
-    <hp-accordion-trigger> Otro Título </hp-accordion-trigger>
-    <hp-accordion-content> Otro contenido... </hp-accordion-content>
+  <hp-accordion-item>
+    <hp-accordion-trigger></hp-accordion-trigger>
+    <hp-accordion-content></hp-accordion-content>
   </hp-accordion-item>
 </hp-accordion>
 ```
@@ -317,105 +251,83 @@ El componente Accordion sigue una estructura anidada que establece las relacione
 
 Contenedor principal que coordina múltiples paneles de acordeón.
 
-#### Atributos
+#### Atributos / Propiedades
 
-| Atributo       | Tipo                  | Por defecto | Descripción                                                   |
-| :------------- | :-------------------- | :---------- | :------------------------------------------------------------ |
-| `single-panel` | _boolean (presencia)_ | ausente     | Si está presente, solo un panel puede estar abierto a la vez. |
-| `disabled`     | _boolean (presencia)_ | ausente     | Si está presente, deshabilita todos los paneles del acordeón. |
-
-#### Propiedades
-
-| Propiedad     | Tipo      | Descripción                                  |
-| :------------ | :-------- | :------------------------------------------- |
-| `singlePanel` | `boolean` | Obtiene o establece el modo de panel único.  |
-| `disabled`    | `boolean` | Obtiene o establece el estado deshabilitado. |
+| Atributo / Propiedad | Tipo      | Por Defecto | Descripción                                                   |
+| -------------------- | --------- | ----------- | ------------------------------------------------------------- |
+| `single-panel`       | `boolean` | `false`     | Si está presente, solo un panel puede estar abierto a la vez. |
+| `disabled`           | `boolean` | `false`     | Si está presente, deshabilita todos los paneles del acordeón. |
 
 #### Eventos
 
-| Evento      | Detalle                            | Descripción                                            |
-| :---------- | :--------------------------------- | :----------------------------------------------------- |
-| `hp-change` | `{ open: boolean, value: string }` | Se dispara cuando cambia el estado de cualquier panel. |
+| Evento      | Detalle                            | Descripción                                                      |
+| ----------- | ---------------------------------- | ---------------------------------------------------------------- |
+| `hp-change` | `{ open: boolean, value: string }` | Se dispara cuando cambia el estado de cualquier panel (bubbles). |
 
 ### `hp-accordion-item`
 
 Panel individual dentro del acordeón.
 
-#### Atributos
+#### Atributos / Propiedades
 
-| Atributo   | Tipo                  | Por defecto | Descripción                                           |
-| :--------- | :-------------------- | :---------- | :---------------------------------------------------- |
-| `value`    | _string_              | auto        | Identificador único del panel.                        |
-| `open`     | _boolean (presencia)_ | ausente     | Si está presente, el panel está expandido. Observado. |
-| `disabled` | _boolean (presencia)_ | ausente     | Si está presente, deshabilita solo este panel.        |
-
-#### Propiedades
-
-| Propiedad  | Tipo      | Descripción                                  |
-| :--------- | :-------- | :------------------------------------------- |
-| `value`    | `string`  | Obtiene o establece el valor del panel.      |
-| `open`     | `boolean` | Obtiene o establece el estado de expansión.  |
-| `disabled` | `boolean` | Obtiene o establece el estado deshabilitado. |
+| Atributo / Propiedad | Tipo      | Por Defecto | Descripción                                    |
+| -------------------- | --------- | ----------- | ---------------------------------------------- |
+| `value`              | `string`  | auto (UUID) | Identificador único del panel.                 |
+| `open`               | `boolean` | `false`     | Si está presente, el panel está expandido.     |
+| `disabled`           | `boolean` | `false`     | Si está presente, deshabilita solo este panel. |
 
 #### Eventos
 
-| Evento      | Detalle                            | Descripción                                         |
-| :---------- | :--------------------------------- | :-------------------------------------------------- |
-| `hp-open`   | `{ value: string }`                | Se dispara cuando el panel se expande.              |
-| `hp-close`  | `{ value: string }`                | Se dispara cuando el panel se contrae.              |
-| `hp-change` | `{ open: boolean, value: string }` | Se dispara en cualquier cambio de estado (bubbles). |
+| Evento      | Detalle                            | Descripción                               |
+| ----------- | ---------------------------------- | ----------------------------------------- |
+| `hp-open`   | `{ value: string }`                | Se dispara cuando el panel se expande.    |
+| `hp-close`  | `{ value: string }`                | Se dispara cuando el panel se contrae.    |
+| `hp-change` | `{ open: boolean, value: string }` | Se dispara en cualquier cambio de estado. |
 
 ### `hp-accordion-trigger`
 
 Botón que controla la visibilidad del contenido del panel.
 
-#### Atributos
+#### Atributos / Propiedades
 
-| Atributo   | Tipo                  | Por defecto | Descripción                                  |
-| :--------- | :-------------------- | :---------- | :------------------------------------------- |
-| `disabled` | _boolean (presencia)_ | heredado    | Heredado del contenedor `hp-accordion-item`. |
+| Atributo / Propiedad | Tipo      | Por Defecto | Descripción                                  |
+| -------------------- | --------- | ----------- | -------------------------------------------- |
+| `disabled`           | `boolean` | heredado    | Heredado del contenedor `hp-accordion-item`. |
 
-#### Atributos ARIA gestionados
+#### Atributos ARIA gestionados automáticamente
 
-- `role="button"` - Asignado automáticamente si no se especifica
-- `aria-expanded` - Sincronizado con el estado `open` del panel
-- `aria-controls` - Referencia al ID del contenido
-- `tabindex="0"` - Habilitado cuando no está deshabilitado
-
-#### Eventos
-
-| Evento    | Detalle         | Descripción                           |
-| :-------- | :-------------- | :------------------------------------ |
-| `click`   | `MouseEvent`    | Evento nativo, manejado internamente. |
-| `keydown` | `KeyboardEvent` | Soporta `Enter`, `Espacio` y flechas. |
+- `role="button"` — Asignado automáticamente si no se especifica.
+- `aria-expanded` — Sincronizado con el estado `open` del panel.
+- `aria-controls` — Referencia al ID del contenido.
+- `aria-disabled` — Sincronizado con el estado `disabled`.
+- `tabindex="0"` — Habilitado cuando no está deshabilitado.
 
 ### `hp-accordion-content`
 
-Panel de contenido que se muestra u oculta según el estado del panel.
+Panel de contenido que se muestra u oculta según el estado.
 
-#### Atributos
+#### Atributos ARIA gestionados automáticamente
 
-| Atributo | Tipo                  | Por defecto | Descripción                                             |
-| :------- | :-------------------- | :---------- | :------------------------------------------------------ |
-| `hidden` | _boolean (presencia)_ | gestionado  | Añadido automáticamente cuando el panel está contraído. |
-
-#### Atributos ARIA gestionados
-
-- `role="region"` - Asignado automáticamente si no se especifica
-- `aria-labelledby` - Referencia al ID del trigger
-- `id` - ID único generado automáticamente para la relación ARIA
+- `role="region"` — Asignado automáticamente si no se especifica.
+- `aria-labelledby` — Referencia al ID del trigger.
+- `data-state` — `"open"` | `"closed"` para estilizado CSS.
+- `data-hp-panel` — Presente siempre (usado por `base.css`).
 
 ## Accesibilidad
 
-`hp-accordion` implementa el patrón **WAI-ARIA Accordion**:
+Adhiere al [patrón WAI-ARIA APG para Accordion](https://www.w3.org/WAI/ARIA/apg/patterns/accordion/).
 
-- **Relaciones ARIA**: Gestiona automáticamente `aria-controls`, `aria-labelledby` y `aria-expanded`
-- **Navegación por teclado**: Soporta `Enter`, `Espacio` y flechas direccionales
-- **Gestión de foco**: Manejo adecuado del foco y orden de tabulación
-- **Screen readers**: Anuncia correctamente el estado expandido/contraído
-- **Estados deshabilitados**: Propaga correctamente el estado deshabilitado
+### Navegación por teclado
 
-## Ejemplos de Uso
+| Tecla             | Acción                                        |
+| ----------------- | --------------------------------------------- |
+| `Enter` / `Space` | Activa el trigger y abre/cierra el contenido. |
+| `ArrowDown`       | Mueve el foco al siguiente trigger.           |
+| `ArrowUp`         | Mueve el foco al trigger anterior.            |
+| `Home`            | Mueve el foco al primer trigger.              |
+| `End`             | Mueve el foco al último trigger.              |
+
+## Ejemplos
 
 ### Modo de Panel Único
 
@@ -466,3 +378,69 @@ accordion.singlePanel = true;
   </hp-accordion-item>
 </hp-accordion>
 ```
+
+<style>
+hp-accordion,
+hp-accordion-item,
+hp-accordion-trigger,
+hp-accordion-content {
+  display: block;
+}
+hp-accordion-content[hidden] {
+  display: none;
+}
+.demo-accordion {
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--vp-c-bg-soft);
+  max-width: 500px;
+}
+hp-accordion-item {
+  border-bottom: 1px solid var(--vp-c-divider);
+}
+hp-accordion-item:last-child {
+  border-bottom: none;
+}
+.demo-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 16px;
+  background: var(--vp-c-bg-soft);
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--vp-c-text-1);
+}
+.demo-trigger:hover {
+  background: var(--vp-c-bg-mute);
+}
+.demo-trigger:focus {
+  outline: 2px solid var(--vp-c-brand-1);
+  outline-offset: -2px;
+}
+.demo-trigger[aria-expanded="true"] .demo-icon {
+  transform: rotate(180deg);
+}
+.demo-content {
+  padding: 16px;
+  background: var(--vp-c-bg);
+  border-top: 1px solid var(--vp-c-divider);
+}
+.demo-content[hidden] {
+  display: none;
+}
+.demo-content p {
+  margin: 0;
+  color: var(--vp-c-text-2);
+  line-height: 1.6;
+}
+.demo-icon {
+  font-size: 12px;
+  transition: transform 0.2s;
+  color: var(--vp-c-text-2);
+}
+</style>

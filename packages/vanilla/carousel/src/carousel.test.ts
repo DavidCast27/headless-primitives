@@ -224,14 +224,14 @@ describe("Preservation: navigation behavior", () => {
     }
   });
 
-  // ── Property: hp-carousel-change event emitted on every activeIndex change ─
-  // Every transition via activeIndex setter must emit hp-carousel-change with
+  // ── Property: hp-change event emitted on every activeIndex change ─
+  // Every transition via activeIndex setter must emit hp-change with
   // the correct { activeIndex } in detail.
-  test("every activeIndex change emits hp-carousel-change with correct detail", () => {
+  test("every activeIndex change emits hp-change with correct detail", () => {
     for (let n = 2; n <= 4; n++) {
       const c = makeCarousel(n);
       const received: number[] = [];
-      c.addEventListener("hp-carousel-change", (e: Event) => {
+      c.addEventListener("hp-change", (e: Event) => {
         received.push((e as CustomEvent).detail.activeIndex);
       });
 
@@ -313,6 +313,51 @@ describe("Preservation: navigation behavior", () => {
 
     c.activeIndex = 0;
     next.dispatchEvent(new KeyboardEvent("keydown", { key: " ", bubbles: true }));
+    expect(c.activeIndex).toBe(1);
+  });
+
+  // ── Property: keyboard Enter/Space on hp-carousel-dot triggers goTo() ─
+  test("Enter keydown on hp-carousel-dot triggers goTo()", () => {
+    document.body.innerHTML = `
+      <hp-carousel>
+        <hp-carousel-content>
+          <hp-carousel-item>1</hp-carousel-item>
+          <hp-carousel-item>2</hp-carousel-item>
+          <hp-carousel-item>3</hp-carousel-item>
+        </hp-carousel-content>
+        <hp-carousel-dot index="2" id="dot-2"></hp-carousel-dot>
+      </hp-carousel>
+    `;
+    const c = document.querySelector("hp-carousel") as HpCarousel;
+    const dot = document.querySelector("#dot-2")!;
+    const n = 3;
+    const fakeItems = Array.from({ length: n }, () => document.createElement("hp-carousel-item"));
+    Object.defineProperty(c, "_items", { get: () => fakeItems, configurable: true });
+
+    c.activeIndex = 0;
+    dot.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter", bubbles: true }));
+    expect(c.activeIndex).toBe(2);
+  });
+
+  test("Space keydown on hp-carousel-dot triggers goTo()", () => {
+    document.body.innerHTML = `
+      <hp-carousel>
+        <hp-carousel-content>
+          <hp-carousel-item>1</hp-carousel-item>
+          <hp-carousel-item>2</hp-carousel-item>
+          <hp-carousel-item>3</hp-carousel-item>
+        </hp-carousel-content>
+        <hp-carousel-dot index="1" id="dot-1"></hp-carousel-dot>
+      </hp-carousel>
+    `;
+    const c = document.querySelector("hp-carousel") as HpCarousel;
+    const dot = document.querySelector("#dot-1")!;
+    const n = 3;
+    const fakeItems = Array.from({ length: n }, () => document.createElement("hp-carousel-item"));
+    Object.defineProperty(c, "_items", { get: () => fakeItems, configurable: true });
+
+    c.activeIndex = 0;
+    dot.dispatchEvent(new KeyboardEvent("keydown", { key: " ", bubbles: true }));
     expect(c.activeIndex).toBe(1);
   });
 

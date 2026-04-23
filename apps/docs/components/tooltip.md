@@ -1,34 +1,6 @@
----
-badge: Nuevo
----
+# Tooltip <span class="hp-badge">Nuevo</span>
 
-# Tooltip
-
-<span class="hp-badge">Nuevo</span>
-
-Información flotante que aparece al hacer hover o focus en un elemento.
-
-## Instalación
-
-::: code-group
-
-```bash [pnpm]
-pnpm add @headless-primitives/tooltip
-```
-
-```bash [npm]
-npm install @headless-primitives/tooltip
-```
-
-```bash [yarn]
-yarn add @headless-primitives/tooltip
-```
-
-```bash [bun]
-bun add @headless-primitives/tooltip
-```
-
-:::
+El componente `hp-tooltip` implementa el patrón [WAI-ARIA Tooltip](https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/), mostrando información flotante accesible al hacer hover o focus en un elemento trigger.
 
 ## Demostración
 
@@ -56,46 +28,6 @@ Así se ve `hp-tooltip` usando únicamente `@headless-primitives/utils/base.css`
   </hp-tooltip>
 </div>
 
-<style>
-hp-tooltip { display: inline-block; position: relative; }
-hp-tooltip-trigger { display: inline-block; }
-.demo-btn {
-  font-family: inherit;
-  font-size: 0.9rem;
-  font-weight: 500;
-  padding: 8px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s;
-  border: 1px solid transparent;
-  background: var(--vp-c-brand-1);
-  color: white;
-}
-.demo-tooltip-content {
-  position: absolute;
-  bottom: calc(100% + 8px);
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--vp-c-bg-inverse, #1f2937);
-  color: var(--vp-c-text-inverse, #fff);
-  padding: 6px 10px;
-  border-radius: 6px;
-  font-size: 0.8rem;
-  white-space: nowrap;
-  z-index: 1000;
-  pointer-events: none;
-}
-.demo-tooltip-content::after {
-  content: '';
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  border: 5px solid transparent;
-  border-top-color: var(--vp-c-bg-inverse, #1f2937);
-}
-</style>
-
 <CodeSnippet>
 
 <Flavor only="css">
@@ -119,7 +51,6 @@ hp-tooltip {
 hp-tooltip-trigger {
   display: inline-block;
 }
-/* hp-tooltip-content visibility via base.css: [data-hp-tooltip-content][data-state="closed"] */
 
 .tooltip-trigger {
   padding: 8px 16px;
@@ -183,45 +114,165 @@ hp-tooltip-trigger {
 
 </CodeSnippet>
 
+## Instalación
+
+::: code-group
+
+```bash [pnpm]
+pnpm add @headless-primitives/tooltip
+```
+
+```bash [npm]
+npm install @headless-primitives/tooltip
+```
+
+```bash [yarn]
+yarn add @headless-primitives/tooltip
+```
+
+```bash [bun]
+bun add @headless-primitives/tooltip
+```
+
+:::
+
+## Features
+
+- ♿️ `role="tooltip"` y `aria-describedby` gestionados automáticamente.
+- 🎨 Sin estilos visuales (Headless) — posicionamiento libre.
+- ⏱️ Delays configurables para show/hide (`show-delay`, `hide-delay`).
+- 🔍 Activación por hover (con delay) y focus (inmediato).
+
+## Anatomía
+
+```html
+<hp-tooltip>
+  <hp-tooltip-trigger></hp-tooltip-trigger>
+  <hp-tooltip-content></hp-tooltip-content>
+</hp-tooltip>
+```
+
 ## API Reference
 
 ### `hp-tooltip`
 
-Contenedor principal que coordina el trigger y el content.
+Contenedor principal que coordina trigger y content con delays de hover.
 
-| Evento     | Descripción                           |
-| :--------- | :------------------------------------ |
-| `hp-open`  | Se emite cuando el tooltip se muestra |
-| `hp-close` | Se emite cuando el tooltip se oculta  |
+#### Atributos / Propiedades
+
+| Atributo / Propiedad | Tipo     | Por Defecto | Descripción                                                 |
+| -------------------- | -------- | ----------- | ----------------------------------------------------------- |
+| `show-delay`         | `number` | `300`       | Delay en ms antes de mostrar el tooltip al hacer hover.     |
+| `hide-delay`         | `number` | `150`       | Delay en ms antes de ocultar el tooltip al salir del hover. |
+
+#### Eventos
+
+| Evento     | Detalle | Descripción                            |
+| ---------- | ------- | -------------------------------------- |
+| `hp-open`  | —       | Se emite cuando el tooltip se muestra. |
+| `hp-close` | —       | Se emite cuando el tooltip se oculta.  |
+
+#### Métodos
+
+| Método   | Descripción                           |
+| -------- | ------------------------------------- |
+| `show()` | Muestra el tooltip programáticamente. |
+| `hide()` | Oculta el tooltip programáticamente.  |
 
 ### `hp-tooltip-trigger`
 
-El elemento que activa el tooltip al hacer hover o focus.
+Elemento que activa el tooltip al hacer hover o recibir focus.
 
-| Atributo   | Descripción                                            |
-| :--------- | :----------------------------------------------------- |
-| `tabindex` | Establecido a `"0"` automáticamente si no es focusable |
+#### Atributos / Propiedades
+
+| Atributo / Propiedad | Tipo      | Por Defecto | Descripción             |
+| -------------------- | --------- | ----------- | ----------------------- |
+| `disabled`           | `boolean` | `false`     | Deshabilita el trigger. |
+
+#### Atributos ARIA gestionados automáticamente
+
+- `tabindex="0"` — Habilitado cuando no está deshabilitado.
+- `aria-describedby` — Referencia al ID del content cuando el tooltip es visible.
 
 ### `hp-tooltip-content`
 
-El contenido flotante del tooltip.
+Contenido flotante del tooltip.
 
-| Atributo      | Valor gestionado                    |
-| :------------ | :---------------------------------- |
-| `role`        | `"tooltip"`                         |
-| `aria-hidden` | `"true"` oculto / `"false"` visible |
-| `id`          | Generado automáticamente            |
+#### Atributos ARIA gestionados automáticamente
+
+- `role="tooltip"` — Siempre presente.
+- `aria-hidden` — `"true"` cuando oculto, `"false"` cuando visible.
+- `data-state` — `"open"` | `"closed"`.
+- `data-hp-tooltip-content` — Presente siempre (usado por `base.css`).
+- `id` — Generado automáticamente si no proporcionado.
 
 ## Accesibilidad
 
-- ✅ `role="tooltip"` en el content
-- ✅ `aria-describedby` en el trigger apunta al content cuando visible
-- ✅ Activación por hover (300ms delay) y focus (inmediato)
-- ✅ Se oculta al perder el foco o al salir con el mouse
-- ✅ `Escape` cierra el tooltip
+Adhiere al [patrón WAI-ARIA APG para Tooltip](https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/).
 
-## Notas
+### Navegación por teclado
 
-- La visibilidad del content se controla via `data-state="open|closed"` — usa `base.css` o tus propios estilos basados en `[data-hp-tooltip-content][data-state="closed"]`.
-- Usa `position: relative` en `hp-tooltip` y `position: absolute` en `hp-tooltip-content` para posicionamiento relativo al trigger.
-- Para posicionamiento dinámico (flip, collision detection), aplica las coordenadas desde JS escuchando el evento `hp-open`.
+| Tecla         | Acción                                                  |
+| ------------- | ------------------------------------------------------- |
+| `Tab` (focus) | Muestra el tooltip inmediatamente al recibir foco.      |
+| `Tab` (blur)  | Oculta el tooltip al perder el foco (con `hide-delay`). |
+
+## Ejemplos
+
+### Delays Personalizados
+
+```html
+<hp-tooltip show-delay="500" hide-delay="200">
+  <hp-tooltip-trigger><button>Hover lento</button></hp-tooltip-trigger>
+  <hp-tooltip-content>Aparece después de 500ms</hp-tooltip-content>
+</hp-tooltip>
+```
+
+### Control Programático
+
+```javascript
+const tooltip = document.querySelector("hp-tooltip");
+
+tooltip.show(); // Muestra inmediatamente
+tooltip.hide(); // Oculta inmediatamente
+```
+
+<style>
+hp-tooltip { display: inline-block; position: relative; }
+hp-tooltip-trigger { display: inline-block; }
+.demo-btn {
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1px solid transparent;
+  background: var(--vp-c-brand-1);
+  color: white;
+}
+.demo-tooltip-content {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--vp-c-bg-inverse, #1f2937);
+  color: var(--vp-c-text-inverse, #fff);
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  z-index: 1000;
+  pointer-events: none;
+}
+.demo-tooltip-content::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: var(--vp-c-bg-inverse, #1f2937);
+}
+</style>

@@ -63,5 +63,5 @@ Never use `updated()` or `willUpdate()` for ARIA/state sync.
 ## Key References
 
 - `AGENTS.md` — comprehensive rules for AI agents (Spanish)
-- `docs/adr/` — Architecture Decision Records (ADR 0010: Lit migration, ADR 0011: property+sync pattern, ADR 0002: Light DOM)
+- `docs/adr/` — Architecture Decision Records (ADR 0012: Premium doc template v2, ADR 0010: Lit migration, ADR 0011: property+sync pattern, ADR 0002: Light DOM)
 - `CONTRIBUTING.md` — contributor setup and workflow

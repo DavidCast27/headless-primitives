@@ -1,30 +1,6 @@
-# Collapsible
+# Collapsible <span class="hp-badge">Nuevo</span>
 
-<span class="hp-badge">Nuevo</span>
-
-El componente `hp-collapsible` es un primitivo que implementa el patrón WAI-ARIA Disclosure, permitiendo mostrar u ocultar contenido de manera accesible. Proporciona una base sólida para crear acordeones, FAQs, secciones expandibles y cualquier patrón de revelación de contenido.
-
-## Instalación
-
-::: code-group
-
-```bash [pnpm]
-pnpm add @headless-primitives/collapsible
-```
-
-```bash [npm]
-npm install @headless-primitives/collapsible
-```
-
-```bash [yarn]
-yarn add @headless-primitives/collapsible
-```
-
-```bash [bun]
-bun add @headless-primitives/collapsible
-```
-
-:::
+El componente `hp-collapsible` implementa el patrón [WAI-ARIA Disclosure](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/), permitiendo mostrar u ocultar contenido de manera accesible. Base ideal para FAQs, secciones expandibles y patrones de revelación de contenido.
 
 ## Demostración
 
@@ -52,63 +28,6 @@ Así se ve `hp-collapsible` usando únicamente `@headless-primitives/utils/base.
     </hp-collapsible-content>
   </hp-collapsible>
 </div>
-
-<style>
-hp-collapsible,
-hp-collapsible-trigger,
-hp-collapsible-content {
-  display: block;
-}
-hp-collapsible-content[hidden] {
-  display: none;
-}
-.demo-collapsible {
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 8px;
-  overflow: hidden;
-  background: var(--vp-c-bg-soft);
-  max-width: 400px;
-}
-.demo-trigger {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  padding: 12px 16px;
-  background: var(--vp-c-bg-soft);
-  border: none;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--vp-c-text-1);
-  transition: background-color 0.2s;
-  margin: 0;
-}
-.demo-trigger:hover {
-  background: var(--vp-c-bg-mute);
-}
-.demo-trigger:focus {
-  outline: 2px solid var(--vp-c-brand-1);
-  outline-offset: -2px;
-}
-.demo-icon {
-  font-size: 12px;
-  transition: transform 0.2s;
-  color: var(--vp-c-text-2);
-  margin: 0;
-}
-.demo-content {
-  padding: 16px;
-  background: var(--vp-c-bg);
-  border-top: 1px solid var(--vp-c-divider);
-  margin: 0;
-}
-.demo-content p {
-  margin: 0;
-  color: var(--vp-c-text-2);
-  line-height: 1.6;
-}
-</style>
 
 <CodeSnippet>
 
@@ -178,7 +97,6 @@ hp-collapsible-content[hidden] {
   line-height: 1.6;
 }
 
-/* Animación del icono cuando está abierto */
 hp-collapsible[open] .faq-icon {
   transform: rotate(180deg);
 }
@@ -206,31 +124,48 @@ hp-collapsible[open] .faq-icon {
 </hp-collapsible>
 ```
 
-```css [styles.css]
-/* Rotación del icono cuando está abierto */
-hp-collapsible[open] .fa-icon {
-  @apply rotate-180;
-}
-```
-
 :::
 
 </Flavor>
 
 </CodeSnippet>
 
-## Anatomía
+## Instalación
 
-El componente Collapsible sigue una estructura anidada simple que establece las relaciones ARIA correctas:
+::: code-group
+
+```bash [pnpm]
+pnpm add @headless-primitives/collapsible
+```
+
+```bash [npm]
+npm install @headless-primitives/collapsible
+```
+
+```bash [yarn]
+yarn add @headless-primitives/collapsible
+```
+
+```bash [bun]
+bun add @headless-primitives/collapsible
+```
+
+:::
+
+## Features
+
+- ⌨️ Activación por teclado con `Enter` y `Space`.
+- ♿️ `aria-expanded`, `aria-controls` y `aria-labelledby` gestionados automáticamente.
+- 🎨 Sin estilos visuales (Headless).
+- ⚡️ Controlable via atributo `open` o propiedad JS.
+- 🔒 Estado `disabled` propagable al trigger.
+
+## Anatomía
 
 ```html
 <hp-collapsible>
-  <hp-collapsible-trigger>
-    <!-- Contenido del botón disparador -->
-  </hp-collapsible-trigger>
-  <hp-collapsible-content>
-    <!-- Contenido que se muestra/oculta -->
-  </hp-collapsible-content>
+  <hp-collapsible-trigger></hp-collapsible-trigger>
+  <hp-collapsible-content></hp-collapsible-content>
 </hp-collapsible>
 ```
 
@@ -238,97 +173,64 @@ El componente Collapsible sigue una estructura anidada simple que establece las 
 
 ### `hp-collapsible`
 
-Contenedor principal que gestiona el estado de expansión/contracción y la coordinación ARIA entre trigger y content.
+Contenedor principal que gestiona el estado de expansión/contracción.
 
-#### Atributos
+#### Atributos / Propiedades
 
-| Atributo   | Tipo                  | Por defecto | Descripción                                                   |
-| :--------- | :-------------------- | :---------- | :------------------------------------------------------------ |
-| `open`     | _boolean (presencia)_ | ausente     | Si está presente, el contenido está visible. Observado.       |
-| `disabled` | _boolean (presencia)_ | ausente     | Si está presente, deshabilita todo el collapsible. Observado. |
-
-#### Propiedades
-
-| Propiedad  | Tipo      | Descripción                                  |
-| :--------- | :-------- | :------------------------------------------- |
-| `open`     | `boolean` | Obtiene o establece el estado de expansión.  |
-| `disabled` | `boolean` | Obtiene o establece el estado deshabilitado. |
+| Atributo / Propiedad | Tipo      | Por Defecto | Descripción                                  |
+| -------------------- | --------- | ----------- | -------------------------------------------- |
+| `open`               | `boolean` | `false`     | Si está presente, el contenido está visible. |
+| `disabled`           | `boolean` | `false`     | Deshabilita todo el collapsible.             |
 
 #### Eventos
 
-| Evento      | Detalle              | Descripción                                         |
-| :---------- | :------------------- | :-------------------------------------------------- |
-| `hp-open`   | `{ value: boolean }` | Se dispara cuando el collapsible se abre.           |
-| `hp-close`  | `{ value: boolean }` | Se dispara cuando el collapsible se cierra.         |
-| `hp-change` | `{ open: boolean }`  | Se dispara en cualquier cambio de estado (bubbles). |
+| Evento      | Detalle             | Descripción                                 |
+| ----------- | ------------------- | ------------------------------------------- |
+| `hp-open`   | `{ open: boolean }` | Se dispara cuando el collapsible se abre.   |
+| `hp-close`  | `{ open: boolean }` | Se dispara cuando el collapsible se cierra. |
+| `hp-change` | `{ open: boolean }` | Se dispara en cualquier cambio de estado.   |
 
 ### `hp-collapsible-trigger`
 
-Botón que controla la visibilidad del contenido. Hereda automáticamente el estado deshabilitado del contenedor padre.
+Botón que controla la visibilidad del contenido.
 
-#### Atributos
+#### Atributos / Propiedades
 
-| Atributo   | Tipo                  | Por defecto | Descripción                                          |
-| :--------- | :-------------------- | :---------- | :--------------------------------------------------- |
-| `disabled` | _boolean (presencia)_ | heredado    | Heredado del contenedor `hp-collapsible`. Observado. |
+| Atributo / Propiedad | Tipo      | Por Defecto | Descripción                               |
+| -------------------- | --------- | ----------- | ----------------------------------------- |
+| `disabled`           | `boolean` | heredado    | Heredado del contenedor `hp-collapsible`. |
 
-#### Atributos ARIA gestionados
+#### Atributos ARIA gestionados automáticamente
 
-- `role="button"` - Asignado automáticamente si no se especifica
-- `aria-expanded` - Sincronizado con el estado `open` del contenedor
-- `aria-controls` - Referencia al ID del contenido
-- `tabindex="0"` - Habilitado cuando no está deshabilitado
-
-#### Eventos
-
-| Evento    | Detalle         | Descripción                           |
-| :-------- | :-------------- | :------------------------------------ |
-| `click`   | `MouseEvent`    | Evento nativo, manejado internamente. |
-| `keydown` | `KeyboardEvent` | Soporta `Enter` y `Espacio`.          |
+- `role="button"` — Asignado si no se especifica.
+- `aria-expanded` — Sincronizado con el estado `open` del contenedor.
+- `aria-controls` — Referencia al ID del contenido.
+- `aria-disabled` — Sincronizado con `disabled`.
+- `tabindex="0"` — Habilitado cuando no está deshabilitado.
 
 ### `hp-collapsible-content`
 
-Panel de contenido que se muestra u oculta según el estado del contenedor.
+Panel de contenido que se muestra u oculta según el estado.
 
-#### Atributos
+#### Atributos ARIA gestionados automáticamente
 
-| Atributo | Tipo                  | Por defecto | Descripción                                                 |
-| :------- | :-------------------- | :---------- | :---------------------------------------------------------- |
-| `hidden` | _boolean (presencia)_ | gestionado  | Añadido automáticamente cuando el collapsible está cerrado. |
-
-#### Atributos ARIA gestionados
-
-- `role="region"` - Asignado automáticamente si no se especifica
-- `aria-labelledby` - Referencia al ID del trigger
-- `id` - ID único generado automáticamente para la relación ARIA
+- `role="region"` — Asignado si no se especifica.
+- `aria-labelledby` — Referencia al ID del trigger.
+- `data-state` — `"open"` | `"closed"`.
+- `data-hp-panel` — Presente siempre (usado por `base.css`).
 
 ## Accesibilidad
 
-`hp-collapsible` implementa el patrón **WAI-ARIA Disclosure**:
+Adhiere al [patrón WAI-ARIA APG para Disclosure](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/).
 
-- **Relaciones ARIA**: Gestiona automáticamente `aria-controls`, `aria-labelledby` y `aria-expanded`
-- **Navegación por teclado**: Soporta `Enter` y `Espacio` en el trigger
-- **Gestión de foco**: El trigger mantiene el foco durante la interacción
-- **Screen readers**: Anuncia correctamente el estado expandido/contraído
-- **Estados deshabilitados**: Propaga correctamente el estado deshabilitado
+### Navegación por teclado
 
-## Ejemplos de Uso
+| Tecla   | Acción                    |
+| ------- | ------------------------- |
+| `Enter` | Abre/cierra el contenido. |
+| `Space` | Abre/cierra el contenido. |
 
-### Acordeón Simple
-
-```html
-<div class="accordion">
-  <hp-collapsible>
-    <hp-collapsible-trigger>Sección 1</hp-collapsible-trigger>
-    <hp-collapsible-content>Contenido de la sección 1...</hp-collapsible-content>
-  </hp-collapsible>
-
-  <hp-collapsible>
-    <hp-collapsible-trigger>Sección 2</hp-collapsible-trigger>
-    <hp-collapsible-content>Contenido de la sección 2...</hp-collapsible-content>
-  </hp-collapsible>
-</div>
-```
+## Ejemplos
 
 ### Control Programático
 
@@ -360,3 +262,60 @@ collapsible.addEventListener("hp-change", (e) => {
   </hp-collapsible-content>
 </hp-collapsible>
 ```
+
+<style>
+hp-collapsible,
+hp-collapsible-trigger,
+hp-collapsible-content {
+  display: block;
+}
+hp-collapsible-content[hidden] {
+  display: none;
+}
+.demo-collapsible {
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--vp-c-bg-soft);
+  max-width: 400px;
+}
+.demo-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 12px 16px;
+  background: var(--vp-c-bg-soft);
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--vp-c-text-1);
+  transition: background-color 0.2s;
+  margin: 0;
+}
+.demo-trigger:hover {
+  background: var(--vp-c-bg-mute);
+}
+.demo-trigger:focus {
+  outline: 2px solid var(--vp-c-brand-1);
+  outline-offset: -2px;
+}
+.demo-icon {
+  font-size: 12px;
+  transition: transform 0.2s;
+  color: var(--vp-c-text-2);
+  margin: 0;
+}
+.demo-content {
+  padding: 16px;
+  background: var(--vp-c-bg);
+  border-top: 1px solid var(--vp-c-divider);
+  margin: 0;
+}
+.demo-content p {
+  margin: 0;
+  color: var(--vp-c-text-2);
+  line-height: 1.6;
+}
+</style>

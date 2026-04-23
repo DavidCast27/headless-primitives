@@ -179,13 +179,15 @@ packages/vanilla/<name>/
 
 ## Documentación de componente (`apps/docs/components/<name>.md`)
 
-Estructura estándar:
+Estructura estándar (Premium Template v2 - ADR 0012):
 1. Título + Badge
-2. Instalación (pnpm/npm/yarn/bun)
-3. Demostración — "Sin estilos (solo base.css)" primero, luego con estilos
-4. Anatomía (árbol HTML de etiquetas `hp-*`)
-5. API Reference por custom element
-6. Ejemplos de código: `<CodeSnippet>` con `<Flavor only="css">`, `<Flavor only="tailwind">`, `<Flavor only="base-css">`
+2. Features (capacidades clave como soporte de a11y)
+3. Demostración — "Sin estilos" primero, luego con estilos
+4. Instalación (pnpm/npm/yarn/bun)
+5. Anatomía (árbol HTML de etiquetas `hp-*`)
+6. API Reference por custom element
+7. Accesibilidad (Interacciones de teclado explícitas)
+8. Ejemplos de variaciones y Casos de uso
 
 ## Playground (`apps/playground/src/demos/`)
 

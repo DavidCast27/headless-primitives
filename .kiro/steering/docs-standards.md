@@ -7,15 +7,9 @@ description: Estructura de páginas de docs, demo "Sin estilos" primero, flavors
 
 ## Estructura de página de componente (`apps/docs/components/<name>.md`)
 
-1. Título + Badge (`<span class="hp-badge">Nuevo</span>`)
-2. Instalación (bloques pnpm / npm / yarn / bun con `::: code-group`)
-3. **Demostración** — en este orden:
-   - `### Sin estilos (solo base.css)` — demo en vivo primero
-   - `### Con estilos personalizados` — componente Vue con estilos
-4. Anatomía (snippet HTML con árbol de etiquetas `hp-*`)
-5. API Reference — una subsección `### \`hp-parte\`` por cada custom element
-6. Ejemplos de código con `<CodeSnippet>` y flavors
-7. Sección de estilos con `@headless-primitives/styles`
+⚠️ **EL ESTÁNDAR SE RIGE POR ADR 0012** ⚠️
+Para crear o editar cualquier archivo en `apps/docs/components/`, **DEBES** seguir estricta y rígidamente la anatomía y las plantillas proveídas en `docs/adr/0012-premium-documentation-template-v2.md`.
+Ese archivo contiene el "Premium Documentation Template v2" que incluye las reglas anti-alucinación, estructura de demos, tablas de API y teclado.
 
 ## Demo "Sin estilos (solo base.css)"
 

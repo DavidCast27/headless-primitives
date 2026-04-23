@@ -1,36 +1,10 @@
-# Radio Group
+# Radio Group <span class="hp-badge">Nuevo</span>
 
-<span class="hp-badge">Nuevo</span>
-
-El componente `hp-radio-group` permite al usuario seleccionar una sola opción de un conjunto de opciones mutuamente excluyentes. Implementa el patrón de accesibilidad **Radio Group** con navegación por teclado (roving tabindex).
-
-## Instalación
-
-::: code-group
-
-```bash [pnpm]
-pnpm add @headless-primitives/radio-group
-```
-
-```bash [npm]
-npm install @headless-primitives/radio-group
-```
-
-```bash [yarn]
-yarn add @headless-primitives/radio-group
-```
-
-```bash [bun]
-bun add @headless-primitives/radio-group
-```
-
-:::
+El componente `hp-radio-group` permite seleccionar una sola opción de un conjunto mutuamente excluyente. Implementa el patrón [WAI-ARIA Radio Group](https://www.w3.org/WAI/ARIA/apg/patterns/radio/) con roving tabindex.
 
 ## Demostración
 
 ### Sin estilos (solo base.css)
-
-Así se ve `hp-radio-group` usando únicamente `@headless-primitives/utils/base.css`. La selección exclusiva, `aria-checked` y navegación por flechas funcionan completamente.
 
 <div class="hp-demo-card">
   <hp-radio-group value="op1">
@@ -56,44 +30,6 @@ Así se ve `hp-radio-group` usando únicamente `@headless-primitives/utils/base.
     </hp-radio-group>
   </div>
 </div>
-
-<style>
-.demo-radio-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-.demo-radio-item {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-.demo-radio {
-  width: 18px;
-  height: 18px;
-  border: 2px solid var(--vp-c-divider);
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: transparent;
-}
-.demo-radio[aria-checked="true"] {
-  border-color: var(--vp-c-brand-1);
-}
-.demo-radio[aria-checked="true"]::after {
-  content: "";
-  width: 10px;
-  height: 10px;
-  background: var(--vp-c-brand-1);
-  border-radius: 50%;
-}
-.demo-radio:focus-visible {
-  outline: 2px solid var(--vp-c-brand-1);
-  outline-offset: 2px;
-}
-</style>
 
 <CodeSnippet>
 
@@ -154,9 +90,7 @@ Así se ve `hp-radio-group` usando únicamente `@headless-primitives/utils/base.
       value="1"
       id="r1"
       class="h-5 w-5 rounded-full border-2 border-gray-300 aria-checked:border-blue-600 flex items-center justify-center"
-    >
-      <div class="h-2.5 w-2.5 rounded-full bg-blue-600 hidden group-aria-checked:block"></div>
-    </hp-radio>
+    ></hp-radio>
     <hp-label for="r1">Opción 1</hp-label>
   </div>
 </hp-radio-group>
@@ -167,6 +101,36 @@ Así se ve `hp-radio-group` usando únicamente `@headless-primitives/utils/base.
 </Flavor>
 
 </CodeSnippet>
+
+## Instalación
+
+::: code-group
+
+```bash [pnpm]
+pnpm add @headless-primitives/radio-group
+```
+
+```bash [npm]
+npm install @headless-primitives/radio-group
+```
+
+```bash [yarn]
+yarn add @headless-primitives/radio-group
+```
+
+```bash [bun]
+bun add @headless-primitives/radio-group
+```
+
+:::
+
+## Features
+
+- ⌨️ Navegación con flechas, `Home`, `End` — selección automática al navegar.
+- ♿️ `role="radiogroup"`, `role="radio"`, `aria-checked` y `aria-orientation` automáticos.
+- 🎨 Sin estilos visuales (Headless).
+- 🔒 Soporte para items individuales deshabilitados y grupo completo deshabilitado.
+- 📐 Orientación configurable (`horizontal` / `vertical`).
 
 ## Anatomía
 
@@ -181,35 +145,94 @@ Así se ve `hp-radio-group` usando únicamente `@headless-primitives/utils/base.
 
 ### `hp-radio-group`
 
-#### Atributos
+Contenedor raíz con roving tabindex.
 
-| Atributo      | Tipo                         | Por defecto  | Descripción                                    |
-| :------------ | :--------------------------- | :----------- | :--------------------------------------------- |
-| `value`       | `string`                     | `""`         | Valor de la opción seleccionada.               |
-| `disabled`    | _boolean (presencia)_        | ausente      | Deshabilita todo el grupo.                     |
-| `orientation` | `"horizontal" \| "vertical"` | `"vertical"` | Define la orientación para `aria-orientation`. |
+#### Atributos / Propiedades
+
+| Atributo / Propiedad | Tipo                           | Por Defecto  | Descripción                      |
+| -------------------- | ------------------------------ | ------------ | -------------------------------- |
+| `value`              | `string`                       | `""`         | Valor de la opción seleccionada. |
+| `disabled`           | `boolean`                      | `false`      | Deshabilita todo el grupo.       |
+| `required`           | `boolean`                      | `false`      | Marca el grupo como requerido.   |
+| `orientation`        | `"horizontal"` \| `"vertical"` | `"vertical"` | Orientación del grupo.           |
 
 #### Eventos
 
-| Evento      | Detalle             | Descripción                                   |
-| :---------- | :------------------ | :-------------------------------------------- |
-| `hp-change` | `{ value: string }` | Tras cambiar la selección por clic o teclado. |
+| Evento      | Detalle             | Descripción                 |
+| ----------- | ------------------- | --------------------------- |
+| `hp-change` | `{ value: string }` | Cuando cambia la selección. |
+
+#### Atributos ARIA gestionados automáticamente
+
+- `role="radiogroup"` — Asignado si no se especifica.
+- `aria-orientation` — Sincronizado con `orientation`.
+- `aria-required` — Presente cuando `required` es `true`.
 
 ### `hp-radio`
 
-#### Atributos
+Opción individual dentro del grupo.
 
-| Atributo   | Tipo                  | Por defecto | Descripción                                             |
-| :--------- | :-------------------- | :---------- | :------------------------------------------------------ |
-| `value`    | `string`              | `""`        | Valor único de esta opción.                             |
-| `checked`  | _boolean (presencia)_ | ausente     | Indica si está seleccionada. Sincronizado por el grupo. |
-| `disabled` | _boolean (presencia)_ | ausente     | Deshabilita esta opción individualmente.                |
+#### Atributos / Propiedades
+
+| Atributo / Propiedad | Tipo      | Por Defecto | Descripción                 |
+| -------------------- | --------- | ----------- | --------------------------- |
+| `value`              | `string`  | `""`        | Valor único de esta opción. |
+| `disabled`           | `boolean` | `false`     | Deshabilita esta opción.    |
+
+#### Atributos ARIA gestionados automáticamente
+
+- `role="radio"` — Asignado si no se especifica.
+- `aria-checked` — `"true"` | `"false"`.
+- `aria-disabled` — Sincronizado con `disabled`.
+- `tabindex` — `0` para el seleccionado, `-1` para los demás (roving).
 
 ## Accesibilidad
 
-`hp-radio-group` implementa el patrón **WAI-ARIA Radio Group**:
+Adhiere al [patrón WAI-ARIA APG para Radio Group](https://www.w3.org/WAI/ARIA/apg/patterns/radio/).
 
-- Roving tabindex: Solo el elemento seleccionado (o el primero) es enfocable.
-- Navegación con flechas: `ArrowDown`/`ArrowRight` para la siguiente, `ArrowUp`/`ArrowLeft` para la anterior.
-- Selección automática al navegar con flechas.
-- Rol `radiogroup` para el contenedor y `radio` para los items.
+### Navegación por teclado
+
+| Tecla                      | Acción                          |
+| -------------------------- | ------------------------------- |
+| `ArrowDown` / `ArrowRight` | Selecciona la siguiente opción. |
+| `ArrowUp` / `ArrowLeft`    | Selecciona la opción anterior.  |
+| `Home`                     | Selecciona la primera opción.   |
+| `End`                      | Selecciona la última opción.    |
+
+<style>
+.demo-radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.demo-radio-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.demo-radio {
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--vp-c-divider);
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+}
+.demo-radio[aria-checked="true"] {
+  border-color: var(--vp-c-brand-1);
+}
+.demo-radio[aria-checked="true"]::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  background: var(--vp-c-brand-1);
+  border-radius: 50%;
+}
+.demo-radio:focus-visible {
+  outline: 2px solid var(--vp-c-brand-1);
+  outline-offset: 2px;
+}
+</style>

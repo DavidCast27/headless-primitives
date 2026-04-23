@@ -1,34 +1,6 @@
----
-badge: Nuevo
----
+# Popover <span class="hp-badge">Nuevo</span>
 
-# Popover
-
-<span class="hp-badge">Nuevo</span>
-
-Contenido flotante que se abre al hacer click, con manejo de foco y teclado.
-
-## Instalación
-
-::: code-group
-
-```bash [pnpm]
-pnpm add @headless-primitives/popover
-```
-
-```bash [npm]
-npm install @headless-primitives/popover
-```
-
-```bash [yarn]
-yarn add @headless-primitives/popover
-```
-
-```bash [bun]
-bun add @headless-primitives/popover
-```
-
-:::
+El componente `hp-popover` implementa un contenido flotante anclado a un trigger, con posicionamiento computado, focus trap y cierre automático. Sigue el patrón [WAI-ARIA Dialog (Non-modal)](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/).
 
 ## Demostración
 
@@ -42,30 +14,6 @@ Así se ve `hp-popover` usando únicamente `@headless-primitives/utils/base.css`
     <hp-popover-content>
       <p>Contenido del popover sin estilos.</p>
       <button onclick="this.closest('hp-popover').close()">Cerrar</button>
-    </hp-popover-content>
-  </hp-popover>
-</div>
-
-### Alineamiento
-
-El atributo `align` controla el borde horizontal desde el que se abre el contenido, siempre hacia abajo.
-
-<div class="hp-demo-card" style="gap: 1rem; display: flex; flex-wrap: wrap; justify-content: space-between;">
-  <hp-popover align="start">
-    <hp-popover-trigger>
-      <button class="demo-btn">align="start" (izquierda)</button>
-    </hp-popover-trigger>
-    <hp-popover-content class="demo-popover-content">
-      <p style="margin: 0; font-size: 0.875rem; color: var(--vp-c-text-2);">Alineado al borde izquierdo del trigger.</p>
-    </hp-popover-content>
-  </hp-popover>
-
-  <hp-popover align="end">
-    <hp-popover-trigger>
-      <button class="demo-btn">align="end" (derecha)</button>
-    </hp-popover-trigger>
-    <hp-popover-content class="demo-popover-content">
-      <p style="margin: 0; font-size: 0.875rem; color: var(--vp-c-text-2);">Alineado al borde derecho del trigger.</p>
     </hp-popover-content>
   </hp-popover>
 </div>
@@ -84,37 +32,6 @@ El atributo `align` controla el borde horizontal desde el que se abre el conteni
     </hp-popover-content>
   </hp-popover>
 </div>
-
-<style>
-hp-popover { display: inline-block; }
-hp-popover-trigger { display: inline-block; }
-.demo-btn {
-  font-family: inherit;
-  font-size: 0.9rem;
-  font-weight: 500;
-  padding: 8px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s;
-  border: 1px solid transparent;
-  background: var(--vp-c-brand-1);
-  color: white;
-}
-.demo-btn.secondary {
-  background: transparent;
-  border-color: var(--vp-c-divider);
-  color: var(--vp-c-text-1);
-}
-.demo-btn.secondary:hover { border-color: var(--vp-c-brand-1); }
-.demo-popover-content {
-  background: var(--vp-c-bg);
-  padding: 16px;
-  border-radius: 8px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.08);
-  border: 1px solid var(--vp-c-divider);
-  min-width: 220px;
-}
-</style>
 
 <CodeSnippet>
 
@@ -138,14 +55,12 @@ hp-popover-trigger { display: inline-block; }
 ```css [style.css]
 hp-popover {
   display: inline-block;
-  position: relative; /* hp-popover es el containing block */
+  position: relative;
 }
 hp-popover-trigger {
   display: inline-block;
 }
-/* hp-popover-content visibility via base.css: [data-hp-overlay-content][data-state="closed"] */
-/* El componente gestiona position:absolute y coordenadas top/left automáticamente.
-   Solo necesitas estilos visuales: */
+
 .popover-content {
   background: white;
   padding: 16px;
@@ -199,72 +114,142 @@ hp-popover-trigger {
 
 </CodeSnippet>
 
+## Instalación
+
+::: code-group
+
+```bash [pnpm]
+pnpm add @headless-primitives/popover
+```
+
+```bash [npm]
+npm install @headless-primitives/popover
+```
+
+```bash [yarn]
+yarn add @headless-primitives/popover
+```
+
+```bash [bun]
+bun add @headless-primitives/popover
+```
+
+:::
+
+## Features
+
+- ⌨️ `Escape` cierra el popover y devuelve el foco al trigger.
+- ♿️ `role="dialog"`, `aria-expanded` y `aria-controls` gestionados automáticamente.
+- 🎨 Sin estilos visuales (Headless) — posicionamiento computado automático.
+- 📐 Alineamiento horizontal configurable (`start` / `end`) con flip vertical automático.
+- 🖱️ Click fuera cierra el popover.
+
+## Anatomía
+
+```html
+<hp-popover>
+  <hp-popover-trigger></hp-popover-trigger>
+  <hp-popover-content></hp-popover-content>
+</hp-popover>
+```
+
 ## API Reference
 
 ### `hp-popover`
 
-Contenedor principal que coordina el trigger y el content.
+Contenedor principal que coordina trigger y content con posicionamiento computado.
 
-#### Atributos
+#### Atributos / Propiedades
 
-| Atributo | Tipo                 | Por defecto | Descripción                                                                                                                          |
-| :------- | :------------------- | :---------- | :----------------------------------------------------------------------------------------------------------------------------------- |
-| `align`  | `"start"` \| `"end"` | `"start"`   | Alineamiento horizontal del contenido respecto al trigger. `start` = borde izquierdo del trigger, `end` = borde derecho del trigger. |
-
-#### Métodos
-
-| Método     | Descripción                   |
-| :--------- | :---------------------------- |
-| `open()`   | Abre el popover               |
-| `close()`  | Cierra el popover             |
-| `toggle()` | Alterna el estado del popover |
+| Atributo / Propiedad | Tipo                 | Por Defecto | Descripción                                              |
+| -------------------- | -------------------- | ----------- | -------------------------------------------------------- |
+| `align`              | `"start"` \| `"end"` | `"start"`   | Alineamiento horizontal del content respecto al trigger. |
 
 #### Eventos
 
-| Evento     | Descripción                          |
-| :--------- | :----------------------------------- |
-| `hp-open`  | Se emite cuando el popover se abre   |
-| `hp-close` | Se emite cuando el popover se cierra |
+| Evento     | Detalle | Descripción                           |
+| ---------- | ------- | ------------------------------------- |
+| `hp-open`  | —       | Se emite cuando el popover se abre.   |
+| `hp-close` | —       | Se emite cuando el popover se cierra. |
+
+#### Métodos
+
+| Método     | Descripción                    |
+| ---------- | ------------------------------ |
+| `open()`   | Abre el popover.               |
+| `close()`  | Cierra el popover.             |
+| `toggle()` | Alterna el estado del popover. |
 
 ### `hp-popover-trigger`
 
-El elemento que abre/cierra el popover al hacer click.
+Elemento que abre/cierra el popover al hacer click.
 
-| Atributo        | Valor gestionado                         |
-| :-------------- | :--------------------------------------- |
-| `tabindex`      | `"0"` automáticamente si no es focusable |
-| `aria-expanded` | `"true"` abierto / `"false"` cerrado     |
-| `aria-controls` | ID del content cuando abierto            |
+#### Atributos / Propiedades
+
+| Atributo / Propiedad | Tipo      | Por Defecto | Descripción             |
+| -------------------- | --------- | ----------- | ----------------------- |
+| `disabled`           | `boolean` | `false`     | Deshabilita el trigger. |
+
+#### Atributos ARIA gestionados automáticamente
+
+- `tabindex="0"` — Habilitado cuando no está deshabilitado.
+- `aria-expanded` — `"true"` abierto / `"false"` cerrado.
+- `aria-controls` — ID del content cuando abierto.
 
 ### `hp-popover-content`
 
-El contenido flotante con focus trap.
+Contenido flotante con focus trap y posicionamiento computado.
 
-| Atributo      | Valor gestionado                     |
-| :------------ | :----------------------------------- |
-| `role`        | `"dialog"`                           |
-| `aria-modal`  | `"false"`                            |
-| `aria-hidden` | `"true"` cerrado / `"false"` abierto |
-| `id`          | Generado automáticamente             |
+#### Atributos ARIA gestionados automáticamente
 
-## Comportamiento
-
-- Click en el trigger abre/cierra el popover
-- Click fuera del popover lo cierra
-- `Escape` cierra el popover y devuelve el foco al trigger
-- Focus trap activo mientras está abierto
+- `role="dialog"` — Siempre presente.
+- `aria-modal="false"` — No es modal (permite interacción fuera).
+- `aria-hidden` — `"true"` cerrado / `"false"` abierto.
+- `data-state` — `"open"` | `"closed"`.
+- `data-side` — `"bottom"` | `"top"` (calculado automáticamente).
+- `data-align` — Refleja el valor de `align`.
+- `data-hp-overlay-content` — Presente siempre.
+- `id` — Generado automáticamente si no proporcionado.
 
 ## Accesibilidad
 
-- ✅ `role="dialog"` en el content
-- ✅ `aria-expanded` en el trigger
-- ✅ `aria-controls` vincula trigger con content
-- ✅ Focus trap implementado
-- ✅ `Escape` para cerrar
-- ✅ Click fuera para cerrar
+Adhiere al [patrón WAI-ARIA APG para Dialog (Non-modal)](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/).
 
-## Notas
+### Navegación por teclado
 
-- El componente gestiona `data-state` para visibilidad — usa `base.css` o tus propios estilos basados en `[data-hp-overlay-content][data-state="closed"]`.
-- Usa `position: relative` en `hp-popover` (el containing block) y el componente gestiona `position: absolute` + coordenadas `top`/`left` en `hp-popover-content` automáticamente.
-- Para cerrar desde dentro del content, usa `this.closest('hp-popover').close()`.
+| Tecla             | Acción                                                             |
+| ----------------- | ------------------------------------------------------------------ |
+| `Enter` / `Space` | Abre/cierra el popover desde el trigger.                           |
+| `Escape`          | Cierra el popover y devuelve el foco al trigger.                   |
+| `Tab`             | Navega entre elementos focusables dentro del popover (focus trap). |
+
+<style>
+hp-popover { display: inline-block; }
+hp-popover-trigger { display: inline-block; }
+.demo-btn {
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1px solid transparent;
+  background: var(--vp-c-brand-1);
+  color: white;
+}
+.demo-btn.secondary {
+  background: transparent;
+  border-color: var(--vp-c-divider);
+  color: var(--vp-c-text-1);
+}
+.demo-btn.secondary:hover { border-color: var(--vp-c-brand-1); }
+.demo-popover-content {
+  background: var(--vp-c-bg);
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--vp-c-divider);
+  min-width: 220px;
+}
+</style>

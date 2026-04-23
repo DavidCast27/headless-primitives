@@ -1,32 +1,22 @@
-# Badge
+# Badge <span class="hp-badge">Nuevo</span>
 
-<span class="hp-badge">Nuevo</span>
-
-El componente `hp-badge` es una etiqueta compacta para mostrar estados, contadores o texto corto. Provee una base semántica y accesible para indicadores visuales, con soporte de variantes (`variant`) y tamaños (`size`) controlados por atributos.
-
-## Instalación
-
-::: code-group
-
-```bash [pnpm]
-pnpm add @headless-primitives/badge
-```
-
-```bash [npm]
-npm install @headless-primitives/badge
-```
-
-```bash [yarn]
-yarn add @headless-primitives/badge
-```
-
-```bash [bun]
-bun add @headless-primitives/badge
-```
-
-:::
+El componente `hp-badge` es una etiqueta compacta para mostrar estados, contadores o texto corto. Provee variantes semánticas (`variant`) y tamaños (`size`) controlados por atributos, reflejados en `data-*` para estilizado CSS puro.
 
 ## Demostración
+
+### Sin estilos (solo base.css)
+
+Así se ve `hp-badge` sin ningún estilo visual. Los atributos `data-variant` y `data-size` están en el DOM listos para estilizarse.
+
+<div class="hp-demo-card">
+  <hp-badge variant="default">Default</hp-badge>
+  <hp-badge variant="success">Success</hp-badge>
+  <hp-badge variant="danger">Danger</hp-badge>
+  <hp-badge variant="info" size="sm">Small</hp-badge>
+  <hp-badge variant="warning" size="lg">Large</hp-badge>
+</div>
+
+### Con estilos personalizados
 
 <div class="hp-demo-card" style="display: flex; flex-direction: column; gap: 1.5rem;">
   <div style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
@@ -43,38 +33,7 @@ bun add @headless-primitives/badge
   </div>
 </div>
 
-<style>
-.demo-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 999px;
-  font-family: inherit;
-  font-weight: 600;
-  line-height: 1;
-  white-space: nowrap;
-  padding: 0.25rem 0.625rem;
-  font-size: 0.75rem;
-  box-sizing: border-box;
-  vertical-align: middle;
-}
-.demo-badge--sm { font-size: 0.6875rem; padding: 0.125rem 0.5rem; }
-.demo-badge--lg { font-size: 0.875rem; padding: 0.375rem 0.75rem; }
-</style>
-
-### Sin estilos (solo base.css)
-
-Así se ve `hp-badge` usando únicamente `@headless-primitives/utils/base.css` — sin ningún estilo visual adicional. Los atributos `data-variant` y `data-size` están presentes en el DOM listos para estilizarse.
-
-> **¿Quieres agregar colores?** Usa el atributo `data-variant` que el componente setea automáticamente. Por ejemplo: `hp-badge[data-variant="success"] { background: #f0fdf4; color: #16a34a; }`. O importa `@headless-primitives/styles` para obtener todos los variantes con tokens CSS.
-
-<div class="hp-demo-card">
-  <hp-badge variant="default">Default</hp-badge>
-  <hp-badge variant="success">Success</hp-badge>
-  <hp-badge variant="danger">Danger</hp-badge>
-  <hp-badge variant="info" size="sm">Small</hp-badge>
-  <hp-badge variant="warning" size="lg">Large</hp-badge>
-</div><CodeSnippet>
+<CodeSnippet>
 
 <Flavor only="css">
 
@@ -143,7 +102,6 @@ hp-badge[data-variant="info"] {
 ::: code-group
 
 ```html [index.html]
-<!-- Variante success -->
 <hp-badge
   variant="success"
   class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold border border-green-200 bg-green-50 text-green-700"
@@ -151,7 +109,6 @@ hp-badge[data-variant="info"] {
   Activo
 </hp-badge>
 
-<!-- Variante danger, tamaño pequeño -->
 <hp-badge
   variant="danger"
   size="sm"
@@ -167,60 +124,63 @@ hp-badge[data-variant="info"] {
 
 </CodeSnippet>
 
-## Anatomía
+## Instalación
 
-`hp-badge` es un elemento de un solo nodo. Acepta contenido ranurado (slot) para el texto o ícono que muestra.
+::: code-group
 
-```html
-<hp-badge variant="success" size="md"> Activo </hp-badge>
+```bash [pnpm]
+pnpm add @headless-primitives/badge
 ```
 
-El DOM resultante incluye los atributos de estado sincronizados:
+```bash [npm]
+npm install @headless-primitives/badge
+```
+
+```bash [yarn]
+yarn add @headless-primitives/badge
+```
+
+```bash [bun]
+bun add @headless-primitives/badge
+```
+
+:::
+
+## Features
+
+- 🏷️ Variantes semánticas: `default`, `success`, `warning`, `danger`, `info`.
+- 📐 Tamaños configurables: `sm`, `md`, `lg`.
+- 🎨 Sin estilos visuales (Headless) — se estiliza con `data-variant` y `data-size`.
+- ♿️ Elemento de presentación — accesibilidad delegada al contexto.
+
+## Anatomía
 
 ```html
-<hp-badge
-  data-hp-component="badge"
-  variant="success"
-  size="md"
-  data-variant="success"
-  data-size="md"
->
-  Activo
-</hp-badge>
+<hp-badge variant="success" size="md">Activo</hp-badge>
 ```
 
 ## API Reference
 
 ### `hp-badge`
 
-Custom element inline que envuelve contenido ranurado. No emite eventos propios; su función es meramente semántica y estilística.
+Elemento inline que envuelve contenido ranurado.
 
-#### Atributos
+#### Atributos / Propiedades
 
-| Atributo  | Tipo                                                                | Por defecto | Descripción                                                                               |
-| :-------- | :------------------------------------------------------------------ | :---------- | :---------------------------------------------------------------------------------------- |
-| `variant` | `"default"` \| `"success"` \| `"warning"` \| `"danger"` \| `"info"` | `"default"` | Controla el significado semántico. Se refleja en `data-variant` para estilizarse con CSS. |
-| `size`    | `"sm"` \| `"md"` \| `"lg"`                                          | `"md"`      | Controla el tamaño tipográfico y de padding. Se refleja en `data-size`.                   |
+| Atributo / Propiedad | Tipo                                                                | Por Defecto | Descripción                                        |
+| -------------------- | ------------------------------------------------------------------- | ----------- | -------------------------------------------------- |
+| `variant`            | `"default"` \| `"success"` \| `"warning"` \| `"danger"` \| `"info"` | `"default"` | Semántica del badge. Se refleja en `data-variant`. |
+| `size`               | `"sm"` \| `"md"` \| `"lg"`                                          | `"md"`      | Tamaño del badge. Se refleja en `data-size`.       |
 
-#### Atributos de datos (solo lectura)
+#### Atributos de datos gestionados automáticamente
 
-| Atributo            | Valor sincronizado desde | Descripción                                         |
-| :------------------ | :----------------------- | :-------------------------------------------------- |
-| `data-hp-component` | `"badge"`                | Identificador del componente. Siempre presente.     |
-| `data-variant`      | `variant`                | Espejo de `variant`; usado para los selectores CSS. |
-| `data-size`         | `size`                   | Espejo de `size`; usado para los selectores CSS.    |
-
-#### Slots
-
-| Slot        | Descripción                                     |
-| :---------- | :---------------------------------------------- |
-| _(default)_ | Contenido del badge: texto, número o ícono SVG. |
+- `data-hp-component="badge"` — Siempre presente.
+- `data-variant` — Espejo de `variant`.
+- `data-size` — Espejo de `size`.
 
 ## Accesibilidad
 
-`hp-badge` es un elemento de presentación. Por defecto no tiene `role` ni atributos ARIA propios, ya que su significado debe comunicarse mediante el contexto circundante o mediante un `aria-label` en el elemento padre si la información es crítica.
-
-Para contadores o estados visualmente diferenciados que son la única fuente de información, considera rodear el badge con un `span` con `aria-label` descriptivo:
+`hp-badge` es un elemento de presentación. No tiene `role` ni atributos ARIA propios. Para badges que son la única fuente de información, agrega `aria-label`:
 
 ```html
 <button>
@@ -229,32 +189,21 @@ Para contadores o estados visualmente diferenciados que son la única fuente de 
 </button>
 ```
 
-## Theming
-
-`hp-badge` expone sus variantes a través de custom properties que puedes redefinir:
-
-```css
-:root {
-  /* Variante success */
-  --hp-color-success-bg: #f0fdf4;
-  --hp-color-success: #16a34a;
-  --hp-color-success-border: #bbf7d0;
-
-  /* Variante danger */
-  --hp-color-danger-bg: #fef2f2;
-  --hp-color-danger: #dc2626;
-  --hp-color-danger-border: #fecaca;
-
-  /* Variante warning */
-  --hp-color-warning-bg: #fffbeb;
-  --hp-color-warning: #d97706;
-  --hp-color-warning-border: #fde68a;
-
-  /* Variante info */
-  --hp-color-info-bg: #eff6ff;
-  --hp-color-info: #2563eb;
-  --hp-color-info-border: #bfdbfe;
+<style>
+.demo-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  font-family: inherit;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  padding: 0.25rem 0.625rem;
+  font-size: 0.75rem;
+  box-sizing: border-box;
+  vertical-align: middle;
 }
-```
-
-Usando `@headless-primitives/styles`, todos estos tokens ya están definidos. Solo necesitas sobrescribir los que quieras personalizar.
+.demo-badge--sm { font-size: 0.6875rem; padding: 0.125rem 0.5rem; }
+.demo-badge--lg { font-size: 0.875rem; padding: 0.375rem 0.75rem; }
+</style>
