@@ -1,6 +1,7 @@
 import { defineConfig } from "vitepress";
 
 export default defineConfig({
+  base: "/headless-primitives/",
   title: "Headless Primitives",
   description: "Web Components agnósticos, accesibles y cero dependencias.",
   head: [["link", { rel: "icon", href: "/logo.png" }]],

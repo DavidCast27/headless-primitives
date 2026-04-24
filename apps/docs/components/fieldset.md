@@ -19,7 +19,8 @@ El componente `hp-fieldset` agrupa controles de formulario relacionados con una 
 </div>
 
 <script>
-(function () {
+;(function () {
+  if (typeof document === "undefined") return;
   const btn = document.getElementById("toggle-disabled-btn");
   const fs = document.getElementById("demo-fieldset");
   if (btn && fs) {
