@@ -17,7 +17,7 @@ El componente `hp-radio-group` permite seleccionar una sola opción de un conjun
 ### Con estilos personalizados
 
 <div class="hp-demo-card">
-  <div style="display: flex; flex-direction: column; gap: 1rem;">
+  <div class="demo-rg-stack">
     <hp-radio-group value="op1" class="demo-radio-group">
       <div class="demo-radio-item">
         <hp-radio value="op1" id="r-op1" class="demo-radio"></hp-radio>
@@ -198,41 +198,3 @@ Adhiere al [patrón WAI-ARIA APG para Radio Group](https://www.w3.org/WAI/ARIA/a
 | `ArrowUp` / `ArrowLeft`    | Selecciona la opción anterior.  |
 | `Home`                     | Selecciona la primera opción.   |
 | `End`                      | Selecciona la última opción.    |
-
-<style>
-.demo-radio-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-.demo-radio-item {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-.demo-radio {
-  width: 18px;
-  height: 18px;
-  border: 2px solid var(--vp-c-divider);
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: transparent;
-}
-.demo-radio[aria-checked="true"] {
-  border-color: var(--vp-c-brand-1);
-}
-.demo-radio[aria-checked="true"]::after {
-  content: "";
-  width: 10px;
-  height: 10px;
-  background: var(--vp-c-brand-1);
-  border-radius: 50%;
-}
-.demo-radio:focus-visible {
-  outline: 2px solid var(--vp-c-brand-1);
-  outline-offset: 2px;
-}
-</style>

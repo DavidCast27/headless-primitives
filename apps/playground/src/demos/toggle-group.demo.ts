@@ -1,5 +1,5 @@
 import { ComponentDemo } from "../types";
-import "./toggle-group.css";
+import "../styles/toggle-group.css";
 
 export const toggleGroupDemo: ComponentDemo = {
   title: "Toggle Group",

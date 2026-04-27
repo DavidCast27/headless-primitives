@@ -77,10 +77,19 @@
   --hp-space-3: 0.75rem;
   --hp-space-4: 1rem;
 
-  /* === Transiciones === */
+  /* === Transiciones (shorthand: duración + easing) === */
   --hp-transition-fast: 100ms ease;
   --hp-transition: 150ms ease;
   --hp-transition-slow: 200ms ease;
+
+  /* === Duraciones aisladas (para keyframe animations en base.css) === */
+  --hp-duration-fast: 100ms;
+  --hp-duration: 150ms;
+  --hp-duration-slow: 200ms;
+
+  /* === Funciones de easing === */
+  --hp-ease: ease;
+  --hp-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 
   /* === Estados de opacidad === */
   --hp-opacity-disabled: 0.5;

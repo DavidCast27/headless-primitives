@@ -1,0 +1,66 @@
+/**
+ * @headless-primitives/demo-styles — progress
+ */
+
+hp-progress.progress {
+  display: block;
+  width: 100%;
+  height: 8px;
+  background-color: var(--hp-bg-muted);
+  border-radius: 99px;
+  overflow: hidden;
+  border: 1px solid var(--hp-border);
+  position: relative;
+}
+
+hp-progress.progress::after {
+  content: "";
+  display: block;
+  height: 100%;
+  width: var(--hp-progress-percentage, 0%);
+  background-color: var(--hp-accent);
+  border-radius: inherit;
+  transition: width var(--hp-transition-slow, 200ms) ease-out;
+}
+
+hp-progress.progress[data-state="indeterminate"]::after {
+  width: 30%;
+  animation: progress-indeterminate 1.5s infinite linear;
+  background: linear-gradient(90deg, transparent 0%, var(--hp-accent) 50%, transparent 100%);
+}
+
+@keyframes progress-indeterminate {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(400%);
+  }
+}
+
+.progress-control {
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  hp-progress.progress::after {
+    transition: none;
+    animation: none;
+  }
+}
+
+.demo-prg-stack {
+  width: 100%;
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.demo-prg-label {
+  font-size: 0.85rem;
+  margin-bottom: 8px;
+}

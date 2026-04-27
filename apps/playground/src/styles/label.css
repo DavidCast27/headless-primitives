@@ -1,0 +1,50 @@
+/**
+ * @headless-primitives/demo-styles — label
+ */
+
+hp-label {
+  display: inline-block;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--hp-text-secondary);
+  cursor: pointer;
+  transition: color var(--hp-transition, 150ms ease);
+  user-select: none;
+}
+
+hp-label:hover {
+  color: var(--hp-text);
+}
+
+hp-label:has(+ *:focus-visible),
+hp-label:has(+ hp-switch:focus-visible) {
+  color: var(--hp-accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  hp-label {
+    transition: none;
+  }
+}
+
+/* ── Demo label layout ─────────────────────────────────────────────── */
+.demo-lbl-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 300px;
+}
+
+.demo-lbl-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.demo-lbl-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}

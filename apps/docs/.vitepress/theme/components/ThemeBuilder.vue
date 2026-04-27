@@ -347,6 +347,41 @@ const TOKEN_GROUPS: TokenGroup[] = [
         hint: "Entrada de diálogos y toasts",
       },
       {
+        name: "--hp-duration-fast",
+        label: "Duración rápida",
+        default: "100ms",
+        type: "text",
+        hint: "Tiempo para keyframe animations rápidas (tooltip)",
+      },
+      {
+        name: "--hp-duration",
+        label: "Duración predeterminada",
+        default: "150ms",
+        type: "text",
+        hint: "Tiempo base para keyframe animations",
+      },
+      {
+        name: "--hp-duration-slow",
+        label: "Duración lenta",
+        default: "200ms",
+        type: "text",
+        hint: "Tiempo para animaciones de entrada de dialog/drawer",
+      },
+      {
+        name: "--hp-ease",
+        label: "Easing estándar",
+        default: "ease",
+        type: "text",
+        hint: "Curva de aceleración genérica",
+      },
+      {
+        name: "--hp-ease-out",
+        label: "Easing salida",
+        default: "cubic-bezier(0.16, 1, 0.3, 1)",
+        type: "text",
+        hint: "Curva de desaceleración para entradas de overlay",
+      },
+      {
         name: "--hp-opacity-disabled",
         label: "Opacidad deshabilitado",
         default: "0.5",
@@ -492,6 +527,40 @@ const TOKEN_GROUPS: TokenGroup[] = [
       },
     ],
   },
+  {
+    id: "zindex",
+    label: "Capas (z-index)",
+    tokens: [
+      {
+        name: "--hp-z-index-backdrop",
+        label: "Backdrop",
+        default: "1000",
+        type: "number",
+        hint: "Capa del fondo oscuro de dialog/drawer",
+      },
+      {
+        name: "--hp-z-index-overlay-content",
+        label: "Overlay",
+        default: "1100",
+        type: "number",
+        hint: "Capa del contenido de dialog y drawer",
+      },
+      {
+        name: "--hp-z-index-popover",
+        label: "Popover / Dropdown",
+        default: "1200",
+        type: "number",
+        hint: "Select, combobox, dropdown-menu, context-menu, popover",
+      },
+      {
+        name: "--hp-z-index-tooltip",
+        label: "Tooltip",
+        default: "1300",
+        type: "number",
+        hint: "Siempre encima de todo",
+      },
+    ],
+  },
 ];
 
 // ---------------------------------------------------------------------------
@@ -501,11 +570,14 @@ const TOKEN_GROUPS: TokenGroup[] = [
 // Mapa plano de nombre de token -> valor actual, inicializado con los valores por defecto
 const tokenValues = ref<Record<string, string>>({});
 
+// Defaults leídos en runtime desde :root (theme.css). Vacío hasta onMounted.
+const runtimeDefaults: Record<string, string> = {};
+
 function initTokenValues() {
   const map: Record<string, string> = {};
   for (const group of TOKEN_GROUPS) {
     for (const token of group.tokens) {
-      map[token.name] = token.default;
+      map[token.name] = runtimeDefaults[token.name] ?? token.default;
     }
   }
   tokenValues.value = map;
@@ -518,6 +590,9 @@ const activeGroup = ref(TOKEN_GROUPS[0].id);
 
 // Estado del botón de copiar
 const copyState = ref<"idle" | "copied">("idle");
+
+// Toggle dark/light del panel de vista previa
+const previewDark = ref(false);
 
 // Estado interactivo para la vista previa
 const previewDialogOpen = ref(false);
@@ -579,6 +654,18 @@ function applyTokens() {
 watch(tokenValues, applyTokens, { deep: true });
 
 onMounted(() => {
+  // Leer valores reales de theme.css desde :root (antes de aplicar sobreescrituras)
+  const computedStyles = getComputedStyle(document.documentElement);
+  for (const group of TOKEN_GROUPS) {
+    for (const token of group.tokens) {
+      const v = computedStyles.getPropertyValue(token.name).trim();
+      if (v) runtimeDefaults[token.name] = v;
+    }
+  }
+  // Actualizar tokenValues con los valores reales (reemplaza los hardcodeados)
+  for (const [name, value] of Object.entries(runtimeDefaults)) {
+    tokenValues.value[name] = value;
+  }
   applyTokens();
 });
 
@@ -589,8 +676,10 @@ onMounted(() => {
 const generatedCSS = computed(() => {
   const lines = Object.entries(tokenValues.value)
     .filter(([name, value]) => {
-      const group = TOKEN_GROUPS.flatMap((g) => g.tokens).find((t) => t.name === name);
-      return value !== group?.default;
+      const defaultVal =
+        runtimeDefaults[name] ??
+        TOKEN_GROUPS.flatMap((g) => g.tokens).find((t) => t.name === name)?.default;
+      return value !== defaultVal;
     })
     .map(([name, value]) => `  ${name}: ${value};`);
 
@@ -619,7 +708,7 @@ function resetGroup(groupId: string) {
   const group = TOKEN_GROUPS.find((g) => g.id === groupId);
   if (!group) return;
   for (const token of group.tokens) {
-    tokenValues.value[token.name] = token.default;
+    tokenValues.value[token.name] = runtimeDefaults[token.name] ?? token.default;
   }
 }
 
@@ -669,8 +758,14 @@ function isSize(token: Token): boolean {
 }
 
 function isModified(name: string): boolean {
-  const token = TOKEN_GROUPS.flatMap((g) => g.tokens).find((t) => t.name === name);
-  return token ? tokenValues.value[name] !== token.default : false;
+  const def =
+    runtimeDefaults[name] ??
+    TOKEN_GROUPS.flatMap((g) => g.tokens).find((t) => t.name === name)?.default;
+  return def !== undefined ? tokenValues.value[name] !== def : false;
+}
+
+function isHexColor(value: string): boolean {
+  return /^#[0-9a-fA-F]{6}$/.test(value?.trim() ?? "");
 }
 
 function setActiveGroup(id: string) {
@@ -767,7 +862,9 @@ const totalModified = computed(() => TOKEN_GROUPS.reduce((sum, g) => sum + modif
                     <div class="tb-token-input-group">
                       <!-- Selector de color + entrada de texto -->
                       <template v-if="isColor(token)">
+                        <!-- Picker solo para valores hex válidos (#rrggbb) -->
                         <input
+                          v-if="isHexColor(tokenValues[token.name])"
                           :id="`token-${token.name}-picker`"
                           type="color"
                           class="tb-color-picker"
@@ -778,6 +875,13 @@ const totalModified = computed(() => TOKEN_GROUPS.reduce((sum, g) => sum + modif
                             }
                           "
                           :title="`Selector de color para ${token.name}`"
+                        />
+                        <!-- Swatch de solo lectura para valores no-hex (rgb, hsl, etc.) -->
+                        <span
+                          v-else
+                          class="tb-color-swatch"
+                          :style="{ background: tokenValues[token.name] }"
+                          :title="`Valor no-hex — edita manualmente`"
                         />
                         <input
                           :id="`token-${token.name}`"
@@ -890,7 +994,9 @@ const totalModified = computed(() => TOKEN_GROUPS.reduce((sum, g) => sum + modif
                         v-if="isModified(token.name)"
                         class="tb-reset-token"
                         :title="`Restablecer ${token.name} al valor por defecto`"
-                        @click="tokenValues[token.name] = token.default"
+                        @click="
+                          tokenValues[token.name] = runtimeDefaults[token.name] ?? token.default
+                        "
                       >
                         ↺
                       </button>
@@ -940,10 +1046,17 @@ const totalModified = computed(() => TOKEN_GROUPS.reduce((sum, g) => sum + modif
           </section>
         ===========================================================================
       -->
-      <div class="tb-preview-pane">
+      <div class="tb-preview-pane" :class="{ 'is-dark': previewDark }">
         <div class="tb-preview-header">
           <span class="tb-panel-title">Vista previa en vivo</span>
-          <span class="tb-preview-hint">Todos los componentes renderizados con tus tokens</span>
+          <button
+            class="tb-btn-tiny tb-dark-toggle"
+            :class="{ 'is-active': previewDark }"
+            :title="previewDark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'"
+            @click="previewDark = !previewDark"
+          >
+            {{ previewDark ? "☀ Claro" : "☾ Oscuro" }}
+          </button>
         </div>
 
         <div class="tb-preview-scroll">
@@ -2029,6 +2142,15 @@ const totalModified = computed(() => TOKEN_GROUPS.reduce((sum, g) => sum + modif
   flex-shrink: 0;
 }
 
+.tb-color-swatch {
+  width: 32px;
+  height: 28px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 5px;
+  flex-shrink: 0;
+  display: inline-block;
+}
+
 .tb-text-input {
   font-family: var(--vp-font-family-mono);
   font-size: 12px;
@@ -2124,6 +2246,46 @@ const totalModified = computed(() => TOKEN_GROUPS.reduce((sum, g) => sum + modif
   overflow: hidden;
 }
 
+/* Dark mode preset — aplica tokens de tema oscuro sin tocar :root */
+.tb-preview-pane.is-dark {
+  color-scheme: dark;
+  background: #0f172a;
+  --hp-bg: #0f172a;
+  --hp-bg-subtle: #1e293b;
+  --hp-bg-muted: #334155;
+  --hp-surface: #1e293b;
+  --hp-surface-raised: #293548;
+  --hp-border: #334155;
+  --hp-border-strong: #64748b;
+  --hp-text: #f8fafc;
+  --hp-text-secondary: #94a3b8;
+  --hp-text-disabled: #475569;
+  --hp-text-on-accent: #0c1a29;
+  --hp-accent: #38bdf8;
+  --hp-accent-hover: #7dd3fc;
+  --hp-accent-active: #bae6fd;
+  --hp-accent-foreground: #0c1a29;
+  --hp-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+  --hp-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.4), 0 1px 2px -1px rgb(0 0 0 / 0.4);
+  --hp-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.4);
+  --hp-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.4);
+  --hp-focus-outline-color: #38bdf8;
+  --hp-text-error: #f87171;
+  --hp-color-success-bg: #052e16;
+  --hp-color-success: #4ade80;
+  --hp-color-success-border: #166534;
+  --hp-color-warning-bg: #1c1107;
+  --hp-color-warning: #fbbf24;
+  --hp-color-warning-border: #92400e;
+  --hp-color-danger-bg: #1f0707;
+  --hp-color-danger: #f87171;
+  --hp-color-danger-border: #7f1d1d;
+  --hp-color-info-bg: #0c1a3a;
+  --hp-color-info: #60a5fa;
+  --hp-color-info-border: #1e3a8a;
+  --hp-backdrop-bg: rgb(0 0 0 / 0.65);
+}
+
 .tb-preview-header {
   display: flex;
   align-items: center;
@@ -2132,6 +2294,17 @@ const totalModified = computed(() => TOKEN_GROUPS.reduce((sum, g) => sum + modif
   border-bottom: 1px solid var(--vp-c-divider);
   background: var(--vp-c-bg-soft);
   flex-shrink: 0;
+}
+
+.tb-dark-toggle {
+  font-size: 12px;
+  padding: 4px 10px;
+}
+
+.tb-dark-toggle.is-active {
+  background: rgba(56, 189, 248, 0.12);
+  color: #38bdf8;
+  border-color: rgba(56, 189, 248, 0.3);
 }
 
 .tb-preview-hint {

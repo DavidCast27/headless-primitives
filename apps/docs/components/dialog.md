@@ -24,15 +24,15 @@ Así se ve `hp-dialog` usando únicamente `@headless-primitives/utils/base.css`.
 <div class="hp-demo-card">
   <hp-dialog>
     <hp-dialog-trigger>
-      <button class="dlg-btn">Abrir Diálogo</button>
+      <button class="btn">Abrir Diálogo</button>
     </hp-dialog-trigger>
-    <hp-dialog-backdrop class="dlg-backdrop"></hp-dialog-backdrop>
-    <hp-dialog-content class="dlg-content">
-      <h2 class="dlg-title">Título del Diálogo</h2>
-      <p class="dlg-body">Este es el contenido del diálogo modal. Puedes poner cualquier cosa aquí.</p>
-      <div class="dlg-footer">
-        <button class="dlg-btn secondary" onclick="this.closest('hp-dialog').close()">Cancelar</button>
-        <button class="dlg-btn primary" onclick="this.closest('hp-dialog').close()">Confirmar</button>
+    <hp-dialog-backdrop class="dialog-backdrop"></hp-dialog-backdrop>
+    <hp-dialog-content class="dialog-content">
+      <h2>Título del Diálogo</h2>
+      <p>Este es el contenido del diálogo modal. Puedes poner cualquier cosa aquí.</p>
+      <div class="demo-dlg-footer">
+        <button class="btn" onclick="this.closest('hp-dialog').close()">Cancelar</button>
+        <button class="btn btn-secondary" onclick="this.closest('hp-dialog').close()">Confirmar</button>
       </div>
     </hp-dialog-content>
   </hp-dialog>
@@ -294,63 +294,3 @@ dialog.close();
 dialog.addEventListener("hp-open", () => console.log("Abierto"));
 dialog.addEventListener("hp-close", () => console.log("Cerrado"));
 ```
-
-<style>
-.dlg-btn {
-  font-family: inherit;
-  font-size: 0.875rem;
-  font-weight: 500;
-  padding: 8px 18px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: opacity 0.15s, transform 0.15s;
-  border: 1px solid transparent;
-}
-.dlg-btn:not(.secondary):not(.primary) {
-  background: var(--vp-c-brand-1);
-  color: #fff;
-}
-.dlg-btn.primary {
-  background: var(--vp-c-brand-1);
-  color: #fff;
-}
-.dlg-btn.secondary {
-  background: transparent;
-  border-color: var(--vp-c-divider);
-  color: var(--vp-c-text-1);
-}
-.dlg-btn:hover { opacity: 0.85; }
-.dlg-backdrop {
-  backdrop-filter: blur(4px);
-}
-.dlg-content {
-  background: var(--vp-c-bg);
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 12px;
-  padding: 0;
-  max-width: 420px;
-  width: 90%;
-  box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.25);
-}
-.dlg-title {
-  margin: 0;
-  padding: 1.5rem 1.5rem 0.5rem;
-  font-size: 1.125rem;
-  font-weight: 600;
-  color: var(--vp-c-text-1);
-}
-.dlg-body {
-  margin: 0;
-  padding: 0 1.5rem 1.5rem;
-  font-size: 0.9rem;
-  color: var(--vp-c-text-2);
-  line-height: 1.6;
-}
-.dlg-footer {
-  display: flex;
-  justify-content: flex-end;
-  gap: 0.5rem;
-  padding: 1rem 1.5rem;
-  border-top: 1px solid var(--vp-c-divider);
-}
-</style>

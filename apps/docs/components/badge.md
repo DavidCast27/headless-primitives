@@ -18,18 +18,18 @@ Así se ve `hp-badge` sin ningún estilo visual. Los atributos `data-variant` y 
 
 ### Con estilos personalizados
 
-<div class="hp-demo-card" style="display: flex; flex-direction: column; gap: 1.5rem;">
-  <div style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
-    <hp-badge class="demo-badge" variant="default" style="background: var(--vp-c-bg-mute); color: var(--vp-c-text-2); border: 1px solid var(--vp-c-divider);">Default</hp-badge>
-    <hp-badge class="demo-badge" variant="success" style="background: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0;">Success</hp-badge>
-    <hp-badge class="demo-badge" variant="warning" style="background: #fffbeb; color: #d97706; border: 1px solid #fde68a;">Warning</hp-badge>
-    <hp-badge class="demo-badge" variant="danger" style="background: #fef2f2; color: #dc2626; border: 1px solid #fecaca;">Danger</hp-badge>
-    <hp-badge class="demo-badge" variant="info" style="background: #eff6ff; color: #2563eb; border: 1px solid #bfdbfe;">Info</hp-badge>
+<div class="hp-demo-card demo-bdg-card">
+  <div class="demo-bdg-row">
+    <hp-badge class="badge" variant="default">Default</hp-badge>
+    <hp-badge class="badge" variant="success">Success</hp-badge>
+    <hp-badge class="badge" variant="warning">Warning</hp-badge>
+    <hp-badge class="badge" variant="danger">Danger</hp-badge>
+    <hp-badge class="badge" variant="info">Info</hp-badge>
   </div>
-  <div style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
-    <hp-badge class="demo-badge demo-badge--sm" variant="default" style="background: var(--vp-c-bg-mute); color: var(--vp-c-text-2); border: 1px solid var(--vp-c-divider);">Small</hp-badge>
-    <hp-badge class="demo-badge" variant="default" style="background: var(--vp-c-bg-mute); color: var(--vp-c-text-2); border: 1px solid var(--vp-c-divider);">Medium</hp-badge>
-    <hp-badge class="demo-badge demo-badge--lg" variant="default" style="background: var(--vp-c-bg-mute); color: var(--vp-c-text-2); border: 1px solid var(--vp-c-divider);">Large</hp-badge>
+  <div class="demo-bdg-row">
+    <hp-badge class="badge" variant="default" size="sm">Small</hp-badge>
+    <hp-badge class="badge" variant="default">Medium</hp-badge>
+    <hp-badge class="badge" variant="default" size="lg">Large</hp-badge>
   </div>
 </div>
 
@@ -188,22 +188,3 @@ Elemento inline que envuelve contenido ranurado.
   <hp-badge variant="danger" size="sm" aria-label="3 notificaciones sin leer">3</hp-badge>
 </button>
 ```
-
-<style>
-.demo-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 999px;
-  font-family: inherit;
-  font-weight: 600;
-  line-height: 1;
-  white-space: nowrap;
-  padding: 0.25rem 0.625rem;
-  font-size: 0.75rem;
-  box-sizing: border-box;
-  vertical-align: middle;
-}
-.demo-badge--sm { font-size: 0.6875rem; padding: 0.125rem 0.5rem; }
-.demo-badge--lg { font-size: 0.875rem; padding: 0.375rem 0.75rem; }
-</style>

@@ -1,11 +1,11 @@
 import "@headless-primitives/tabs";
-import "./tabs.css";
+import "../styles/tabs.css";
 
 export const tabsDemo = {
   title: "Tabs",
   description: "An accessible tabs component with keyboard navigation and ARIA support.",
   html: `
-<div class="demo-section">
+<div class="hp-demo-section">
   <h2>Basic Tabs</h2>
   <hp-tabs value="profile">
     <hp-tab-list class="tab-list">
@@ -46,7 +46,7 @@ export const tabsDemo = {
   </hp-tabs>
 </div>
 
-<div class="demo-section">
+<div class="hp-demo-section">
   <h2>With Disabled Tab</h2>
   <hp-tabs value="active-1">
     <hp-tab-list class="tab-list">
@@ -69,9 +69,9 @@ export const tabsDemo = {
   </hp-tabs>
 </div>
 
-<div class="demo-section">
+<div class="hp-demo-section">
   <h2>Pure Headless (solo base.css)</h2>
-  <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:1rem;">
+  <p style="font-size:0.85rem;color:var(--hp-text-secondary);margin-bottom:1rem;">
     Sin clases de demo. Solo <code>base.css</code> controla la visibilidad de los paneles.
   </p>
   <hp-tabs value="a">

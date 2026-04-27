@@ -22,20 +22,20 @@ Así se ve `hp-avatar` usando únicamente `@headless-primitives/utils/base.css`.
 ### Con estilos personalizados
 
 <div class="hp-demo-card">
-  <div style="display: flex; gap: 2rem; align-items: center; flex-wrap: wrap; justify-content: center;">
-    <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
-      <hp-avatar class="demo-avatar">
+  <div class="demo-av-grid">
+    <div class="demo-av-col">
+      <hp-avatar>
         <hp-avatar-image src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=128&h=128&fit=crop" alt="User Image"></hp-avatar-image>
-        <hp-avatar-fallback class="demo-fallback">JD</hp-avatar-fallback>
+        <hp-avatar-fallback>JD</hp-avatar-fallback>
       </hp-avatar>
-      <span style="font-size: 11px; opacity: 0.7;">Éxito</span>
+      <span class="demo-av-label">Éxito</span>
     </div>
-    <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
-      <hp-avatar class="demo-avatar">
+    <div class="demo-av-col">
+      <hp-avatar>
         <hp-avatar-image src="invalid.jpg" alt="Broken Image"></hp-avatar-image>
-        <hp-avatar-fallback class="demo-fallback">ER</hp-avatar-fallback>
+        <hp-avatar-fallback>ER</hp-avatar-fallback>
       </hp-avatar>
-      <span style="font-size: 11px; opacity: 0.7;">Error</span>
+      <span class="demo-av-label">Error</span>
     </div>
   </div>
 </div>
@@ -197,37 +197,3 @@ Contenido visible durante la carga o si la imagen falla.
 - **Semántica**: `role="img"` en el contenedor raíz.
 - **Fallback**: Siempre hay una representación visual válida.
 - **Texto Alternativo**: Se traspasa al atributo `alt` de la imagen interna.
-
-<style>
-.demo-avatar {
-  display: inline-flex;
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  overflow: hidden;
-  background: var(--vp-c-bg-mute);
-  border: 2px solid var(--vp-c-divider);
-}
-.demo-avatar hp-avatar-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: none;
-}
-.demo-avatar[data-state="loaded"] hp-avatar-image {
-  display: block;
-}
-.demo-fallback {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--vp-c-brand-1);
-  color: white;
-  font-weight: 600;
-}
-.demo-avatar[data-state="loaded"] .demo-fallback {
-  display: none;
-}
-</style>

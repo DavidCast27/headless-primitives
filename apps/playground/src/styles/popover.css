@@ -1,0 +1,81 @@
+/**
+ * @headless-primitives/demo-styles — popover
+ */
+
+hp-popover {
+  display: inline-block;
+}
+
+hp-popover-trigger {
+  display: inline-block;
+}
+
+.popover-content,
+hp-popover-content.popover-content {
+  position: absolute;
+  background-color: var(--hp-surface);
+  color: var(--hp-text);
+  padding: 16px;
+  border-radius: var(--hp-radius-md, 8px);
+  box-shadow: var(--hp-shadow-lg);
+  min-width: 200px;
+  z-index: var(--hp-z-index-popover, 1200);
+  border: 1px solid var(--hp-border);
+}
+
+.popover-content p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--hp-text-secondary);
+}
+
+.popover-content .btn {
+  margin-top: 12px;
+  padding: 6px 12px;
+  border: 1px solid var(--hp-border);
+  border-radius: var(--hp-radius-sm, 4px);
+  background-color: var(--hp-surface);
+  color: var(--hp-text);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--hp-transition, 150ms ease);
+}
+
+.popover-content .btn:hover {
+  background-color: var(--hp-bg-subtle);
+  border-color: var(--hp-border-strong);
+}
+
+.popover-content .btn-secondary {
+  background-color: var(--hp-accent);
+  border-color: var(--hp-accent);
+  color: var(--hp-accent-foreground, #fff);
+  margin-left: 8px;
+}
+
+.popover-content .btn-secondary:hover {
+  background-color: var(--hp-accent-hover);
+  border-color: var(--hp-accent-hover);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .popover-content {
+    animation: none;
+  }
+}
+
+.demo-pop-title {
+  margin: 0 0 0.5rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--vp-c-text-1, var(--hp-text));
+}
+
+.demo-pop-body {
+  margin: 0 0 1rem 0;
+  font-size: 0.875rem;
+  color: var(--vp-c-text-2, var(--hp-text-secondary));
+  line-height: 1.5;
+}

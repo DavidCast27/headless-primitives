@@ -7,7 +7,7 @@ Control deslizante accesible para seleccionar un valor dentro de un rango. Imple
 ### Sin estilos (solo base.css)
 
 <div class="hp-demo-card">
-  <div style="display:flex;flex-direction:column;gap:1.5rem;width:100%;">
+  <div class="demo-sld-stack">
     <hp-slider value="40" min="0" max="100" label="Volumen" show-value value-suffix="%"></hp-slider>
     <hp-slider value="60" min="0" max="100" label="Deshabilitado" show-value value-suffix="%" disabled></hp-slider>
   </div>
@@ -16,10 +16,10 @@ Control deslizante accesible para seleccionar un valor dentro de un rango. Imple
 ### Con estilos personalizados
 
 <div class="hp-demo-card">
-  <div style="display:flex;flex-direction:column;gap:2rem;width:100%;">
-    <hp-slider class="demo-slider" value="60" min="0" max="100" label="Volumen" show-value value-suffix="%"></hp-slider>
-    <hp-slider class="demo-slider" value="22" min="16" max="30" step="0.5" label="Temperatura" show-value value-suffix="°C"></hp-slider>
-    <hp-slider class="demo-slider" value="40" min="0" max="100" label="Deshabilitado" show-value value-suffix="%" disabled></hp-slider>
+  <div class="demo-sld-stack">
+    <hp-slider class="demo-sld" value="60" min="0" max="100" label="Volumen" show-value value-suffix="%"></hp-slider>
+    <hp-slider class="demo-sld" value="22" min="16" max="30" step="0.5" label="Temperatura" show-value value-suffix="°C"></hp-slider>
+    <hp-slider class="demo-sld" value="40" min="0" max="100" label="Deshabilitado" show-value value-suffix="%" disabled></hp-slider>
   </div>
 </div>
 
@@ -242,124 +242,3 @@ Adhiere al [patrón WAI-ARIA APG para Slider](https://www.w3.org/WAI/ARIA/apg/pa
 | `End`                     | Salta al valor máximo.    |
 | `PageUp`                  | Aumenta en `step × 10`.   |
 | `PageDown`                | Disminuye en `step × 10`. |
-
-<style>
-.hp-demo-card hp-slider:not(.demo-slider) {
-  display: flex;
-  flex-direction: column;
-  gap: 0.375rem;
-  touch-action: none;
-  user-select: none;
-}
-.hp-demo-card hp-slider:not(.demo-slider) [data-hp-slider-header] {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.8rem;
-}
-.hp-demo-card hp-slider:not(.demo-slider) [data-hp-slider-rail] {
-  position: relative;
-  height: 18px;
-  width: 100%;
-}
-.hp-demo-card hp-slider:not(.demo-slider) [data-hp-slider-track] {
-  position: absolute;
-  left: 0; right: 0; top: 50%;
-  transform: translateY(-50%);
-  height: 6px;
-  background: currentColor;
-  opacity: 0.15;
-  border-radius: 9999px;
-  cursor: pointer;
-}
-.hp-demo-card hp-slider:not(.demo-slider) [data-hp-slider-range] {
-  position: absolute;
-  left: 0; top: 0; bottom: 0;
-  width: var(--hp-slider-percentage, 0%);
-  background: currentColor;
-  opacity: 1;
-  border-radius: inherit;
-}
-.hp-demo-card hp-slider:not(.demo-slider) [data-hp-slider-thumb] {
-  position: absolute;
-  top: 50%;
-  left: var(--hp-slider-percentage, 0%);
-  transform: translate(-50%, -50%);
-  width: 18px; height: 18px;
-  border-radius: 50%;
-  background: currentColor;
-  cursor: grab;
-  z-index: 1;
-}
-.hp-demo-card hp-slider:not(.demo-slider)[data-disabled] {
-  opacity: 0.45;
-  pointer-events: none;
-}
-
-.demo-slider {
-  display: flex;
-  flex-direction: column;
-  gap: 0.375rem;
-  touch-action: none;
-  user-select: none;
-}
-.demo-slider [data-hp-slider-header] {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.demo-slider [data-hp-slider-label] {
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: var(--vp-c-text-1);
-}
-.demo-slider [data-hp-slider-output] {
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: var(--vp-c-text-2);
-  font-variant-numeric: tabular-nums;
-}
-.demo-slider [data-hp-slider-rail] {
-  position: relative;
-  height: 20px;
-}
-.demo-slider [data-hp-slider-track] {
-  position: absolute;
-  left: 0; right: 0; top: 50%;
-  transform: translateY(-50%);
-  height: 6px;
-  background: var(--vp-c-bg-alt);
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 9999px;
-  cursor: pointer;
-}
-.demo-slider [data-hp-slider-range] {
-  position: absolute;
-  left: -1px; top: -1px; bottom: -1px;
-  width: calc(var(--hp-slider-percentage, 0%) + 1px);
-  background: var(--vp-c-brand-1);
-  border-radius: inherit;
-  transition: width 60ms linear;
-}
-.demo-slider [data-hp-slider-thumb] {
-  position: absolute;
-  top: 50%;
-  left: var(--hp-slider-percentage, 0%);
-  transform: translate(-50%, -50%);
-  width: 18px; height: 18px;
-  border-radius: 50%;
-  background: var(--vp-c-brand-1);
-  border: 2.5px solid var(--vp-c-bg);
-  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
-  cursor: grab;
-  z-index: 1;
-  transition: left 60ms linear, transform 180ms ease;
-}
-.demo-slider [data-hp-slider-thumb]:hover {
-  transform: translate(-50%, -50%) scale(1.18);
-}
-.demo-slider [data-hp-slider-thumb]:active {
-  cursor: grabbing;
-  transform: translate(-50%, -50%) scale(0.9);
-}
-.demo-slider[data-disabled] { opacity: 0.45; pointer-events: none; }
-</style>

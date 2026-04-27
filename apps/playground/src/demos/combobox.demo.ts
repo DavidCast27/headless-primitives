@@ -1,5 +1,5 @@
 import { ComponentDemo } from "../types";
-import "./combobox.css";
+import "../styles/combobox.css";
 
 export const comboboxDemo: ComponentDemo = {
   title: "Combobox primitive",

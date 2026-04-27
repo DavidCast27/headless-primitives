@@ -17,9 +17,9 @@ Así se ve `hp-button` usando únicamente `@headless-primitives/utils/base.css` 
 ### Con estilos personalizados
 
 <div class="hp-demo-card">
-  <hp-button class="demo-btn primary">Botón Primario</hp-button>
-  <hp-button class="demo-btn secondary">Secundario</hp-button>
-  <hp-button class="demo-btn" disabled>Deshabilitado</hp-button>
+  <hp-button class="btn btn-primary">Botón Primario</hp-button>
+  <hp-button class="btn btn-secondary">Secundario</hp-button>
+  <hp-button class="btn" disabled>Deshabilitado</hp-button>
 </div>
 
 <CodeSnippet>
@@ -176,21 +176,3 @@ Adhiere al [patrón WAI-ARIA APG para Button](https://www.w3.org/WAI/ARIA/apg/pa
 ```html
 <hp-button disabled>No disponible</hp-button>
 ```
-
-<style>
-.demo-btn {
-  font-family: inherit;
-  font-size: 0.9rem;
-  font-weight: 500;
-  padding: 8px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s;
-  border: 1px solid transparent;
-}
-.primary { background: var(--vp-c-brand-1); color: white; }
-.primary:hover { background: var(--vp-c-brand-2); }
-.secondary { background: transparent; border-color: var(--vp-c-divider); }
-.secondary:hover { border-color: var(--vp-c-brand-1); }
-.demo-btn[disabled] { opacity: 0.5; cursor: not-allowed; }
-</style>

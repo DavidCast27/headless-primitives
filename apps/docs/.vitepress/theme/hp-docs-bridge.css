@@ -1,0 +1,62 @@
+/* hp-docs-bridge.css
+   Maps VitePress design tokens → --hp-* tokens so that demo-styles and
+   base component styles work in docs light/dark mode without importing
+   @headless-primitives/styles/theme.css (which uses @media prefers-color-scheme,
+   not VitePress's .dark class).
+
+   If theme.css is ever added to this app, DELETE this file instead — let
+   theme.css own the --hp-* definitions and remove this bridge to avoid
+   double source-of-truth. */
+
+:root {
+  /* Bridge: VitePress tokens → --hp-* tokens */
+  --hp-accent: var(--vp-c-brand-1);
+  --hp-accent-hover: var(--vp-c-brand-2);
+  --hp-accent-foreground: #ffffff;
+  --hp-bg: var(--vp-c-bg);
+  --hp-surface: var(--vp-c-bg-elv);
+  --hp-bg-subtle: var(--vp-c-bg-soft);
+  --hp-bg-muted: var(--vp-c-bg-soft);
+  --hp-border: var(--vp-c-divider);
+  --hp-border-strong: var(--vp-c-border);
+  --hp-text: var(--vp-c-text-1);
+  --hp-text-secondary: var(--vp-c-text-2);
+  --hp-text-disabled: var(--vp-c-text-3);
+  --hp-focus-outline-color: var(--vp-c-brand-1);
+  --hp-radius: 8px;
+  --hp-radius-md: 8px;
+  --hp-font-size-xs: var(--vp-custom-block-font-size, 0.75rem);
+  --hp-font-size-sm: 0.875rem;
+  --hp-opacity-disabled: 0.45;
+  --hp-shadow-lg: 0 4px 20px rgba(0, 0, 0, 0.1), 0 1px 5px rgba(0, 0, 0, 0.06);
+
+  /* Semantic color tokens (light) */
+  --hp-color-success: #16a34a;
+  --hp-color-success-bg: #f0fdf4;
+  --hp-color-success-border: #bbf7d0;
+  --hp-color-warning: #d97706;
+  --hp-color-warning-bg: #fffbeb;
+  --hp-color-warning-border: #fde68a;
+  --hp-color-danger: #dc2626;
+  --hp-color-danger-bg: #fef2f2;
+  --hp-color-danger-border: #fecaca;
+  --hp-color-info: #2563eb;
+  --hp-color-info-bg: #eff6ff;
+  --hp-color-info-border: #bfdbfe;
+}
+
+/* Semantic color tokens — dark overrides (VitePress uses .dark class, not @media) */
+.dark {
+  --hp-color-success: #4ade80;
+  --hp-color-success-bg: #052e16;
+  --hp-color-success-border: #166534;
+  --hp-color-warning: #fbbf24;
+  --hp-color-warning-bg: #1c1400;
+  --hp-color-warning-border: #92400e;
+  --hp-color-danger: #f87171;
+  --hp-color-danger-bg: #1f0000;
+  --hp-color-danger-border: #991b1b;
+  --hp-color-info: #60a5fa;
+  --hp-color-info-bg: #00112e;
+  --hp-color-info-border: #1e40af;
+}

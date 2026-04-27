@@ -1,5 +1,5 @@
 import { ComponentDemo } from "../types";
-import "./context-menu.css";
+import "../styles/context-menu.css";
 
 export const contextMenuDemo: ComponentDemo = {
   title: "Context Menu primitive",

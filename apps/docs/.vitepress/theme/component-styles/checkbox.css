@@ -1,0 +1,77 @@
+/**
+ * @headless-primitives/demo-styles — checkbox
+ */
+
+.demo-checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.demo-checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+hp-checkbox {
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px solid var(--hp-border-strong);
+  border-radius: var(--hp-radius-sm, 4px);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--hp-transition, 150ms ease);
+}
+
+hp-checkbox:focus-visible {
+  outline: 2px solid var(--hp-focus-outline-color);
+  outline-offset: 2px;
+}
+
+hp-checkbox[aria-checked="true"],
+hp-checkbox[aria-checked="mixed"] {
+  background-color: var(--hp-accent);
+  border-color: var(--hp-accent);
+}
+
+hp-checkbox[aria-checked="true"]::after {
+  content: "✓";
+  color: var(--hp-accent-foreground, #fff);
+  font-size: 0.8rem;
+}
+
+hp-checkbox[aria-checked="mixed"]::after {
+  content: "";
+  width: 0.75rem;
+  height: 2px;
+  background-color: var(--hp-accent-foreground, #fff);
+}
+
+hp-checkbox[aria-disabled="true"] {
+  opacity: var(--hp-opacity-disabled, 0.45);
+  cursor: not-allowed;
+  border-color: var(--hp-border);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  hp-checkbox {
+    transition: none;
+  }
+}
+
+/* ── Demo checkbox layout ─────────────────────────────────────────────── */
+.demo-chk-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.demo-chk-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}

@@ -1,5 +1,5 @@
 import { ComponentDemo } from "../types";
-import "./toolbar.css";
+import "../styles/toolbar.css";
 
 export const toolbarDemo: ComponentDemo = {
   title: "Toolbar primitive",
@@ -8,7 +8,7 @@ export const toolbarDemo: ComponentDemo = {
   html: `
 <div class="demo-toolbar">
 
-  <section class="demo-section">
+  <section class="hp-demo-section">
     <h3 class="demo-label">Horizontal (default)</h3>
     <hp-toolbar label="Text formatting" class="toolbar-example">
       <button type="button" title="Bold" aria-pressed="false" id="btn-bold">
@@ -30,7 +30,7 @@ export const toolbarDemo: ComponentDemo = {
     </hp-toolbar>
   </section>
 
-  <section class="demo-section">
+  <section class="hp-demo-section">
     <h3 class="demo-label">Vertical</h3>
     <hp-toolbar orientation="vertical" label="Drawing tools" class="toolbar-example toolbar-vertical">
       <button type="button" title="Select">&#9654;</button>
@@ -42,7 +42,7 @@ export const toolbarDemo: ComponentDemo = {
     </hp-toolbar>
   </section>
 
-  <section class="demo-section">
+  <section class="hp-demo-section">
     <h3 class="demo-label">With disabled items</h3>
     <hp-toolbar label="Actions" class="toolbar-example">
       <button type="button">Cut</button>
@@ -54,7 +54,7 @@ export const toolbarDemo: ComponentDemo = {
     </hp-toolbar>
   </section>
 
-  <section class="demo-section">
+  <section class="hp-demo-section">
     <h3 class="demo-label">Event log</h3>
     <p class="event-log" id="event-log">Interact with toolbar items to see events...</p>
   </section>

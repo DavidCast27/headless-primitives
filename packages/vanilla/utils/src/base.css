@@ -593,11 +593,6 @@ hp-select-content {
   min-width: 100%;
   /* color-scheme garantiza que Canvas/CanvasText se resuelvan igual en dark mode */
   color-scheme: light dark;
-  background-color: var(--hp-surface, Canvas);
-  color: var(--hp-text, CanvasText);
-  border: 1px solid var(--hp-border, color-mix(in srgb, currentColor 25%, transparent));
-  border-radius: var(--hp-radius, 0.5rem);
-  box-shadow: var(--hp-shadow-lg, 0 8px 32px rgb(0 0 0 / 0.12), 0 2px 8px rgb(0 0 0 / 0.08));
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -793,11 +788,6 @@ hp-combobox-content {
   z-index: var(--hp-z-index-popover);
   /* color-scheme garantiza que Canvas/CanvasText se resuelvan igual en dark mode */
   color-scheme: light dark;
-  background-color: var(--hp-surface, Canvas);
-  color: var(--hp-text, CanvasText);
-  border: 1px solid var(--hp-border, color-mix(in srgb, currentColor 25%, transparent));
-  border-radius: var(--hp-radius, 0.5rem);
-  box-shadow: var(--hp-shadow-lg, 0 8px 32px rgb(0 0 0 / 0.12), 0 2px 8px rgb(0 0 0 / 0.08));
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -1229,11 +1219,6 @@ hp-dropdown-menu-content {
   left: 0;
   min-width: 8rem;
   color-scheme: light dark;
-  background-color: var(--hp-surface, Canvas);
-  color: var(--hp-text, CanvasText);
-  border: 1px solid var(--hp-border, color-mix(in srgb, currentColor 25%, transparent));
-  border-radius: var(--hp-radius, 0.5rem);
-  box-shadow: var(--hp-shadow-lg, 0 8px 32px rgb(0 0 0 / 0.12), 0 2px 8px rgb(0 0 0 / 0.08));
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -1358,10 +1343,7 @@ hp-navigation-menu-content {
   top: 100%;
   left: 0;
   min-width: 200px;
-  background-color: var(--hp-surface, Canvas);
-  color: var(--hp-text, CanvasText);
-  border: 1px solid var(--hp-border, color-mix(in srgb, currentColor 20%, transparent));
-  border-radius: var(--hp-radius, 0.375rem);
+  color-scheme: light dark;
   overflow: hidden;
 }
 
@@ -1400,11 +1382,6 @@ hp-context-menu-content {
   z-index: var(--hp-z-index-popover);
   min-width: 8rem;
   color-scheme: light dark;
-  background-color: var(--hp-surface, Canvas);
-  color: var(--hp-text, CanvasText);
-  border: 1px solid var(--hp-border, color-mix(in srgb, currentColor 25%, transparent));
-  border-radius: var(--hp-radius, 0.5rem);
-  box-shadow: var(--hp-shadow-lg, 0 8px 32px rgb(0 0 0 / 0.12), 0 2px 8px rgb(0 0 0 / 0.08));
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -1687,17 +1664,17 @@ hp-tree-item[disabled] {
   pointer-events: none;
 }
 
-/* Group — hidden when parent item is collapsed */
+/* Group — hidden by default; prevents flash-of-expanded-tree before JS loads */
 hp-tree-group {
-  display: block;
-}
-
-hp-tree-item[data-state="closed"] > hp-tree-group,
-hp-tree-item[data-state="leaf"] > hp-tree-group {
   display: none;
 }
 
 hp-tree-item[data-state="open"] > hp-tree-group {
+  display: block;
+}
+
+/* SSR fallback: items with [expanded] start visible before JS initializes */
+hp-tree-item[expanded] > hp-tree-group {
   display: block;
 }
 
@@ -1951,26 +1928,4 @@ hp-carousel-next {
 hp-carousel-dot {
   cursor: pointer;
   user-select: none;
-}
-
-/* --- Documentation Utils --- */
-/* Badge utility for component status (e.g., "Nuevo") used in docs */
-.hp-badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 2px 10px;
-  border-radius: 9999px;
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  background: rgba(16, 185, 129, 0.1);
-  color: #10b981;
-  border: 1px solid rgba(16, 185, 129, 0.2);
-}
-
-.hp-badge.new {
-  background: rgba(59, 130, 246, 0.1);
-  color: #3b82f6;
-  border-color: rgba(59, 130, 246, 0.2);
 }

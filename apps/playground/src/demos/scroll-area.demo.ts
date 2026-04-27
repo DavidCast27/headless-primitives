@@ -1,12 +1,12 @@
 import "@headless-primitives/scroll-area";
-import "./scroll-area.css";
+import "../styles/scroll-area.css";
 
 export const scrollAreaDemo = {
   title: "Scroll Area",
   description:
     "A scrollable container with custom, accessible scrollbars that replace native browser scrollbars.",
   html: `
-<div class="demo-section">
+<div class="hp-demo-section">
   <h2>Vertical Scroll</h2>
   <hp-scroll-area class="scroll-box" orientation="vertical">
     <hp-scroll-area-viewport>
@@ -34,7 +34,7 @@ export const scrollAreaDemo = {
   </hp-scroll-area>
 </div>
 
-<div class="demo-section">
+<div class="hp-demo-section">
   <h2>Horizontal Scroll</h2>
   <hp-scroll-area class="scroll-box-h" orientation="horizontal">
     <hp-scroll-area-viewport>
@@ -57,7 +57,7 @@ export const scrollAreaDemo = {
   </hp-scroll-area>
 </div>
 
-<div class="demo-section">
+<div class="hp-demo-section">
   <h2>Both Scrollbars</h2>
   <hp-scroll-area class="scroll-box" orientation="both">
     <hp-scroll-area-viewport>

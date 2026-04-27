@@ -1,0 +1,53 @@
+/**
+ * @headless-primitives/demo-styles — separator
+ */
+
+hp-separator[orientation="horizontal"],
+hp-separator:not([orientation]) {
+  display: block;
+  height: 1px;
+  width: 100%;
+  background-color: var(--hp-border);
+  margin: 1rem 0;
+}
+
+hp-separator[orientation="vertical"] {
+  display: inline-block;
+  width: 1px;
+  height: 1.5rem;
+  background-color: var(--hp-border);
+  margin: 0 1rem;
+  vertical-align: middle;
+}
+
+.separator-demo-box {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  background: var(--hp-bg-muted);
+  border-radius: var(--hp-radius-md, 8px);
+}
+
+.demo-sep-inline {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 24px;
+}
+
+.demo-sep-box {
+  width: 100%;
+  max-width: 300px;
+}
+
+.demo-sep-title {
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.demo-sep-inline--mt {
+  gap: 12px;
+  margin-top: 12px;
+  height: 20px;
+}

@@ -1,5 +1,5 @@
 import { ComponentDemo } from "../types";
-import "./progress.css";
+import "../styles/progress.css";
 
 export const progressDemo: ComponentDemo = {
   title: "Progress primitive",
@@ -9,7 +9,7 @@ export const progressDemo: ComponentDemo = {
       <div style="display: flex; flex-direction: column; gap: 1rem;">
         <div style="display: flex; justify-content: space-between; align-items: flex-end;">
           <span style="font-size: 0.85rem; font-weight: 500;">Dynamic progress</span>
-          <span id="prg-val" style="font-size: 0.75rem; color: var(--primary-color);">0%</span>
+          <span id="prg-val" style="font-size: 0.75rem; color: var(--hp-accent);">0%</span>
         </div>
         <hp-progress id="prg-dyn" class="progress" value="0"></hp-progress>
         <div style="display: flex; gap: 12px; margin-top: 0.5rem;">

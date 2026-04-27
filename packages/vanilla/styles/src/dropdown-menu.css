@@ -53,9 +53,18 @@
   hp-dropdown-menu-content {
     background-color: var(--hp-surface, Canvas);
     color: var(--hp-text, CanvasText);
-    border-color: var(--hp-border, color-mix(in srgb, currentColor 25%, transparent));
+    border: 1px solid var(--hp-border, color-mix(in srgb, currentColor 25%, transparent));
     border-radius: var(--hp-radius, 0.5rem);
     box-shadow: var(--hp-shadow-lg, 0 8px 32px rgb(0 0 0 / 0.12), 0 2px 8px rgb(0 0 0 / 0.08));
+  }
+
+  hp-dropdown-menu-content[data-state="open"] {
+    animation: hp-overlay-in var(--hp-duration, 150ms)
+      var(--hp-ease-out, cubic-bezier(0.16, 1, 0.3, 1)) both;
+  }
+
+  hp-dropdown-menu-content[data-state="closed"] {
+    animation: hp-overlay-out var(--hp-duration-fast, 100ms) var(--hp-ease, ease) both;
   }
 
   /* --- Menu item --- */
@@ -112,6 +121,7 @@
     hp-dropdown-menu-content,
     hp-dropdown-menu-item {
       transition: none;
+      animation: none;
     }
   }
 }

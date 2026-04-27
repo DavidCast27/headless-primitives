@@ -1,5 +1,5 @@
 import { ComponentDemo } from "../types";
-import "./dialog.css";
+import "../styles/dialog.css";
 
 export const dialogDemo: ComponentDemo = {
   title: "Dialog primitive",

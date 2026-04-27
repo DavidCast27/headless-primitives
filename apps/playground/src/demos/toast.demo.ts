@@ -1,5 +1,5 @@
 import { ComponentDemo } from "../types";
-import "./toast.css";
+import "../styles/toast.css";
 
 export const toastDemo: ComponentDemo = {
   title: "Toast / Alert",

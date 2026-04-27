@@ -15,7 +15,7 @@ Así se ve `hp-drawer` usando únicamente `@headless-primitives/utils/base.css`.
     <hp-drawer-content>
       <hp-drawer-title>Panel lateral</hp-drawer-title>
       <hp-drawer-close>&times;</hp-drawer-close>
-      <p style="padding: 0 1.5rem 1rem; margin: 0; font-size: 0.875rem; opacity: 0.7;">
+      <p class="demo-drw-bare-text">
         Solo <code>base.css</code>. Focus trap, scroll lock y Escape funcionan sin CSS adicional.
       </p>
     </hp-drawer-content>
@@ -24,31 +24,31 @@ Así se ve `hp-drawer` usando únicamente `@headless-primitives/utils/base.css`.
 
 ### Con estilos personalizados
 
-<div class="hp-demo-card" style="display:flex;gap:0.75rem;flex-wrap:wrap;padding:2rem;">
+<div class="hp-demo-card demo-drw-card">
   <hp-drawer>
     <hp-drawer-trigger>
-      <button class="drw-btn">Left Drawer</button>
+      <button class="btn">Left Drawer</button>
     </hp-drawer-trigger>
-    <hp-drawer-backdrop class="drw-backdrop"></hp-drawer-backdrop>
-    <hp-drawer-content class="drw-content" data-position="left">
-      <div class="drw-header">
-        <h2 class="drw-title">Navegación</h2>
-        <hp-drawer-close><button class="drw-close" aria-label="Cerrar">&times;</button></hp-drawer-close>
+    <hp-drawer-backdrop class="drawer-backdrop"></hp-drawer-backdrop>
+    <hp-drawer-content class="drawer-content" data-position="left">
+      <div class="drawer-header">
+        <h2>Navegación</h2>
+        <hp-drawer-close><button class="drawer-close-icon" aria-label="Cerrar">&times;</button></hp-drawer-close>
       </div>
-      <div class="drw-body"><p>Panel deslizante desde la izquierda. Usa Escape o haz click fuera para cerrar.</p></div>
+      <div class="drawer-body"><p>Panel deslizante desde la izquierda. Usa Escape o haz click fuera para cerrar.</p></div>
     </hp-drawer-content>
   </hp-drawer>
   <hp-drawer position="right">
     <hp-drawer-trigger>
-      <button class="drw-btn">Right Drawer</button>
+      <button class="btn">Right Drawer</button>
     </hp-drawer-trigger>
-    <hp-drawer-backdrop class="drw-backdrop"></hp-drawer-backdrop>
-    <hp-drawer-content class="drw-content" data-position="right">
-      <div class="drw-header">
-        <h2 class="drw-title">Ajustes</h2>
-        <hp-drawer-close><button class="drw-close" aria-label="Cerrar">&times;</button></hp-drawer-close>
+    <hp-drawer-backdrop class="drawer-backdrop"></hp-drawer-backdrop>
+    <hp-drawer-content class="drawer-content" data-position="right">
+      <div class="drawer-header">
+        <h2>Ajustes</h2>
+        <hp-drawer-close><button class="drawer-close-icon" aria-label="Cerrar">&times;</button></hp-drawer-close>
       </div>
-      <div class="drw-body"><p>Panel deslizante desde la derecha.</p></div>
+      <div class="drawer-body"><p>Panel deslizante desde la derecha.</p></div>
     </hp-drawer-content>
   </hp-drawer>
 </div>
@@ -290,66 +290,3 @@ Adhiere al [patrón WAI-ARIA APG para Dialog (Modal)](https://www.w3.org/WAI/ARI
 | `Tab`             | Navega entre elementos focusables dentro del drawer (focus trap). |
 | `Shift + Tab`     | Navega en reversa dentro del focus trap.                          |
 | `Enter` / `Space` | Activa el trigger o el botón de cierre.                           |
-
-<style>
-.drw-btn {
-  font-family: inherit;
-  font-size: 0.875rem;
-  font-weight: 500;
-  padding: 8px 18px;
-  border-radius: 8px;
-  cursor: pointer;
-  background: var(--vp-c-brand-1);
-  color: #fff;
-  border: none;
-  transition: opacity 0.15s;
-}
-.drw-btn:hover { opacity: 0.85; }
-.drw-backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.45);
-  backdrop-filter: blur(4px);
-  z-index: 999;
-}
-.drw-content {
-  background: var(--vp-c-bg);
-  border: 1px solid var(--vp-c-divider);
-  box-shadow: 0 24px 48px -12px rgba(0,0,0,0.25);
-  z-index: 1000;
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-}
-.drw-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1.25rem 1.5rem;
-  border-bottom: 1px solid var(--vp-c-divider);
-}
-.drw-title {
-  margin: 0;
-  font-size: 1.125rem;
-  font-weight: 600;
-  color: var(--vp-c-text-1);
-}
-.drw-body {
-  padding: 1.25rem 1.5rem;
-  color: var(--vp-c-text-2);
-  font-size: 0.9rem;
-  line-height: 1.6;
-}
-.drw-body p { margin: 0; }
-.drw-close {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 1.25rem;
-  color: var(--vp-c-text-2);
-  padding: 4px 8px;
-  border-radius: 6px;
-  line-height: 1;
-}
-.drw-close:hover { background: var(--vp-c-default-soft); }
-</style>

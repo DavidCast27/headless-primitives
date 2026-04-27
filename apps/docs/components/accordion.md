@@ -24,22 +24,22 @@ Así se ve `hp-accordion` usando únicamente `@headless-primitives/utils/base.cs
 ### Con estilos personalizados
 
 <div class="hp-demo-card">
-  <hp-accordion class="demo-accordion">
-    <hp-accordion-item value="demo-1">
-      <hp-accordion-trigger class="demo-trigger">
-        <span>¿Qué es Headless Primitives?</span>
-        <span class="demo-icon">▼</span>
+  <hp-accordion class="hp-demo-acc">
+    <hp-accordion-item class="hp-demo-acc-item" value="demo-1">
+      <hp-accordion-trigger class="hp-demo-acc-trigger">
+        <span class="hp-demo-acc-text">¿Qué es Headless Primitives?</span>
+        <span class="hp-demo-acc-icon">▼</span>
       </hp-accordion-trigger>
-      <hp-accordion-content class="demo-content">
+      <hp-accordion-content class="hp-demo-acc-content">
         <p>Es una librería de componentes headless que proveen la accesibilidad y comportamiento nativo.</p>
       </hp-accordion-content>
     </hp-accordion-item>
-    <hp-accordion-item value="demo-2">
-      <hp-accordion-trigger class="demo-trigger">
-        <span>¿Por qué usar acordeones?</span>
-        <span class="demo-icon">▼</span>
+    <hp-accordion-item class="hp-demo-acc-item" value="demo-2">
+      <hp-accordion-trigger class="hp-demo-acc-trigger">
+        <span class="hp-demo-acc-text">¿Por qué usar acordeones?</span>
+        <span class="hp-demo-acc-icon">▼</span>
       </hp-accordion-trigger>
-      <hp-accordion-content class="demo-content">
+      <hp-accordion-content class="hp-demo-acc-content">
         <p>Son perfectos para organizar contenido en secciones expandibles.</p>
       </hp-accordion-content>
     </hp-accordion-item>
@@ -378,69 +378,3 @@ accordion.singlePanel = true;
   </hp-accordion-item>
 </hp-accordion>
 ```
-
-<style>
-hp-accordion,
-hp-accordion-item,
-hp-accordion-trigger,
-hp-accordion-content {
-  display: block;
-}
-hp-accordion-content[hidden] {
-  display: none;
-}
-.demo-accordion {
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 8px;
-  overflow: hidden;
-  background: var(--vp-c-bg-soft);
-  max-width: 500px;
-}
-hp-accordion-item {
-  border-bottom: 1px solid var(--vp-c-divider);
-}
-hp-accordion-item:last-child {
-  border-bottom: none;
-}
-.demo-trigger {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  padding: 16px;
-  background: var(--vp-c-bg-soft);
-  border: none;
-  cursor: pointer;
-  font-size: 15px;
-  font-weight: 500;
-  color: var(--vp-c-text-1);
-}
-.demo-trigger:hover {
-  background: var(--vp-c-bg-mute);
-}
-.demo-trigger:focus {
-  outline: 2px solid var(--vp-c-brand-1);
-  outline-offset: -2px;
-}
-.demo-trigger[aria-expanded="true"] .demo-icon {
-  transform: rotate(180deg);
-}
-.demo-content {
-  padding: 16px;
-  background: var(--vp-c-bg);
-  border-top: 1px solid var(--vp-c-divider);
-}
-.demo-content[hidden] {
-  display: none;
-}
-.demo-content p {
-  margin: 0;
-  color: var(--vp-c-text-2);
-  line-height: 1.6;
-}
-.demo-icon {
-  font-size: 12px;
-  transition: transform 0.2s;
-  color: var(--vp-c-text-2);
-}
-</style>

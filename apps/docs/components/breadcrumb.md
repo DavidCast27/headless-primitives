@@ -8,12 +8,12 @@ El componente `hp-breadcrumb` implementa el patrón [WAI-ARIA Breadcrumb](https:
 
 <div class="hp-demo-card">
   <hp-breadcrumb>
-    <hp-breadcrumb-list style="display: flex; list-style: none; padding: 0; margin: 0; gap: 0.5rem; align-items: center;">
-      <hp-breadcrumb-item style="display: flex; align-items: center; gap: 0.5rem;">
+    <hp-breadcrumb-list class="demo-bc-list">
+      <hp-breadcrumb-item class="demo-bc-item">
         <hp-breadcrumb-link href="/">Inicio</hp-breadcrumb-link>
         <hp-breadcrumb-separator>/</hp-breadcrumb-separator>
       </hp-breadcrumb-item>
-      <hp-breadcrumb-item style="display: flex; align-items: center; gap: 0.5rem;">
+      <hp-breadcrumb-item class="demo-bc-item">
         <hp-breadcrumb-link href="/componentes">Componentes</hp-breadcrumb-link>
         <hp-breadcrumb-separator>/</hp-breadcrumb-separator>
       </hp-breadcrumb-item>
@@ -27,22 +27,22 @@ El componente `hp-breadcrumb` implementa el patrón [WAI-ARIA Breadcrumb](https:
 ### Con estilos personalizados
 
 <div class="hp-demo-card">
-  <hp-breadcrumb class="demo-breadcrumb">
-    <hp-breadcrumb-list class="demo-list">
-      <hp-breadcrumb-item class="demo-item">
-        <hp-breadcrumb-link href="/" class="demo-link">Inicio</hp-breadcrumb-link>
-        <hp-breadcrumb-separator class="demo-separator">/</hp-breadcrumb-separator>
+  <hp-breadcrumb>
+    <hp-breadcrumb-list class="demo-bc-list">
+      <hp-breadcrumb-item class="demo-bc-item">
+        <hp-breadcrumb-link href="/">Inicio</hp-breadcrumb-link>
+        <hp-breadcrumb-separator>/</hp-breadcrumb-separator>
       </hp-breadcrumb-item>
-      <hp-breadcrumb-item class="demo-item">
-        <hp-breadcrumb-link href="/componentes" class="demo-link">Componentes</hp-breadcrumb-link>
-        <hp-breadcrumb-separator class="demo-separator">/</hp-breadcrumb-separator>
+      <hp-breadcrumb-item class="demo-bc-item">
+        <hp-breadcrumb-link href="/componentes">Componentes</hp-breadcrumb-link>
+        <hp-breadcrumb-separator>/</hp-breadcrumb-separator>
       </hp-breadcrumb-item>
-      <hp-breadcrumb-item class="demo-item">
-        <hp-breadcrumb-ellipsis class="demo-ellipsis">...</hp-breadcrumb-ellipsis>
-        <hp-breadcrumb-separator class="demo-separator">/</hp-breadcrumb-separator>
+      <hp-breadcrumb-item class="demo-bc-item">
+        <hp-breadcrumb-ellipsis>...</hp-breadcrumb-ellipsis>
+        <hp-breadcrumb-separator>/</hp-breadcrumb-separator>
       </hp-breadcrumb-item>
-      <hp-breadcrumb-item class="demo-item">
-        <hp-breadcrumb-page class="demo-page">Breadcrumb</hp-breadcrumb-page>
+      <hp-breadcrumb-item>
+        <hp-breadcrumb-page>Breadcrumb</hp-breadcrumb-page>
       </hp-breadcrumb-item>
     </hp-breadcrumb-list>
   </hp-breadcrumb>
@@ -248,44 +248,3 @@ Adhiere al [patrón WAI-ARIA APG para Breadcrumb](https://www.w3.org/WAI/ARIA/ap
 | `Enter` | Activa el link bajo foco.      |
 | `Space` | Activa el link bajo foco.      |
 | `Tab`   | Navega entre links focusables. |
-
-<style>
-.demo-breadcrumb {
-  font-family: var(--vp-font-family-base);
-}
-.demo-list {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-.demo-item {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-.demo-link {
-  color: var(--vp-c-brand-1);
-  text-decoration: none;
-  font-size: 14px;
-}
-.demo-link:hover {
-  text-decoration: underline;
-}
-.demo-page {
-  color: var(--vp-c-text-2);
-  font-weight: 500;
-  font-size: 14px;
-}
-.demo-separator {
-  color: var(--vp-c-divider);
-  font-size: 14px;
-}
-.demo-ellipsis {
-  color: var(--vp-c-text-3);
-  font-size: 14px;
-}
-</style>

@@ -1,0 +1,43 @@
+/**
+ * @headless-primitives/demo-styles — field
+ */
+
+.demo-fld-wrap {
+  width: 100%;
+  max-width: 320px;
+}
+
+.demo-fld-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+hp-field-label.demo-fld-label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--hp-text);
+}
+
+hp-field-description.demo-fld-desc {
+  font-size: 0.8rem;
+  opacity: 0.7;
+  color: var(--hp-text-secondary);
+}
+
+hp-field-error.demo-fld-error {
+  font-size: 0.8rem;
+  color: var(--hp-color-danger, #ff4d4d);
+}
+
+.demo-fld-input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid var(--hp-border);
+  border-radius: 6px;
+  background: var(--hp-surface);
+  color: var(--hp-text);
+  font-family: inherit;
+  font-size: 0.875rem;
+  box-sizing: border-box;
+}

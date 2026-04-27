@@ -1,5 +1,5 @@
 import { ComponentDemo } from "../types";
-import "./alert-dialog.css";
+import "../styles/alert-dialog.css";
 
 export const alertDialogDemo: ComponentDemo = {
   title: "Alert Dialog",

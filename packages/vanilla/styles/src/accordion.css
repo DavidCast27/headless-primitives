@@ -60,19 +60,17 @@ hp-accordion-trigger[aria-expanded="true"] {
   color: var(--hp-accent);
 }
 
+hp-accordion-trigger .hp-icon,
+hp-accordion-trigger [data-hp-icon] {
+  transition: transform var(--hp-transition);
+}
+
 hp-accordion-trigger[aria-expanded="true"] .hp-icon,
 hp-accordion-trigger[aria-expanded="true"] [data-hp-icon] {
   transform: rotate(180deg);
-  transition: transform var(--hp-transition);
 }
 
-hp-accordion-trigger[aria-expanded="false"] .hp-icon,
-hp-accordion-trigger[aria-expanded="false"] [data-hp-icon] {
-  transform: rotate(0deg);
-  transition: transform var(--hp-transition);
-}
-
-/* Content — padding interno (Req 9.5) */
+/* Content — padding interno + entrada animada (Req 9.5) */
 hp-accordion-content {
   display: block;
   padding: var(--hp-space-3) var(--hp-space-4);
@@ -80,6 +78,8 @@ hp-accordion-content {
   font-size: var(--hp-font-size-sm);
   overflow-wrap: break-word;
   word-break: break-word;
+  animation: hp-panel-in var(--hp-duration-slow, 200ms)
+    var(--hp-ease-out, cubic-bezier(0.16, 1, 0.3, 1)) both;
 }
 
 /* === Accesibilidad — prefers-reduced-motion === */
@@ -88,5 +88,9 @@ hp-accordion-content {
   hp-accordion-trigger .hp-icon,
   hp-accordion-trigger [data-hp-icon] {
     transition: none;
+  }
+
+  hp-accordion-content {
+    animation: none;
   }
 }

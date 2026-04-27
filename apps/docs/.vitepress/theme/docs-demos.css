@@ -1,4 +1,6 @@
-/* shared-demos.css — Headless Primitives Docs Theme */
+/* docs-demos.css — Headless Primitives Docs Theme
+   Utility classes and demo layout styles.
+   Token definitions (--hp-* bridge from VitePress) live in hp-docs-bridge.css. */
 
 :root {
   --hp-demo-bg: var(--vp-custom-block-bg);
@@ -8,20 +10,27 @@
 
 /* Badge inline en headings */
 .hp-badge {
-  float: right;
-  font-size: 0.4em;
-  padding: 0.01rem 0.6em;
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+  font-size: 0.5em;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  padding: 0.15rem 0.75em;
+  border-radius: 999px;
   background: var(--vp-c-brand-soft);
   color: var(--vp-c-brand-1);
+  margin-left: 0.5em;
 }
 
 /* Contenedor universal para demos en MD */
 .hp-demo-card {
   margin: 2rem 0;
   padding: 3rem;
-  border: 1px solid var(--hp-demo-border);
+  border: 1px solid var(--vp-c-border);
   border-radius: var(--hp-demo-radius);
   background: var(--hp-demo-bg);
+  box-shadow: 0 1px 4px 0 var(--vp-c-divider);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -29,6 +38,15 @@
   gap: 1.5rem;
   position: relative;
   overflow: visible;
+  transition:
+    background var(--hp-transition, 150ms ease),
+    border-color var(--hp-transition, 150ms ease);
+}
+
+@media (max-width: 640px) {
+  .hp-demo-card {
+    padding: 1.5rem;
+  }
 }
 
 /* Estilos base para elementos dentro de demos para que no se vean crudos */
@@ -37,37 +55,100 @@
 .hp-demo-card textarea {
   font-family: inherit;
   padding: 8px 12px;
-  border-radius: 6px;
+  border-radius: var(--hp-radius, 6px);
   border: 1px solid var(--hp-demo-border);
   background: var(--vp-c-bg);
   color: var(--vp-c-text-1);
-  transition: border-color 0.2s;
+  transition: border-color var(--hp-transition, 150ms ease);
 }
 
 .hp-demo-card input:focus {
   outline: none;
-  border-color: #3b82f6;
+  border-color: var(--vp-c-brand-1);
+}
+
+/* ── Page header (h1 + lead paragraph) ────────────────────────────────── */
+
+.vp-doc h1 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--vp-c-divider);
+  margin-bottom: 1.25rem;
+}
+
+/* Lead paragraph — first <p> directly after h1 */
+.vp-doc h1 + p {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: var(--vp-c-text-2);
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--vp-c-divider);
 }
 
 /* ── Tree View base styles ─────────────────────────────────────────────── */
-hp-tree,
-hp-tree-item,
-hp-tree-group {
-  display: block;
+/* Tree visibility rules (hidden-by-default + [expanded] SSR fallback)
+   live in base.css to apply globally before custom elements upgrade. */
+
+/* ── Dark mode polish ──────────────────────────────────────────────────── */
+
+.dark .hp-demo-card {
+  background: var(--vp-c-bg-soft);
+  border-color: var(--vp-c-border);
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.35);
 }
 
-/* Groups are hidden by default; only shown when parent item is open.
-   This must live here (not in the page <style>) so it applies before
-   the custom element upgrades, preventing the flash-of-expanded-tree. */
-hp-tree-group {
-  display: none;
+/* ── API table styling ─────────────────────────────────────────────────── */
+
+.vp-doc table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.875rem;
 }
 
-hp-tree-item[data-state="open"] > hp-tree-group {
-  display: block;
+.vp-doc table thead tr {
+  background: var(--vp-c-bg-soft);
+  border-bottom: 2px solid var(--vp-c-border);
 }
 
-/* Items with the `expanded` HTML attribute start open before JS runs */
-hp-tree-item[expanded] > hp-tree-group {
+.vp-doc table thead th {
+  padding: 0.65rem 1rem;
+  font-weight: 600;
+  color: var(--vp-c-text-1);
+  text-align: left;
+  white-space: nowrap;
+}
+
+.vp-doc table tbody tr:nth-child(even) {
+  background: var(--vp-c-bg-soft);
+}
+
+.vp-doc table tbody tr {
+  border-bottom: 1px solid var(--vp-c-divider);
+  transition: background var(--hp-transition, 150ms ease);
+}
+
+.vp-doc table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.vp-doc table tbody td {
+  padding: 0.6rem 1rem;
+  color: var(--vp-c-text-1);
+  vertical-align: top;
+}
+
+/* ── Section label utility ─────────────────────────────────────────────── */
+
+.hp-demo-label {
   display: block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--vp-c-text-2);
+  margin-bottom: -1rem;
 }

@@ -12,7 +12,7 @@ Así se ve `hp-tree` usando únicamente `@headless-primitives/utils/base.css`. L
   <hp-tree>
     <hp-tree-item value="1">
       Item 1
-      <hp-tree-group style="padding-left: 1rem;">
+      <hp-tree-group class="demo-tree-group">
         <hp-tree-item value="1.1">Hijo 1.1</hp-tree-item>
       </hp-tree-group>
     </hp-tree-item>
@@ -247,35 +247,3 @@ Adhiere al [patrón WAI-ARIA APG para TreeView](https://www.w3.org/WAI/ARIA/apg/
 | `Home`            | Mueve al primer nodo.                                   |
 | `End`             | Mueve al último nodo visible.                           |
 | `Enter` / `Space` | Selecciona y/o expande/colapsa.                         |
-
-<style>
-hp-tree,
-hp-tree-item,
-hp-tree-group {
-  display: block;
-}
-.demo-tree {
-  width: 100%;
-  max-width: 280px;
-  font-size: 0.875rem;
-}
-.demo-tree-item {
-  padding: 4px 8px;
-  cursor: pointer;
-  border-radius: 4px;
-  transition: background 0.1s;
-}
-.demo-tree-item:hover { background: var(--vp-c-bg-soft); }
-.demo-tree-item[aria-selected="true"] {
-  background: var(--vp-c-brand-soft);
-  color: var(--vp-c-brand-1);
-}
-.demo-tree-item:focus-visible {
-  outline: 2px solid var(--vp-c-brand-1);
-  outline-offset: -2px;
-}
-.demo-tree-group {
-  padding-left: 1.25rem;
-}
-hp-tree-item[data-state="closed"] > hp-tree-group { display: none; }
-</style>

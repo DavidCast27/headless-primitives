@@ -9,13 +9,13 @@ El componente `hp-fieldset` agrupa controles de formulario relacionados con una 
 <div class="hp-demo-card">
   <hp-fieldset id="demo-fieldset">
     <hp-fieldset-legend>Información de contacto</hp-fieldset-legend>
-    <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 8px;">
-      <input type="text" placeholder="Nombre completo" style="padding: 6px 10px; border: 1px solid var(--vp-c-divider); border-radius: 6px; background: var(--vp-c-bg); color: var(--vp-c-text-1);" />
-      <input type="email" placeholder="correo@ejemplo.com" style="padding: 6px 10px; border: 1px solid var(--vp-c-divider); border-radius: 6px; background: var(--vp-c-bg); color: var(--vp-c-text-1);" />
-      <button style="padding: 6px 14px; border: 1px solid var(--vp-c-brand-1); border-radius: 6px; background: var(--vp-c-brand-1); color: #fff; cursor: pointer;">Enviar</button>
+    <div class="demo-fset-body">
+      <input type="text" placeholder="Nombre completo" class="demo-fset-input" />
+      <input type="email" placeholder="correo@ejemplo.com" class="demo-fset-input" />
+      <button class="demo-fset-submit">Enviar</button>
     </div>
   </hp-fieldset>
-  <button id="toggle-disabled-btn" style="margin-top: 12px; padding: 6px 14px; border: 1px solid var(--vp-c-divider); border-radius: 6px; background: var(--vp-c-bg); color: var(--vp-c-text-1); cursor: pointer;">Deshabilitar grupo</button>
+  <button id="toggle-disabled-btn" class="demo-fset-toggle">Deshabilitar grupo</button>
 </div>
 
 <script>
@@ -196,10 +196,3 @@ Leyenda accesible del grupo.
 ## Accesibilidad
 
 Adhiere al patrón WAI-ARIA `group`. La propagación de `disabled` respeta el estado preexistente de cada control: si un control ya estaba deshabilitado antes, permanecerá deshabilitado al re-habilitar el fieldset.
-
-<style>
-hp-fieldset,
-hp-fieldset-legend {
-  display: block;
-}
-</style>

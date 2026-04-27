@@ -1,0 +1,149 @@
+/**
+ * @headless-primitives/demo-styles — context-menu
+ */
+
+.demo-context-menu {
+  position: relative;
+  display: block;
+}
+
+.demo-cm-trigger {
+  display: block;
+}
+
+.demo-cm-trigger-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 2rem;
+  min-height: 120px;
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--hp-text);
+  background-color: var(--hp-bg-subtle);
+  border: 2px dashed var(--hp-border);
+  border-radius: var(--hp-radius-md, 8px);
+  cursor: context-menu;
+  user-select: none;
+  transition: all var(--hp-transition, 150ms ease);
+}
+
+.demo-cm-trigger-area:hover {
+  border-color: var(--hp-accent);
+  background-color: var(--hp-bg-muted);
+}
+
+.demo-cm-trigger-area--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  border-style: solid;
+}
+
+.demo-cm-trigger-area--disabled:hover {
+  border-color: var(--hp-border);
+  background-color: var(--hp-bg-subtle);
+}
+
+hp-context-menu-trigger[data-state="open"] .demo-cm-trigger-area {
+  border-color: var(--hp-accent);
+  background-color: var(--hp-bg-muted);
+  border-style: solid;
+}
+
+.demo-cm-content {
+  position: absolute;
+  z-index: var(--hp-z-index-popover, 50);
+  min-width: 12rem;
+  overflow-y: auto;
+  background-color: var(--hp-surface);
+  border: 1px solid var(--hp-border);
+  border-radius: var(--hp-radius, 6px);
+  box-shadow: var(--hp-shadow-lg);
+  padding: 0.25rem 0;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity var(--hp-transition, 150ms ease),
+    visibility var(--hp-transition, 150ms ease);
+}
+
+.demo-cm-content[data-state="open"] {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.demo-cm-content[data-state="closed"] {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+hp-context-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  font-family: inherit;
+  font-size: 0.875rem;
+  color: var(--hp-text);
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  user-select: none;
+  text-align: left;
+  transition: background-color var(--hp-transition-fast, 100ms ease);
+  box-sizing: border-box;
+  min-height: 2rem;
+}
+
+hp-context-menu-item:hover:not([aria-disabled="true"]) {
+  background-color: var(--hp-bg-muted);
+}
+
+hp-context-menu-item:focus-visible {
+  outline: 2px solid var(--hp-focus-outline-color);
+  outline-offset: -2px;
+}
+
+hp-context-menu-item[aria-disabled="true"],
+hp-context-menu-item[disabled] {
+  opacity: var(--hp-opacity-disabled, 0.45);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+hp-context-menu-separator {
+  height: 1px;
+  margin: 0.25rem 0;
+  background-color: var(--hp-border);
+}
+
+hp-context-menu-label {
+  padding: 0.375rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--hp-text-secondary);
+  user-select: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .demo-cm-trigger-area,
+  .demo-cm-content,
+  hp-context-menu-item {
+    transition: none;
+  }
+}
+
+/* ── Demo context-menu bare trigger ─────────────────────────────────────── */
+.demo-cm-bare-area {
+  padding: 2rem;
+  border: 1px solid var(--hp-border);
+  text-align: center;
+  color: var(--hp-text-secondary);
+}

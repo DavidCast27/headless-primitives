@@ -1,6 +1,6 @@
 import { ComponentDemo } from "../types";
 import "@headless-primitives/checkbox";
-import "./checkbox.css";
+import "../styles/checkbox.css";
 
 export const checkboxDemo: ComponentDemo = {
   title: "Checkbox primitive",

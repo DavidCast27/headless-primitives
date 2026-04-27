@@ -1,5 +1,5 @@
 import { ComponentDemo } from "../types";
-import "./dropdown-menu.css";
+import "../styles/dropdown-menu.css";
 
 export const dropdownMenuDemo: ComponentDemo = {
   title: "Dropdown Menu primitive",

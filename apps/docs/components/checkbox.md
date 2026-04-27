@@ -18,13 +18,13 @@ Así se ve `hp-checkbox` usando únicamente `@headless-primitives/utils/base.css
 ### Con estilos personalizados
 
 <div class="hp-demo-card">
-  <div style="display: flex; flex-direction: column; gap: 1rem; align-items: flex-start;">
-    <div style="display: flex; align-items: center; gap: 0.75rem;">
-      <hp-checkbox id="check-demo" class="demo-checkbox"></hp-checkbox>
+  <div class="demo-chk-list">
+    <div class="demo-chk-row">
+      <hp-checkbox id="check-demo"></hp-checkbox>
       <hp-label for="check-demo">Acepto los términos</hp-label>
     </div>
-    <div style="display: flex; align-items: center; gap: 0.75rem;">
-      <hp-checkbox id="check-mixed" checked="mixed" class="demo-checkbox"></hp-checkbox>
+    <div class="demo-chk-row">
+      <hp-checkbox id="check-mixed" checked="mixed"></hp-checkbox>
       <hp-label for="check-mixed">Estado mixto (indeterminado)</hp-label>
     </div>
   </div>
@@ -207,29 +207,3 @@ checkbox.addEventListener("hp-change", (e) => {
   console.log("Checked:", e.detail.checked);
 });
 ```
-
-<style>
-.demo-checkbox {
-  width: 20px;
-  height: 20px;
-  border: 2px solid var(--vp-c-divider);
-  border-radius: 4px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s;
-  background: transparent;
-}
-
-.demo-checkbox[aria-checked="true"],
-.demo-checkbox[aria-checked="mixed"] {
-  background: var(--vp-c-brand-1);
-  border-color: var(--vp-c-brand-1);
-}
-
-.demo-checkbox:focus-visible {
-  outline: 2px solid var(--vp-c-brand-1);
-  outline-offset: 2px;
-}
-</style>

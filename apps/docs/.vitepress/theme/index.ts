@@ -37,7 +37,11 @@ import "@headless-primitives/scroll-area";
 import "@headless-primitives/toolbar";
 // Base functional CSS for headless components
 import "@headless-primitives/utils/base.css";
+// Bridge: maps VitePress tokens → --hp-* so demo-styles works in light/dark.
+// If @headless-primitives/styles/theme.css is ever imported here, delete hp-docs-bridge.css.
+import "./hp-docs-bridge.css";
 import "./docs-demos.css";
+import "./component-styles/index.css";
 
 // Importar componentes del tema
 import FlavorToggle from "./components/FlavorToggle.vue";

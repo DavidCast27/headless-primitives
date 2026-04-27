@@ -1,0 +1,106 @@
+/**
+ * @headless-primitives/demo-styles — dialog
+ */
+
+.dialog-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--hp-backdrop-bg, rgb(0 0 0 / 0.5));
+  backdrop-filter: blur(4px);
+  z-index: var(--hp-z-index-backdrop, 1000);
+  animation: hp-backdrop-in var(--hp-duration-slow, 200ms) ease-out;
+}
+
+.dialog-content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--hp-surface);
+  color: var(--hp-text);
+  padding: 0;
+  border-radius: var(--hp-radius-md, 8px);
+  box-shadow: var(--hp-shadow-lg);
+  min-width: 320px;
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow: hidden;
+  z-index: var(--hp-z-index-overlay-content, 1001);
+  border: 1px solid var(--hp-border);
+  animation: hp-dialog-in 0.3s ease-out;
+}
+
+.dialog-content h2 {
+  margin: 0;
+  padding: 24px 24px 0 24px;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--hp-text);
+}
+
+.dialog-content p {
+  margin: 8px 0 0 0;
+  padding: 0 24px;
+  color: var(--hp-text-secondary);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.dialog-content .btn {
+  margin: 24px 24px 24px 0;
+  padding: 8px 16px;
+  border: 1px solid var(--hp-border);
+  border-radius: var(--hp-radius, 6px);
+  background-color: var(--hp-surface);
+  color: var(--hp-text);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--hp-transition, 150ms ease);
+}
+
+.dialog-content .btn:hover {
+  background-color: var(--hp-bg-subtle);
+  border-color: var(--hp-border-strong);
+}
+
+.dialog-content .btn.btn-secondary {
+  background-color: var(--hp-accent);
+  border-color: var(--hp-accent);
+  color: var(--hp-accent-foreground, #fff);
+}
+
+.dialog-content .btn.btn-secondary:hover {
+  background-color: var(--hp-accent-hover);
+  border-color: var(--hp-accent-hover);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dialog-backdrop,
+  .dialog-content {
+    animation: none;
+  }
+}
+
+/* ── Demo dialog footer ─────────────────────────────────────────────── */
+.demo-dlg-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  padding: 0 24px 24px;
+}
+
+/* ── Demo alert-dialog footer ─────────────────────────────────────────── */
+.demo-adlg-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+.demo-adlg-hidden-trigger {
+  display: none;
+}

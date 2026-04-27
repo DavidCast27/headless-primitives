@@ -185,6 +185,22 @@ describe("Tree View", () => {
       expect(item.getAttribute("aria-expanded")).toBe("false");
     });
 
+    it("SSR fallback: [expanded] attribute set before upgrade initializes data-state=open", () => {
+      // Simulates SSR-rendered HTML: <hp-tree-item expanded> already in the DOM.
+      // base.css shows the group via hp-tree-item[expanded] > hp-tree-group before JS runs.
+      // After hydration, connectedCallback must read the attribute and set data-state="open"
+      // so the post-hydration rule hp-tree-item[data-state="open"] > hp-tree-group takes over.
+      const item = document.createElement("hp-tree-item") as HeadlessTreeItem;
+      const group = document.createElement("hp-tree-group") as HeadlessTreeGroup;
+      item.setAttribute("expanded", "");
+      item.appendChild(group);
+      document.body.appendChild(item);
+
+      expect(item.expanded).toBe(true);
+      expect(item.getAttribute("data-state")).toBe("open");
+      expect(item.getAttribute("aria-expanded")).toBe("true");
+    });
+
     it("emits hp-expand when clicking a collapsed expandable item", () => {
       const tree = document.createElement("hp-tree") as HeadlessTree;
       const item = document.createElement("hp-tree-item") as HeadlessTreeItem;

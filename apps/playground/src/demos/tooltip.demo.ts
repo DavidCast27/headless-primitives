@@ -1,5 +1,5 @@
 import { ComponentDemo } from "../types";
-import "./tooltip.css";
+import "../styles/tooltip.css";
 
 export const tooltipDemo: ComponentDemo = {
   title: "Tooltip primitive",

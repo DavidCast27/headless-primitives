@@ -43,6 +43,11 @@ hp-collapsible-trigger:focus-visible {
 }
 
 /* Ícono indicador — rotación al estar expandido (Req 8.2) */
+hp-collapsible-trigger .hp-icon,
+hp-collapsible-trigger [data-hp-icon] {
+  transition: transform var(--hp-transition);
+}
+
 hp-collapsible-trigger[aria-expanded="true"] .hp-icon,
 hp-collapsible-trigger[aria-expanded="true"] [data-hp-icon] {
   transform: rotate(180deg);
@@ -60,6 +65,8 @@ hp-collapsible-content {
   overflow-wrap: break-word;
   word-break: break-word;
   box-sizing: border-box;
+  animation: hp-panel-in var(--hp-duration-slow, 200ms)
+    var(--hp-ease-out, cubic-bezier(0.16, 1, 0.3, 1)) both;
 }
 
 /* === Accesibilidad — prefers-reduced-motion === */
@@ -68,5 +75,9 @@ hp-collapsible-content {
   hp-collapsible-trigger .hp-icon,
   hp-collapsible-trigger [data-hp-icon] {
     transition: none;
+  }
+
+  hp-collapsible-content {
+    animation: none;
   }
 }

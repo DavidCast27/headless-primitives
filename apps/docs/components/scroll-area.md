@@ -50,19 +50,19 @@ bun add @headless-primitives/scroll-area
 ### Sin estilos (solo base.css)
 
 <div class="hp-demo-card">
-  <hp-scroll-area style="width:300px;height:150px;overflow:hidden;position:relative;">
-    <hp-scroll-area-viewport style="width:100%;height:100%;overflow:scroll;scrollbar-width:none;">
+  <hp-scroll-area class="demo-sa-bare">
+    <hp-scroll-area-viewport class="demo-sa-viewport">
       <hp-scroll-area-content>
-        <p style="margin:0;padding:8px 12px;border-bottom:1px solid var(--vp-c-divider);">Línea 1</p>
-        <p style="margin:0;padding:8px 12px;border-bottom:1px solid var(--vp-c-divider);">Línea 2</p>
-        <p style="margin:0;padding:8px 12px;border-bottom:1px solid var(--vp-c-divider);">Línea 3</p>
-        <p style="margin:0;padding:8px 12px;border-bottom:1px solid var(--vp-c-divider);">Línea 4</p>
-        <p style="margin:0;padding:8px 12px;border-bottom:1px solid var(--vp-c-divider);">Línea 5</p>
-        <p style="margin:0;padding:8px 12px;">Línea 6</p>
+        <p class="demo-sa-row">Línea 1</p>
+        <p class="demo-sa-row">Línea 2</p>
+        <p class="demo-sa-row">Línea 3</p>
+        <p class="demo-sa-row">Línea 4</p>
+        <p class="demo-sa-row">Línea 5</p>
+        <p class="demo-sa-row demo-sa-row--last">Línea 6</p>
       </hp-scroll-area-content>
     </hp-scroll-area-viewport>
-    <hp-scroll-area-scrollbar orientation="vertical" style="position:absolute;top:0;right:0;bottom:0;width:8px;display:flex;flex-direction:column;padding:2px;">
-      <hp-scroll-area-thumb style="flex:1;background:var(--vp-c-divider);border-radius:9999px;min-height:20px;"></hp-scroll-area-thumb>
+    <hp-scroll-area-scrollbar orientation="vertical" class="demo-sa-scrollbar">
+      <hp-scroll-area-thumb class="demo-sa-thumb"></hp-scroll-area-thumb>
     </hp-scroll-area-scrollbar>
   </hp-scroll-area>
 </div>
@@ -70,80 +70,24 @@ bun add @headless-primitives/scroll-area
 ### Con estilos personalizados
 
 <div class="hp-demo-card">
-  <hp-scroll-area class="demo-scroll-area">
-    <hp-scroll-area-viewport class="demo-viewport">
+  <hp-scroll-area class="demo-sa">
+    <hp-scroll-area-viewport>
       <hp-scroll-area-content>
-        <p class="demo-item">Elemento 1 — Scroll para ver más</p>
-        <p class="demo-item">Elemento 2</p>
-        <p class="demo-item">Elemento 3</p>
-        <p class="demo-item">Elemento 4</p>
-        <p class="demo-item">Elemento 5</p>
-        <p class="demo-item">Elemento 6</p>
-        <p class="demo-item">Elemento 7</p>
-        <p class="demo-item">Elemento 8 — Fin del contenido</p>
+        <p>Elemento 1 — Scroll para ver más</p>
+        <p>Elemento 2</p>
+        <p>Elemento 3</p>
+        <p>Elemento 4</p>
+        <p>Elemento 5</p>
+        <p>Elemento 6</p>
+        <p>Elemento 7</p>
+        <p>Elemento 8 — Fin del contenido</p>
       </hp-scroll-area-content>
     </hp-scroll-area-viewport>
-    <hp-scroll-area-scrollbar class="demo-scrollbar" orientation="vertical">
-      <hp-scroll-area-thumb class="demo-thumb"></hp-scroll-area-thumb>
+    <hp-scroll-area-scrollbar orientation="vertical">
+      <hp-scroll-area-thumb></hp-scroll-area-thumb>
     </hp-scroll-area-scrollbar>
   </hp-scroll-area>
 </div>
-
-<style>
-hp-scroll-area,
-hp-scroll-area-viewport,
-hp-scroll-area-content,
-hp-scroll-area-scrollbar,
-hp-scroll-area-thumb,
-hp-scroll-area-corner {
-  display: block;
-}
-.demo-scroll-area {
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  max-width: 360px;
-  height: 200px;
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 8px;
-  background: var(--vp-c-bg-soft);
-}
-.demo-viewport {
-  width: 100%;
-  height: 100%;
-  overflow: scroll;
-  scrollbar-width: none;
-}
-.demo-viewport::-webkit-scrollbar { display: none; }
-.demo-item {
-  margin: 0;
-  padding: 10px 14px;
-  font-size: 14px;
-  color: var(--vp-c-text-2);
-  border-bottom: 1px solid var(--vp-c-divider);
-}
-.demo-item:last-child { border-bottom: none; }
-.demo-scrollbar {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 8px;
-  display: flex;
-  flex-direction: column;
-  padding: 2px;
-  opacity: 0;
-  transition: opacity 0.2s;
-}
-.demo-scroll-area:hover .demo-scrollbar { opacity: 1; }
-.demo-thumb {
-  flex: 1;
-  background: var(--vp-c-brand-1);
-  border-radius: 9999px;
-  min-height: 20px;
-  cursor: grab;
-}
-</style>
 
 <CodeSnippet>
 

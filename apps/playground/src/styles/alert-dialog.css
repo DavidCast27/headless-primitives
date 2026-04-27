@@ -1,0 +1,29 @@
+/**
+ * @headless-primitives/demo-styles — alert-dialog
+ */
+
+/* Reuses .dialog-backdrop and .dialog-content from dialog.css */
+
+/* Override: destructive primary action */
+.dialog-content .btn.btn-secondary.btn-danger {
+  background-color: var(--hp-color-danger, #dc2626);
+  border-color: var(--hp-color-danger, #dc2626);
+  color: var(--hp-accent-foreground, #fff);
+}
+
+.dialog-content .btn.btn-secondary.btn-danger:hover {
+  background-color: color-mix(in srgb, var(--hp-color-danger, #dc2626) 85%, black);
+  border-color: color-mix(in srgb, var(--hp-color-danger, #dc2626) 85%, black);
+}
+
+/* Alert-dialog specific: confirm button is danger */
+.dialog-content .btn.btn-secondary:not(.btn-danger) {
+  background-color: var(--hp-color-danger, #dc2626);
+  border-color: var(--hp-color-danger, #dc2626);
+  color: var(--hp-accent-foreground, #fff);
+}
+
+.dialog-content .btn.btn-secondary:not(.btn-danger):hover {
+  background-color: color-mix(in srgb, var(--hp-color-danger, #dc2626) 85%, black);
+  border-color: color-mix(in srgb, var(--hp-color-danger, #dc2626) 85%, black);
+}
