@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, afterEach } from "vitest";
+import { describe, it, test, expect, beforeEach, afterEach } from "vitest";
 import "./index"; // triggers @customElement decorator registration
 import type {
   HeadlessDrawer,
@@ -195,5 +195,31 @@ describe("HpDrawerContent", () => {
     document.body.appendChild(content);
     expect(content.id).toBe("my-drawer");
     content.remove();
+  });
+
+  test("drawer content has aria-labelledby pointing to title id", () => {
+    document.body.innerHTML = `
+      <hp-drawer>
+        <hp-drawer-trigger>Open</hp-drawer-trigger>
+        <hp-drawer-content>
+          <hp-drawer-title>Hello</hp-drawer-title>
+          <hp-drawer-description>World</hp-drawer-description>
+        </hp-drawer-content>
+      </hp-drawer>
+    `;
+    return new Promise<void>((resolve) => {
+      requestAnimationFrame(() =>
+        requestAnimationFrame(() => {
+          const content = document.querySelector("hp-drawer-content") as HTMLElement;
+          const title = document.querySelector("hp-drawer-title") as HTMLElement;
+          const description = document.querySelector("hp-drawer-description") as HTMLElement;
+          expect(title.id).toBeTruthy();
+          expect(description.id).toBeTruthy();
+          expect(content.getAttribute("aria-labelledby")).toBe(title.id);
+          expect(content.getAttribute("aria-describedby")).toBe(description.id);
+          resolve();
+        }),
+      );
+    });
   });
 });

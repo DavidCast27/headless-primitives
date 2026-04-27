@@ -224,6 +224,19 @@ export class HeadlessDrawerContent extends HeadlessElement {
     super.connectedCallback();
     this.setAttribute("data-hp-component", "drawer-content");
     if (!this.id) this.id = `hp-drawer-content-${this.hpId}`;
+    this._linkAria();
+    requestAnimationFrame(() => this._linkAria());
+  }
+
+  _linkAria() {
+    const root = this.closest("hp-drawer");
+    if (!root) return;
+    const title = root.querySelector("hp-drawer-title") as HTMLElement | null;
+    const description = root.querySelector("hp-drawer-description") as HTMLElement | null;
+    if (title?.id) this.setAttribute("aria-labelledby", title.id);
+    else this.removeAttribute("aria-labelledby");
+    if (description?.id) this.setAttribute("aria-describedby", description.id);
+    else this.removeAttribute("aria-describedby");
   }
 }
 
@@ -240,6 +253,16 @@ export class HeadlessDrawerTitle extends HeadlessElement {
   connectedCallback() {
     super.connectedCallback();
     this.setAttribute("data-hp-component", "drawer-title");
+    if (!this.id) this.id = `hp-drawer-title-${this.hpId}`;
+  }
+}
+
+@customElement("hp-drawer-description")
+export class HeadlessDrawerDescription extends HeadlessElement {
+  connectedCallback() {
+    super.connectedCallback();
+    this.setAttribute("data-hp-component", "drawer-description");
+    if (!this.id) this.id = `hp-drawer-description-${this.hpId}`;
   }
 }
 
