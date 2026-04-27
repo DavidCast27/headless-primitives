@@ -68,8 +68,12 @@ export class HeadlessAvatarImage extends HeadlessElement {
     this._img.src = this.src;
     this._img.alt = this.alt;
     this._img.style.cssText = "width:100%;height:100%;object-fit:cover";
-    this._img.onload = () => this._notifyParent("loaded");
-    this._img.onerror = () => this._notifyParent("error");
+    this._img.addEventListener("load", () => this._notifyParent("loaded"), {
+      signal: this.signal,
+    });
+    this._img.addEventListener("error", () => this._notifyParent("error"), {
+      signal: this.signal,
+    });
     this.appendChild(this._img);
   }
 
@@ -83,6 +87,6 @@ export class HeadlessAvatarImage extends HeadlessElement {
 export class HeadlessAvatarFallback extends HeadlessElement {
   connectedCallback() {
     super.connectedCallback();
-    this.style.opacity = "var(--hp-avatar-fallback-opacity, 1)";
+    this.setAttribute("data-hp-component", "avatar-fallback");
   }
 }
