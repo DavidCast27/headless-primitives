@@ -48,10 +48,11 @@ export class HeadlessSwitch extends HeadlessElement {
     const required = this.hasAttribute("required");
     this.setAttribute("aria-checked", String(checked));
     this.setAttribute("data-state", checked ? "checked" : "unchecked");
-    this.setAttribute("aria-disabled", String(disabled));
     if (disabled) {
+      this.setAttribute("aria-disabled", "true");
       this.removeAttribute("tabindex");
     } else {
+      this.removeAttribute("aria-disabled");
       this.setAttribute("tabindex", "0");
     }
     if (required) {
