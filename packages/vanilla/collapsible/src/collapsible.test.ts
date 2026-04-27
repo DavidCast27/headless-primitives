@@ -114,13 +114,24 @@ describe("HeadlessCollapsible", () => {
     await raf();
     collapsible.open = true;
     await collapsible.updateComplete;
-    await new Promise((r) => setTimeout(r, 50));
+    await raf();
+    await raf();
     expect(collapsible.open).toBe(true);
     expect(trigger.getAttribute("aria-expanded")).toBe("true");
     expect(content.getAttribute("data-state")).toBe("open");
     collapsible.open = false;
     await collapsible.updateComplete;
-    await new Promise((r) => setTimeout(r, 50));
+    await raf();
+    await raf();
+    expect(content.getAttribute("data-state")).toBe("closed");
+  });
+
+  it("setting open syncs data-state synchronously", async () => {
+    const { collapsible, content } = createCollapsible();
+    await raf();
+    collapsible.open = true;
+    expect(content.getAttribute("data-state")).toBe("open");
+    collapsible.open = false;
     expect(content.getAttribute("data-state")).toBe("closed");
   });
 
