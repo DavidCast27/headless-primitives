@@ -71,10 +71,32 @@ export class HeadlessAccordion extends HeadlessElement {
 
 @customElement("hp-accordion-item")
 export class HeadlessAccordionItem extends HeadlessElement {
-  @property({ type: Boolean, reflect: true }) open = false;
-  @property({ type: Boolean, reflect: true }) disabled = false;
+  @property({ type: Boolean, reflect: true })
+  get open(): boolean {
+    return this._open;
+  }
+  set open(val: boolean) {
+    const old = this._open;
+    this._open = val;
+    this.requestUpdate("open", old);
+    if (this.isConnected) this._sync();
+  }
+
+  @property({ type: Boolean, reflect: true })
+  get disabled(): boolean {
+    return this._disabled;
+  }
+  set disabled(val: boolean) {
+    const old = this._disabled;
+    this._disabled = val;
+    this.requestUpdate("disabled", old);
+    if (this.isConnected) this._sync();
+  }
+
   @property({ type: String, reflect: true }) value = "";
 
+  private _open = false;
+  private _disabled = false;
   private _explicitlyDisabled = false;
   private _triggerId = "";
   private _contentId = "";
@@ -90,21 +112,24 @@ export class HeadlessAccordionItem extends HeadlessElement {
       signal: this.signal,
     });
     this.addEventListener("slotchange", () => this._sync(), { signal: this.signal });
+    this._sync();
     requestAnimationFrame(() => this._sync());
+  }
+
+  attributeChangedCallback(name: string, old: string | null, next: string | null) {
+    super.attributeChangedCallback(name, old, next);
+    if ((name === "open" || name === "disabled") && old !== next && this.isConnected) {
+      this._sync();
+    }
   }
 
   setInheritedDisabled(val: boolean) {
     if (this._explicitlyDisabled) return;
     this.disabled = val;
-    this._sync();
   }
 
   syncState() {
     this._sync();
-  }
-
-  protected updated(changed: Map<string, unknown>) {
-    if (changed.has("open") || changed.has("disabled")) this._sync();
   }
 
   private _handleTriggerClick = () => {
@@ -114,7 +139,6 @@ export class HeadlessAccordionItem extends HeadlessElement {
     if (accordion?.singlePanel && this.open) return;
 
     this.open = !this.open;
-    this._sync();
     this.emit("change", { open: this.open, value: this.value });
     if (this.open) {
       this.emit("open", { value: this.value });

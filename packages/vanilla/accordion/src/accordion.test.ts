@@ -79,6 +79,28 @@ describe("Accordion", () => {
       expect(item.value).toBe("test-value");
     });
 
+    it("should sync ARIA on trigger synchronously when open property changes (ADR 0011)", () => {
+      const item = document.createElement("hp-accordion-item") as any;
+      const trigger = document.createElement("hp-accordion-trigger");
+      const content = document.createElement("hp-accordion-content");
+      item.appendChild(trigger);
+      item.appendChild(content);
+      document.body.appendChild(item);
+
+      // Initially closed
+      expect(trigger.getAttribute("aria-expanded")).toBe("false");
+      expect(content.getAttribute("data-state")).toBe("closed");
+
+      // Set open synchronously — no awaits, no microtasks
+      item.open = true;
+      expect(trigger.getAttribute("aria-expanded")).toBe("true");
+      expect(content.getAttribute("data-state")).toBe("open");
+
+      item.open = false;
+      expect(trigger.getAttribute("aria-expanded")).toBe("false");
+      expect(content.getAttribute("data-state")).toBe("closed");
+    });
+
     it("should dispatch events when toggling via trigger click", () => {
       const item = document.createElement("hp-accordion-item") as any;
       const trigger = document.createElement("hp-accordion-trigger") as any;
