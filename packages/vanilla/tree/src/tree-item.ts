@@ -167,6 +167,28 @@ export class HeadlessTreeItem extends HeadlessElement {
     if (items.length > 0) items[items.length - 1].focus();
   }
 
+  private _computeDepth(): number {
+    let depth = 1;
+    let current = this.parentElement;
+    while (current && current.tagName.toLowerCase() !== "hp-tree") {
+      if (current.tagName.toLowerCase() === "hp-tree-item") depth++;
+      current = current.parentElement;
+    }
+    return depth;
+  }
+
+  private _computeSetInfo(): { posinset: number; setsize: number } {
+    const parent = this.parentElement;
+    if (!parent) return { posinset: 1, setsize: 1 };
+    const siblings = Array.from(parent.children).filter(
+      (el) => el.tagName.toLowerCase() === "hp-tree-item",
+    );
+    return {
+      posinset: siblings.indexOf(this) + 1,
+      setsize: siblings.length,
+    };
+  }
+
   private _sync() {
     const expandable = this.isExpandable();
 
@@ -180,6 +202,12 @@ export class HeadlessTreeItem extends HeadlessElement {
 
     this.setAttribute("aria-selected", String(this.selected));
     this.setAttribute("aria-disabled", String(this.disabled));
+
+    // APG: expose hierarchy/position for screen readers
+    this.setAttribute("aria-level", String(this._computeDepth()));
+    const { posinset, setsize } = this._computeSetInfo();
+    this.setAttribute("aria-posinset", String(posinset));
+    this.setAttribute("aria-setsize", String(setsize));
   }
 }
 
