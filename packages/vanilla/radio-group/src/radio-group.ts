@@ -12,18 +12,14 @@ export class HeadlessRadioGroup extends HeadlessElement {
     super.connectedCallback();
     this.setAttribute("data-hp-component", "radio-group");
     if (!this.hasAttribute("role")) this.setAttribute("role", "radiogroup");
-    this.addEventListener("hp-radio-select", this._handleRadioSelect as EventListener);
-    this.addEventListener("keydown", this._handleKeyDown);
-    this.addEventListener("slotchange", () => this._updateRadios());
+    this.addEventListener("hp-radio-select", this._handleRadioSelect as EventListener, {
+      signal: this.signal,
+    });
+    this.addEventListener("keydown", this._handleKeyDown, { signal: this.signal });
+    this.addEventListener("slotchange", () => this._updateRadios(), { signal: this.signal });
     this._sync();
     this._updateRadios();
     requestAnimationFrame(() => this._updateRadios());
-  }
-
-  disconnectedCallback() {
-    super.disconnectedCallback();
-    this.removeEventListener("hp-radio-select", this._handleRadioSelect as EventListener);
-    this.removeEventListener("keydown", this._handleKeyDown);
   }
 
   private _sync() {
@@ -120,13 +116,8 @@ export class HeadlessRadio extends HeadlessElement {
     this.setAttribute("data-hp-component", "radio");
     if (!this.hasAttribute("role")) this.setAttribute("role", "radio");
     this.setAttribute("tabindex", "-1");
-    this.addEventListener("click", this._handleClick);
+    this.addEventListener("click", this._handleClick, { signal: this.signal });
     this._sync();
-  }
-
-  disconnectedCallback() {
-    super.disconnectedCallback();
-    this.removeEventListener("click", this._handleClick);
   }
 
   setChecked(val: boolean) {
