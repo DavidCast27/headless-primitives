@@ -6,7 +6,7 @@
  * Visibility is driven by data-state + base.css [data-hp-overlay-content].
  * Only top/left coordinates are set as inline styles (computed anchor position).
  */
-import { FocusTrap, HeadlessElement, customElement } from "@headless-primitives/utils";
+import { HeadlessElement, customElement } from "@headless-primitives/utils";
 import { property } from "lit/decorators.js";
 
 @customElement("hp-popover")
@@ -17,9 +17,9 @@ export class HeadlessPopover extends HeadlessElement {
   private _trigger: HTMLElement | null = null;
   private _content: HTMLElement | null = null;
   private _isOpen = false;
-  private _focusTrap: FocusTrap | null = null;
   private _rafId: number | null = null;
   private _scrollParents: EventTarget[] = [];
+  private _openController: AbortController | null = null;
 
   connectedCallback() {
     super.connectedCallback();
@@ -30,18 +30,20 @@ export class HeadlessPopover extends HeadlessElement {
     if (this._trigger && this._content) {
       this._setupTrigger();
       this._setupContent();
-      this._focusTrap = new FocusTrap(this._content);
     }
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    this._removeGlobalListeners();
+    this._openController?.abort();
+    this._openController = null;
+    this._scrollParents = [];
   }
 
   private _setupTrigger() {
     if (!this._trigger) return;
     this._trigger.setAttribute("data-hp-component", "popover-trigger");
+    this._trigger.setAttribute("aria-haspopup", "dialog");
     if (!this._trigger.hasAttribute("tabindex") && !this._trigger.hasAttribute("disabled")) {
       this._trigger.setAttribute("tabindex", "0");
     }
@@ -51,7 +53,6 @@ export class HeadlessPopover extends HeadlessElement {
   private _setupContent() {
     if (!this._content) return;
     this._content.setAttribute("role", "dialog");
-    this._content.setAttribute("aria-modal", "false");
     this._content.setAttribute("data-hp-overlay-content", "");
     this._content.setAttribute("data-state", "closed");
     this._content.setAttribute("aria-hidden", "true");
@@ -157,20 +158,30 @@ export class HeadlessPopover extends HeadlessElement {
       this._trigger.setAttribute("aria-controls", this._content.id || "");
     }
 
-    document.addEventListener("click", this._handleClickOutside);
-    document.addEventListener("keydown", this._handleEscape);
+    // Bind global listeners to a per-opening AbortController so they can be
+    // released on close() OR torn down automatically if the element is
+    // disconnected from the DOM without close() ever being called.
+    this._openController?.abort();
+    this._openController = new AbortController();
+    const sig = this._openController.signal;
+
+    document.addEventListener("click", this._handleClickOutside, { signal: sig });
+    document.addEventListener("keydown", this._handleEscape, { signal: sig });
 
     if (this._trigger) {
       this._scrollParents = this._getScrollParents(this._trigger);
       for (const parent of this._scrollParents) {
         parent.addEventListener("scroll", this._handleScrollOrResize, {
+          signal: sig,
           passive: true,
         } as AddEventListenerOptions);
       }
     }
-    window.addEventListener("resize", this._handleScrollOrResize, { passive: true });
+    window.addEventListener("resize", this._handleScrollOrResize, {
+      signal: sig,
+      passive: true,
+    });
 
-    this._focusTrap?.activate();
     this.emit("open");
   }
 
@@ -190,18 +201,13 @@ export class HeadlessPopover extends HeadlessElement {
     }
 
     this._removeGlobalListeners();
-    this._focusTrap?.deactivate();
     this.emit("close");
   }
 
   private _removeGlobalListeners() {
-    document.removeEventListener("click", this._handleClickOutside);
-    document.removeEventListener("keydown", this._handleEscape);
-    for (const parent of this._scrollParents) {
-      parent.removeEventListener("scroll", this._handleScrollOrResize);
-    }
+    this._openController?.abort();
+    this._openController = null;
     this._scrollParents = [];
-    window.removeEventListener("resize", this._handleScrollOrResize);
   }
 
   private _handleClickOutside = (event: Event) => {

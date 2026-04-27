@@ -291,9 +291,9 @@ export class HeadlessContextMenu extends HeadlessElement {
   }
 
   private _onClickOutside = (e: MouseEvent) => {
-    if (!this._open || !this._content) return;
+    if (!this._open) return;
     const target = e.target as Node;
-    if (!this._content.contains(target)) this.close();
+    if (!this.contains(target)) this.close();
   };
 
   private _onGlobalKeydown = (e: KeyboardEvent) => {

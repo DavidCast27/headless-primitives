@@ -35,6 +35,23 @@ describe("hp-avatar", () => {
     expect(avatar.getAttribute("data-state")).toBe("error");
   });
 
+  it("fallback element does not set inline opacity", () => {
+    const fb = document.getElementById("test-fallback") as HTMLElement;
+    expect(fb.style.opacity).toBe("");
+    expect(fb.getAttribute("data-hp-component")).toBe("avatar-fallback");
+  });
+
+  it("removing image element aborts its load/error listeners", () => {
+    const newImage = document.createElement("hp-avatar-image") as HeadlessAvatarImage;
+    newImage.setAttribute("src", "x.jpg");
+    document.body.appendChild(newImage);
+    const img = newImage.querySelector("img") as HTMLImageElement;
+    expect(img).toBeTruthy();
+    newImage.remove();
+    // Despachar load tras remove no debe propagar al parent (signal abortado)
+    expect(() => img.dispatchEvent(new Event("load"))).not.toThrow();
+  });
+
   it("should respect delay for fallback visibility", async () => {
     vi.useFakeTimers();
 

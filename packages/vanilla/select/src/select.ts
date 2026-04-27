@@ -6,6 +6,7 @@ import type { SelectChangeDetail, SelectHighlightDetail } from "./types";
 export class HeadlessSelect extends HeadlessElement {
   private _value: string | null = null;
   private _open = false;
+  private _prevOpen = false;
   private _hiddenInput: HTMLInputElement | null = null;
   private _trigger: HeadlessSelectTrigger | null = null;
   private _content: HeadlessSelectContent | null = null;
@@ -326,12 +327,13 @@ export class HeadlessSelect extends HeadlessElement {
         }
       }
       window.addEventListener("resize", this._onScrollOrResize, { passive: true });
-      this.emit("open");
+      if (!this._prevOpen) this.emit("open");
     } else {
       this._stopPositionLoop();
       this._removeGlobalListeners();
-      this.emit("close");
+      if (this._prevOpen) this.emit("close");
     }
+    this._prevOpen = this._open;
   }
 
   private _getScrollParents(el: HTMLElement): EventTarget[] {

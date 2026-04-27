@@ -93,6 +93,29 @@ describe("hp-toggle-group", () => {
     expect(toggle1.pressed).toBe(true);
   });
 
+  test("should toggle on Enter and emit a single hp-change event without synthesizing hp-toggle-press", () => {
+    let changeCount = 0;
+    let changeDetail: any = null;
+    let pressCount = 0;
+    group.addEventListener("hp-change", (e: any) => {
+      changeCount += 1;
+      changeDetail = e.detail;
+    });
+    group.addEventListener("hp-toggle-press", () => {
+      pressCount += 1;
+    });
+
+    toggle1.focus();
+    toggle1.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter", bubbles: true }));
+
+    expect(group.value).toEqual(["option1"]);
+    expect(toggle1.pressed).toBe(true);
+    expect(changeCount).toBe(1);
+    expect(changeDetail).toEqual({ value: ["option1"] });
+    // Keyboard activation must not synthesize an ad-hoc hp-toggle-press event
+    expect(pressCount).toBe(0);
+  });
+
   test("should handle disabled state", () => {
     group.setAttribute("disabled", "");
 

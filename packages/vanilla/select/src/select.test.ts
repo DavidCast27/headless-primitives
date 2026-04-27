@@ -69,4 +69,21 @@ describe("HpSelect", () => {
     expect(root.value).toBe("a");
     document.body.removeChild(root);
   });
+
+  it("re-opening an already open select does not re-emit open", () => {
+    let opens = 0;
+    let closes = 0;
+    root.addEventListener("hp-open", () => opens++);
+    root.addEventListener("hp-close", () => closes++);
+
+    root.open = true;
+    root.open = true; // idempotent — no debe re-emitir
+    expect(opens).toBe(1);
+    expect(closes).toBe(0);
+
+    root.open = false;
+    root.open = false; // idempotent
+    expect(opens).toBe(1);
+    expect(closes).toBe(1);
+  });
 });

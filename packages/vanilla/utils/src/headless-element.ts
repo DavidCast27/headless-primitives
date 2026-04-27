@@ -25,4 +25,32 @@ export class HeadlessElement extends LitElement {
   get hpId(): string {
     return this._hpId;
   }
+
+  // AbortController por ciclo connect/disconnect.
+  // Se aborta automáticamente en disconnectedCallback y se renueva en connectedCallback.
+  private _abortController: AbortController | null = null;
+
+  /**
+   * AbortSignal que se cancela automáticamente cuando el elemento se desconecta del DOM.
+   * Pásalo como `{ signal: this.signal }` a `addEventListener` para cleanup automático.
+   */
+  get signal(): AbortSignal {
+    if (!this._abortController || this._abortController.signal.aborted) {
+      this._abortController = new AbortController();
+    }
+    return this._abortController.signal;
+  }
+
+  override connectedCallback() {
+    super.connectedCallback();
+    if (!this._abortController || this._abortController.signal.aborted) {
+      this._abortController = new AbortController();
+    }
+  }
+
+  override disconnectedCallback() {
+    super.disconnectedCallback();
+    this._abortController?.abort();
+    this._abortController = null;
+  }
 }

@@ -66,4 +66,22 @@ describe("hp-switch", () => {
     expect(sw.checked).toBe(false);
     expect(sw.getAttribute("aria-checked")).toBe("false");
   });
+
+  it("should not expose aria-disabled when not disabled", () => {
+    expect(sw.hasAttribute("aria-disabled")).toBe(false);
+  });
+
+  it("should set aria-disabled to 'true' when disabled attribute is added", () => {
+    sw.setAttribute("disabled", "");
+    expect(sw.getAttribute("aria-disabled")).toBe("true");
+  });
+
+  it("should remove aria-disabled when disabled attribute is removed", () => {
+    sw.setAttribute("disabled", "");
+    expect(sw.getAttribute("aria-disabled")).toBe("true");
+
+    sw.removeAttribute("disabled");
+    expect(sw.hasAttribute("aria-disabled")).toBe(false);
+    expect(sw.getAttribute("tabindex")).toBe("0");
+  });
 });
