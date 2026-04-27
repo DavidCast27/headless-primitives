@@ -100,4 +100,14 @@ describe("HpPopover", () => {
     expect(content.style.opacity).toBe("");
     expect(content.style.zIndex).toBe("");
   });
+
+  it("popover content has no aria-modal attribute", async () => {
+    popover.open();
+    await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+    expect(content.hasAttribute("aria-modal")).toBe(false);
+  });
+
+  it("popover trigger has aria-haspopup=dialog", () => {
+    expect(trigger.getAttribute("aria-haspopup")).toBe("dialog");
+  });
 });

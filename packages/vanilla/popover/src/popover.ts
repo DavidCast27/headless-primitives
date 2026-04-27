@@ -6,7 +6,7 @@
  * Visibility is driven by data-state + base.css [data-hp-overlay-content].
  * Only top/left coordinates are set as inline styles (computed anchor position).
  */
-import { FocusTrap, HeadlessElement, customElement } from "@headless-primitives/utils";
+import { HeadlessElement, customElement } from "@headless-primitives/utils";
 import { property } from "lit/decorators.js";
 
 @customElement("hp-popover")
@@ -17,7 +17,6 @@ export class HeadlessPopover extends HeadlessElement {
   private _trigger: HTMLElement | null = null;
   private _content: HTMLElement | null = null;
   private _isOpen = false;
-  private _focusTrap: FocusTrap | null = null;
   private _rafId: number | null = null;
   private _scrollParents: EventTarget[] = [];
 
@@ -30,7 +29,6 @@ export class HeadlessPopover extends HeadlessElement {
     if (this._trigger && this._content) {
       this._setupTrigger();
       this._setupContent();
-      this._focusTrap = new FocusTrap(this._content);
     }
   }
 
@@ -42,6 +40,7 @@ export class HeadlessPopover extends HeadlessElement {
   private _setupTrigger() {
     if (!this._trigger) return;
     this._trigger.setAttribute("data-hp-component", "popover-trigger");
+    this._trigger.setAttribute("aria-haspopup", "dialog");
     if (!this._trigger.hasAttribute("tabindex") && !this._trigger.hasAttribute("disabled")) {
       this._trigger.setAttribute("tabindex", "0");
     }
@@ -51,7 +50,6 @@ export class HeadlessPopover extends HeadlessElement {
   private _setupContent() {
     if (!this._content) return;
     this._content.setAttribute("role", "dialog");
-    this._content.setAttribute("aria-modal", "false");
     this._content.setAttribute("data-hp-overlay-content", "");
     this._content.setAttribute("data-state", "closed");
     this._content.setAttribute("aria-hidden", "true");
@@ -170,7 +168,6 @@ export class HeadlessPopover extends HeadlessElement {
     }
     window.addEventListener("resize", this._handleScrollOrResize, { passive: true });
 
-    this._focusTrap?.activate();
     this.emit("open");
   }
 
@@ -190,7 +187,6 @@ export class HeadlessPopover extends HeadlessElement {
     }
 
     this._removeGlobalListeners();
-    this._focusTrap?.deactivate();
     this.emit("close");
   }
 
