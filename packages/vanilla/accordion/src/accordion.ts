@@ -9,14 +9,11 @@ export class HeadlessAccordion extends HeadlessElement {
   connectedCallback() {
     super.connectedCallback();
     this.setAttribute("data-hp-component", "accordion");
-    this.addEventListener("hp-item-open", this._handleItemOpen as EventListener);
-    this.addEventListener("slotchange", () => this._updateItems());
+    this.addEventListener("hp-item-open", this._handleItemOpen as EventListener, {
+      signal: this.signal,
+    });
+    this.addEventListener("slotchange", () => this._updateItems(), { signal: this.signal });
     requestAnimationFrame(() => this._updateItems());
-  }
-
-  disconnectedCallback() {
-    super.disconnectedCallback();
-    this.removeEventListener("hp-item-open", this._handleItemOpen as EventListener);
   }
 
   private _handleItemOpen = (event: CustomEvent) => {
@@ -89,14 +86,11 @@ export class HeadlessAccordionItem extends HeadlessElement {
     if (!this.value) this.value = this.hpId;
     this._triggerId = `hp-accordion-trigger-${this.value}`;
     this._contentId = `hp-accordion-content-${this.value}`;
-    this.addEventListener("hp-trigger-click", this._handleTriggerClick as EventListener);
-    this.addEventListener("slotchange", () => this._sync());
+    this.addEventListener("hp-trigger-click", this._handleTriggerClick as EventListener, {
+      signal: this.signal,
+    });
+    this.addEventListener("slotchange", () => this._sync(), { signal: this.signal });
     requestAnimationFrame(() => this._sync());
-  }
-
-  disconnectedCallback() {
-    super.disconnectedCallback();
-    this.removeEventListener("hp-trigger-click", this._handleTriggerClick as EventListener);
   }
 
   setInheritedDisabled(val: boolean) {
@@ -166,14 +160,8 @@ export class HeadlessAccordionTrigger extends HeadlessElement {
     this.setAttribute("data-hp-component", "accordion-trigger");
     if (!this.hasAttribute("role")) this.setAttribute("role", "button");
     if (!this.disabled) this.setAttribute("tabindex", "0");
-    this.addEventListener("click", this._handleClick);
-    this.addEventListener("keydown", this._handleKeyDown);
-  }
-
-  disconnectedCallback() {
-    super.disconnectedCallback();
-    this.removeEventListener("click", this._handleClick);
-    this.removeEventListener("keydown", this._handleKeyDown);
+    this.addEventListener("click", this._handleClick, { signal: this.signal });
+    this.addEventListener("keydown", this._handleKeyDown, { signal: this.signal });
   }
 
   attributeChangedCallback(name: string, old: string | null, next: string | null) {
