@@ -1,5 +1,5 @@
 import { ComponentDemo } from "../types";
-import "./switch.css";
+import "../styles/switch.css";
 
 export const switchDemo: ComponentDemo = {
   title: "Switch primitive",

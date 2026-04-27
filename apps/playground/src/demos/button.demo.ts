@@ -1,5 +1,5 @@
 import { ComponentDemo } from "../types";
-import "./button.css";
+import "../styles/button.css";
 
 export const buttonDemo: ComponentDemo = {
   title: "Button primitive",

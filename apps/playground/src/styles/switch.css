@@ -1,0 +1,104 @@
+/**
+ * @headless-primitives/demo-styles — switch
+ */
+
+.control-group {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  justify-content: space-between;
+  padding: 0.5rem;
+  border-radius: var(--hp-radius-md, 8px);
+  background: var(--hp-bg-muted);
+}
+
+.control-group label {
+  font-size: 0.9rem;
+  color: var(--hp-text-secondary);
+  cursor: pointer;
+}
+
+hp-switch.switch {
+  display: inline-block;
+  vertical-align: middle;
+  width: 48px;
+  height: 26px;
+  background-color: var(--hp-bg-muted);
+  border-radius: 99px;
+  position: relative;
+  cursor: pointer;
+  transition: all var(--hp-transition-slow, 200ms) cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid var(--hp-border);
+}
+
+hp-switch.switch:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px var(--hp-bg),
+    0 0 0 4px var(--hp-focus-outline-color);
+}
+
+hp-switch.switch::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  background-color: var(--hp-surface);
+  border-radius: 50%;
+  transition: all var(--hp-transition-slow, 200ms) cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+hp-switch.switch[data-state="checked"] {
+  background-color: var(--hp-accent);
+  border-color: transparent;
+}
+
+hp-switch.switch[data-state="checked"]::after {
+  transform: translateX(22px);
+}
+
+hp-switch.switch[disabled],
+hp-switch.switch[aria-disabled="true"] {
+  opacity: var(--hp-opacity-disabled, 0.45);
+  cursor: not-allowed;
+  filter: grayscale(1);
+}
+
+.tagline {
+  font-size: 0.85rem;
+  color: var(--hp-text-secondary);
+  margin-bottom: 1.5rem;
+  opacity: 0.8;
+}
+
+.card-footer {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--hp-border);
+  font-size: 0.8rem;
+  color: var(--hp-text-secondary);
+  font-style: italic;
+}
+
+.dot.green {
+  background: var(--hp-accent);
+  box-shadow: 0 0 8px var(--hp-accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  hp-switch.switch,
+  hp-switch.switch::after {
+    transition: none;
+  }
+}
+
+.demo-sw-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}

@@ -60,7 +60,7 @@ hp-tab[aria-disabled="true"] {
   cursor: not-allowed;
 }
 
-/* Panel — padding interno (Req 10.5) */
+/* Panel — padding interno + entrada animada (Req 10.5) */
 hp-tab-panel {
   display: block;
   padding: var(--hp-space-4);
@@ -68,9 +68,18 @@ hp-tab-panel {
   font-size: var(--hp-font-size-sm);
 }
 
+hp-tab-panel[data-state="selected"] {
+  animation: hp-panel-in var(--hp-duration-slow, 200ms)
+    var(--hp-ease-out, cubic-bezier(0.16, 1, 0.3, 1)) both;
+}
+
 /* === Accesibilidad — prefers-reduced-motion === */
 @media (prefers-reduced-motion: reduce) {
   hp-tab {
     transition: none;
+  }
+
+  hp-tab-panel {
+    animation: none;
   }
 }

@@ -1,5 +1,5 @@
 import { ComponentDemo } from "../types";
-import "./select.css";
+import "../styles/select.css";
 
 export const selectDemo: ComponentDemo = {
   title: "Select primitive",

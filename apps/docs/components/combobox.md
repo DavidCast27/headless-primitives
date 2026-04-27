@@ -25,15 +25,15 @@ El componente estilizado usando clases CSS y variables de tema.
 
 <div class="hp-demo-card">
   <hp-combobox placeholder="Busca una fruta..." class="demo-combobox">
-    <hp-combobox-input class="demo-combobox-input">
+    <hp-combobox-input class="demo-input">
       <input type="text" placeholder="Busca una fruta..." />
     </hp-combobox-input>
-    <hp-combobox-content class="demo-combobox-content">
-      <hp-combobox-option value="apple" class="demo-combobox-option">🍎 Apple</hp-combobox-option>
-      <hp-combobox-option value="banana" class="demo-combobox-option">🍌 Banana</hp-combobox-option>
-      <hp-combobox-option value="cherry" class="demo-combobox-option">🍒 Cherry</hp-combobox-option>
-      <hp-combobox-option value="date" class="demo-combobox-option" disabled>📅 Date (deshabilitado)</hp-combobox-option>
-      <hp-combobox-option value="elderberry" class="demo-combobox-option">🫐 Elderberry</hp-combobox-option>
+    <hp-combobox-content class="demo-content">
+      <hp-combobox-option value="apple">🍎 Apple</hp-combobox-option>
+      <hp-combobox-option value="banana">🍌 Banana</hp-combobox-option>
+      <hp-combobox-option value="cherry">🍒 Cherry</hp-combobox-option>
+      <hp-combobox-option value="date" disabled>📅 Date (deshabilitado)</hp-combobox-option>
+      <hp-combobox-option value="elderberry">🫐 Elderberry</hp-combobox-option>
     </hp-combobox-content>
   </hp-combobox>
 </div>
@@ -241,80 +241,3 @@ Adhiere al [patrón WAI-ARIA APG para Combobox](https://www.w3.org/WAI/ARIA/apg/
 | `Enter`           | Selecciona la opción destacada y cierra el popup.    |
 | `Escape`          | Cierra el popup y devuelve el foco al input.         |
 | `Cualquier texto` | Filtra las opciones disponibles en el listbox.       |
-
-<style>
-/* Reset estructural */
-hp-combobox,
-hp-combobox-input,
-hp-combobox-content,
-hp-combobox-option {
-  display: block;
-}
-
-.demo-combobox {
-  width: 100%;
-  max-width: 320px;
-  position: relative;
-}
-
-.demo-combobox-input input {
-  width: 100%;
-  padding: 0.625rem 1rem;
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 8px;
-  background: var(--vp-c-bg-soft);
-  color: var(--vp-c-text-1);
-  font-size: 0.875rem;
-  transition: border-color 0.2s;
-}
-
-.demo-combobox-input input:focus {
-  border-color: var(--vp-c-brand-1);
-  outline: none;
-}
-
-.demo-combobox-content {
-  position: absolute;
-  z-index: 50;
-  width: 100%;
-  max-height: 250px;
-  overflow-y: auto;
-  margin-top: 8px;
-  background: var(--vp-c-bg);
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 8px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-  padding: 4px;
-}
-
-.demo-combobox-content[data-state="closed"] {
-  display: none;
-}
-
-.demo-combobox-option {
-  padding: 0.5rem 0.75rem;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 0.875rem;
-  transition: background 0.15s;
-}
-
-.demo-combobox-option:hover:not([aria-disabled="true"]) {
-  background: var(--vp-c-bg-mute);
-}
-
-.demo-combobox-option[aria-selected="true"] {
-  background: var(--vp-c-brand-soft);
-  color: var(--vp-c-brand-1);
-  font-weight: 500;
-}
-
-.demo-combobox-option[aria-disabled="true"] {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.demo-combobox-option[data-state="hidden"] {
-  display: none;
-}
-</style>

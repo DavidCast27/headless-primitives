@@ -1,5 +1,5 @@
 import { ComponentDemo } from "../types";
-import "./breadcrumb.css";
+import "../styles/breadcrumb.css";
 
 export const breadcrumbDemo: ComponentDemo = {
   title: "Breadcrumb primitive",

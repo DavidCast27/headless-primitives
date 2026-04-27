@@ -1,5 +1,5 @@
 import { ComponentDemo } from "../types";
-import "./navigation-menu.css";
+import "../styles/navigation-menu.css";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -369,7 +369,11 @@ export const navigationMenuDemo: ComponentDemo = {
           if (!wrapper.contains(e.relatedTarget as Node)) hide();
         });
         btn.addEventListener("click", () => {
-          panel.classList.contains("is-open") ? hide() : show();
+          if (panel.classList.contains("is-open")) {
+            hide();
+          } else {
+            show();
+          }
         });
         btn.addEventListener("keydown", (e) => {
           if (e.key === "Escape") {

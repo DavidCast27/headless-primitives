@@ -1,12 +1,12 @@
 import "@headless-primitives/collapsible";
-import "./collapsible.css";
+import "../styles/collapsible.css";
 
 export const collapsibleDemo = {
   title: "Collapsible",
   description:
     "A disclosure widget that enables content to be either collapsed (hidden) or expanded (visible).",
   html: `
-<div class="demo-section">
+<div class="hp-demo-section">
   <h2>Basic Collapsible</h2>
   <hp-collapsible class="collapsible-demo">
     <hp-collapsible-trigger class="trigger">
@@ -19,7 +19,7 @@ export const collapsibleDemo = {
   </hp-collapsible>
 </div>
 
-<div class="demo-section">
+<div class="hp-demo-section">
   <h2>Initially Open Collapsible</h2>
   <hp-collapsible class="collapsible-demo" open>
     <hp-collapsible-trigger class="trigger">
@@ -32,7 +32,7 @@ export const collapsibleDemo = {
   </hp-collapsible>
 </div>
 
-<div class="demo-section">
+<div class="hp-demo-section">
   <h2>Disabled Collapsible</h2>
   <hp-collapsible class="collapsible-demo" disabled>
     <hp-collapsible-trigger class="trigger">
@@ -45,7 +45,7 @@ export const collapsibleDemo = {
   </hp-collapsible>
 </div>
 
-<div class="demo-section">
+<div class="hp-demo-section">
   <h2>Nested Collapsibles</h2>
   <hp-collapsible class="collapsible-demo">
     <hp-collapsible-trigger class="trigger">
@@ -68,7 +68,7 @@ export const collapsibleDemo = {
   </hp-collapsible>
 </div>
 
-<div class="demo-section">
+<div class="hp-demo-section">
   <h2>Programmatic Control</h2>
   <hp-collapsible id="controlled-collapsible" class="collapsible-demo">
     <hp-collapsible-trigger class="trigger">
@@ -87,7 +87,7 @@ export const collapsibleDemo = {
   </div>
 </div>
 
-<div class="demo-section">
+<div class="hp-demo-section">
   <h2>Event Monitoring</h2>
   <hp-collapsible id="monitored-collapsible" class="collapsible-demo">
     <hp-collapsible-trigger class="trigger">

@@ -10,7 +10,7 @@ El componente `hp-separator` provee una división visual y semántica entre grup
   <p>Sección A</p>
   <hp-separator></hp-separator>
   <p>Sección B</p>
-  <div style="display:flex;align-items:center;gap:8px;height:24px;">
+  <div class="demo-sep-inline">
     <span>Uno</span><hp-separator orientation="vertical"></hp-separator><span>Dos</span>
   </div>
 </div>
@@ -18,14 +18,14 @@ El componente `hp-separator` provee una división visual y semántica entre grup
 ### Con estilos personalizados
 
 <div class="hp-demo-card">
-  <div style="width: 100%; max-width: 300px;">
-    <p style="margin-bottom: 8px; font-weight: 500;">Opciones de cuenta</p>
-    <hp-separator class="demo-separator-h"></hp-separator>
-    <div style="display: flex; align-items: center; gap: 12px; margin-top: 12px; height: 20px;">
+  <div class="demo-sep-box">
+    <p class="demo-sep-title">Opciones de cuenta</p>
+    <hp-separator></hp-separator>
+    <div class="demo-sep-inline demo-sep-inline--mt">
       <span>Perfil</span>
-      <hp-separator orientation="vertical" class="demo-separator-v"></hp-separator>
+      <hp-separator orientation="vertical"></hp-separator>
       <span>Ajustes</span>
-      <hp-separator orientation="vertical" class="demo-separator-v"></hp-separator>
+      <hp-separator orientation="vertical"></hp-separator>
       <span>Salir</span>
     </div>
   </div>
@@ -151,18 +151,3 @@ bun add @headless-primitives/separator
 
 - `role="separator"` y `aria-orientation` sincronizados automáticamente.
 - Para separadores puramente decorativos, sobreescribe `role="presentation"`.
-
-<style>
-.demo-separator-h {
-  display: block;
-  height: 1px;
-  width: 100%;
-  background: var(--vp-c-divider);
-}
-.demo-separator-v {
-  display: inline-block;
-  width: 1px;
-  height: 100%;
-  background: var(--vp-c-divider);
-}
-</style>

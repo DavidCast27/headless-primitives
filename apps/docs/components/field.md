@@ -18,15 +18,15 @@ El componente `hp-field` orquesta automáticamente la accesibilidad entre etique
 ### Con estilos personalizados
 
 <div class="hp-demo-card">
-  <div style="width: 100%; max-width: 320px;">
+  <div class="demo-fld-wrap">
     <hp-field>
-      <div style="display: flex; flex-direction: column; gap: 8px;">
-        <hp-field-label style="font-weight: 600; font-size: 0.9rem;">Nombre de Usuario</hp-field-label>
-        <hp-field-description style="font-size: 0.8rem; opacity: 0.7;">Este es el nombre público en tu perfil.</hp-field-description>
+      <div class="demo-fld-body">
+        <hp-field-label class="demo-fld-label">Nombre de Usuario</hp-field-label>
+        <hp-field-description class="demo-fld-desc">Este es el nombre público en tu perfil.</hp-field-description>
         <hp-field-control>
-          <input type="text" placeholder="Ej: david_c" style="width: 100%; padding: 8px; border: 1px solid var(--vp-c-divider); border-radius: 6px; background: var(--vp-c-bg);">
+          <input type="text" placeholder="Ej: david_c" class="demo-fld-input">
         </hp-field-control>
-        <hp-field-error style="font-size: 0.8rem; color: #ff4d4d;">El nombre ya está en uso.</hp-field-error>
+        <hp-field-error class="demo-fld-error">El nombre ya está en uso.</hp-field-error>
       </div>
     </hp-field>
   </div>

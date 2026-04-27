@@ -1,5 +1,5 @@
 import { ComponentDemo } from "../types";
-import "./pin-input.css";
+import "../styles/pin-input.css";
 
 export const pinInputDemo: ComponentDemo = {
   title: "Pin Input primitive",

@@ -1,0 +1,26 @@
+/**
+ * @headless-primitives/demo-styles — breadcrumb
+ */
+
+.demo-breadcrumb-container {
+  padding: 2rem;
+  background-color: var(--hp-bg);
+  border-radius: var(--hp-radius-md, 8px);
+  border: 1px solid var(--hp-border);
+}
+
+/* ── Demo breadcrumb layout ─────────────────────────────────────────────── */
+.demo-bc-list {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.demo-bc-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}

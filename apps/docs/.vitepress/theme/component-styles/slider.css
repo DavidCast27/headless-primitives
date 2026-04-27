@@ -1,0 +1,176 @@
+/**
+ * @headless-primitives/demo-styles — slider
+ */
+
+.slider-demo-root,
+.demo-sld {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  width: 100%;
+}
+
+.demo-sld-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+}
+
+.slider-demo-root hp-slider,
+.demo-sld hp-slider {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  touch-action: none;
+  user-select: none;
+  cursor: default;
+}
+
+.slider-demo-root [data-hp-slider-header],
+.demo-sld [data-hp-slider-header] {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.slider-demo-root [data-hp-slider-label],
+.demo-sld [data-hp-slider-label] {
+  font-size: 0.825rem;
+  font-weight: 500;
+  color: var(--hp-text);
+}
+
+.slider-demo-root [data-hp-slider-output],
+.demo-sld [data-hp-slider-output] {
+  font-size: 0.825rem;
+  font-weight: 500;
+  color: var(--hp-accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.slider-demo-root [data-hp-slider-rail],
+.demo-sld [data-hp-slider-rail] {
+  position: relative;
+  height: 24px;
+  width: 100%;
+}
+
+.slider-demo-root [data-hp-slider-track],
+.demo-sld [data-hp-slider-track] {
+  height: 6px;
+  background: var(--hp-bg-muted);
+  border: 1px solid var(--hp-border);
+  border-radius: 9999px;
+}
+
+.slider-demo-root [data-hp-slider-range],
+.demo-sld [data-hp-slider-range] {
+  background: linear-gradient(
+    90deg,
+    var(--hp-accent),
+    color-mix(in srgb, var(--hp-accent) 70%, var(--hp-accent-hover, var(--hp-accent)))
+  );
+  transition: width var(--hp-duration-fast, 100ms) ease;
+}
+
+.slider-demo-root [data-hp-slider-thumb],
+.demo-sld [data-hp-slider-thumb] {
+  width: 18px;
+  height: 18px;
+  background: var(--hp-accent);
+  border: 2.5px solid var(--hp-surface);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--hp-accent) 35%, transparent);
+  transition:
+    background var(--hp-transition, 150ms),
+    box-shadow var(--hp-transition, 150ms),
+    transform 180ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    left var(--hp-duration-fast, 100ms) ease;
+}
+
+.slider-demo-root [data-hp-slider-thumb]:hover,
+.demo-sld [data-hp-slider-thumb]:hover {
+  background: color-mix(in srgb, var(--hp-accent) 85%, white);
+  box-shadow: 0 3px 12px color-mix(in srgb, var(--hp-accent) 50%, transparent);
+  transform: translate(-50%, -50%) scale(1.15);
+}
+
+.slider-demo-root [data-hp-slider-thumb]:focus-visible,
+.demo-sld [data-hp-slider-thumb]:focus-visible {
+  box-shadow:
+    0 0 0 2px var(--hp-surface),
+    0 0 0 4px var(--hp-accent);
+}
+
+.slider-demo-root [data-hp-slider-thumb]:active,
+.demo-sld [data-hp-slider-thumb]:active {
+  cursor: grabbing;
+  transform: translate(-50%, -50%) scale(0.9);
+  transition:
+    background var(--hp-transition, 150ms),
+    box-shadow var(--hp-transition, 150ms),
+    transform var(--hp-duration-fast, 100ms) cubic-bezier(0.25, 0, 0.5, 1),
+    left var(--hp-duration-fast, 100ms) ease;
+}
+
+.slider-demo-root hp-slider[data-disabled],
+.demo-sld hp-slider[data-disabled] {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.slider-vertical {
+  flex-direction: row !important;
+  align-items: flex-start !important;
+  width: fit-content !important;
+  flex-shrink: 0;
+}
+
+.slider-vertical [data-hp-slider-rail] {
+  width: 24px !important;
+  height: 150px !important;
+}
+
+.slider-demo-root .slider-vertical [data-hp-slider-range],
+.demo-sld .slider-vertical [data-hp-slider-range] {
+  background: linear-gradient(
+    0deg,
+    var(--hp-accent),
+    color-mix(in srgb, var(--hp-accent) 70%, var(--hp-accent-hover, var(--hp-accent)))
+  );
+  transition: height var(--hp-duration-fast, 100ms) ease;
+}
+
+.slider-demo-root .slider-vertical [data-hp-slider-thumb],
+.demo-sld .slider-vertical [data-hp-slider-thumb] {
+  transition:
+    background var(--hp-transition, 150ms),
+    box-shadow var(--hp-transition, 150ms),
+    transform 180ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    bottom var(--hp-duration-fast, 100ms) ease;
+}
+
+.slider-demo-root .slider-vertical [data-hp-slider-thumb]:hover,
+.demo-sld .slider-vertical [data-hp-slider-thumb]:hover {
+  transform: translate(-50%, 50%) scale(1.15);
+}
+
+.slider-demo-root .slider-vertical [data-hp-slider-thumb]:active,
+.demo-sld .slider-vertical [data-hp-slider-thumb]:active {
+  transform: translate(-50%, 50%) scale(0.9);
+  transition:
+    background var(--hp-transition, 150ms),
+    box-shadow var(--hp-transition, 150ms),
+    transform var(--hp-duration-fast, 100ms) cubic-bezier(0.25, 0, 0.5, 1),
+    bottom var(--hp-duration-fast, 100ms) ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slider-demo-root [data-hp-slider-range],
+  .slider-demo-root [data-hp-slider-thumb],
+  .demo-sld [data-hp-slider-range],
+  .demo-sld [data-hp-slider-thumb] {
+    transition: none;
+  }
+}

@@ -17,9 +17,9 @@ Así se ve `hp-switch` usando únicamente `@headless-primitives/utils/base.css`.
 ### Con estilos personalizados
 
 <div class="hp-demo-card">
-  <div style="display: flex; flex-direction: column; gap: 1rem; align-items: center;">
+  <div class="demo-sw-wrap">
     <hp-label for="sw-demo">Activar modo oscuro</hp-label>
-    <hp-switch id="sw-demo" class="demo-switch"></hp-switch>
+    <hp-switch id="sw-demo" class="switch"></hp-switch>
   </div>
 </div>
 
@@ -198,37 +198,3 @@ sw.addEventListener("hp-change", (e) => {
   console.log("Checked:", e.detail.checked);
 });
 ```
-
-<style>
-.demo-switch {
-  width: 44px;
-  height: 24px;
-  background: var(--vp-c-divider);
-  border-radius: 999px;
-  cursor: pointer;
-  position: relative;
-  transition: background 0.2s;
-  border: 1px solid transparent;
-}
-.demo-switch[data-state="checked"] {
-  background: var(--vp-c-brand-1);
-}
-.demo-switch::after {
-  content: "";
-  position: absolute;
-  top: 2px;
-  left: 2px;
-  width: 18px;
-  height: 18px;
-  background: white;
-  border-radius: 50%;
-  transition: transform 0.2s;
-}
-.demo-switch[data-state="checked"]::after {
-  transform: translateX(20px);
-}
-.demo-switch:focus-visible {
-  outline: 2px solid var(--vp-c-brand-1);
-  outline-offset: 2px;
-}
-</style>

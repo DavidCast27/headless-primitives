@@ -18,12 +18,12 @@ Así se ve `hp-collapsible` usando únicamente `@headless-primitives/utils/base.
 ### Con estilos personalizados
 
 <div class="hp-demo-card">
-  <hp-collapsible class="demo-collapsible">
-    <hp-collapsible-trigger class="demo-trigger">
+  <hp-collapsible class="demo-col">
+    <hp-collapsible-trigger class="demo-col-trigger">
       <span>¿Qué es Headless Primitives?</span>
-      <span class="demo-icon">▼</span>
+      <span class="demo-col-icon">▼</span>
     </hp-collapsible-trigger>
-    <hp-collapsible-content class="demo-content">
+    <hp-collapsible-content class="demo-col-content">
       <p>Es una librería de componentes headless que proveen la accesibilidad y comportamiento nativo, dejando total libertad creativa para el diseño visual.</p>
     </hp-collapsible-content>
   </hp-collapsible>
@@ -262,60 +262,3 @@ collapsible.addEventListener("hp-change", (e) => {
   </hp-collapsible-content>
 </hp-collapsible>
 ```
-
-<style>
-hp-collapsible,
-hp-collapsible-trigger,
-hp-collapsible-content {
-  display: block;
-}
-hp-collapsible-content[hidden] {
-  display: none;
-}
-.demo-collapsible {
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 8px;
-  overflow: hidden;
-  background: var(--vp-c-bg-soft);
-  max-width: 400px;
-}
-.demo-trigger {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  padding: 12px 16px;
-  background: var(--vp-c-bg-soft);
-  border: none;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--vp-c-text-1);
-  transition: background-color 0.2s;
-  margin: 0;
-}
-.demo-trigger:hover {
-  background: var(--vp-c-bg-mute);
-}
-.demo-trigger:focus {
-  outline: 2px solid var(--vp-c-brand-1);
-  outline-offset: -2px;
-}
-.demo-icon {
-  font-size: 12px;
-  transition: transform 0.2s;
-  color: var(--vp-c-text-2);
-  margin: 0;
-}
-.demo-content {
-  padding: 16px;
-  background: var(--vp-c-bg);
-  border-top: 1px solid var(--vp-c-divider);
-  margin: 0;
-}
-.demo-content p {
-  margin: 0;
-  color: var(--vp-c-text-2);
-  line-height: 1.6;
-}
-</style>

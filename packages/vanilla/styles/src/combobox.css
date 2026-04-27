@@ -1,10 +1,73 @@
 /**
  * @headless-primitives/styles — hp-combobox
  *
- * El estilado funcional básico de `hp-combobox` ahora vive en
- * `@headless-primitives/utils/base.css` para que la versión "sin estilos"
- * siga funcionando.
+ * Visual theming layer for `hp-combobox`.
+ * Structural/functional styles live in `@headless-primitives/utils/base.css`.
  *
- * `@headless-primitives/styles/combobox.css` permanece como placeholder
- * de paquete y puede extenderse en el futuro con temas adicionales.
+ * Uses `--hp-*` design tokens for full theme customisation.
+ * No `!important`, no position/top/left/transform overrides.
  */
+
+@layer hp-styles {
+  /* --- Content panel (floating dropdown) --- */
+  hp-combobox-content {
+    background-color: var(--hp-surface, Canvas);
+    color: var(--hp-text, CanvasText);
+    border: 1px solid var(--hp-border, color-mix(in srgb, currentColor 25%, transparent));
+    border-radius: var(--hp-radius, 0.5rem);
+    box-shadow: var(--hp-shadow-lg, 0 8px 32px rgb(0 0 0 / 0.12), 0 2px 8px rgb(0 0 0 / 0.08));
+  }
+
+  hp-combobox-content[data-state="open"] {
+    animation: hp-overlay-in var(--hp-duration, 150ms)
+      var(--hp-ease-out, cubic-bezier(0.16, 1, 0.3, 1)) both;
+  }
+
+  hp-combobox-content[data-state="closed"] {
+    animation: hp-overlay-out var(--hp-duration-fast, 100ms) var(--hp-ease, ease) both;
+  }
+
+  /* --- Option --- */
+  hp-combobox-option {
+    color: var(--hp-text, CanvasText);
+    font-size: var(--hp-font-size-sm, 0.875rem);
+    border-radius: var(--hp-radius-sm, 0.25rem);
+    margin-inline: var(--hp-space-1, 0.25rem);
+    padding: var(--hp-space-2, 0.5rem) var(--hp-space-3, 0.75rem);
+    transition:
+      background-color var(--hp-transition, 150ms),
+      color var(--hp-transition, 150ms);
+  }
+
+  hp-combobox-option:hover:not([aria-disabled="true"]) {
+    background-color: var(--hp-bg-muted, color-mix(in srgb, currentColor 8%, transparent));
+    color: var(--hp-text, CanvasText);
+  }
+
+  hp-combobox-option[aria-selected="true"] {
+    background-color: var(--hp-bg-subtle, color-mix(in srgb, currentColor 14%, transparent));
+    color: var(--hp-accent, CanvasText);
+    font-weight: var(--hp-font-weight-medium, 500);
+  }
+
+  hp-combobox-option:focus-visible {
+    outline: var(--hp-focus-outline-width, 2px) solid var(--hp-focus-outline-color, #2563eb);
+    outline-offset: -2px;
+  }
+
+  hp-combobox-option[aria-disabled="true"],
+  hp-combobox-option[disabled] {
+    opacity: var(--hp-opacity-disabled, 0.45);
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  /* --- Reduced motion --- */
+  @media (prefers-reduced-motion: reduce) {
+    hp-combobox-content,
+    hp-combobox-option {
+      transition: none;
+      animation: none;
+    }
+  }
+}

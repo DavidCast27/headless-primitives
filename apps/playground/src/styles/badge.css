@@ -1,0 +1,73 @@
+/**
+ * @headless-primitives/demo-styles — badge
+ */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--hp-radius-full, 9999px);
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  padding: 0.25rem 0.625rem;
+  border: 1px solid transparent;
+  box-sizing: border-box;
+  vertical-align: middle;
+}
+
+.badge[data-size="sm"] {
+  font-size: 0.6875rem;
+  padding: 0.125rem 0.5rem;
+}
+
+.badge[data-size="lg"] {
+  font-size: 0.875rem;
+  padding: 0.375rem 0.75rem;
+}
+
+.badge[data-variant="default"] {
+  background-color: var(--hp-bg-muted);
+  color: var(--hp-text-secondary);
+  border-color: var(--hp-border);
+}
+
+.badge[data-variant="success"] {
+  background-color: var(--hp-color-success-bg);
+  color: var(--hp-color-success);
+  border-color: var(--hp-color-success-border);
+}
+
+.badge[data-variant="warning"] {
+  background-color: var(--hp-color-warning-bg);
+  color: var(--hp-color-warning);
+  border-color: var(--hp-color-warning-border);
+}
+
+.badge[data-variant="danger"] {
+  background-color: var(--hp-color-danger-bg);
+  color: var(--hp-color-danger);
+  border-color: var(--hp-color-danger-border);
+}
+
+.badge[data-variant="info"] {
+  background-color: var(--hp-color-info-bg);
+  color: var(--hp-color-info);
+  border-color: var(--hp-color-info-border);
+}
+
+/* ── Demo badge layout ─────────────────────────────────────────────── */
+.demo-bdg-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.demo-bdg-row {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  flex-wrap: wrap;
+}

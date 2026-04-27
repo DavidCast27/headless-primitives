@@ -1,0 +1,148 @@
+/**
+ * @headless-primitives/demo-styles — fieldset
+ */
+
+.demo-fieldset {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 480px;
+}
+
+.demo-fieldset .toggle-btn {
+  align-self: flex-start;
+  padding: 0.5rem 1rem;
+  border-radius: var(--hp-radius, 6px);
+  border: 1px solid var(--hp-border);
+  background: var(--hp-bg-muted);
+  color: var(--hp-text);
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+.demo-fieldset .toggle-btn:hover {
+  background: var(--hp-bg-subtle);
+}
+
+hp-fieldset {
+  display: block;
+  padding: 1.25rem;
+  border: 1px solid var(--hp-border);
+  border-radius: var(--hp-radius-md, 8px);
+}
+
+hp-fieldset-legend {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+  color: var(--hp-text);
+}
+
+.demo-fieldset .field-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  margin-bottom: 0.75rem;
+}
+
+.demo-fieldset label {
+  font-size: 0.8rem;
+  color: var(--hp-text-secondary);
+}
+
+.demo-fieldset input,
+.demo-fieldset select {
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--hp-radius, 6px);
+  border: 1px solid var(--hp-border-strong);
+  background: var(--hp-surface);
+  color: var(--hp-text);
+  font-size: 0.875rem;
+  width: 100%;
+}
+
+.demo-fieldset button[type="submit"] {
+  padding: 0.5rem 1.25rem;
+  border-radius: var(--hp-radius, 6px);
+  border: 1px solid var(--hp-border);
+  background: var(--hp-bg-muted);
+  color: var(--hp-text);
+  cursor: pointer;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.demo-fieldset .aria-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+  margin-bottom: 0.75rem;
+}
+
+.demo-fieldset .aria-checkbox-box {
+  width: 1.1rem;
+  height: 1.1rem;
+  border: 2px solid var(--hp-border-strong);
+  border-radius: 3px;
+  display: inline-block;
+}
+
+hp-fieldset[data-state="disabled"] {
+  opacity: var(--hp-opacity-disabled, 0.45);
+  cursor: not-allowed;
+}
+
+hp-fieldset[data-state="disabled"] input,
+hp-fieldset[data-state="disabled"] select,
+hp-fieldset[data-state="disabled"] button[type="submit"] {
+  cursor: not-allowed;
+}
+
+.demo-fieldset [aria-disabled="true"] {
+  opacity: var(--hp-opacity-disabled, 0.45);
+  cursor: not-allowed;
+}
+
+/* ── Demo fieldset bare layout ─────────────────────────────────────────── */
+.demo-fset-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.demo-fset-input {
+  padding: 6px 10px;
+  border: 1px solid var(--hp-border);
+  border-radius: 6px;
+  background: var(--hp-surface);
+  color: var(--hp-text);
+  font-family: inherit;
+  font-size: 0.875rem;
+}
+
+.demo-fset-submit {
+  padding: 6px 14px;
+  border: 1px solid var(--hp-accent);
+  border-radius: 6px;
+  background: var(--hp-accent);
+  color: var(--hp-accent-foreground, #fff);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.875rem;
+}
+
+.demo-fset-toggle {
+  margin-top: 12px;
+  padding: 6px 14px;
+  border: 1px solid var(--hp-border);
+  border-radius: 6px;
+  background: var(--hp-surface);
+  color: var(--hp-text);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.875rem;
+}

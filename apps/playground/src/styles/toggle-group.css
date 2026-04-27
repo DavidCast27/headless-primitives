@@ -1,0 +1,103 @@
+/**
+ * @headless-primitives/demo-styles — toggle-group
+ */
+
+.toggle-group-demo {
+  padding: 1rem;
+}
+
+.demo-group {
+  display: flex;
+  gap: 0.25rem;
+  border: 1px solid var(--hp-border);
+  border-radius: var(--hp-radius-md, 8px);
+  padding: 0.25rem;
+  margin-bottom: 1.5rem;
+  background: var(--hp-bg-subtle);
+}
+
+.demo-group.vertical {
+  flex-direction: column;
+  width: fit-content;
+}
+
+.demo-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.5rem;
+  height: 2.5rem;
+  padding: 0.5rem;
+  border: 1px solid var(--hp-border);
+  border-radius: var(--hp-radius, 6px);
+  background: var(--hp-bg-subtle);
+  cursor: pointer;
+  transition: all var(--hp-transition, 150ms) cubic-bezier(0.4, 0, 0.2, 1);
+  font-weight: 500;
+  font-size: 0.875rem;
+  color: var(--hp-text-secondary);
+}
+
+.demo-toggle:hover {
+  background: var(--hp-bg-muted);
+  transform: translateY(-1px);
+}
+
+.demo-toggle:active {
+  transform: translateY(1px);
+}
+
+.demo-toggle:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--hp-focus-outline-color) 30%, transparent);
+}
+
+.demo-toggle[data-state="on"] {
+  background: var(--hp-accent);
+  color: var(--hp-accent-foreground, #fff);
+  border-color: var(--hp-accent);
+  transform: translateY(0);
+}
+
+.demo-toggle[data-state="on"]:hover {
+  background: var(--hp-accent-hover);
+  border-color: var(--hp-accent-hover);
+}
+
+.demo-toggle[disabled] {
+  opacity: var(--hp-opacity-disabled, 0.45);
+  cursor: not-allowed;
+  pointer-events: none;
+  background-color: var(--hp-bg-muted);
+  border-color: var(--hp-border);
+  color: var(--hp-text-secondary);
+  transform: none;
+}
+
+.toggle-group-demo h3 {
+  margin: 1.5rem 0 0.5rem 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--hp-text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .demo-toggle {
+    transition: none;
+    transform: none !important;
+  }
+}
+
+.demo-tg-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.demo-tg-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--vp-c-text-2, var(--hp-text-secondary));
+  margin-bottom: 0.5rem;
+}

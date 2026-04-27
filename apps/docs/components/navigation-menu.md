@@ -10,7 +10,7 @@ Así se ve `hp-navigation-menu` usando únicamente `@headless-primitives/utils/b
 
 <div class="hp-demo-card">
   <hp-navigation-menu aria-label="Demo Nav Bare">
-    <hp-navigation-menu-list style="display: flex; gap: 1rem; list-style: none; padding: 0;">
+    <hp-navigation-menu-list class="demo-nm-bare-list">
       <hp-navigation-menu-item value="1">
         <hp-navigation-menu-trigger><button>Menú 1</button></hp-navigation-menu-trigger>
         <hp-navigation-menu-content>Contenido 1</hp-navigation-menu-content>
@@ -26,31 +26,31 @@ Así se ve `hp-navigation-menu` usando únicamente `@headless-primitives/utils/b
 ### Con estilos personalizados
 
 <div class="hp-demo-card">
-  <hp-navigation-menu class="demo-nav" aria-label="Demo Nav">
-    <hp-navigation-menu-list class="demo-nav-list">
-      <hp-navigation-menu-item value="products">
-        <hp-navigation-menu-trigger class="demo-nav-trigger">Productos</hp-navigation-menu-trigger>
-        <hp-navigation-menu-content class="demo-nav-content">
-          <div style="padding: 1rem; display: flex; flex-direction: column; gap: 0.5rem;">
-            <hp-navigation-menu-link class="demo-nav-link">Componentes</hp-navigation-menu-link>
-            <hp-navigation-menu-link class="demo-nav-link">Templates</hp-navigation-menu-link>
+  <hp-navigation-menu aria-label="Demo Nav">
+    <hp-navigation-menu-list class="nm-list">
+      <hp-navigation-menu-item class="nm-item" value="products">
+        <hp-navigation-menu-trigger class="nm-trigger">Productos</hp-navigation-menu-trigger>
+        <hp-navigation-menu-content class="nm-content">
+          <div class="demo-nm-content-body">
+            <hp-navigation-menu-link class="nm-link-card">Componentes</hp-navigation-menu-link>
+            <hp-navigation-menu-link class="nm-link-card">Templates</hp-navigation-menu-link>
           </div>
         </hp-navigation-menu-content>
       </hp-navigation-menu-item>
-      <hp-navigation-menu-item value="docs">
-        <hp-navigation-menu-trigger class="demo-nav-trigger">Docs</hp-navigation-menu-trigger>
-        <hp-navigation-menu-content class="demo-nav-content">
-          <div style="padding: 1rem; display: flex; flex-direction: column; gap: 0.5rem;">
-            <hp-navigation-menu-link class="demo-nav-link">Guía</hp-navigation-menu-link>
-            <hp-navigation-menu-link class="demo-nav-link">API Reference</hp-navigation-menu-link>
+      <hp-navigation-menu-item class="nm-item" value="docs">
+        <hp-navigation-menu-trigger class="nm-trigger">Docs</hp-navigation-menu-trigger>
+        <hp-navigation-menu-content class="nm-content">
+          <div class="demo-nm-content-body">
+            <hp-navigation-menu-link class="nm-link-card">Guía</hp-navigation-menu-link>
+            <hp-navigation-menu-link class="nm-link-card">API Reference</hp-navigation-menu-link>
           </div>
         </hp-navigation-menu-content>
       </hp-navigation-menu-item>
-      <hp-navigation-menu-item value="about">
-        <hp-navigation-menu-link class="demo-nav-trigger" style="cursor: pointer;">About</hp-navigation-menu-link>
+      <hp-navigation-menu-item class="nm-item" value="about">
+        <hp-navigation-menu-link class="nm-trigger demo-nm-plain-link">About</hp-navigation-menu-link>
       </hp-navigation-menu-item>
     </hp-navigation-menu-list>
-    <hp-navigation-menu-indicator class="demo-nav-indicator"></hp-navigation-menu-indicator>
+    <hp-navigation-menu-indicator class="nm-indicator"></hp-navigation-menu-indicator>
   </hp-navigation-menu>
 </div>
 
@@ -267,57 +267,3 @@ Adhiere al [patrón WAI-ARIA APG para Menubar](https://www.w3.org/WAI/ARIA/apg/p
 | `ArrowLeft`       | Foco al trigger anterior.                   |
 | `Escape`          | Cierra el flyout y foco al trigger.         |
 | `Tab`             | Cierra el flyout y avanza foco normalmente. |
-
-<style>
-hp-navigation-menu,
-hp-navigation-menu-list,
-hp-navigation-menu-item,
-hp-navigation-menu-trigger,
-hp-navigation-menu-content,
-hp-navigation-menu-link,
-hp-navigation-menu-indicator {
-  display: block;
-}
-.demo-nav { position: relative; }
-.demo-nav-list { display: flex; gap: 0; align-items: center; }
-.demo-nav-trigger {
-  padding: 0.5rem 1rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-  cursor: pointer;
-  border: none;
-  background: transparent;
-  color: var(--vp-c-text-1);
-}
-.demo-nav-trigger:hover { color: var(--vp-c-brand-1); }
-.demo-nav-trigger[data-state="open"] { color: var(--vp-c-brand-1); }
-.demo-nav-content {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  min-width: 200px;
-  background: var(--vp-c-bg);
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 6px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  z-index: 50;
-}
-.demo-nav-content[data-state="closed"] { display: none; }
-.demo-nav-link {
-  padding: 0.4rem 0;
-  cursor: pointer;
-  font-size: 0.85rem;
-  color: var(--vp-c-text-1);
-}
-.demo-nav-link:hover { color: var(--vp-c-brand-1); }
-.demo-nav-indicator {
-  position: absolute;
-  bottom: 0;
-  height: 2px;
-  background: var(--vp-c-brand-1);
-  transition: left 0.2s ease, width 0.2s ease;
-}
-.demo-nav-indicator[data-state="hidden"],
-.demo-nav-indicator[data-state="idle"] { opacity: 0; }
-.demo-nav-indicator[data-state="visible"] { opacity: 1; }
-</style>

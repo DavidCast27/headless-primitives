@@ -1,0 +1,70 @@
+/**
+ * @headless-primitives/demo-styles — button
+ */
+
+.btn {
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 0.6rem 1.2rem;
+  border-radius: var(--hp-radius-md, 8px);
+  cursor: pointer;
+  transition: all var(--hp-transition, 150ms) cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid transparent;
+}
+
+.btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--hp-focus-outline-color) 30%, transparent);
+}
+
+.btn-primary {
+  background-color: var(--hp-accent);
+  color: var(--hp-accent-foreground, #fff);
+}
+
+.btn-primary:hover {
+  background-color: var(--hp-accent-hover);
+  transform: translateY(-1px);
+}
+
+.btn-primary:active {
+  transform: translateY(1px);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  border-color: var(--hp-border);
+  color: var(--hp-text);
+}
+
+.btn[disabled],
+.btn[aria-disabled="true"] {
+  opacity: var(--hp-opacity-disabled, 0.45);
+  cursor: not-allowed;
+  pointer-events: none;
+  background-color: var(--hp-bg-muted);
+}
+
+.btn-toggle {
+  background-color: var(--hp-bg-subtle);
+  border-color: var(--hp-border);
+  color: var(--hp-text-secondary);
+}
+
+.btn-toggle:hover {
+  background-color: var(--hp-bg-muted);
+}
+
+.btn-toggle[aria-pressed="true"] {
+  background-color: var(--hp-accent);
+  color: var(--hp-accent-foreground, #fff);
+  border-color: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn {
+    transition: none;
+    transform: none !important;
+  }
+}

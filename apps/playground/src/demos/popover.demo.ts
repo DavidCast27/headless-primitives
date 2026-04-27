@@ -1,5 +1,5 @@
 import { ComponentDemo } from "../types";
-import "./popover.css";
+import "../styles/popover.css";
 
 export const popoverDemo: ComponentDemo = {
   title: "Popover primitive",

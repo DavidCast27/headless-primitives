@@ -1,0 +1,127 @@
+/**
+ * @headless-primitives/demo-styles — scroll-area
+ */
+
+.demo-sa,
+.scroll-box {
+  width: 100%;
+  max-width: 400px;
+  height: 200px;
+  border: 1px solid var(--hp-border);
+  border-radius: 0.5rem;
+  background: var(--hp-bg-subtle);
+}
+
+.demo-sa hp-scroll-area-content p,
+.scroll-box hp-scroll-area-content p {
+  margin: 0;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  color: var(--hp-text-secondary);
+  border-bottom: 1px solid var(--hp-border);
+  white-space: nowrap;
+}
+
+.scroll-box hp-scroll-area-content p:last-child {
+  border-bottom: none;
+}
+
+.scroll-box-h {
+  width: 100%;
+  max-width: 400px;
+  height: 60px;
+  border: 1px solid var(--hp-border);
+  border-radius: 0.5rem;
+  background: var(--hp-bg-subtle);
+}
+
+.h-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0;
+  white-space: nowrap;
+  width: max-content;
+}
+
+.h-content span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1.5rem;
+  height: 60px;
+  font-size: 0.875rem;
+  color: var(--hp-text-secondary);
+  border-right: 1px solid var(--hp-border);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.h-content span:last-child {
+  border-right: none;
+}
+
+.both-content {
+  width: 700px;
+}
+
+.both-content p {
+  margin: 0;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  color: var(--hp-text-secondary);
+  border-bottom: 1px solid var(--hp-border);
+  white-space: nowrap;
+}
+
+.both-content p:last-child {
+  border-bottom: none;
+}
+
+.scroll-box,
+.scroll-box-h {
+  --hp-scroll-area-scrollbar-size: 6px;
+}
+
+/* "Sin estilos" bare demo */
+.demo-sa-bare {
+  width: 300px;
+  height: 150px;
+  overflow: hidden;
+  position: relative;
+}
+
+.demo-sa-viewport {
+  width: 100%;
+  height: 100%;
+  overflow: scroll;
+  scrollbar-width: none;
+}
+
+.demo-sa-row {
+  margin: 0;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--vp-c-divider, var(--hp-border));
+}
+
+.demo-sa-row--last {
+  border-bottom: none;
+}
+
+.demo-sa-scrollbar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 8px;
+  display: flex;
+  flex-direction: column;
+  padding: 2px;
+}
+
+.demo-sa-thumb {
+  flex: 1;
+  background: var(--vp-c-divider, var(--hp-border));
+  border-radius: 9999px;
+  min-height: 20px;
+}

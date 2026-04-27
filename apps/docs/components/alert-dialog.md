@@ -24,18 +24,18 @@ Así se ve `hp-dialog` con `data-alert` usando únicamente `@headless-primitives
 
 <div class="hp-demo-card">
   <hp-dialog id="demo-alert-dialog" data-alert="true" aria-labelledby="demo-alert-title" aria-describedby="demo-alert-body">
-    <hp-dialog-trigger style="display:none;" tabindex="-1"></hp-dialog-trigger>
-    <hp-dialog-backdrop class="demo-alert-backdrop"></hp-dialog-backdrop>
-    <hp-dialog-content class="demo-alert-content" role="alertdialog" aria-modal="true">
+    <hp-dialog-trigger class="demo-adlg-hidden-trigger" tabindex="-1"></hp-dialog-trigger>
+    <hp-dialog-backdrop class="dialog-backdrop"></hp-dialog-backdrop>
+    <hp-dialog-content class="dialog-content" role="alertdialog" aria-modal="true">
       <h2 id="demo-alert-title">Confirmar eliminación</h2>
       <p id="demo-alert-body">¿Estás seguro de que deseas eliminar este elemento? Esta acción no se puede deshacer.</p>
-      <div style="display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 1.5rem;">
-        <button class="demo-btn secondary" onclick="document.getElementById('demo-alert-dialog').close()">Cancelar</button>
-        <button class="demo-btn danger" onclick="document.getElementById('demo-alert-dialog').close()">Eliminar</button>
+      <div class="demo-adlg-footer">
+        <button class="btn btn-secondary" onclick="document.getElementById('demo-alert-dialog').close()">Cancelar</button>
+        <button class="btn btn-secondary btn-danger" onclick="document.getElementById('demo-alert-dialog').close()">Eliminar</button>
       </div>
     </hp-dialog-content>
   </hp-dialog>
-  <button class="demo-btn primary" onclick="document.getElementById('demo-alert-dialog').open()">Mostrar Alert Dialog</button>
+  <button class="btn btn-primary" onclick="document.getElementById('demo-alert-dialog').open()">Mostrar Alert Dialog</button>
 </div>
 
 <CodeSnippet>
@@ -268,46 +268,3 @@ Adhiere al [patrón WAI-ARIA APG para Alert Dialog](https://www.w3.org/WAI/ARIA/
   document.getElementById("cancel-delete").addEventListener("click", () => dialog.close());
 </script>
 ```
-
-<style>
-.demo-btn {
-  font-family: inherit;
-  font-size: 0.9rem;
-  font-weight: 500;
-  padding: 8px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s;
-  border: 1px solid transparent;
-}
-.demo-btn.primary { background: var(--vp-c-brand-1); color: white; }
-.demo-btn.secondary { background: transparent; border-color: var(--vp-c-divider); color: var(--vp-c-text-1); }
-.demo-btn.danger { background: #dc2626; color: white; }
-.demo-btn:hover { opacity: 0.9; transform: translateY(-1px); }
-.demo-alert-backdrop {
-  position: fixed;
-  top: 0; left: 0; width: 100%; height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(4px);
-}
-.demo-alert-content {
-  background: var(--vp-c-bg);
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 12px;
-  padding: 2rem;
-  max-width: 400px;
-  width: 90%;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-}
-.demo-alert-content h2 {
-  margin: 0 0 0.5rem 0;
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: var(--vp-c-text-1);
-}
-.demo-alert-content p {
-  margin: 0;
-  color: var(--vp-c-text-2);
-  line-height: 1.5;
-}
-</style>

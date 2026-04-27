@@ -1,6 +1,6 @@
 import { ComponentDemo } from "../types";
 import "@headless-primitives/radio-group";
-import "./radio-group.css";
+import "../styles/radio-group.css";
 
 export const radioGroupDemo: ComponentDemo = {
   title: "Radio Group primitive",

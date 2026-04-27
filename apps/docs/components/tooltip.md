@@ -8,7 +8,7 @@ El componente `hp-tooltip` implementa el patrón [WAI-ARIA Tooltip](https://www.
 
 Así se ve `hp-tooltip` usando únicamente `@headless-primitives/utils/base.css`. El hover/focus, `aria-describedby` y visibilidad funcionan completamente.
 
-<div class="hp-demo-card" style="overflow: visible; min-height: 100px;">
+<div class="hp-demo-card demo-tip-card">
   <hp-tooltip>
     <hp-tooltip-trigger><button>Hover aquí</button></hp-tooltip-trigger>
     <hp-tooltip-content>Texto del tooltip sin estilos</hp-tooltip-content>
@@ -17,12 +17,12 @@ Así se ve `hp-tooltip` usando únicamente `@headless-primitives/utils/base.css`
 
 ### Con estilos personalizados
 
-<div class="hp-demo-card" style="overflow: visible; min-height: 120px;">
-  <hp-tooltip class="demo-tooltip">
+<div class="hp-demo-card demo-tip-card">
+  <hp-tooltip>
     <hp-tooltip-trigger>
-      <button class="demo-btn">Hover me</button>
+      <button class="btn btn-primary">Hover me</button>
     </hp-tooltip-trigger>
-    <hp-tooltip-content class="demo-tooltip-content">
+    <hp-tooltip-content class="tooltip-content">
       Este es un tooltip de ejemplo
     </hp-tooltip-content>
   </hp-tooltip>
@@ -236,43 +236,3 @@ const tooltip = document.querySelector("hp-tooltip");
 tooltip.show(); // Muestra inmediatamente
 tooltip.hide(); // Oculta inmediatamente
 ```
-
-<style>
-hp-tooltip { display: inline-block; position: relative; }
-hp-tooltip-trigger { display: inline-block; }
-.demo-btn {
-  font-family: inherit;
-  font-size: 0.9rem;
-  font-weight: 500;
-  padding: 8px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s;
-  border: 1px solid transparent;
-  background: var(--vp-c-brand-1);
-  color: white;
-}
-.demo-tooltip-content {
-  position: absolute;
-  bottom: calc(100% + 8px);
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--vp-c-bg-inverse, #1f2937);
-  color: var(--vp-c-text-inverse, #fff);
-  padding: 6px 10px;
-  border-radius: 6px;
-  font-size: 0.8rem;
-  white-space: nowrap;
-  z-index: 1000;
-  pointer-events: none;
-}
-.demo-tooltip-content::after {
-  content: '';
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  border: 5px solid transparent;
-  border-top-color: var(--vp-c-bg-inverse, #1f2937);
-}
-</style>

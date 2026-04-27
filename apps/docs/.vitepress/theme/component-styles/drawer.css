@@ -1,0 +1,136 @@
+/**
+ * @headless-primitives/demo-styles — drawer
+ */
+
+.drawer-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--hp-backdrop-bg, rgb(0 0 0 / 0.5));
+  backdrop-filter: blur(4px);
+  z-index: var(--hp-z-index-backdrop, 1000);
+  animation: hp-backdrop-in var(--hp-duration-slow, 200ms) ease-out;
+}
+
+.drawer-content {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 320px;
+  background-color: var(--hp-surface);
+  color: var(--hp-text);
+  padding: 0;
+  box-shadow: var(--hp-shadow-lg);
+  z-index: var(--hp-z-index-overlay-content, 1001);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.drawer-content[data-position="right"] {
+  left: auto;
+  right: 0;
+}
+
+.drawer-content[data-position="top"] {
+  left: 0;
+  right: 0;
+  bottom: auto;
+  top: 0;
+  width: 100vw;
+  height: 320px;
+}
+
+.drawer-content[data-position="bottom"] {
+  left: 0;
+  right: 0;
+  top: auto;
+  bottom: 0;
+  width: 100vw;
+  height: 320px;
+}
+
+.drawer-header {
+  padding: 24px 24px 16px 24px;
+  border-bottom: 1px solid var(--hp-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.drawer-header h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--hp-text);
+}
+
+.drawer-body {
+  padding: 20px 24px;
+  flex: 1;
+}
+
+.drawer-body p {
+  margin: 0 0 12px 0;
+  color: var(--hp-text-secondary);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.drawer-footer {
+  padding: 16px 24px;
+  border-top: 1px solid var(--hp-border);
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.drawer-close-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  color: var(--hp-text-secondary);
+  font-size: 20px;
+  line-height: 1;
+  border-radius: var(--hp-radius-sm, 4px);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.drawer-close-icon:hover {
+  background-color: var(--hp-bg-muted);
+  color: var(--hp-text);
+}
+
+.demo-controls {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 2rem;
+  align-items: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .drawer-backdrop {
+    animation: none;
+  }
+}
+
+/* ── Demo drawer card layout ─────────────────────────────────────────────── */
+.demo-drw-card {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.demo-drw-bare-text {
+  padding: 0 1.5rem 1rem;
+  margin: 0;
+  font-size: 0.875rem;
+  opacity: 0.7;
+}

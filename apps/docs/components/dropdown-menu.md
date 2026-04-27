@@ -21,14 +21,14 @@ Así se ve `hp-dropdown-menu` usando únicamente `@headless-primitives/utils/bas
 ### Con estilos personalizados
 
 <div class="hp-demo-card">
-  <hp-dropdown-menu class="demo-ddm">
-    <hp-dropdown-menu-trigger class="demo-ddm-trigger">Opciones ▼</hp-dropdown-menu-trigger>
-    <hp-dropdown-menu-content class="demo-ddm-content">
-      <hp-dropdown-menu-label class="demo-ddm-label">Cuenta</hp-dropdown-menu-label>
-      <hp-dropdown-menu-item value="profile" class="demo-ddm-item">👤 Perfil</hp-dropdown-menu-item>
-      <hp-dropdown-menu-item value="settings" class="demo-ddm-item">⚙️ Ajustes</hp-dropdown-menu-item>
-      <hp-dropdown-menu-separator class="demo-ddm-sep"></hp-dropdown-menu-separator>
-      <hp-dropdown-menu-item value="logout" class="demo-ddm-item">🚪 Cerrar sesión</hp-dropdown-menu-item>
+  <hp-dropdown-menu class="demo-dropdown-menu">
+    <hp-dropdown-menu-trigger class="demo-dm-trigger">Opciones ▼</hp-dropdown-menu-trigger>
+    <hp-dropdown-menu-content class="demo-dm-content">
+      <hp-dropdown-menu-label>Cuenta</hp-dropdown-menu-label>
+      <hp-dropdown-menu-item value="profile">👤 Perfil</hp-dropdown-menu-item>
+      <hp-dropdown-menu-item value="settings">⚙️ Ajustes</hp-dropdown-menu-item>
+      <hp-dropdown-menu-separator></hp-dropdown-menu-separator>
+      <hp-dropdown-menu-item value="logout">🚪 Cerrar sesión</hp-dropdown-menu-item>
     </hp-dropdown-menu-content>
   </hp-dropdown-menu>
 </div>
@@ -247,51 +247,3 @@ Adhiere al [patrón WAI-ARIA APG para Menu Button](https://www.w3.org/WAI/ARIA/a
 | `End`             | Último item.                                                |
 | `Escape`          | Cierra y foco al trigger.                                   |
 | `Tab`             | Cierra el menú.                                             |
-
-<style>
-hp-dropdown-menu,
-hp-dropdown-menu-trigger,
-hp-dropdown-menu-content,
-hp-dropdown-menu-item,
-hp-dropdown-menu-separator,
-hp-dropdown-menu-label {
-  display: block;
-}
-.demo-ddm { position: relative; }
-.demo-ddm-trigger {
-  padding: 0.5rem 1rem;
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 6px;
-  background: var(--vp-c-bg);
-  cursor: pointer;
-  font-size: 0.875rem;
-}
-.demo-ddm-trigger:hover { border-color: var(--vp-c-brand-1); }
-.demo-ddm-content {
-  position: absolute;
-  z-index: 50;
-  min-width: 180px;
-  background: var(--vp-c-bg);
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 6px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  padding: 4px 0;
-}
-.demo-ddm-content[data-state="closed"] { display: none; }
-.demo-ddm-label {
-  padding: 4px 12px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--vp-c-text-2);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-.demo-ddm-item {
-  padding: 6px 12px;
-  cursor: pointer;
-  transition: background 0.1s;
-}
-.demo-ddm-item:hover:not([aria-disabled="true"]) { background: var(--vp-c-bg-soft); }
-.demo-ddm-item[aria-disabled="true"] { opacity: 0.5; cursor: not-allowed; }
-.demo-ddm-sep { height: 1px; background: var(--vp-c-divider); margin: 4px 0; }
-</style>

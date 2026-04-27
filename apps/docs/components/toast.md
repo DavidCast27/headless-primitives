@@ -10,17 +10,17 @@ Así se ve `hp-toast` usando únicamente `@headless-primitives/utils/base.css`. 
 
 <div class="hp-demo-card">
   <hp-toast-container id="demo-toast-bare" data-position="bottom-right"></hp-toast-container>
-  <button class="demo-btn" onclick="document.getElementById('demo-toast-bare').addToast('Notificación sin estilos', {duration:3000})">Mostrar Toast (sin estilos)</button>
+  <button class="btn" onclick="document.getElementById('demo-toast-bare').addToast('Notificación sin estilos', {duration:3000})">Mostrar Toast (sin estilos)</button>
 </div>
 
 ### Con estilos personalizados
 
 <div class="hp-demo-card">
   <hp-toast-container id="demo-toast-container" data-position="bottom-right"></hp-toast-container>
-  <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-    <button class="demo-btn success" onclick="(function(){ var t = document.getElementById('demo-toast-container').addToast('✓ Cambios guardados correctamente', {duration:3000}); t.style.background='#16a34a'; t.style.color='#fff'; t.style.boxShadow='0 4px 12px rgba(0,0,0,0.15)'; })()">Mostrar Éxito</button>
-    <button class="demo-btn error" onclick="(function(){ var t = document.getElementById('demo-toast-container').addToast('✗ Error al guardar los cambios', {duration:4000}); t.style.background='#dc2626'; t.style.color='#fff'; t.style.boxShadow='0 4px 12px rgba(0,0,0,0.15)'; })()">Mostrar Error</button>
-    <button class="demo-btn info" onclick="(function(){ var t = document.getElementById('demo-toast-container').addToast('ℹ Información importante', {duration:5000}); t.style.background='#2563eb'; t.style.color='#fff'; t.style.boxShadow='0 4px 12px rgba(0,0,0,0.15)'; })()">Mostrar Info</button>
+  <div class="demo-tst-btns">
+    <button class="btn btn-primary" onclick="(function(){ var t = document.getElementById('demo-toast-container').addToast('✓ Cambios guardados correctamente', {duration:3000}); t.style.background='#16a34a'; t.style.color='#fff'; t.style.boxShadow='0 4px 12px rgba(0,0,0,0.15)'; })()">Mostrar Éxito</button>
+    <button class="btn btn-primary" onclick="(function(){ var t = document.getElementById('demo-toast-container').addToast('✗ Error al guardar los cambios', {duration:4000}); t.style.background='#dc2626'; t.style.color='#fff'; t.style.boxShadow='0 4px 12px rgba(0,0,0,0.15)'; })()">Mostrar Error</button>
+    <button class="btn btn-primary" onclick="(function(){ var t = document.getElementById('demo-toast-container').addToast('ℹ Información importante', {duration:5000}); t.style.background='#2563eb'; t.style.color='#fff'; t.style.boxShadow='0 4px 12px rgba(0,0,0,0.15)'; })()">Mostrar Info</button>
   </div>
 </div>
 
@@ -204,22 +204,3 @@ Adhiere al patrón [WAI-ARIA Alert](https://www.w3.org/WAI/ARIA/apg/patterns/ale
 | Tecla             | Acción                                        |
 | ----------------- | --------------------------------------------- |
 | `Enter` / `Space` | Activa el botón de cierre (`hp-toast-close`). |
-
-<style>
-.demo-btn {
-  font-family: inherit;
-  font-size: 0.9rem;
-  font-weight: 500;
-  padding: 8px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s;
-  border: 1px solid transparent;
-  background: var(--vp-c-brand-1);
-  color: white;
-}
-.demo-btn.success { background: #16a34a; color: white; }
-.demo-btn.error { background: #dc2626; color: white; }
-.demo-btn.info { background: #2563eb; color: white; }
-.demo-btn:hover { opacity: 0.9; transform: translateY(-1px); }
-</style>

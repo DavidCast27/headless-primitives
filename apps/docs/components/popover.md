@@ -23,12 +23,12 @@ Así se ve `hp-popover` usando únicamente `@headless-primitives/utils/base.css`
 <div class="hp-demo-card">
   <hp-popover align="start">
     <hp-popover-trigger>
-      <button class="demo-btn">Abrir Popover</button>
+      <button class="btn btn-primary">Abrir Popover</button>
     </hp-popover-trigger>
-    <hp-popover-content class="demo-popover-content">
-      <h3 style="margin: 0 0 0.5rem 0; font-size: 1rem; font-weight: 600; color: var(--vp-c-text-1);">Título del Popover</h3>
-      <p style="margin: 0 0 1rem 0; font-size: 0.875rem; color: var(--vp-c-text-2); line-height: 1.5;">Contenido del popover flotante con información adicional.</p>
-      <button class="demo-btn secondary" onclick="this.closest('hp-popover').close()">Cerrar</button>
+    <hp-popover-content class="popover-content">
+      <h3 class="demo-pop-title">Título del Popover</h3>
+      <p class="demo-pop-body">Contenido del popover flotante con información adicional.</p>
+      <button class="btn btn-secondary" onclick="this.closest('hp-popover').close()">Cerrar</button>
     </hp-popover-content>
   </hp-popover>
 </div>
@@ -222,34 +222,3 @@ Adhiere al [patrón WAI-ARIA APG para Dialog (Non-modal)](https://www.w3.org/WAI
 | `Enter` / `Space` | Abre/cierra el popover desde el trigger.                           |
 | `Escape`          | Cierra el popover y devuelve el foco al trigger.                   |
 | `Tab`             | Navega entre elementos focusables dentro del popover (focus trap). |
-
-<style>
-hp-popover { display: inline-block; }
-hp-popover-trigger { display: inline-block; }
-.demo-btn {
-  font-family: inherit;
-  font-size: 0.9rem;
-  font-weight: 500;
-  padding: 8px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s;
-  border: 1px solid transparent;
-  background: var(--vp-c-brand-1);
-  color: white;
-}
-.demo-btn.secondary {
-  background: transparent;
-  border-color: var(--vp-c-divider);
-  color: var(--vp-c-text-1);
-}
-.demo-btn.secondary:hover { border-color: var(--vp-c-brand-1); }
-.demo-popover-content {
-  background: var(--vp-c-bg);
-  padding: 16px;
-  border-radius: 8px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.08);
-  border: 1px solid var(--vp-c-divider);
-  min-width: 220px;
-}
-</style>

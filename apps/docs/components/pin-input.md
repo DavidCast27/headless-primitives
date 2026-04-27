@@ -12,21 +12,21 @@ El componente `hp-pin-input` captura un código PIN u OTP de longitud fija, con 
 
 ### Con estilos personalizados
 
-<div class="hp-demo-card" style="display: flex; flex-direction: column; gap: 2rem; align-items: flex-start;">
+<div class="hp-demo-card demo-pin-card">
   <div>
-    <p style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--vp-c-text-2); margin-bottom: 0.75rem;">Numérico — 4 dígitos</p>
+    <p class="demo-pin-label">Numérico — 4 dígitos</p>
     <hp-pin-input class="demo-pin" length="4" type="numeric" placeholder="·"></hp-pin-input>
   </div>
   <div>
-    <p style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--vp-c-text-2); margin-bottom: 0.75rem;">OTP — 6 dígitos</p>
+    <p class="demo-pin-label">OTP — 6 dígitos</p>
     <hp-pin-input class="demo-pin" length="6" type="numeric" placeholder="·"></hp-pin-input>
   </div>
   <div>
-    <p style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--vp-c-text-2); margin-bottom: 0.75rem;">Alfanumérico</p>
+    <p class="demo-pin-label">Alfanumérico</p>
     <hp-pin-input class="demo-pin" length="6" type="alphanumeric" placeholder="–"></hp-pin-input>
   </div>
   <div>
-    <p style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--vp-c-text-2); margin-bottom: 0.75rem;">Deshabilitado</p>
+    <p class="demo-pin-label">Deshabilitado</p>
     <hp-pin-input class="demo-pin" length="4" type="numeric" disabled placeholder="·"></hp-pin-input>
   </div>
 </div>
@@ -222,47 +222,3 @@ Implementa el patrón OTP Input Group con `role="group"`.
 | `Home`           | Mueve foco al primer slot.                   |
 | `End`            | Mueve foco al último slot.                   |
 | `Ctrl+V` / Pegar | Distribuye texto desde el slot activo.       |
-
-<style>
-.demo-pin {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-.demo-pin input[data-hp-pin-slot] {
-  width: 2.75rem;
-  height: 2.75rem;
-  text-align: center;
-  font-family: var(--vp-font-family-mono, monospace);
-  font-size: 1.25rem;
-  font-weight: 700;
-  border: 2px solid var(--vp-c-divider);
-  border-radius: 0.5rem;
-  background: var(--vp-c-bg-soft);
-  color: var(--vp-c-text-1);
-  outline: none;
-  padding: 0;
-  caret-color: var(--vp-c-brand-1);
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
-}
-.demo-pin input[data-hp-pin-slot]::placeholder {
-  color: var(--vp-c-text-3);
-  font-size: 1rem;
-}
-.demo-pin input[data-hp-pin-slot]:hover:not(:disabled) {
-  border-color: var(--vp-c-text-3);
-}
-.demo-pin input[data-hp-pin-slot]:focus {
-  border-color: var(--vp-c-brand-1);
-  box-shadow: 0 0 0 3px var(--vp-c-brand-soft);
-  background: var(--vp-c-bg);
-}
-.demo-pin[data-state="complete"] input[data-hp-pin-slot] {
-  border-color: #16a34a;
-  box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.2);
-}
-.demo-pin[aria-disabled="true"] input[data-hp-pin-slot] {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
-</style>

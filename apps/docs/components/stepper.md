@@ -10,13 +10,13 @@ Así se ve `hp-stepper` usando únicamente `@headless-primitives/utils/base.css`
 
 <div class="hp-demo-card">
   <hp-stepper value="0">
-    <hp-stepper-list style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+    <hp-stepper-list class="demo-stp-list">
       <hp-stepper-item>1</hp-stepper-item>
       <hp-stepper-item>2</hp-stepper-item>
     </hp-stepper-list>
     <hp-stepper-panel>Paso 1 (sin estilos)</hp-stepper-panel>
     <hp-stepper-panel>Paso 2 (sin estilos)</hp-stepper-panel>
-    <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
+    <div class="demo-stp-actions">
       <hp-stepper-prev><button>Anterior</button></hp-stepper-prev>
       <hp-stepper-next><button>Siguiente</button></hp-stepper-next>
     </div>
@@ -26,19 +26,19 @@ Así se ve `hp-stepper` usando únicamente `@headless-primitives/utils/base.css`
 ### Con estilos personalizados
 
 <div class="hp-demo-card">
-  <hp-stepper value="0" class="demo-stepper">
-    <hp-stepper-list class="demo-stepper-list">
-      <hp-stepper-item class="demo-stepper-item">Paso 1</hp-stepper-item>
-      <hp-stepper-item class="demo-stepper-item">Paso 2</hp-stepper-item>
-      <hp-stepper-item class="demo-stepper-item">Paso 3</hp-stepper-item>
+  <hp-stepper value="0" class="stepper">
+    <hp-stepper-list class="stepper-list">
+      <hp-stepper-item class="stepper-item">Paso 1</hp-stepper-item>
+      <hp-stepper-item class="stepper-item">Paso 2</hp-stepper-item>
+      <hp-stepper-item class="stepper-item">Paso 3</hp-stepper-item>
     </hp-stepper-list>
-    <hp-stepper-panel class="demo-stepper-panel">Contenido del paso 1</hp-stepper-panel>
-    <hp-stepper-panel class="demo-stepper-panel">Contenido del paso 2</hp-stepper-panel>
-    <hp-stepper-panel class="demo-stepper-panel">Contenido del paso 3</hp-stepper-panel>
-    <div class="demo-stepper-actions">
-      <hp-stepper-prev class="demo-stepper-btn">← Anterior</hp-stepper-prev>
-      <hp-stepper-next class="demo-stepper-btn">Siguiente →</hp-stepper-next>
-      <hp-stepper-finish class="demo-stepper-btn demo-stepper-finish">✓ Finalizar</hp-stepper-finish>
+    <hp-stepper-panel class="stepper-panel">Contenido del paso 1</hp-stepper-panel>
+    <hp-stepper-panel class="stepper-panel">Contenido del paso 2</hp-stepper-panel>
+    <hp-stepper-panel class="stepper-panel">Contenido del paso 3</hp-stepper-panel>
+    <div class="stepper-actions">
+      <hp-stepper-prev class="stepper-prev">← Anterior</hp-stepper-prev>
+      <hp-stepper-next class="stepper-next">Siguiente →</hp-stepper-next>
+      <hp-stepper-finish class="stepper-next">✓ Finalizar</hp-stepper-finish>
     </div>
   </hp-stepper>
 </div>
@@ -225,61 +225,3 @@ Usa el patrón `tablist`/`tab`/`tabpanel` del W3C.
 | `ArrowLeft` / `ArrowUp`    | Paso anterior.  |
 | `Home`                     | Primer paso.    |
 | `End`                      | Último paso.    |
-
-<style>
-hp-stepper,
-hp-stepper-list,
-hp-stepper-item,
-hp-stepper-panel,
-hp-stepper-prev,
-hp-stepper-next,
-hp-stepper-finish {
-  display: block;
-}
-.demo-stepper { width: 100%; max-width: 400px; }
-.demo-stepper-list {
-  display: flex;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-}
-.demo-stepper-item {
-  padding: 0.5rem 1rem;
-  border-radius: 999px;
-  font-size: 0.8rem;
-  font-weight: 500;
-  cursor: pointer;
-  border: 1px solid var(--vp-c-divider);
-  background: var(--vp-c-bg);
-  transition: all 0.15s;
-}
-.demo-stepper-item[data-state="active"] {
-  background: var(--vp-c-brand-1);
-  color: #fff;
-  border-color: var(--vp-c-brand-1);
-}
-.demo-stepper-item[data-state="completed"] {
-  background: var(--vp-c-brand-soft);
-  border-color: var(--vp-c-brand-1);
-  color: var(--vp-c-brand-1);
-}
-.demo-stepper-item[data-state="pending"] { opacity: 0.5; }
-.demo-stepper-panel {
-  padding: 1rem;
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 8px;
-  margin-bottom: 1rem;
-  min-height: 60px;
-}
-.demo-stepper-panel[data-state="hidden"] { display: none; }
-.demo-stepper-actions { display: flex; gap: 0.5rem; }
-.demo-stepper-btn {
-  padding: 0.4rem 1rem;
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 6px;
-  background: var(--vp-c-bg);
-  cursor: pointer;
-  font-size: 0.8rem;
-}
-.demo-stepper-btn[disabled] { opacity: 0.4; cursor: not-allowed; }
-.demo-stepper-finish { background: var(--vp-c-brand-1); color: #fff; border-color: var(--vp-c-brand-1); }
-</style>

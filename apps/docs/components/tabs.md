@@ -24,15 +24,15 @@ Así se ven las tabs usando únicamente `@headless-primitives/utils/base.css`. L
 ### Con estilos personalizados
 
 <div class="hp-demo-card">
-  <hp-tabs value="profile" class="demo-tabs">
+  <hp-tabs value="profile">
     <hp-tab-list class="demo-tab-list">
-      <hp-tab value="profile" class="demo-tab">Perfil</hp-tab>
-      <hp-tab value="settings" class="demo-tab">Ajustes</hp-tab>
-      <hp-tab value="notifications" class="demo-tab">Notificaciones</hp-tab>
+      <hp-tab value="profile" class="demo-tab-trigger">Perfil</hp-tab>
+      <hp-tab value="settings" class="demo-tab-trigger">Ajustes</hp-tab>
+      <hp-tab value="notifications" class="demo-tab-trigger">Notificaciones</hp-tab>
     </hp-tab-list>
-    <hp-tab-panel value="profile" class="demo-panel"><p>Gestiona tu información de perfil y datos personales.</p></hp-tab-panel>
-    <hp-tab-panel value="settings" class="demo-panel"><p>Configura las preferencias de tu aplicación.</p></hp-tab-panel>
-    <hp-tab-panel value="notifications" class="demo-panel"><p>Controla cómo y cuándo recibes notificaciones.</p></hp-tab-panel>
+    <hp-tab-panel value="profile" class="demo-tab-panel"><p>Gestiona tu información de perfil y datos personales.</p></hp-tab-panel>
+    <hp-tab-panel value="settings" class="demo-tab-panel"><p>Configura las preferencias de tu aplicación.</p></hp-tab-panel>
+    <hp-tab-panel value="notifications" class="demo-tab-panel"><p>Controla cómo y cuándo recibes notificaciones.</p></hp-tab-panel>
   </hp-tabs>
 </div>
 
@@ -307,51 +307,3 @@ tabs.addEventListener("hp-change", (e) => {
   <hp-tab-panel value="tab3"><p>Panel 3</p></hp-tab-panel>
 </hp-tabs>
 ```
-
-<style>
-.demo-tabs {
-  width: 100%;
-  max-width: 500px;
-}
-.demo-tab-list {
-  display: flex;
-  border-bottom: 2px solid var(--vp-c-divider);
-  margin-bottom: 0;
-}
-.demo-tab {
-  padding: 10px 20px;
-  background: none;
-  border: none;
-  border-bottom: 2px solid transparent;
-  margin-bottom: -2px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--vp-c-text-2);
-  transition: color 0.2s;
-}
-.demo-tab:hover {
-  color: var(--vp-c-text-1);
-}
-.demo-tab[aria-selected="true"] {
-  color: var(--vp-c-brand-1);
-  border-bottom-color: var(--vp-c-brand-1);
-}
-.demo-tab:focus-visible {
-  outline: 2px solid var(--vp-c-brand-1);
-  outline-offset: -2px;
-  border-radius: 4px;
-}
-.demo-panel {
-  padding: 16px;
-  background: var(--vp-c-bg-soft);
-  border: 1px solid var(--vp-c-divider);
-  border-top: none;
-  border-radius: 0 0 8px 8px;
-}
-.demo-panel p {
-  margin: 0;
-  color: var(--vp-c-text-2);
-  line-height: 1.6;
-}
-</style>

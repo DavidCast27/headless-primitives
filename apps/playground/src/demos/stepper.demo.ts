@@ -1,11 +1,11 @@
 import "@headless-primitives/stepper";
-import "./stepper.css";
+import "../styles/stepper.css";
 
 export const stepperDemo = {
   title: "Stepper",
   description: "A step-by-step wizard indicator with full keyboard navigation and ARIA support.",
   html: `
-<div class="demo-section">
+<div class="hp-demo-section">
   <h2>Horizontal</h2>
   <hp-stepper value="0" orientation="horizontal" class="stepper">
     <hp-stepper-list class="stepper-list">
@@ -35,7 +35,7 @@ export const stepperDemo = {
   </hp-stepper>
 </div>
 
-<div class="demo-section">
+<div class="hp-demo-section">
   <h2>Vertical</h2>
   <hp-stepper value="0" orientation="vertical" class="stepper">
     <hp-stepper-list class="stepper-list">
@@ -65,7 +65,7 @@ export const stepperDemo = {
   </hp-stepper>
 </div>
 
-<div class="demo-section">
+<div class="hp-demo-section">
   <h2>Linear (sequential only)</h2>
   <hp-stepper value="0" linear class="stepper">
     <hp-stepper-list class="stepper-list">
@@ -95,9 +95,9 @@ export const stepperDemo = {
   </hp-stepper>
 </div>
 
-<div class="demo-section">
+<div class="hp-demo-section">
   <h2>Sin estilos (solo base.css)</h2>
-  <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:1rem;">
+  <p style="font-size:0.85rem;color:var(--hp-text-secondary);margin-bottom:1rem;">
     Solo <code>base.css</code> controla la visibilidad de los paneles vía <code>[data-hp-stepper-panel][data-state="hidden"]</code>.
   </p>
   <hp-stepper value="1">

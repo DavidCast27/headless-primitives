@@ -14,14 +14,14 @@ El componente `hp-progress` implementa el patrón [WAI-ARIA Progressbar](https:/
 ### Con estilos personalizados
 
 <div class="hp-demo-card">
-  <div style="width: 100%; max-width: 300px; display: flex; flex-direction: column; gap: 1.5rem;">
+  <div class="demo-prg-stack">
     <div>
-      <p style="font-size: 0.85rem; margin-bottom: 8px;">Determinado (75%)</p>
-      <hp-progress value="75" class="demo-progress"></hp-progress>
+      <p class="demo-prg-label">Determinado (75%)</p>
+      <hp-progress value="75" class="progress"></hp-progress>
     </div>
     <div>
-      <p style="font-size: 0.85rem; margin-bottom: 8px;">Indeterminado</p>
-      <hp-progress class="demo-progress"></hp-progress>
+      <p class="demo-prg-label">Indeterminado</p>
+      <hp-progress class="progress"></hp-progress>
     </div>
   </div>
 </div>
@@ -154,27 +154,3 @@ Adhiere al patrón [WAI-ARIA Progressbar](https://www.w3.org/WAI/ARIA/apg/patter
 
 - `aria-valuenow` se elimina en estado indeterminado.
 - `aria-valuemin` y `aria-valuemax` siempre presentes.
-
-<style>
-hp-progress-indicator { display: block; }
-.demo-progress {
-  display: block;
-  height: 8px;
-  background: var(--vp-c-divider);
-  border-radius: 999px;
-  overflow: hidden;
-}
-.demo-progress hp-progress-indicator {
-  height: 100%;
-  background: var(--vp-c-brand-1);
-  transition: width 0.3s ease;
-}
-.demo-progress hp-progress-indicator[data-indeterminate] {
-  width: 30% !important;
-  animation: hp-progress-ind 1.5s infinite linear;
-}
-@keyframes hp-progress-ind {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(400%); }
-}
-</style>

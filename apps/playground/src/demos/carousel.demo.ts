@@ -1,5 +1,5 @@
 import { ComponentDemo } from "../types";
-import "./carousel.css";
+import "../styles/carousel.css";
 
 export const carouselDemo: ComponentDemo = {
   title: "Carousel primitive",

@@ -1,12 +1,12 @@
 import "@headless-primitives/tree";
-import "./tree.css";
+import "../styles/tree.css";
 
 export const treeDemo = {
   title: "Tree View",
   description:
     "A hierarchical tree widget for navigating nested data with keyboard support and full ARIA compliance.",
   html: `
-<div class="demo-section">
+<div class="hp-demo-section">
   <h2>Basic Tree</h2>
   <hp-tree class="tree-demo" id="demo-tree-1">
     <hp-tree-item class="tree-item" value="documents">
@@ -35,7 +35,7 @@ export const treeDemo = {
   <div class="event-log" id="log-1"><p>Click or use keyboard to interact…</p></div>
 </div>
 
-<div class="demo-section">
+<div class="hp-demo-section">
   <h2>Pre-expanded Tree</h2>
   <hp-tree class="tree-demo" id="demo-tree-2">
     <hp-tree-item class="tree-item" value="src" expanded>
@@ -62,7 +62,7 @@ export const treeDemo = {
   </hp-tree>
 </div>
 
-<div class="demo-section">
+<div class="hp-demo-section">
   <h2>With Disabled Items</h2>
   <hp-tree class="tree-demo" id="demo-tree-3">
     <hp-tree-item class="tree-item" value="active-1">Active Node</hp-tree-item>
@@ -78,7 +78,7 @@ export const treeDemo = {
   </hp-tree>
 </div>
 
-<div class="demo-section">
+<div class="hp-demo-section">
   <h2>Multi-select</h2>
   <hp-tree class="tree-demo" id="demo-tree-4" multi-select>
     <hp-tree-item class="tree-item" value="ms-docs">

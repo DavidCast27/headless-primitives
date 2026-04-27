@@ -9,18 +9,18 @@ El componente `hp-carousel` permite mostrar una serie de slides navegables con c
 Así se ve `hp-carousel` usando únicamente `@headless-primitives/utils/base.css`. La navegación, el autoplay y la gestión de estados funcionan completamente sin estilos adicionales.
 
 <div class="hp-demo-card">
-  <hp-carousel label="Demo carousel bare" style="max-width:400px; border:1px solid var(--vp-c-divider); border-radius:8px; overflow:hidden;">
+  <hp-carousel label="Demo carousel bare" class="demo-car-bare">
     <hp-carousel-content>
-      <hp-carousel-item style="padding:3rem 2rem; text-align:center; background:var(--vp-c-bg-soft);">Slide 1</hp-carousel-item>
-      <hp-carousel-item style="padding:3rem 2rem; text-align:center; background:var(--vp-c-bg-soft);">Slide 2</hp-carousel-item>
-      <hp-carousel-item style="padding:3rem 2rem; text-align:center; background:var(--vp-c-bg-soft);">Slide 3</hp-carousel-item>
+      <hp-carousel-item class="demo-car-item">Slide 1</hp-carousel-item>
+      <hp-carousel-item class="demo-car-item">Slide 2</hp-carousel-item>
+      <hp-carousel-item class="demo-car-item">Slide 3</hp-carousel-item>
     </hp-carousel-content>
-    <div style="display:flex; justify-content:center; gap:1rem; padding:1rem; border-top:1px solid var(--vp-c-divider);">
+    <div class="demo-car-controls">
       <hp-carousel-previous><button>←</button></hp-carousel-previous>
-      <div style="display:flex; gap:0.5rem; align-items:center;">
-        <hp-carousel-dot index="0"><button style="width:8px;height:8px;border-radius:50%;border:1px solid currentColor;padding:0;"></button></hp-carousel-dot>
-        <hp-carousel-dot index="1"><button style="width:8px;height:8px;border-radius:50%;border:1px solid currentColor;padding:0;"></button></hp-carousel-dot>
-        <hp-carousel-dot index="2"><button style="width:8px;height:8px;border-radius:50%;border:1px solid currentColor;padding:0;"></button></hp-carousel-dot>
+      <div class="demo-car-dots">
+        <hp-carousel-dot index="0"><button class="demo-car-dot-btn"></button></hp-carousel-dot>
+        <hp-carousel-dot index="1"><button class="demo-car-dot-btn"></button></hp-carousel-dot>
+        <hp-carousel-dot index="2"><button class="demo-car-dot-btn"></button></hp-carousel-dot>
       </div>
       <hp-carousel-next><button>→</button></hp-carousel-next>
     </div>
@@ -32,20 +32,20 @@ Así se ve `hp-carousel` usando únicamente `@headless-primitives/utils/base.css
 El componente estilizado usando clases CSS y variables de tema.
 
 <div class="hp-demo-card">
-  <hp-carousel loop class="demo-carousel">
-    <hp-carousel-content class="demo-carousel-content">
-      <hp-carousel-item class="demo-carousel-item" style="background: var(--vp-c-brand-soft);">Slide 1</hp-carousel-item>
-      <hp-carousel-item class="demo-carousel-item" style="background: var(--vp-c-indigo-soft);">Slide 2</hp-carousel-item>
-      <hp-carousel-item class="demo-carousel-item" style="background: var(--vp-c-green-soft);">Slide 3</hp-carousel-item>
+  <hp-carousel loop>
+    <hp-carousel-content>
+      <hp-carousel-item class="demo-car-item demo-car-item--brand">Slide 1</hp-carousel-item>
+      <hp-carousel-item class="demo-car-item demo-car-item--indigo">Slide 2</hp-carousel-item>
+      <hp-carousel-item class="demo-car-item demo-car-item--green">Slide 3</hp-carousel-item>
     </hp-carousel-content>
-    <div class="demo-carousel-controls">
-      <hp-carousel-previous class="demo-carousel-btn">←</hp-carousel-previous>
-      <div class="demo-carousel-dots">
-        <hp-carousel-dot index="0" class="demo-dot"></hp-carousel-dot>
-        <hp-carousel-dot index="1" class="demo-dot"></hp-carousel-dot>
-        <hp-carousel-dot index="2" class="demo-dot"></hp-carousel-dot>
+    <div class="demo-car-controls">
+      <hp-carousel-previous>←</hp-carousel-previous>
+      <div class="demo-car-dots">
+        <hp-carousel-dot index="0"></hp-carousel-dot>
+        <hp-carousel-dot index="1"></hp-carousel-dot>
+        <hp-carousel-dot index="2"></hp-carousel-dot>
       </div>
-      <hp-carousel-next class="demo-carousel-btn">→</hp-carousel-next>
+      <hp-carousel-next>→</hp-carousel-next>
     </div>
   </hp-carousel>
 </div>
@@ -251,81 +251,3 @@ Adhiere al [patrón WAI-ARIA APG para Carousel](https://www.w3.org/WAI/ARIA/apg/
 | `ArrowRight` / `ArrowDown` | Mueve el foco al siguiente slide (según orientación). |
 | `ArrowLeft` / `ArrowUp`    | Mueve el foco al slide anterior (según orientación).  |
 | `Enter` / `Space`          | Activa botones de navegación o indicadores de puntos. |
-
-<style>
-/* Reset estructural */
-hp-carousel,
-hp-carousel-content,
-hp-carousel-item,
-hp-carousel-previous,
-hp-carousel-next,
-hp-carousel-dot {
-  display: block;
-}
-
-hp-carousel-item[data-state="inactive"] { 
-  display: none; 
-}
-
-.demo-carousel {
-  position: relative;
-  width: 100%;
-  max-width: 400px;
-}
-
-.demo-carousel-content {
-  position: relative;
-  overflow: hidden;
-  border-radius: 12px;
-}
-
-.demo-carousel-item {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 4rem 2rem;
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--vp-c-text-1);
-}
-
-.demo-carousel-controls {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1.5rem;
-  margin-top: 1.25rem;
-}
-
-.demo-carousel-btn {
-  padding: 8px 12px;
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 8px;
-  background: var(--vp-c-bg-soft);
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.demo-carousel-btn:hover {
-  background: var(--vp-c-bg-mute);
-}
-
-.demo-carousel-dots {
-  display: flex;
-  gap: 8px;
-}
-
-.demo-dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: var(--vp-c-divider);
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.demo-dot[data-state="active"] {
-  background: var(--vp-c-brand-1);
-  transform: scale(1.2);
-}
-</style>

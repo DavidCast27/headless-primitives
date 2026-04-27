@@ -1,5 +1,5 @@
 import { ComponentDemo } from "../types";
-import "./fieldset.css";
+import "../styles/fieldset.css";
 
 export const fieldsetDemo: ComponentDemo = {
   title: "Fieldset primitive",

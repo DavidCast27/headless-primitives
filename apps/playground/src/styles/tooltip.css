@@ -1,0 +1,61 @@
+/**
+ * @headless-primitives/demo-styles — tooltip
+ */
+
+hp-tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+hp-tooltip-trigger {
+  display: inline-block;
+}
+
+hp-tooltip-content[data-state="closed"] {
+  display: none;
+}
+
+.tooltip-content {
+  position: absolute;
+  background-color: var(--hp-text);
+  color: var(--hp-surface);
+  padding: 8px 12px;
+  border-radius: var(--hp-radius, 6px);
+  box-shadow: var(--hp-shadow-md);
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  z-index: var(--hp-z-index-tooltip, 1300);
+  animation: hp-tooltip-in var(--hp-duration, 150ms) var(--hp-ease-out) both;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 8px;
+}
+
+.tooltip-content::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 4px solid transparent;
+  border-top-color: var(--hp-text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tooltip-content {
+    animation: none;
+  }
+}
+
+.hp-demo-card.demo-tip-card {
+  overflow: visible;
+  min-height: 100px;
+}
+
+/* ── Demo tooltip card modifier ─────────────────────────────────────────── */
+.demo-tip-card {
+  overflow: visible;
+  min-height: 120px;
+}

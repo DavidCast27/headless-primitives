@@ -1,5 +1,5 @@
 import { ComponentDemo } from "../types";
-import "./slider.css";
+import "../styles/slider.css";
 
 export const sliderDemo: ComponentDemo = {
   title: "Slider primitive",

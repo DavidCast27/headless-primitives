@@ -11,7 +11,7 @@ Así se ve `hp-context-menu` usando únicamente `@headless-primitives/utils/base
 <div class="hp-demo-card">
   <hp-context-menu id="bare-context-menu">
     <hp-context-menu-trigger>
-      <div style="padding: 2rem; border: 1px solid var(--vp-c-divider); text-align: center; color: var(--vp-c-text-2);">
+      <div class="demo-cm-bare-area">
         Haz clic derecho aquí (sin estilos)
       </div>
     </hp-context-menu-trigger>
@@ -27,19 +27,19 @@ Así se ve `hp-context-menu` usando únicamente `@headless-primitives/utils/base
 El componente estilizado usando clases CSS y variables de tema.
 
 <div class="hp-demo-card">
-  <hp-context-menu class="demo-ctx">
-    <hp-context-menu-trigger class="demo-ctx-trigger">
-      <div style="padding: 2rem; border: 2px dashed var(--vp-c-divider); border-radius: 8px; text-align: center; color: var(--vp-c-text-2);">
+  <hp-context-menu class="demo-context-menu">
+    <hp-context-menu-trigger class="demo-cm-trigger">
+      <div class="demo-cm-trigger-area">
         Haz clic derecho aquí
       </div>
     </hp-context-menu-trigger>
-    <hp-context-menu-content class="demo-ctx-content">
-      <hp-context-menu-label class="demo-ctx-label">Acciones</hp-context-menu-label>
-      <hp-context-menu-item value="copy" class="demo-ctx-item">📋 Copiar</hp-context-menu-item>
-      <hp-context-menu-item value="cut" class="demo-ctx-item">✂️ Cortar</hp-context-menu-item>
-      <hp-context-menu-item value="paste" class="demo-ctx-item">📎 Pegar</hp-context-menu-item>
-      <hp-context-menu-separator class="demo-ctx-sep"></hp-context-menu-separator>
-      <hp-context-menu-item value="delete" class="demo-ctx-item" disabled>🗑️ Eliminar</hp-context-menu-item>
+    <hp-context-menu-content class="demo-cm-content">
+      <hp-context-menu-label>Acciones</hp-context-menu-label>
+      <hp-context-menu-item value="copy">📋 Copiar</hp-context-menu-item>
+      <hp-context-menu-item value="cut">✂️ Cortar</hp-context-menu-item>
+      <hp-context-menu-item value="paste">📎 Pegar</hp-context-menu-item>
+      <hp-context-menu-separator></hp-context-menu-separator>
+      <hp-context-menu-item value="delete" disabled>🗑️ Eliminar</hp-context-menu-item>
     </hp-context-menu-content>
   </hp-context-menu>
 </div>
@@ -258,70 +258,3 @@ Adhiere al [patrón WAI-ARIA APG para Menu](https://www.w3.org/WAI/ARIA/apg/patt
 | `Enter` / `Space`            | Selecciona el ítem destacado y cierra el menú. |
 | `Escape`                     | Cierra el menú y devuelve el foco al trigger.  |
 | `Tab`                        | Cierra el menú inmediatamente.                 |
-
-<style>
-/* Reset estructural */
-hp-context-menu,
-hp-context-menu-trigger,
-hp-context-menu-content,
-hp-context-menu-item,
-hp-context-menu-separator,
-hp-context-menu-label {
-  display: block;
-}
-
-.demo-ctx { 
-  position: relative; 
-}
-
-.demo-ctx-trigger { 
-  cursor: context-menu; 
-}
-
-.demo-ctx-content {
-  position: absolute;
-  z-index: 100;
-  min-width: 180px;
-  background: var(--vp-c-bg);
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 8px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-  padding: 4px;
-}
-
-.demo-ctx-content[data-state="closed"] { 
-  display: none; 
-}
-
-.demo-ctx-label {
-  padding: 6px 12px;
-  font-size: 0.7rem;
-  font-weight: 700;
-  color: var(--vp-c-text-3);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.demo-ctx-item {
-  padding: 6px 10px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 0.875rem;
-  transition: background 0.1s;
-}
-
-.demo-ctx-item:hover:not([aria-disabled="true"]) { 
-  background: var(--vp-c-bg-soft); 
-}
-
-.demo-ctx-item[aria-disabled="true"] { 
-  opacity: 0.5; 
-  cursor: not-allowed; 
-}
-
-.demo-ctx-sep {
-  height: 1px;
-  background: var(--vp-c-divider);
-  margin: 4px 0;
-}
-</style>

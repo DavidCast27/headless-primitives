@@ -1,5 +1,5 @@
 import { ComponentDemo } from "../types";
-import "./drawer.css";
+import "../styles/drawer.css";
 
 export const drawerDemo: ComponentDemo = {
   title: "Drawer primitive",

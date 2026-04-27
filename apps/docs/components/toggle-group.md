@@ -18,18 +18,18 @@ Así se ve `hp-toggle-group` usando únicamente `@headless-primitives/utils/base
 ### Con estilos personalizados
 
 <div class="hp-demo-card">
-  <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+  <div class="demo-tg-stack">
     <div>
-      <p style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; color: var(--vp-c-text-2); margin-bottom: 0.5rem;">Single</p>
-      <hp-toggle-group value="center" class="demo-tg">
+      <p class="demo-tg-label">Single</p>
+      <hp-toggle-group value="center" class="demo-group">
         <hp-toggle value="left" class="demo-toggle">Left</hp-toggle>
         <hp-toggle value="center" class="demo-toggle">Center</hp-toggle>
         <hp-toggle value="right" class="demo-toggle">Right</hp-toggle>
       </hp-toggle-group>
     </div>
     <div>
-      <p style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; color: var(--vp-c-text-2); margin-bottom: 0.5rem;">Multiple</p>
-      <hp-toggle-group type="multiple" value="bold" class="demo-tg">
+      <p class="demo-tg-label">Multiple</p>
+      <hp-toggle-group type="multiple" value="bold" class="demo-group">
         <hp-toggle value="bold" class="demo-toggle"><b>B</b></hp-toggle>
         <hp-toggle value="italic" class="demo-toggle"><i>I</i></hp-toggle>
         <hp-toggle value="underline" class="demo-toggle"><u>U</u></hp-toggle>
@@ -224,37 +224,3 @@ Implementa roving tabindex y gestión de foco según orientación.
 | `Home`                                             | Primer toggle.                         |
 | `End`                                              | Último toggle.                         |
 | `Enter` / `Space`                                  | Alterna el estado del toggle con foco. |
-
-<style>
-hp-toggle-group,
-hp-toggle {
-  display: inline-flex;
-}
-.demo-tg {
-  display: inline-flex;
-  gap: 0;
-  border-radius: 6px;
-  overflow: hidden;
-  border: 1px solid var(--vp-c-divider);
-}
-.demo-toggle {
-  padding: 0.4rem 0.8rem;
-  font-size: 0.85rem;
-  cursor: pointer;
-  border: none;
-  background: var(--vp-c-bg);
-  color: var(--vp-c-text-1);
-  border-right: 1px solid var(--vp-c-divider);
-  transition: all 0.15s;
-}
-.demo-toggle:last-child { border-right: none; }
-.demo-toggle[data-state="on"] {
-  background: var(--vp-c-brand-1);
-  color: #fff;
-}
-.demo-toggle:focus-visible {
-  outline: 2px solid var(--vp-c-brand-1);
-  outline-offset: -2px;
-}
-.demo-toggle[aria-disabled="true"] { opacity: 0.4; cursor: not-allowed; }
-</style>

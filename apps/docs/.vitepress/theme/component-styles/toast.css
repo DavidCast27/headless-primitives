@@ -1,0 +1,75 @@
+/**
+ * @headless-primitives/demo-styles — toast
+ */
+
+hp-toast-container {
+  position: fixed;
+  z-index: var(--hp-z-index-tooltip, 9999);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+  pointer-events: none;
+}
+
+hp-toast-container[data-position="top-right"] {
+  top: 0;
+  right: 0;
+}
+
+hp-toast-container[data-position="top-left"] {
+  top: 0;
+  left: 0;
+}
+
+hp-toast-container[data-position="top-center"] {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+hp-toast-container[data-position="bottom-right"] {
+  bottom: 0;
+  right: 0;
+  flex-direction: column-reverse;
+}
+
+hp-toast-container[data-position="bottom-left"] {
+  bottom: 0;
+  left: 0;
+  flex-direction: column-reverse;
+}
+
+hp-toast-container[data-position="bottom-center"] {
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  flex-direction: column-reverse;
+}
+
+hp-toast {
+  display: block;
+  pointer-events: all;
+  padding: 0.75rem 1rem;
+  border-radius: var(--hp-radius-md, 8px);
+  box-shadow: var(--hp-shadow-lg);
+  font-size: var(--hp-font-size-sm, 0.875rem);
+  min-width: 220px;
+  max-width: 360px;
+  background: var(--hp-surface);
+  border: 1px solid var(--hp-border);
+  color: var(--hp-text);
+  animation: hp-toast-in var(--hp-duration, 200ms) ease-out forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  hp-toast {
+    animation: none;
+  }
+}
+
+.demo-tst-btns {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}

@@ -64,6 +64,7 @@ export default defineConfig({
           { text: "Accesibilidad", link: "/guide/accessibility" },
           { text: "Animaciones", link: "/guide/animation" },
           { text: "Eventos", link: "/guide/events" },
+          { text: "Integración con Frameworks", link: "/guide/frameworks" },
           { text: "Theming & Tokens", link: "/guide/theming" },
           {
             text: "Styling",
