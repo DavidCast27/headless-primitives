@@ -3,7 +3,20 @@ import { property } from "lit/decorators.js";
 
 @customElement("hp-tabs")
 export class Tabs extends HeadlessElement {
-  @property({ type: String, reflect: true }) value = "";
+  private _value = "";
+
+  // Setter+_sync pattern (ADR 0011): keep ARIA/state sync in sync without relying on
+  // Lit's async update cycle (which happy-dom does not run).
+  @property({ type: String, reflect: true })
+  get value(): string {
+    return this._value;
+  }
+  set value(v: string) {
+    const old = this._value;
+    this._value = v ?? "";
+    if (this.isConnected) this._sync();
+    this.requestUpdate("value", old);
+  }
 
   // Store bound reference so we can properly remove it in disconnectedCallback
   private _boundOnSlotChange = this._onSlotChange.bind(this);
@@ -16,15 +29,16 @@ export class Tabs extends HeadlessElement {
     this.addEventListener("slotchange", this._boundOnSlotChange);
 
     // Initial fallback only if author didn't set attribute
-    if (!this.value && !this.hasAttribute("value")) {
+    if (!this._value && !this.hasAttribute("value")) {
       const firstTab = this.querySelector("hp-tab");
       if (firstTab) {
-        this.value = firstTab.getAttribute("value") || "";
+        this._value = firstTab.getAttribute("value") || "";
       }
     }
 
-    this._syncPanels();
-    requestAnimationFrame(() => this._syncPanels());
+    // Synchronous sync + rAF re-sync (VitePress / SSR-friendly per ADR 0011)
+    this._sync();
+    requestAnimationFrame(() => this._sync());
   }
 
   disconnectedCallback() {
@@ -32,32 +46,51 @@ export class Tabs extends HeadlessElement {
     this.removeEventListener("slotchange", this._boundOnSlotChange);
   }
 
-  protected updated(changed: Map<string, unknown>) {
-    if (changed.has("value")) {
-      this._syncPanels();
-    }
-  }
-
   private _onSlotChange() {
-    this._syncPanels();
+    this._sync();
   }
 
-  private _syncPanels() {
+  private _sync() {
     try {
       const triggers = Array.from(this.querySelectorAll<HTMLElement>("hp-tab"));
       const panels = Array.from(this.querySelectorAll<HTMLElement>("hp-tab-panel"));
 
       triggers.forEach((trigger) => {
-        const isSelected = trigger.getAttribute("value") === this.value;
+        const tabValue = trigger.getAttribute("value") || "";
+        const isSelected = tabValue === this._value;
         trigger.setAttribute("data-state", isSelected ? "selected" : "unselected");
         trigger.setAttribute("aria-selected", String(isSelected));
         trigger.setAttribute("tabindex", isSelected ? "0" : "-1");
+
+        if (!tabValue) return;
+
+        // Generate stable IDs based on hpId so tab/panel pairs are linked via ARIA.
+        const baseId = `${this.hpId}-${tabValue}`;
+        const tabId = `${baseId}-tab`;
+        const panelId = `${baseId}-panel`;
+        if (!trigger.id) trigger.id = tabId;
+        trigger.setAttribute("aria-controls", panelId);
       });
 
       panels.forEach((panel) => {
-        const isSelected = panel.getAttribute("value") === this.value;
+        const panelValue = panel.getAttribute("value") || "";
+        const isSelected = panelValue === this._value;
         panel.setAttribute("data-state", isSelected ? "selected" : "unselected");
         panel.setAttribute("aria-hidden", String(!isSelected));
+
+        if (!panelValue) return;
+
+        const baseId = `${this.hpId}-${panelValue}`;
+        const tabId = `${baseId}-tab`;
+        const panelId = `${baseId}-panel`;
+        if (!panel.id) panel.id = panelId;
+
+        // Only point aria-labelledby at a tab that actually exists.
+        const matchingTrigger = triggers.find((t) => t.getAttribute("value") === panelValue);
+        if (matchingTrigger) {
+          // Ensure the trigger has the expected ID even if author overrode trigger.id earlier.
+          panel.setAttribute("aria-labelledby", matchingTrigger.id || tabId);
+        }
       });
     } catch {
       // Defensive: prevent any DOM timing errors from aborting rendering
@@ -65,18 +98,20 @@ export class Tabs extends HeadlessElement {
   }
 
   activateByValue(value: string) {
-    const oldValue = this.value;
+    const oldValue = this._value;
     this.value = value;
-    this._syncPanels();
     if (oldValue !== value) {
-      this.emit("change", { value: this.value });
+      this.emit("change", { value: this._value });
     }
   }
 
   attributeChangedCallback(name: string, old: string | null, next: string | null) {
     super.attributeChangedCallback(name, old, next);
     if (name === "value" && old !== next && this.isConnected) {
-      this._syncPanels();
+      // Keep internal state in sync when the attribute is set externally without
+      // going through the property setter.
+      this._value = next ?? "";
+      this._sync();
     }
   }
 }
@@ -143,7 +178,20 @@ export class TabList extends HeadlessElement {
 @customElement("hp-tab")
 export class TabTrigger extends HeadlessElement {
   @property({ type: String, reflect: true }) value = "";
-  @property({ type: Boolean, reflect: true }) disabled = false;
+
+  private _disabled = false;
+
+  // Setter+_sync pattern for `disabled` (ADR 0011) — avoids relying on `updated()`.
+  @property({ type: Boolean, reflect: true })
+  get disabled(): boolean {
+    return this._disabled;
+  }
+  set disabled(v: boolean) {
+    const old = this._disabled;
+    this._disabled = !!v;
+    if (this.isConnected) this._sync();
+    this.requestUpdate("disabled", old);
+  }
 
   private _boundHandleClick = this._handleClick.bind(this);
 
@@ -154,10 +202,8 @@ export class TabTrigger extends HeadlessElement {
     this.setAttribute("data-hp-tabs-trigger", "");
     this.addEventListener("click", this._boundHandleClick);
     if (!this.hasAttribute("tabindex")) this.setAttribute("tabindex", "-1");
-    this.setAttribute(
-      "aria-disabled",
-      this.disabled || this.hasAttribute("disabled") ? "true" : "false",
-    );
+    this._sync();
+    requestAnimationFrame(() => this._sync());
   }
 
   disconnectedCallback() {
@@ -165,21 +211,23 @@ export class TabTrigger extends HeadlessElement {
     this.removeEventListener("click", this._boundHandleClick);
   }
 
-  protected updated(changed: Map<string, unknown>) {
-    if (changed.has("disabled")) {
-      this.setAttribute("aria-disabled", this.disabled ? "true" : "false");
-    }
+  private _sync() {
+    this.setAttribute(
+      "aria-disabled",
+      this._disabled || this.hasAttribute("disabled") ? "true" : "false",
+    );
   }
 
   attributeChangedCallback(name: string, old: string | null, next: string | null) {
     super.attributeChangedCallback(name, old, next);
     if (name === "disabled" && old !== next && this.isConnected) {
-      this.setAttribute("aria-disabled", next !== null ? "true" : "false");
+      this._disabled = next !== null;
+      this._sync();
     }
   }
 
   private _handleClick() {
-    if (this.disabled || this.hasAttribute("disabled")) return;
+    if (this._disabled || this.hasAttribute("disabled")) return;
     const root = this.closest<Tabs>("hp-tabs");
     if (root && this.value && typeof root.activateByValue === "function") {
       root.activateByValue(this.value);
