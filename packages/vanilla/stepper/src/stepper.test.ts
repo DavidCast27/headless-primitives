@@ -157,6 +157,42 @@ describe("Stepper Components", () => {
     expect(items[2].getAttribute("aria-selected")).toBe("false");
   });
 
+  // --- aria-current on active item (APG) ---
+
+  it("sets aria-current=step on the active item only", async () => {
+    const root = createStepper(1);
+    await waitForUpdate(root);
+
+    const items = root.querySelectorAll("hp-stepper-item");
+    expect(items[0].hasAttribute("aria-current")).toBe(false);
+    expect(items[1].getAttribute("aria-current")).toBe("step");
+    expect(items[2].hasAttribute("aria-current")).toBe(false);
+  });
+
+  it("moves aria-current=step when value changes", async () => {
+    const root = createStepper(0);
+    await waitForUpdate(root);
+
+    const items = root.querySelectorAll("hp-stepper-item");
+    expect(items[0].getAttribute("aria-current")).toBe("step");
+
+    root.next();
+    await waitForUpdate(root);
+    expect(items[0].hasAttribute("aria-current")).toBe(false);
+    expect(items[1].getAttribute("aria-current")).toBe("step");
+  });
+
+  it("removes aria-current from all items after complete()", async () => {
+    const root = createStepper(2);
+    await waitForUpdate(root);
+
+    root.complete();
+    await waitForUpdate(root);
+
+    const items = root.querySelectorAll("hp-stepper-item");
+    items.forEach((item) => expect(item.hasAttribute("aria-current")).toBe(false));
+  });
+
   // --- tabindex management ---
 
   it("gives tabindex=0 to the active item only", async () => {
