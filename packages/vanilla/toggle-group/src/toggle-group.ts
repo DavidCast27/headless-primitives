@@ -75,7 +75,10 @@ export class HeadlessToggleGroup extends HeadlessElement {
   }
 
   private _handleTogglePress = (event: CustomEvent) => {
-    const toggleValue = event.detail.value;
+    this._togglePressByValue(event.detail.value);
+  };
+
+  private _togglePressByValue(toggleValue: string) {
     let newValue: string[];
 
     if (this.type === "single") {
@@ -90,7 +93,7 @@ export class HeadlessToggleGroup extends HeadlessElement {
     this.setAttribute("value", newValue.join(","));
     this._syncToggles();
     this.emit("change", { value: [...this._value] });
-  };
+  }
 
   private _handleKeyDown = (event: KeyboardEvent) => {
     if (this.disabled) return;
@@ -133,11 +136,7 @@ export class HeadlessToggleGroup extends HeadlessElement {
       case " ":
       case "Enter":
         event.preventDefault();
-        this._handleTogglePress(
-          new CustomEvent("hp-toggle-press", {
-            detail: { value: (event.target as HeadlessToggle).value },
-          }),
-        );
+        this._togglePressByValue((event.target as HeadlessToggle).value);
         return;
     }
     if (nextIndex !== -1) toggles[nextIndex].focus();

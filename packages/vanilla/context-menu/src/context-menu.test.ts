@@ -183,6 +183,16 @@ describe("HpContextMenu", () => {
     expect(content.getAttribute("data-state")).toBe("closed");
   });
 
+  it("does not close when click target is the trigger element", () => {
+    const trigger = root.querySelector("hp-context-menu-trigger")!;
+    root.openMenu();
+    expect(root.open).toBe(true);
+
+    // Simulate a click whose target is the trigger itself (e.g. Shift+F10 follow-up click)
+    trigger.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+    expect(root.open).toBe(true);
+  });
+
   // --- Event tests ---
 
   it("emits hp-select event on item activation", () => {
