@@ -374,12 +374,10 @@ export class HeadlessScrollAreaScrollbar extends HeadlessElement {
     const onUp = () => {
       this._isDragging = false;
       this.removeAttribute("data-dragging");
-      document.removeEventListener("mousemove", onMove);
-      document.removeEventListener("mouseup", onUp);
     };
 
-    document.addEventListener("mousemove", onMove);
-    document.addEventListener("mouseup", onUp);
+    document.addEventListener("mousemove", onMove, { signal: this.signal });
+    document.addEventListener("mouseup", onUp, { signal: this.signal, once: true });
   }
 }
 

@@ -57,4 +57,22 @@ describe("hp-checkbox", () => {
     checkbox.click();
     expect(changedValue).toBe(true);
   });
+
+  test("setAttribute('checked','mixed') updates aria-checked", () => {
+    checkbox.setAttribute("checked", "mixed");
+    expect(checkbox.getAttribute("aria-checked")).toBe("mixed");
+    expect(checkbox.checked).toBe("mixed");
+  });
+
+  test("removeAttribute('checked') resets to false", () => {
+    checkbox.checked = true;
+    checkbox.removeAttribute("checked");
+    expect(checkbox.checked).toBe(false);
+    expect(checkbox.getAttribute("aria-checked")).toBe("false");
+  });
+
+  test("setAttribute('disabled','') updates aria-disabled", () => {
+    checkbox.setAttribute("disabled", "");
+    expect(checkbox.getAttribute("aria-disabled")).toBe("true");
+  });
 });

@@ -132,4 +132,31 @@ describe("HeadlessScrollArea", () => {
     expect(vScrollbar.getAttribute("data-orientation")).toBe("horizontal");
     expect(vScrollbar.getAttribute("aria-orientation")).toBe("horizontal");
   });
+
+  it("disconnecting during drag aborts document listeners (no leak)", async () => {
+    const { root, vScrollbar, vThumb, viewport } = createScrollArea();
+    await raf();
+
+    // Start drag by dispatching mousedown on the thumb
+    vThumb.dispatchEvent(
+      new MouseEvent("mousedown", { bubbles: true, cancelable: true, clientX: 10, clientY: 10 }),
+    );
+    expect(vScrollbar.hasAttribute("data-dragging")).toBe(true);
+
+    // Capture viewport scroll before disconnect to assert listeners no longer fire.
+    const scrollTopBefore = viewport.scrollTop;
+
+    // Disconnect while dragging — signal should abort and clean up listeners
+    root.remove();
+
+    // Subsequent document mousemove/mouseup should not throw because the
+    // AbortSignal removes the listeners. The drag handlers should NOT run.
+    expect(() => {
+      document.dispatchEvent(new MouseEvent("mousemove", { clientX: 200, clientY: 200 }));
+      document.dispatchEvent(new MouseEvent("mouseup"));
+    }).not.toThrow();
+
+    // Viewport scroll must remain untouched, proving onMove was not invoked.
+    expect(viewport.scrollTop).toBe(scrollTopBefore);
+  });
 });

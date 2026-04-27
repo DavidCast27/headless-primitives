@@ -11,11 +11,33 @@ export class HeadlessCheckbox extends HeadlessElement {
   }
   set checked(val: CheckedState) {
     this._checked = val;
+    // Reflect to attribute so removeAttribute/setAttribute stays in sync with the property
+    const desired = val === "mixed" ? "mixed" : val ? "" : null;
+    if (desired === null) {
+      if (this.hasAttribute("checked")) this.removeAttribute("checked");
+    } else if (this.getAttribute("checked") !== desired) {
+      this.setAttribute("checked", desired);
+    }
     this._sync();
   }
 
   @property({ type: Boolean, reflect: true }) disabled = false;
   @property({ type: Boolean, reflect: true }) required = false;
+
+  static get observedAttributes() {
+    return ["checked", "disabled", "required"];
+  }
+
+  attributeChangedCallback(name: string, _old: string | null, next: string | null) {
+    super.attributeChangedCallback(name, _old, next);
+    if (!this.isConnected) return;
+    if (name === "checked") {
+      if (next === null) this._checked = false;
+      else if (next === "mixed") this._checked = "mixed";
+      else this._checked = true;
+    }
+    this._sync();
+  }
 
   connectedCallback() {
     super.connectedCallback();
@@ -37,10 +59,6 @@ export class HeadlessCheckbox extends HeadlessElement {
     this.removeEventListener("keydown", this._handleKeyDown);
   }
 
-  protected updated(changed: Map<string, unknown>) {
-    if (changed.has("disabled") || changed.has("required")) this._sync();
-  }
-
   toggle() {
     if (this.disabled) return;
     this.checked = this._checked === "mixed" ? true : !this._checked;
@@ -53,14 +71,17 @@ export class HeadlessCheckbox extends HeadlessElement {
       "data-state",
       this._checked === "mixed" ? "mixed" : this._checked ? "checked" : "unchecked",
     );
-    if (this.disabled) {
+    // Read attribute directly — Lit's async reactive cycle may not have updated this.disabled yet
+    const isDisabled = this.disabled || this.hasAttribute("disabled");
+    const isRequired = this.required || this.hasAttribute("required");
+    if (isDisabled) {
       this.setAttribute("aria-disabled", "true");
       this.removeAttribute("tabindex");
     } else {
       this.removeAttribute("aria-disabled");
       this.setAttribute("tabindex", "0");
     }
-    if (this.required) {
+    if (isRequired) {
       this.setAttribute("aria-required", "true");
     } else {
       this.removeAttribute("aria-required");

@@ -141,10 +141,10 @@ export class HeadlessPinInput extends HeadlessElement {
       this.appendChild(input);
       this._slots.push(input);
 
-      input.addEventListener("keydown", this._onKeydown);
-      input.addEventListener("input", this._onInput);
-      input.addEventListener("paste", this._onPaste);
-      input.addEventListener("focus", this._onFocus);
+      input.addEventListener("keydown", this._onKeydown, { signal: this.signal });
+      input.addEventListener("input", this._onInput, { signal: this.signal });
+      input.addEventListener("paste", this._onPaste, { signal: this.signal });
+      input.addEventListener("focus", this._onFocus, { signal: this.signal });
     }
   }
 

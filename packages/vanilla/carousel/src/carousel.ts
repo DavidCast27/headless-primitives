@@ -68,7 +68,9 @@ export class HpCarousel extends HeadlessElement {
         this._updateItems();
         // Fallback for VitePress hydration: retry if items not found yet
         if (this._items.length === 0) {
-          setTimeout(() => this._updateItems(), 50);
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => this._updateItems());
+          });
         }
       });
     });
