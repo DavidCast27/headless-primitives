@@ -21,7 +21,10 @@ export class HeadlessToggleGroup extends HeadlessElement {
   connectedCallback() {
     super.connectedCallback();
     this.setAttribute("data-hp-component", "toggle-group");
-    if (!this.hasAttribute("role")) this.setAttribute("role", "group");
+    // APG: radiogroup for single-select, group for multi-select
+    if (!this.hasAttribute("role")) {
+      this.setAttribute("role", this.type === "single" ? "radiogroup" : "group");
+    }
 
     const valueAttr = this.getAttribute("value");
     this._value = valueAttr ? valueAttr.split(",").filter((v) => v.trim()) : [];
@@ -52,6 +55,9 @@ export class HeadlessToggleGroup extends HeadlessElement {
     if (name === "disabled") {
       this._updateToggles();
     }
+    if (name === "type") {
+      this._updateToggles();
+    }
   }
 
   private _updateToggles() {
@@ -63,6 +69,8 @@ export class HeadlessToggleGroup extends HeadlessElement {
     } else {
       this.removeAttribute("aria-required");
     }
+    // APG: type="single" is semantically a radiogroup; type="multiple" stays role=group
+    this.setAttribute("role", this.type === "single" ? "radiogroup" : "group");
     this._syncToggles();
   }
 
@@ -156,10 +164,12 @@ export class HeadlessToggle extends HeadlessElement {
   connectedCallback() {
     super.connectedCallback();
     this.setAttribute("data-hp-component", "toggle");
+    // Role is decided by the parent toggle-group's `type` in _sync(); fall back to button
     if (!this.hasAttribute("role")) this.setAttribute("role", "button");
     this.setAttribute("tabindex", "-1");
     this.addEventListener("click", this._handleClick);
     this._sync();
+    requestAnimationFrame(() => this._sync());
   }
 
   disconnectedCallback() {
@@ -190,7 +200,20 @@ export class HeadlessToggle extends HeadlessElement {
   }
 
   private _sync() {
-    this.setAttribute("aria-pressed", String(this._pressed));
+    // APG: when inside a single-select toggle-group, the toggle is a radio with
+    // aria-checked; otherwise it's a button with aria-pressed. Read from the
+    // attribute (not the property) so we work even before the parent upgrades.
+    const root = this.closest("hp-toggle-group");
+    const groupType = root?.getAttribute("type") ?? "single";
+    const isSingle = !!root && groupType === "single";
+    this.setAttribute("role", isSingle ? "radio" : "button");
+    if (isSingle) {
+      this.setAttribute("aria-checked", String(this._pressed));
+      this.removeAttribute("aria-pressed");
+    } else {
+      this.setAttribute("aria-pressed", String(this._pressed));
+      this.removeAttribute("aria-checked");
+    }
     this.setAttribute("data-state", this._pressed ? "on" : "off");
     const disabled = this.hasAttribute("disabled");
     if (disabled) {
