@@ -120,4 +120,30 @@ describe("HpPopover", () => {
       document.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape" }));
     }).not.toThrow();
   });
+
+  it("popover content has aria-labelledby/describedby when title/description present", () => {
+    document.body.innerHTML = `
+      <hp-popover>
+        <hp-popover-trigger>Open</hp-popover-trigger>
+        <hp-popover-content>
+          <hp-popover-title>Hello</hp-popover-title>
+          <hp-popover-description>World</hp-popover-description>
+        </hp-popover-content>
+      </hp-popover>
+    `;
+    return new Promise<void>((resolve) => {
+      requestAnimationFrame(() =>
+        requestAnimationFrame(() => {
+          const content = document.querySelector("hp-popover-content") as HTMLElement;
+          const title = document.querySelector("hp-popover-title") as HTMLElement;
+          const description = document.querySelector("hp-popover-description") as HTMLElement;
+          expect(title.id).toBeTruthy();
+          expect(description.id).toBeTruthy();
+          expect(content.getAttribute("aria-labelledby")).toBe(title.id);
+          expect(content.getAttribute("aria-describedby")).toBe(description.id);
+          resolve();
+        }),
+      );
+    });
+  });
 });

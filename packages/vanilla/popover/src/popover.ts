@@ -278,5 +278,36 @@ export class HeadlessPopoverContent extends HeadlessElement {
     super.connectedCallback();
     this.setAttribute("data-hp-component", "popover-content");
     if (!this.id) this.id = `hp-popover-content-${this.hpId}`;
+    this._linkAria();
+    requestAnimationFrame(() => this._linkAria());
+  }
+
+  _linkAria() {
+    const root = this.closest("hp-popover");
+    if (!root) return;
+    const title = root.querySelector("hp-popover-title") as HTMLElement | null;
+    const description = root.querySelector("hp-popover-description") as HTMLElement | null;
+    if (title?.id) this.setAttribute("aria-labelledby", title.id);
+    else this.removeAttribute("aria-labelledby");
+    if (description?.id) this.setAttribute("aria-describedby", description.id);
+    else this.removeAttribute("aria-describedby");
+  }
+}
+
+@customElement("hp-popover-title")
+export class HeadlessPopoverTitle extends HeadlessElement {
+  connectedCallback() {
+    super.connectedCallback();
+    this.setAttribute("data-hp-component", "popover-title");
+    if (!this.id) this.id = `hp-popover-title-${this.hpId}`;
+  }
+}
+
+@customElement("hp-popover-description")
+export class HeadlessPopoverDescription extends HeadlessElement {
+  connectedCallback() {
+    super.connectedCallback();
+    this.setAttribute("data-hp-component", "popover-description");
+    if (!this.id) this.id = `hp-popover-description-${this.hpId}`;
   }
 }
