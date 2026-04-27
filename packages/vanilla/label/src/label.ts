@@ -21,19 +21,12 @@ export class HeadlessLabel extends HeadlessElement {
     // Read initial 'for' attribute
     const forAttr = this.getAttribute("for");
     if (forAttr) this._htmlFor = forAttr;
-    this.addEventListener("click", this._handleClick);
-    this.addEventListener("mousedown", this._handleMouseDown);
-    requestAnimationFrame(() => this._updateAriaLink());
-  }
-
-  disconnectedCallback() {
-    super.disconnectedCallback();
-    this.removeEventListener("click", this._handleClick);
-    this.removeEventListener("mousedown", this._handleMouseDown);
-  }
-
-  protected updated(changed: Map<string, unknown>) {
-    if (changed.has("htmlFor")) this._updateAriaLink();
+    this.addEventListener("click", this._handleClick, { signal: this.signal });
+    this.addEventListener("mousedown", this._handleMouseDown, { signal: this.signal });
+    this._updateAriaLink();
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => this._updateAriaLink());
+    });
   }
 
   attributeChangedCallback(name: string, old: string | null, next: string | null) {
