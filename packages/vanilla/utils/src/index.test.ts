@@ -1,5 +1,11 @@
 import { describe, it, expect, vi } from "vitest";
-import { uid, RovingTabindex, HeadlessElement } from "./index.js";
+import {
+  uid,
+  RovingTabindex,
+  HeadlessElement,
+  getScrollParents,
+  startPositionLoop,
+} from "./index.js";
 import { customElement } from "./custom-element.js";
 
 @customElement("test-aborter")
@@ -117,6 +123,52 @@ describe("Utils", () => {
 
       document.dispatchEvent(new CustomEvent("custom-event"));
       expect(handler).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe("getScrollParents", () => {
+    it("always includes window for elements without scroll ancestors", () => {
+      const el = document.createElement("div");
+      document.body.appendChild(el);
+      const parents = getScrollParents(el);
+      expect(parents).toContain(window);
+      el.remove();
+    });
+
+    it("includes scrollable ancestors", () => {
+      const outer = document.createElement("div");
+      outer.style.overflow = "auto";
+      const inner = document.createElement("div");
+      outer.appendChild(inner);
+      document.body.appendChild(outer);
+      const parents = getScrollParents(inner);
+      expect(parents).toContain(outer);
+      expect(parents).toContain(window);
+      outer.remove();
+    });
+  });
+
+  describe("startPositionLoop", () => {
+    it("invokes compute repeatedly until signal aborts", async () => {
+      const compute = vi.fn();
+      const ac = new AbortController();
+      startPositionLoop(compute, ac.signal);
+      await new Promise((r) => requestAnimationFrame(() => r(null)));
+      await new Promise((r) => requestAnimationFrame(() => r(null)));
+      const callsBeforeAbort = compute.mock.calls.length;
+      expect(callsBeforeAbort).toBeGreaterThanOrEqual(1);
+      ac.abort();
+      await new Promise((r) => requestAnimationFrame(() => r(null)));
+      await new Promise((r) => requestAnimationFrame(() => r(null)));
+      expect(compute.mock.calls.length).toBe(callsBeforeAbort);
+    });
+
+    it("is a no-op if the signal is already aborted", () => {
+      const compute = vi.fn();
+      const ac = new AbortController();
+      ac.abort();
+      startPositionLoop(compute, ac.signal);
+      expect(compute).not.toHaveBeenCalled();
     });
   });
 });

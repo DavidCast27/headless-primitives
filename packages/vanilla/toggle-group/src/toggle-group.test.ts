@@ -19,11 +19,12 @@ describe("hp-toggle-group", () => {
     toggle2 = document.querySelector("hp-toggle[value='option2']") as HeadlessToggle;
   });
 
-  test("should initialize with default ARIA attributes", () => {
-    expect(group.getAttribute("role")).toBe("group");
+  test("should initialize with default ARIA attributes (type=single → radiogroup)", () => {
+    expect(group.getAttribute("role")).toBe("radiogroup");
     expect(group.getAttribute("aria-orientation")).toBe("horizontal");
-    expect(toggle1.getAttribute("role")).toBe("button");
-    expect(toggle1.getAttribute("aria-pressed")).toBe("false");
+    expect(toggle1.getAttribute("role")).toBe("radio");
+    expect(toggle1.getAttribute("aria-checked")).toBe("false");
+    expect(toggle1.hasAttribute("aria-pressed")).toBe(false);
   });
 
   test("should handle single toggle selection", () => {
@@ -126,6 +127,79 @@ describe("hp-toggle-group", () => {
   test("should handle orientation", () => {
     group.setAttribute("orientation", "vertical");
     expect(group.getAttribute("aria-orientation")).toBe("vertical");
+  });
+
+  test("type='single' renders radiogroup with aria-checked on items", () => {
+    document.body.innerHTML = `
+      <hp-toggle-group type="single">
+        <hp-toggle value="a"></hp-toggle>
+        <hp-toggle value="b"></hp-toggle>
+      </hp-toggle-group>
+    `;
+    return new Promise<void>((resolve) => {
+      requestAnimationFrame(() =>
+        requestAnimationFrame(() => {
+          const g = document.querySelector("hp-toggle-group") as HTMLElement;
+          const toggles = document.querySelectorAll("hp-toggle");
+          expect(g.getAttribute("role")).toBe("radiogroup");
+          toggles.forEach((t) => {
+            expect(t.getAttribute("role")).toBe("radio");
+            expect(t.hasAttribute("aria-checked")).toBe(true);
+            expect(t.hasAttribute("aria-pressed")).toBe(false);
+          });
+          resolve();
+        }),
+      );
+    });
+  });
+
+  test("type='multiple' uses role=group with aria-pressed", () => {
+    document.body.innerHTML = `
+      <hp-toggle-group type="multiple">
+        <hp-toggle value="a"></hp-toggle>
+        <hp-toggle value="b"></hp-toggle>
+      </hp-toggle-group>
+    `;
+    return new Promise<void>((resolve) => {
+      requestAnimationFrame(() =>
+        requestAnimationFrame(() => {
+          const g = document.querySelector("hp-toggle-group") as HTMLElement;
+          const toggles = document.querySelectorAll("hp-toggle");
+          expect(g.getAttribute("role")).toBe("group");
+          toggles.forEach((t) => {
+            expect(t.getAttribute("role")).toBe("button");
+            expect(t.hasAttribute("aria-pressed")).toBe(true);
+            expect(t.hasAttribute("aria-checked")).toBe(false);
+          });
+          resolve();
+        }),
+      );
+    });
+  });
+
+  test("switching type from single to multiple updates roles", () => {
+    document.body.innerHTML = `
+      <hp-toggle-group type="single">
+        <hp-toggle value="a"></hp-toggle>
+      </hp-toggle-group>
+    `;
+    return new Promise<void>((resolve) => {
+      requestAnimationFrame(() =>
+        requestAnimationFrame(() => {
+          const g = document.querySelector("hp-toggle-group") as HTMLElement;
+          const t = document.querySelector("hp-toggle") as HTMLElement;
+          expect(g.getAttribute("role")).toBe("radiogroup");
+          expect(t.getAttribute("role")).toBe("radio");
+
+          g.setAttribute("type", "multiple");
+          expect(g.getAttribute("role")).toBe("group");
+          expect(t.getAttribute("role")).toBe("button");
+          expect(t.hasAttribute("aria-pressed")).toBe(true);
+          expect(t.hasAttribute("aria-checked")).toBe(false);
+          resolve();
+        }),
+      );
+    });
   });
 });
 

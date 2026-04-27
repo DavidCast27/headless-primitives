@@ -36,6 +36,13 @@ describe("Breadcrumb", () => {
     // In happy-dom with our _sync pattern, it should be sync if we call _sync in setter.
     expect(breadcrumb.getAttribute("aria-label")).toBe("Custom Label");
   });
+
+  it("should sync aria-label synchronously on subsequent property changes (ADR 0011)", () => {
+    breadcrumb.label = "First";
+    expect(breadcrumb.getAttribute("aria-label")).toBe("First");
+    breadcrumb.label = "Second";
+    expect(breadcrumb.getAttribute("aria-label")).toBe("Second");
+  });
 });
 
 describe("BreadcrumbLink", () => {

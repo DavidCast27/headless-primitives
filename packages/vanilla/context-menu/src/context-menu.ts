@@ -1,4 +1,9 @@
-import { HeadlessElement, customElement, RovingTabindex } from "@headless-primitives/utils";
+import {
+  HeadlessElement,
+  customElement,
+  RovingTabindex,
+  getScrollParents,
+} from "@headless-primitives/utils";
 import { property } from "lit/decorators.js";
 import type { ContextMenuSelectDetail, ContextMenuHighlightDetail } from "./types";
 
@@ -13,6 +18,7 @@ export class HeadlessContextMenu extends HeadlessElement {
   private _activeIndex: number = -1;
   private _cursorX = 0;
   private _cursorY = 0;
+  private _openController: AbortController | null = null;
   private _previousFocus: HTMLElement | null = null;
   private _scrollParents: EventTarget[] = [];
 
@@ -245,18 +251,27 @@ export class HeadlessContextMenu extends HeadlessElement {
       if (startIndex >= 0) this._setActiveIndex(startIndex);
 
       this._computePosition();
-      document.addEventListener("click", this._onClickOutside);
-      document.addEventListener("contextmenu", this._onClickOutside);
-      document.addEventListener("keydown", this._onGlobalKeydown);
+
+      this._openController?.abort();
+      this._openController = new AbortController();
+      const sig = this._openController.signal;
+
+      document.addEventListener("click", this._onClickOutside, { signal: sig });
+      document.addEventListener("contextmenu", this._onClickOutside, { signal: sig });
+      document.addEventListener("keydown", this._onGlobalKeydown, { signal: sig });
       if (this._trigger) {
-        this._scrollParents = this._getScrollParents(this._trigger);
+        this._scrollParents = getScrollParents(this._trigger);
         for (const parent of this._scrollParents) {
           parent.addEventListener("scroll", this._onScrollOrResize, {
+            signal: sig,
             passive: true,
           } as AddEventListenerOptions);
         }
       }
-      window.addEventListener("resize", this._onScrollOrResize, { passive: true });
+      window.addEventListener("resize", this._onScrollOrResize, {
+        signal: sig,
+        passive: true,
+      });
       this.emit("open");
     } else {
       if (HeadlessContextMenu._currentOpen === this) {
@@ -267,27 +282,10 @@ export class HeadlessContextMenu extends HeadlessElement {
     }
   }
 
-  private _getScrollParents(el: HTMLElement): EventTarget[] {
-    const parents: EventTarget[] = [];
-    let node: HTMLElement | null = el.parentElement;
-    while (node) {
-      const { overflow, overflowY, overflowX } = getComputedStyle(node);
-      if (/auto|scroll|overlay/.test(overflow + overflowY + overflowX)) parents.push(node);
-      node = node.parentElement;
-    }
-    parents.push(window);
-    return parents;
-  }
-
   private _removeGlobalListeners() {
-    document.removeEventListener("click", this._onClickOutside);
-    document.removeEventListener("contextmenu", this._onClickOutside);
-    document.removeEventListener("keydown", this._onGlobalKeydown);
-    for (const parent of this._scrollParents) {
-      parent.removeEventListener("scroll", this._onScrollOrResize);
-    }
+    this._openController?.abort();
+    this._openController = null;
     this._scrollParents = [];
-    window.removeEventListener("resize", this._onScrollOrResize);
   }
 
   private _onClickOutside = (e: MouseEvent) => {

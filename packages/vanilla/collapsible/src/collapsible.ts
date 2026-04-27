@@ -8,10 +8,9 @@ export class HeadlessCollapsible extends HeadlessElement {
     return this._open;
   }
   set open(val: boolean) {
-    const old = this._open;
+    if (this._open === val) return;
     this._open = val;
-    this.requestUpdate("open", old);
-    if (this.isConnected) this._syncState(val, this.disabled);
+    if (this.isConnected) this._syncState(val, this._disabled);
   }
 
   @property({ type: Boolean, reflect: true })
@@ -19,10 +18,9 @@ export class HeadlessCollapsible extends HeadlessElement {
     return this._disabled;
   }
   set disabled(val: boolean) {
-    const old = this._disabled;
+    if (this._disabled === val) return;
     this._disabled = val;
-    this.requestUpdate("disabled", old);
-    if (this.isConnected) this._syncState(this.open, val);
+    if (this.isConnected) this._syncState(this._open, val);
   }
 
   private _open = false;
@@ -38,6 +36,7 @@ export class HeadlessCollapsible extends HeadlessElement {
     this._contentId = `hp-collapsible-content-${this.hpId}`;
     this.addEventListener("hp-trigger-click", this._handleTriggerClick as EventListener);
     this.addEventListener("slotchange", () => this._sync());
+    this._sync();
     requestAnimationFrame(() => this._sync());
   }
 
@@ -46,26 +45,20 @@ export class HeadlessCollapsible extends HeadlessElement {
     this.removeEventListener("hp-trigger-click", this._handleTriggerClick as EventListener);
   }
 
-  protected updated(changed: Map<string, unknown>) {
-    if (changed.has("open") || changed.has("disabled")) {
-      this._syncState(this.open, this.disabled);
-    }
-  }
-
   attributeChangedCallback(name: string, old: string | null, next: string | null) {
     super.attributeChangedCallback(name, old, next);
-    if ((name === "open" || name === "disabled") && old !== next && this.isConnected) {
-      const open = name === "open" ? next !== null : this.open;
-      const disabled = name === "disabled" ? next !== null : this.disabled;
+    if (old === next) return;
+    if ((name === "open" || name === "disabled") && this.isConnected) {
+      const open = name === "open" ? next !== null : this._open;
+      const disabled = name === "disabled" ? next !== null : this._disabled;
       this._syncState(open, disabled);
     }
   }
 
   private _handleTriggerClick = () => {
-    if (this.disabled) return;
-    const newOpen = !this.open;
+    if (this._disabled) return;
+    const newOpen = !this._open;
     this.open = newOpen;
-    this._syncState(newOpen, this.disabled);
     this.emit(newOpen ? "open" : "close", { open: newOpen });
     this.emit("change", { open: newOpen });
   };

@@ -566,4 +566,75 @@ describe("Tree View", () => {
       expect((detail as { selectedValues: string[] }).selectedValues).toContain("a");
     });
   });
+
+  describe("Tree ARIA hierarchy (APG)", () => {
+    it("tree items expose aria-level/setsize/posinset", () => {
+      const tree = document.createElement("hp-tree") as HeadlessTree;
+      const item1 = document.createElement("hp-tree-item") as HeadlessTreeItem;
+      const item2 = document.createElement("hp-tree-item") as HeadlessTreeItem;
+      item1.setAttribute("value", "a");
+      item2.setAttribute("value", "b");
+      tree.appendChild(item1);
+      tree.appendChild(item2);
+      document.body.appendChild(tree);
+
+      expect(item1.getAttribute("aria-level")).toBe("1");
+      expect(item1.getAttribute("aria-posinset")).toBe("1");
+      expect(item1.getAttribute("aria-setsize")).toBe("2");
+      expect(item2.getAttribute("aria-posinset")).toBe("2");
+      expect(item2.getAttribute("aria-setsize")).toBe("2");
+    });
+
+    it("nested tree items have correct aria-level", () => {
+      document.body.innerHTML = `
+        <hp-tree>
+          <hp-tree-item value="a">
+            <hp-tree-item value="a1"></hp-tree-item>
+            <hp-tree-item value="a2">
+              <hp-tree-item value="a2a"></hp-tree-item>
+            </hp-tree-item>
+          </hp-tree-item>
+        </hp-tree>
+      `;
+      return new Promise<void>((resolve) => {
+        requestAnimationFrame(() =>
+          requestAnimationFrame(() => {
+            const a = document.querySelector('hp-tree-item[value="a"]') as HTMLElement;
+            const a1 = document.querySelector('hp-tree-item[value="a1"]') as HTMLElement;
+            const a2a = document.querySelector('hp-tree-item[value="a2a"]') as HTMLElement;
+            expect(a.getAttribute("aria-level")).toBe("1");
+            expect(a1.getAttribute("aria-level")).toBe("2");
+            expect(a2a.getAttribute("aria-level")).toBe("3");
+            resolve();
+          }),
+        );
+      });
+    });
+
+    it("aria-level counts hp-tree-group ancestors correctly", () => {
+      document.body.innerHTML = `
+        <hp-tree>
+          <hp-tree-item value="root">
+            <hp-tree-group>
+              <hp-tree-item value="child"></hp-tree-item>
+            </hp-tree-group>
+          </hp-tree-item>
+        </hp-tree>
+      `;
+      return new Promise<void>((resolve) => {
+        requestAnimationFrame(() =>
+          requestAnimationFrame(() => {
+            const root = document.querySelector('hp-tree-item[value="root"]') as HTMLElement;
+            const child = document.querySelector('hp-tree-item[value="child"]') as HTMLElement;
+            expect(root.getAttribute("aria-level")).toBe("1");
+            expect(child.getAttribute("aria-level")).toBe("2");
+            // hp-tree-group is not an item itself, so child posinset is 1 within its group
+            expect(child.getAttribute("aria-posinset")).toBe("1");
+            expect(child.getAttribute("aria-setsize")).toBe("1");
+            resolve();
+          }),
+        );
+      });
+    });
+  });
 });

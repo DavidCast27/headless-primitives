@@ -155,4 +155,38 @@ describe("Tab Components", () => {
     expect(panels[2].getAttribute("data-state")).toBe("selected");
     expect(panels[0].getAttribute("data-state")).toBe("unselected");
   });
+
+  it("should link tab and panel via aria-controls and aria-labelledby", async () => {
+    const root = createTabs("tab1");
+    await waitForUpdate(root);
+
+    const tab = root.querySelector('hp-tab[value="tab1"]') as HTMLElement | null;
+    const panel = root.querySelector('hp-tab-panel[value="tab1"]') as HTMLElement | null;
+
+    expect(tab?.id).toBeTruthy();
+    expect(panel?.id).toBeTruthy();
+    expect(tab?.getAttribute("aria-controls")).toBe(panel?.id);
+    expect(panel?.getAttribute("aria-labelledby")).toBe(tab?.id);
+  });
+
+  it("should keep aria-controls/labelledby in sync when value changes", async () => {
+    const root = createTabs("tab1");
+    await waitForUpdate(root);
+
+    root.setAttribute("value", "tab2");
+    await waitForUpdate(root);
+
+    const tab2 = root.querySelector('hp-tab[value="tab2"]') as HTMLElement | null;
+    const panel2 = root.querySelector('hp-tab-panel[value="tab2"]') as HTMLElement | null;
+    const tab1 = root.querySelector('hp-tab[value="tab1"]') as HTMLElement | null;
+    const panel1 = root.querySelector('hp-tab-panel[value="tab1"]') as HTMLElement | null;
+
+    // Active pair stays linked
+    expect(tab2?.getAttribute("aria-controls")).toBe(panel2?.id);
+    expect(panel2?.getAttribute("aria-labelledby")).toBe(tab2?.id);
+
+    // Inactive pair also remains linked (relationship is independent of selection)
+    expect(tab1?.getAttribute("aria-controls")).toBe(panel1?.id);
+    expect(panel1?.getAttribute("aria-labelledby")).toBe(tab1?.id);
+  });
 });

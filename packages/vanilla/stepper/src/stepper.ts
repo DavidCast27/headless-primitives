@@ -170,10 +170,18 @@ export class Stepper extends HeadlessElement {
 
       items.forEach((item, i) => {
         const state: StepState = i < current ? "completed" : i === current ? "active" : "pending";
+        const isActive = i === current && !this._done;
         item.setAttribute("data-state", state);
         item.setAttribute("data-index", String(i));
         item.setAttribute("aria-selected", String(i === current));
         item.setAttribute("tabindex", i === current ? "0" : "-1");
+
+        // APG: aria-current="step" identifies the active step in the workflow
+        if (isActive) {
+          item.setAttribute("aria-current", "step");
+        } else {
+          item.removeAttribute("aria-current");
+        }
 
         // In linear mode, steps beyond current+1 are unreachable
         const isDisabled = this._linear && i > current + 1;

@@ -14,8 +14,9 @@ export class HeadlessBreadcrumb extends HeadlessElement {
     return this._label;
   }
   set label(v: string) {
+    if (this._label === v) return;
     this._label = v;
-    this._sync();
+    if (this.isConnected) this._sync();
   }
 
   connectedCallback() {
@@ -23,17 +24,20 @@ export class HeadlessBreadcrumb extends HeadlessElement {
     this.setAttribute("data-hp-component", "breadcrumb");
     if (!this.hasAttribute("role")) this.setAttribute("role", "navigation");
     this._sync();
+    requestAnimationFrame(() => this._sync());
+  }
+
+  attributeChangedCallback(name: string, old: string | null, next: string | null) {
+    super.attributeChangedCallback(name, old, next);
+    if (old === next) return;
+    if (name === "aria-label" && next !== null && next !== this._label) {
+      this._label = next;
+      if (this.isConnected) this._sync();
+    }
   }
 
   private _sync() {
     this.setAttribute("aria-label", this._label);
-  }
-
-  protected updated(changedProperties: Map<string, any>) {
-    super.updated(changedProperties);
-    if (changedProperties.has("label")) {
-      this._sync();
-    }
   }
 }
 
@@ -74,8 +78,9 @@ export class HeadlessBreadcrumbLink extends HeadlessElement {
     return this._href;
   }
   set href(v: string) {
+    if (this._href === v) return;
     this._href = v;
-    this._sync();
+    if (this.isConnected) this._sync();
   }
 
   connectedCallback() {
@@ -86,6 +91,7 @@ export class HeadlessBreadcrumbLink extends HeadlessElement {
     this.addEventListener("click", this._handleClick);
     this.addEventListener("keydown", this._handleKeyDown);
     this._sync();
+    requestAnimationFrame(() => this._sync());
   }
 
   disconnectedCallback() {
@@ -94,18 +100,23 @@ export class HeadlessBreadcrumbLink extends HeadlessElement {
     this.removeEventListener("keydown", this._handleKeyDown);
   }
 
+  attributeChangedCallback(name: string, old: string | null, next: string | null) {
+    super.attributeChangedCallback(name, old, next);
+    if (old === next) return;
+    if (name === "href") {
+      const nextHref = next ?? "";
+      if (nextHref !== this._href) {
+        this._href = nextHref;
+      }
+      if (this.isConnected) this._sync();
+    }
+  }
+
   private _sync() {
     if (this._href) {
       this.setAttribute("tabindex", "0");
     } else {
       this.removeAttribute("tabindex");
-    }
-  }
-
-  protected updated(changedProperties: Map<string, any>) {
-    super.updated(changedProperties);
-    if (changedProperties.has("href")) {
-      this._sync();
     }
   }
 

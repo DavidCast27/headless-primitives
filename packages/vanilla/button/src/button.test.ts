@@ -54,6 +54,16 @@ describe("HpButton (Headless Primitive Button)", () => {
     expect(btn.getAttribute("aria-pressed")).toBe("true");
   });
 
+  it("debería sincronizar aria-disabled al asignar la propiedad disabled de forma síncrona (ADR 0011)", () => {
+    btn.disabled = true;
+    expect(btn.getAttribute("aria-disabled")).toBe("true");
+    expect(btn.hasAttribute("tabindex")).toBe(false);
+
+    btn.disabled = false;
+    expect(btn.hasAttribute("aria-disabled")).toBe(false);
+    expect(btn.getAttribute("tabindex")).toBe("0");
+  });
+
   it("debería desencadenar click al teclear Enter o Barra espaciadora (Keyboard Navigation)", () => {
     let clicked = false;
     btn.setAttribute("aria-pressed", "false");

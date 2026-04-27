@@ -27,33 +27,27 @@ export class HeadlessTooltip extends HeadlessElement {
     // Sync attach for tests (children already connected when parent fires connectedCallback
     // if they were appended before the parent was inserted into the document)
     this._attachTriggerListeners();
-    // rAF pass covers VitePress/SSR hydration where children may arrive later
-    requestAnimationFrame(() => this._attachTriggerListeners());
+    // Double rAF covers VitePress/SSR hydration where children may arrive later
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => this._attachTriggerListeners());
+    });
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
     this._clearTimeouts();
-    this._detachTriggerListeners();
+    this._triggerEl = null;
   }
 
   private _attachTriggerListeners() {
     const trigger = this.querySelector<HTMLElement>("hp-tooltip-trigger");
     if (!trigger || this._triggerEl === trigger) return; // already wired
     this._triggerEl = trigger;
-    trigger.addEventListener("mouseenter", this._handleMouseEnter);
-    trigger.addEventListener("mouseleave", this._handleMouseLeave);
-    trigger.addEventListener("focus", this._handleFocus);
-    trigger.addEventListener("blur", this._handleBlur);
-  }
-
-  private _detachTriggerListeners() {
-    if (!this._triggerEl) return;
-    this._triggerEl.removeEventListener("mouseenter", this._handleMouseEnter);
-    this._triggerEl.removeEventListener("mouseleave", this._handleMouseLeave);
-    this._triggerEl.removeEventListener("focus", this._handleFocus);
-    this._triggerEl.removeEventListener("blur", this._handleBlur);
-    this._triggerEl = null;
+    const opts = { signal: this.signal };
+    trigger.addEventListener("mouseenter", this._handleMouseEnter, opts);
+    trigger.addEventListener("mouseleave", this._handleMouseLeave, opts);
+    trigger.addEventListener("focus", this._handleFocus, opts);
+    trigger.addEventListener("blur", this._handleBlur, opts);
   }
 
   private get _content() {

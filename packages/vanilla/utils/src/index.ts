@@ -1,6 +1,7 @@
 export * from "./headless-element";
 export * from "./uid";
 export * from "./custom-element";
+export * from "./overlay-position";
 
 /**
  * Handles roving tabindex for a group of elements.

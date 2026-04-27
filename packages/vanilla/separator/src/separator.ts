@@ -23,6 +23,7 @@ export class HeadlessSeparator extends HeadlessElement {
     const raw = this.getAttribute("orientation");
     this._orientation = raw === "vertical" ? "vertical" : "horizontal";
     this._sync();
+    requestAnimationFrame(() => this._sync());
   }
 
   // Call when orientation changes from JS
