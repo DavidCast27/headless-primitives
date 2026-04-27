@@ -6,7 +6,12 @@
  * Visibility is driven by data-state + base.css [data-hp-overlay-content].
  * Only top/left coordinates are set as inline styles (computed anchor position).
  */
-import { HeadlessElement, customElement } from "@headless-primitives/utils";
+import {
+  HeadlessElement,
+  customElement,
+  getScrollParents,
+  startPositionLoop,
+} from "@headless-primitives/utils";
 import { property } from "lit/decorators.js";
 
 @customElement("hp-popover")
@@ -17,7 +22,6 @@ export class HeadlessPopover extends HeadlessElement {
   private _trigger: HTMLElement | null = null;
   private _content: HTMLElement | null = null;
   private _isOpen = false;
-  private _rafId: number | null = null;
   private _scrollParents: EventTarget[] = [];
   private _openController: AbortController | null = null;
 
@@ -60,18 +64,6 @@ export class HeadlessPopover extends HeadlessElement {
     this.style.position = "relative";
   }
 
-  private _getScrollParents(el: HTMLElement): EventTarget[] {
-    const parents: EventTarget[] = [];
-    let node: HTMLElement | null = el.parentElement;
-    while (node) {
-      const { overflow, overflowY, overflowX } = getComputedStyle(node);
-      if (/auto|scroll|overlay/.test(overflow + overflowY + overflowX)) parents.push(node);
-      node = node.parentElement;
-    }
-    parents.push(window);
-    return parents;
-  }
-
   private _computePosition() {
     if (!this._trigger || !this._content) return;
 
@@ -112,22 +104,6 @@ export class HeadlessPopover extends HeadlessElement {
     this._content.setAttribute("data-align", this.align);
   }
 
-  private _startPositionLoop() {
-    const loop = () => {
-      if (!this._isOpen) return;
-      this._computePosition();
-      this._rafId = requestAnimationFrame(loop);
-    };
-    this._rafId = requestAnimationFrame(loop);
-  }
-
-  private _stopPositionLoop() {
-    if (this._rafId !== null) {
-      cancelAnimationFrame(this._rafId);
-      this._rafId = null;
-    }
-  }
-
   private _handleTriggerClick = (event: Event) => {
     event.stopPropagation();
     this._toggle();
@@ -151,25 +127,26 @@ export class HeadlessPopover extends HeadlessElement {
     }
 
     this._computePosition();
-    this._startPositionLoop();
 
     if (this._trigger && this._content) {
       this._trigger.setAttribute("aria-expanded", "true");
       this._trigger.setAttribute("aria-controls", this._content.id || "");
     }
 
-    // Bind global listeners to a per-opening AbortController so they can be
-    // released on close() OR torn down automatically if the element is
-    // disconnected from the DOM without close() ever being called.
+    // Bind global listeners and the position loop to a per-opening
+    // AbortController so they get released on close() OR torn down
+    // automatically if the element is disconnected without close().
     this._openController?.abort();
     this._openController = new AbortController();
     const sig = this._openController.signal;
+
+    startPositionLoop(() => this._computePosition(), sig);
 
     document.addEventListener("click", this._handleClickOutside, { signal: sig });
     document.addEventListener("keydown", this._handleEscape, { signal: sig });
 
     if (this._trigger) {
-      this._scrollParents = this._getScrollParents(this._trigger);
+      this._scrollParents = getScrollParents(this._trigger);
       for (const parent of this._scrollParents) {
         parent.addEventListener("scroll", this._handleScrollOrResize, {
           signal: sig,
@@ -188,8 +165,6 @@ export class HeadlessPopover extends HeadlessElement {
   private _close() {
     if (!this._isOpen) return;
     this._isOpen = false;
-
-    this._stopPositionLoop();
 
     if (this._content) {
       this._content.setAttribute("data-state", "closed");

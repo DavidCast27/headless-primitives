@@ -1,4 +1,10 @@
-import { HeadlessElement, customElement, RovingTabindex } from "@headless-primitives/utils";
+import {
+  HeadlessElement,
+  customElement,
+  RovingTabindex,
+  getScrollParents,
+  startPositionLoop,
+} from "@headless-primitives/utils";
 import { property } from "lit/decorators.js";
 import type { SelectChangeDetail, SelectHighlightDetail } from "./types";
 
@@ -13,8 +19,8 @@ export class HeadlessSelect extends HeadlessElement {
   private _valueDisplay: HeadlessSelectValue | null = null;
   private _items: HeadlessSelectItem[] = [];
   private _activeIndex: number = -1;
-  private _rafId: number | null = null;
   private _scrollParents: EventTarget[] = [];
+  private _openController: AbortController | null = null;
 
   @property({ type: Boolean, reflect: true }) disabled = false;
   @property({ type: String, reflect: true }) name = "";
@@ -106,22 +112,6 @@ export class HeadlessSelect extends HeadlessElement {
     const top = triggerRect.top - rootRect.top + triggerRect.height + gap;
     this._content.style.left = `${left}px`;
     this._content.style.top = `${top}px`;
-  }
-
-  private _startPositionLoop() {
-    const loop = () => {
-      if (!this._open) return;
-      this._computePosition();
-      this._rafId = requestAnimationFrame(loop);
-    };
-    this._rafId = requestAnimationFrame(loop);
-  }
-
-  private _stopPositionLoop() {
-    if (this._rafId !== null) {
-      cancelAnimationFrame(this._rafId);
-      this._rafId = null;
-    }
   }
 
   private _onTriggerClick = (e: Event) => {
@@ -313,49 +303,41 @@ export class HeadlessSelect extends HeadlessElement {
         : this._items.findIndex((i) => !i.disabled);
       if (startIndex >= 0) this._setActiveIndex(startIndex);
 
-      // position + listeners
+      this._openController?.abort();
+      this._openController = new AbortController();
+      const sig = this._openController.signal;
+
       this._computePosition();
-      this._startPositionLoop();
-      document.addEventListener("click", this._onClickOutside);
-      document.addEventListener("keydown", this._onGlobalKeydown);
+      startPositionLoop(() => this._computePosition(), sig);
+
+      document.addEventListener("click", this._onClickOutside, { signal: sig });
+      document.addEventListener("keydown", this._onGlobalKeydown, { signal: sig });
+
       if (this._trigger) {
-        this._scrollParents = this._getScrollParents(this._trigger);
+        this._scrollParents = getScrollParents(this._trigger);
         for (const parent of this._scrollParents) {
           parent.addEventListener("scroll", this._onScrollOrResize, {
+            signal: sig,
             passive: true,
           } as AddEventListenerOptions);
         }
       }
-      window.addEventListener("resize", this._onScrollOrResize, { passive: true });
+      window.addEventListener("resize", this._onScrollOrResize, {
+        signal: sig,
+        passive: true,
+      });
       if (!this._prevOpen) this.emit("open");
     } else {
-      this._stopPositionLoop();
       this._removeGlobalListeners();
       if (this._prevOpen) this.emit("close");
     }
     this._prevOpen = this._open;
   }
 
-  private _getScrollParents(el: HTMLElement): EventTarget[] {
-    const parents: EventTarget[] = [];
-    let node: HTMLElement | null = el.parentElement;
-    while (node) {
-      const { overflow, overflowY, overflowX } = getComputedStyle(node);
-      if (/auto|scroll|overlay/.test(overflow + overflowY + overflowX)) parents.push(node);
-      node = node.parentElement;
-    }
-    parents.push(window);
-    return parents;
-  }
-
   private _removeGlobalListeners() {
-    document.removeEventListener("click", this._onClickOutside);
-    document.removeEventListener("keydown", this._onGlobalKeydown);
-    for (const parent of this._scrollParents) {
-      parent.removeEventListener("scroll", this._onScrollOrResize);
-    }
+    this._openController?.abort();
+    this._openController = null;
     this._scrollParents = [];
-    window.removeEventListener("resize", this._onScrollOrResize);
   }
 
   private _onClickOutside = (e: MouseEvent) => {
