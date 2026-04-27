@@ -55,6 +55,10 @@ export class HeadlessDialog extends HeadlessElement {
       this._focusTrap = new FocusTrap(content);
     }
 
+    if (content) {
+      (content as HeadlessDialogContent)._linkAria?.();
+    }
+
     if (backdrop && !backdrop.hasAttribute("data-hp-backdrop")) {
       backdrop.setAttribute("data-hp-backdrop", "");
       backdrop.setAttribute("data-state", "closed");
@@ -107,6 +111,7 @@ export class HeadlessDialog extends HeadlessElement {
     if (content) {
       content.setAttribute("data-state", "open");
       content.removeAttribute("aria-hidden");
+      (content as HeadlessDialogContent)._linkAria?.();
     }
     if (backdrop) backdrop.setAttribute("data-state", "open");
     if (trigger && content) {
@@ -207,6 +212,19 @@ export class HeadlessDialogContent extends HeadlessElement {
     super.connectedCallback();
     this.setAttribute("data-hp-component", "dialog-content");
     if (!this.id) this.id = `hp-dialog-content-${this.hpId}`;
+    this._linkAria();
+    requestAnimationFrame(() => this._linkAria());
+  }
+
+  _linkAria() {
+    const root = this.closest("hp-dialog");
+    if (!root) return;
+    const title = root.querySelector("hp-dialog-title") as HTMLElement | null;
+    const description = root.querySelector("hp-dialog-description") as HTMLElement | null;
+    if (title?.id) this.setAttribute("aria-labelledby", title.id);
+    else this.removeAttribute("aria-labelledby");
+    if (description?.id) this.setAttribute("aria-describedby", description.id);
+    else this.removeAttribute("aria-describedby");
   }
 }
 
@@ -223,6 +241,16 @@ export class HeadlessDialogTitle extends HeadlessElement {
   connectedCallback() {
     super.connectedCallback();
     this.setAttribute("data-hp-component", "dialog-title");
+    if (!this.id) this.id = `hp-dialog-title-${this.hpId}`;
+  }
+}
+
+@customElement("hp-dialog-description")
+export class HeadlessDialogDescription extends HeadlessElement {
+  connectedCallback() {
+    super.connectedCallback();
+    this.setAttribute("data-hp-component", "dialog-description");
+    if (!this.id) this.id = `hp-dialog-description-${this.hpId}`;
   }
 }
 

@@ -146,6 +146,35 @@ describe("HpDialog alertdialog", () => {
   });
 });
 
+describe("HpDialog ARIA labelling", () => {
+  it("dialog content has aria-labelledby pointing to title id and aria-describedby to description id", () => {
+    document.body.innerHTML = `
+      <hp-dialog>
+        <hp-dialog-trigger>Open</hp-dialog-trigger>
+        <hp-dialog-content>
+          <hp-dialog-title>Hello</hp-dialog-title>
+          <hp-dialog-description>World</hp-dialog-description>
+        </hp-dialog-content>
+      </hp-dialog>
+    `;
+    return new Promise<void>((resolve) => {
+      requestAnimationFrame(() =>
+        requestAnimationFrame(() => {
+          const content = document.querySelector("hp-dialog-content") as HTMLElement;
+          const title = document.querySelector("hp-dialog-title") as HTMLElement;
+          const description = document.querySelector("hp-dialog-description") as HTMLElement;
+          expect(title.id).toBeTruthy();
+          expect(description.id).toBeTruthy();
+          expect(content.getAttribute("aria-labelledby")).toBe(title.id);
+          expect(content.getAttribute("aria-describedby")).toBe(description.id);
+          document.body.innerHTML = "";
+          resolve();
+        }),
+      );
+    });
+  });
+});
+
 describe("HpDialogTrigger disabled", () => {
   it("disabled agrega aria-disabled y quita tabindex", () => {
     const trigger = document.createElement("hp-dialog-trigger") as HeadlessDialogTrigger;
