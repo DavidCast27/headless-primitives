@@ -19,6 +19,7 @@ export class HeadlessPopover extends HeadlessElement {
   private _isOpen = false;
   private _rafId: number | null = null;
   private _scrollParents: EventTarget[] = [];
+  private _openController: AbortController | null = null;
 
   connectedCallback() {
     super.connectedCallback();
@@ -34,7 +35,9 @@ export class HeadlessPopover extends HeadlessElement {
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    this._removeGlobalListeners();
+    this._openController?.abort();
+    this._openController = null;
+    this._scrollParents = [];
   }
 
   private _setupTrigger() {
@@ -155,18 +158,29 @@ export class HeadlessPopover extends HeadlessElement {
       this._trigger.setAttribute("aria-controls", this._content.id || "");
     }
 
-    document.addEventListener("click", this._handleClickOutside);
-    document.addEventListener("keydown", this._handleEscape);
+    // Bind global listeners to a per-opening AbortController so they can be
+    // released on close() OR torn down automatically if the element is
+    // disconnected from the DOM without close() ever being called.
+    this._openController?.abort();
+    this._openController = new AbortController();
+    const sig = this._openController.signal;
+
+    document.addEventListener("click", this._handleClickOutside, { signal: sig });
+    document.addEventListener("keydown", this._handleEscape, { signal: sig });
 
     if (this._trigger) {
       this._scrollParents = this._getScrollParents(this._trigger);
       for (const parent of this._scrollParents) {
         parent.addEventListener("scroll", this._handleScrollOrResize, {
+          signal: sig,
           passive: true,
         } as AddEventListenerOptions);
       }
     }
-    window.addEventListener("resize", this._handleScrollOrResize, { passive: true });
+    window.addEventListener("resize", this._handleScrollOrResize, {
+      signal: sig,
+      passive: true,
+    });
 
     this.emit("open");
   }
@@ -191,13 +205,9 @@ export class HeadlessPopover extends HeadlessElement {
   }
 
   private _removeGlobalListeners() {
-    document.removeEventListener("click", this._handleClickOutside);
-    document.removeEventListener("keydown", this._handleEscape);
-    for (const parent of this._scrollParents) {
-      parent.removeEventListener("scroll", this._handleScrollOrResize);
-    }
+    this._openController?.abort();
+    this._openController = null;
     this._scrollParents = [];
-    window.removeEventListener("resize", this._handleScrollOrResize);
   }
 
   private _handleClickOutside = (event: Event) => {

@@ -110,4 +110,14 @@ describe("HpPopover", () => {
   it("popover trigger has aria-haspopup=dialog", () => {
     expect(trigger.getAttribute("aria-haspopup")).toBe("dialog");
   });
+
+  it("removing open popover does not throw on subsequent global events", () => {
+    popover.open();
+    popover.remove();
+    expect(() => {
+      window.dispatchEvent(new Event("scroll"));
+      document.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+      document.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape" }));
+    }).not.toThrow();
+  });
 });
